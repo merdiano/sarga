@@ -1,0 +1,30 @@
+{
+    "name": "sarga/shop",
+    "description": "Shop for Sarga.",
+    "license": "MIT",
+
+    "authors": [
+        {
+            "name": "merdan muhammedow",
+            "email": "merdan.m@gmail.com"
+        }
+    ],
+
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Sarga\\Shop\\": "src/"
+        }
+    },
+
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sarga\\Shop\\Providers\\ShopServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+
+    "minimum-stability": "dev"
+}
