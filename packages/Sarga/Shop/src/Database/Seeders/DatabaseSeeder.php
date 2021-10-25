@@ -15,7 +15,6 @@ class DatabaseSeeder  extends Seeder
     {
         $this->call(SLocalesTableSeeder::class);
         $this->call(SCurrencyTableSeeder::class);
-        $this->call(DemoCategoryTableSeeder::class);
         $this->call(ChannelTableSeeder::class);
 
     }
