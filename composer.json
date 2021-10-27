@@ -105,7 +105,8 @@
             "Webkul\\SocialLogin\\": "packages/Webkul/SocialLogin/src",
             "Webkul\\DebugBar\\": "packages/Webkul/DebugBar/src",
             "Webkul\\Marketing\\": "packages/Webkul/Marketing/src",
-            "Sarga\\Shop\\": "packages/Sarga/Shop/src"
+            "Sarga\\Shop\\": "packages/Sarga/Shop/src",
+            "Sarga\\API\\": "packages/Sarga/API"
         }
     },
     "autoload-dev": {

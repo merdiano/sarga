@@ -22,7 +22,7 @@ use Webkul\API\Http\Resources\Catalog\Attribute;
 use Webkul\API\Http\Resources\Catalog\AttributeFamily;
 use Webkul\API\Http\Resources\Catalog\Category;
 use Webkul\API\Http\Resources\Catalog\ProductReview;
-use Webkul\API\Http\Resources\Core\Channel;
+use Webkul\API\Http\Resources\Core\ChannelResource;
 use Webkul\API\Http\Resources\Core\Country;
 use Webkul\API\Http\Resources\Core\Currency;
 use Webkul\API\Http\Resources\Core\Locale;
@@ -133,12 +133,12 @@ Route::group(['prefix' => 'api'], function ($router) {
         //Channel routes
         Route::get('channels', [ResourceController::class, 'index'])->defaults('_config', [
             'repository' => ChannelRepository::class,
-            'resource' => Channel::class,
+            'resource' => ChannelResource::class,
         ]);
 
         Route::get('channels/{id}', [ResourceController::class, 'get'])->defaults('_config', [
             'repository' => ChannelRepository::class,
-            'resource' => Channel::class,
+            'resource' => ChannelResource::class,
         ]);
 
 
