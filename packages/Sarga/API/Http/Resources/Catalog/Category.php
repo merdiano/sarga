@@ -17,20 +17,20 @@ class Category extends JsonResource
     {
         return [
             'id'                 => $this->id,
-            'code'               => $this->code,
+//            'code'               => $this->code,
             'name'               => $this->name,
-            'slug'               => $this->slug,
-            'display_mode'       => $this->display_mode,
+//            'slug'               => $this->slug,
+//            'display_mode'       => $this->display_mode,
             'description'        => $this->description,
-            'status'             => $this->status,
+//            'status'             => $this->status,
             'image_url'          => $this->image_url,
             'category_icon_path' => $this->category_icon_path
                 ? Storage::url($this->category_icon_path)
                 : null,
-            'additional'         => is_array($this->resource->additional)
-                ? $this->resource->additional
-                : json_decode($this->resource->additional, true),
-
+//            'additional'         => is_array($this->resource->additional)
+//                ? $this->resource->additional
+//                : json_decode($this->resource->additional, true),
+            'children'           => Category::collection($this->children)
         ];
     }
 }
