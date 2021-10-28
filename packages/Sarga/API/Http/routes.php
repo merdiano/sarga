@@ -2,9 +2,9 @@
 
 use Sarga\API\Http\Controllers\Categories;
 use Sarga\API\Http\Controllers\Channels;
-use Sarga\API\Http\Controllers\Resources;
-use Webkul\Attribute\Repositories\AttributeRepository;
-use Sarga\API\Http\Resources\Catalog\Attribute;
+use Webkul\API\Http\Controllers\Shop\ResourceController;
+use Webkul\Attribute\Repositories\AttributeOptionRepository;
+use Sarga\API\Http\Resources\Catalog\AttributeOption;
 
 Route::group(['prefix' => 'api'], function ($router) {
     Route::group(['middleware' => ['locale', 'currency']], function ($router) {
@@ -16,9 +16,9 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::get('category-brands/{id}', [Categories::class, 'brands']);
 
         //attributes by code
-        Route::get('attribute-by-code/{code}', [Resources::class, 'get'])->defaults('_config', [
-            'repository' => AttributeRepository::class,
-            'resource' => Attribute::class,
+        Route::get('attribute-options', [ResourceController::class, 'index'])->defaults('_config', [
+            'repository' => AttributeOptionRepository::class,
+            'resource' => AttributeOption::class,
         ]);
 
     });
