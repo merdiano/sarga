@@ -14,8 +14,4 @@ class Categories extends CategoryController
         );
     }
 
-    public function brands($id)
-    {
-
-    }
 }
