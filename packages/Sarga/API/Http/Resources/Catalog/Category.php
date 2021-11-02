@@ -19,10 +19,11 @@ class Category extends JsonResource
             'id'                 => $this->id,
 //            'code'               => $this->code,
             'name'               => $this->name,
-            'slug'               => $this->slug,
+//            'slug'               => $this->slug,
 //            'display_mode'       => $this->display_mode,
-            'description'        => $this->description,
+//            'description'        => $this->description,
 //            'status'             => $this->status,
+            'menu'               => $this->visible_in_menu,
             'image_url'          => $this->image_url,
             'category_icon_path' => $this->category_icon_path
                 ? Storage::url($this->category_icon_path)
