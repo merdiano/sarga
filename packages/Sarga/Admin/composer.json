@@ -1,0 +1,27 @@
+{
+    "name": "sarga/laravel-admin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Merdan Singh",
+            "email": "merdan.m@gmail.com"
+        }
+    ],
+    "require": {
+        "bagisto/laravel-core": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sarga\\Admin\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sarga\\Admin\\Providers\\AdminServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}

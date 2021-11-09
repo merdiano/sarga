@@ -283,7 +283,8 @@ return [
         Webkul\DebugBar\Providers\DebugBarServiceProvider::class,
         Webkul\Marketing\Providers\MarketingServiceProvider::class,
         Sarga\Shop\Providers\ShopServiceProvider::class,
-        Sarga\API\Providers\APIServiceProvider::class
+        Sarga\API\Providers\APIServiceProvider::class,
+        Sarga\Admin\Providers\AdminServiceProvider::class
     ],
 
     /*

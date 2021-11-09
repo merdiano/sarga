@@ -22,6 +22,7 @@ class Channel extends JsonResource
             'name'              => $this->name,
             'hostname'          => $this->hostname,
             'root_category_id'  => $this->root_category_id,
+            'promotion_category_id'  => $this->promotion_category_id,
             'is_maintenance_on' => $this->is_maintenance_on,
             'sliders'           => Slider::collection($this->sliders),
             'brand_attribute_id' => 25 //todo vremenno goyuldy. id admindan bazadan settingsden almaly(2 marketplace goshulanda)

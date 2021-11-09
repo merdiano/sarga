@@ -8,17 +8,21 @@ use Illuminate\Support\Facades\DB;
 class SCurrencyTableSeeder extends Seeder
 {
     public function run(){
+        DB::table('channels')->delete();
+
+        DB::table('currencies')->delete();
+
         DB::table('currencies')->insert([
             [
-                'id'     => 3,
+                'id'     => 1,
                 'code'   => 'TL',
                 'name'   => 'Lira',
-                'symbol' => 't',
+                'symbol' => 'TL',
             ], [
-                'id'     => 4,
+                'id'     => 2,
                 'code'   => 'TMT',
                 'name'   => 'Manat',
-                'symbol' => 'm',
+                'symbol' => 'TMT',
             ]
         ]);
     }

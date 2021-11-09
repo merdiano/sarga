@@ -26,12 +26,14 @@ return [
         'name'  => 'shop::app.layouts.wishlist',
         'route' =>'customer.wishlist.index',
         'sort'  => 4,
-    ], [
-        'key'   => 'account.compare',
-        'name'  => 'shop::app.customer.compare.text',
-        'route' =>'velocity.customer.product.compare',
-        'sort'  => 5,
-    ], [
+    ],
+//    [
+//        'key'   => 'account.compare',
+//        'name'  => 'shop::app.customer.compare.text',
+//        'route' =>'velocity.customer.product.compare',
+//        'sort'  => 5,
+//    ],
+    [
         'key'   => 'account.orders',
         'name'  => 'shop::app.layouts.orders',
         'route' =>'customer.orders.index',
