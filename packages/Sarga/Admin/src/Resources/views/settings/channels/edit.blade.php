@@ -92,7 +92,7 @@
                                 <select v-validate="'required'" class="control" id="root_category_id" name="root_category_id" data-vv-as="&quot;{{ __('admin::app.settings.channels.root-category') }}&quot;">
                                     @foreach (app('Webkul\Category\Repositories\CategoryRepository')->getRootCategories() as $category)
                                         <option value="{{ $category->id }}" {{ $selectedOption == $category->id ? 'selected' : '' }}>
-                                            {{ $category->id }} - {{ $category->name }}
+                                            {{ $category->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -104,7 +104,7 @@
                                     <?php $selectedOption = old('promotion_category_id') ?: $channel->promotion_category_id ?>
                                     @foreach (app('Sarga\Shop\Repositories\CategoryRepository')->getDescriptionCategories() as $category)
                                         <option value="{{ $category->id }}" {{ old('promotion_category_id') == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
+                                            {{ $category->id }} - {{ $category->name }}
                                         </option>
                                     @endforeach
                                 </select>
