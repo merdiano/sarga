@@ -12,19 +12,39 @@ class ChannelTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('channels')->delete();
+
         DB::table('channels')->insert([
-            'id'                => 2,
-            'code'              => 'test',
-            'theme'             => 'default',
-            'hostname'          => config('app.url').'/test',
-            'root_category_id'  => 2,
-            'default_locale_id' => 1,
-            'base_currency_id'  => 1,
+            [
+                'id'                => 1,
+                'code'              => 'Trendyol',
+                'theme'             => 'default',
+                'hostname'          => config('app.url'),
+                'root_category_id'  => 1,
+                'default_locale_id' => 1,
+                'base_currency_id'  => 1
+            ],[
+                'id'                => 2,
+                'code'              => 'LCW',
+                'theme'             => 'default',
+                'hostname'          => config('app.url').'/lcw',
+                'root_category_id'  => 2,
+                'default_locale_id' => 1,
+                'base_currency_id'  => 1
+            ],[
+                'id'                => 3,
+                'code'              => 'Outlet',
+                'theme'             => 'default',
+                'hostname'          => config('app.url').'/outlet',
+                'root_category_id'  => 3,
+                'default_locale_id' => 1,
+                'base_currency_id'  => 1
+            ],
         ]);
         DB::table('channel_translations')->insert([
             [
-                'id'                => 6,
-                'channel_id'        => 2,
+                'id'                => 1,
+                'channel_id'        => 1,
                 'locale'            => 'en',
                 'name'              => 'Test',
                 'home_page_content' => '
@@ -63,10 +83,10 @@ class ChannelTableSeeder extends Seeder
                 ',
                 'home_seo'          => '{"meta_title": "Demo store", "meta_keywords": "Demo store meta keyword", "meta_description": "Demo store meta description"}',
             ], [
-                'id'                => 7,
-                'channel_id'        => 2,
+                'id'                => 2,
+                'channel_id'        => 1,
                 'locale'            => 'tr',
-                'name'              => 'Test',
+                'name'              => 'Trendyol',
                 'home_page_content' => '
                     <p>@include("shop::home.slider") @include("shop::home.featured-products") @include("shop::home.new-products")</p>
                         <div class="banner-container">
@@ -105,25 +125,57 @@ class ChannelTableSeeder extends Seeder
             ]
         ]);
 
-        DB::table('channel_currencies')->insert([[
+        DB::table('channel_currencies')->insert([
+            [
+                'channel_id'  => 1,
+                'currency_id' => 1,
+            ],
+            [
+                'channel_id'  => 1,
+                'currency_id' => 2,
+            ],
+            [
+                'channel_id'  => 3,
+                'currency_id' => 1,
+            ],
+            [
+                'channel_id'  => 3,
+                'currency_id' => 2,
+            ],
+            [
             'channel_id'  => 2,
-            'currency_id' => 3,
+            'currency_id' => 1,
         ],[
             'channel_id'  => 2,
-            'currency_id' => 4,
+            'currency_id' => 2,
         ]]);
 
-        DB::table('channel_locales')->insert([[
+        DB::table('channel_locales')->insert([
+            [
+                'channel_id' => 1,
+                'locale_id'  => 1,
+            ],
+            [
             'channel_id' => 2,
-            'locale_id'  => 6,
+            'locale_id'  => 1,
         ],[
-            'channel_id' => 2,
-            'locale_id'  => 7,
+            'channel_id' => 3,
+            'locale_id'  => 1,
         ]]);
 
         DB::table('channel_inventory_sources')->insert([
-            'channel_id'          => 2,
-            'inventory_source_id' => 1,
+            [
+                'channel_id'          => 1,
+                'inventory_source_id' => 1,
+            ],
+            [
+                'channel_id'          => 3,
+                'inventory_source_id' => 1,
+            ],
+            [
+                'channel_id'          => 2,
+                'inventory_source_id' => 1,
+            ]
         ]);
     }
 }

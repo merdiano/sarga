@@ -30,7 +30,7 @@ class Channels extends Controller
     }
 
     public function get($channel_id){
-        $this->categoryRepository->getVisibleCategoryTree(request()->input('parent_id'));
+        $this->categoryRepository->getCategoryTreeWithoutDescendant(request()->input('parent_id'));
     }
 
 }

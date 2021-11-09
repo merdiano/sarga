@@ -8,16 +8,27 @@ use Illuminate\Support\Facades\DB;
 class SLocalesTableSeeder extends Seeder
 {
     public function run(){
-        DB::table('locales')->insert([
+        DB::table('channels')->delete();
 
+        DB::table('locales')->delete();
+
+        DB::table('locales')->insert([
             [
-                'id'   => 6,
-                'code' => 'tm',
+                'id'   => 1,
+                'code' => 'tr',
+                'name' => 'Türkçe',
+            ], [
+                'id'   => 2,
+                'code' => 'TM',
                 'name' => 'Türkmençe',
             ], [
-                'id'   => 7,
+                'id'   => 3,
                 'code' => 'ru',
-                'name' => 'Rusça',
+                'name' => 'Russian',
+            ], [
+                'id'   => 4,
+                'code' => 'en',
+                'name' => 'English',
             ]]);
     }
 }

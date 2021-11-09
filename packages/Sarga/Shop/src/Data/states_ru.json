@@ -1,0 +1,26 @@
+[
+    {
+        "country_state_id":1,
+        "default_name":"Ашхабад"
+    },
+    {
+        "country_state_id":2,
+        "default_name":"Ахал"
+    },
+    {
+        "country_state_id":3,
+        "default_name":"Балкан"
+    },
+    {
+        "country_state_id":4,
+        "default_name":"Дашогуз"
+    },
+    {
+        "country_state_id":5,
+        "default_name":"Лебап"
+    },
+    {
+        "country_state_id":6,
+        "default_name":"Мары"
+    }
+]

@@ -2,6 +2,7 @@
 
 use Sarga\API\Http\Controllers\Categories;
 use Sarga\API\Http\Controllers\Channels;
+use Sarga\API\Http\Controllers\Products;
 use Webkul\API\Http\Controllers\Shop\ResourceController;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
 use Sarga\API\Http\Resources\Catalog\AttributeOption;
@@ -21,5 +22,9 @@ Route::group(['prefix' => 'api'], function ($router) {
             'resource' => AttributeOption::class,
         ]);
 
+        //Product routes
+        Route::get('products', [Products::class, 'index']);
+
+        Route::get('products/{id}', [Products::class, 'get']);
     });
 });

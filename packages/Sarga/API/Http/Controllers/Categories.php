@@ -2,11 +2,24 @@
 
 namespace Sarga\API\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Sarga\API\Http\Resources\Catalog\Category;
-use Webkul\API\Http\Controllers\Shop\CategoryController;
+use Sarga\Shop\Repositories\CategoryRepository;
 
-class Categories extends CategoryController
+
+class Categories extends Controller
 {
+    /**
+     * CategoryRepository object
+     *
+     * @var \Sarga\Shop\Repositories\CategoryRepository
+     */
+    protected $categoryRepository;
+
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
     public function index()
     {
         return Category::collection(

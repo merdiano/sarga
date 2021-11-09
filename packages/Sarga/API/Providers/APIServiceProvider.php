@@ -12,6 +12,8 @@ class APIServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
+        include __DIR__ . '/../Http/helpers.php';
+        
         $this->loadRoutesFrom(__DIR__.'/../Http/routes.php');
     }
 }
