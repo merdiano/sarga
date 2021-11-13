@@ -19,16 +19,12 @@ class SLocalesTableSeeder extends Seeder
                 'name' => 'Türkçe',
             ], [
                 'id'   => 2,
-                'code' => 'TM',
+                'code' => 'tm',
                 'name' => 'Türkmençe',
             ], [
                 'id'   => 3,
                 'code' => 'ru',
                 'name' => 'Russian',
-            ], [
-                'id'   => 4,
-                'code' => 'en',
-                'name' => 'English',
             ]]);
     }
 }
