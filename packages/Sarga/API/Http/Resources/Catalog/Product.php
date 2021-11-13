@@ -57,7 +57,10 @@ class Product extends JsonResource
                 $product->type !== 'grouped',
                 $product->getTypeInstance()->showQuantityBox()
             ),
-
+            /*
+             * attributes
+             */
+            'specifications' => app('Webkul\Product\Helpers\View')->getAdditionalData($product),
             /* product's extra information */
             $this->merge($this->allProductExtraInfo()),
 
