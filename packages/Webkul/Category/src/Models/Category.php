@@ -41,6 +41,8 @@ class Category extends TranslatableModel implements CategoryContract
         'display_mode',
         'parent_id',
         'additional',
+        'trendyol_url',
+        'lcw_url'
     ];
 
     protected $with = ['translations'];

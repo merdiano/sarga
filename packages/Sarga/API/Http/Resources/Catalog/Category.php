@@ -20,6 +20,8 @@ class Category extends JsonResource
 //            'code'               => $this->code,
             'name'               => $this->name,
             'slug'               => $this->slug,
+            'trendyol_url'               => $this->trendyol_url,
+            'lcw_url'               => $this->lcw_url,
             'display_mode'       => $this->display_mode,
 //            'description'        => $this->description,
 //            'status'             => $this->status,

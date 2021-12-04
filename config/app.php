@@ -282,6 +282,8 @@ return [
         Webkul\SocialLogin\Providers\SocialLoginServiceProvider::class,
         Webkul\DebugBar\Providers\DebugBarServiceProvider::class,
         Webkul\Marketing\Providers\MarketingServiceProvider::class,
+        Webkul\Marketplace\Providers\MarketplaceServiceProvider::class,
+
         Sarga\Shop\Providers\ShopServiceProvider::class,
         Sarga\API\Providers\APIServiceProvider::class,
         Sarga\Admin\Providers\AdminServiceProvider::class

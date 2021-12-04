@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use Sarga\API\Http\Controllers\Categories;
 use Sarga\API\Http\Controllers\Channels;
+use Sarga\API\Http\Controllers\Vendors;
 use Sarga\API\Http\Controllers\Products;
 use Webkul\API\Http\Controllers\Shop\ResourceController;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
@@ -11,6 +13,9 @@ Route::group(['prefix' => 'api'], function ($router) {
     Route::group(['middleware' => ['locale', 'currency']], function ($router) {
         //Channel routes
         Route::get('channels',[Channels::class, 'index']);
+
+        //Vendors
+        Route::get('vendors',[Vendors::class,'index']);
 
         //category routes
         Route::get('descendant-categories', [Categories::class, 'index']);
