@@ -2,6 +2,7 @@
 
 namespace Sarga\API\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Webkul\API\Http\Controllers\Shop\ProductController;
 use Sarga\API\Http\Resources\Catalog\Product as ProductResource;
 use Webkul\Core\Contracts\Validations\Slug;
@@ -31,21 +32,6 @@ class Products extends ProductController
         return new ProductResource(
             $this->productRepository->findOrFail($id)
         );
-    }
-
-    public function store(){
-        if(!request()->has('product')){
-            return response()->json(['status' =>false, 'message' => 'bad request'],405);
-        }
-
-        $product = json_decode(request('product'),true);
-
-        $this->validate($product, [
-            'sku'                 => ['required', 'unique:products,sku', new Slug],
-        ]);
-
-//        $product = $this->productRepository->create(request()-
-        return $product;
     }
 
 

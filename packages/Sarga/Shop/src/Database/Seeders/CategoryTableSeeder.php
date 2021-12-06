@@ -30,6 +30,8 @@ class CategoryTableSeeder extends Seeder
                 '_lft'       => '1',
                 '_rgt'       => '14',
                 'parent_id'  => NULL,
+                'trendyol_url' => NULL,
+                'lcw_url' => NULL,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Sarga\API\Http\Controllers\Categories;
 use Sarga\API\Http\Controllers\Channels;
+use Sarga\API\Http\Controllers\Scraper;
 use Sarga\API\Http\Controllers\Vendors;
 use Sarga\API\Http\Controllers\Products;
 use Webkul\API\Http\Controllers\Shop\ResourceController;
@@ -31,5 +32,9 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::get('products', [Products::class, 'index']);
 
         Route::get('products/{id}', [Products::class, 'get']);
+    });
+
+    Route::group(['prefix' => 'scrap','middleware' =>['scrap']], function ($router){
+        Route::put('upload',[Scraper::class,'bulk_upload']);
     });
 });
