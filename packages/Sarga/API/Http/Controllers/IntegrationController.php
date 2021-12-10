@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Storage;
 use Webkul\API\Http\Controllers\Shop\Controller;
 use Webkul\Core\Contracts\Validations\Slug;
 
-class Awtomtizasia extends Controller
+class IntegrationController extends Controller
 {
     public function store(){
         if(!request()->has('product')){
@@ -25,8 +25,13 @@ class Awtomtizasia extends Controller
 
     public function bulk_upload(){
 
-        $content = json_decode(request()->getContent());
+        $products = json_decode(request()->getContent());
         Storage::put('scrap/products' . time() . '.txt', request()->getContent());
+
+        foreach ($products as $product){
+
+
+        }
 
     }
 }
