@@ -36,5 +36,6 @@ Route::group(['prefix' => 'api'], function ($router) {
 
     Route::group(['prefix' => 'scrap','middleware' =>['scrap']], function ($router){
         Route::put('upload',[IntegrationController::class,'bulk_upload']);
+        Route::put('create',[IntegrationController::class,'create']);
     });
 });

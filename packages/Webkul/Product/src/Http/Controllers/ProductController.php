@@ -4,6 +4,7 @@ namespace Webkul\Product\Http\Controllers;
 
 use Exception;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Webkul\Attribute\Repositories\AttributeFamilyRepository;
 use Webkul\Category\Repositories\CategoryRepository;
@@ -183,6 +184,7 @@ class ProductController extends Controller
             'sku'                 => ['required', 'unique:products,sku', new Slug],
         ]);
 
+        Log::info(request());
         $product = $this->productRepository->create(request()->all());
 
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Product']));
