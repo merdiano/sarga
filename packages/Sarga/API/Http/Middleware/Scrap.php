@@ -18,7 +18,7 @@ class Scrap
     public function handle($request, Closure $next)
     {
         if(!$request->hasHeader('Authorization') || $request->header('Authorization') != '0a358dd1-2b07-4cdf-9d9a-a68dac6bb5fc') {
-            return response()->json(['message'=>"Unauthorized request"],401);
+            return response()->json(['errors'=>"Unauthorized request"],401);
         }
 
         return $next($request);

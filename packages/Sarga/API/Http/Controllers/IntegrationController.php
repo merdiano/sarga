@@ -1,22 +1,20 @@
 <?php
 
 namespace Sarga\API\Http\Controllers;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Webkul\API\Http\Controllers\Shop\Controller;
-use Webkul\Attribute\Repositories\AttributeFamilyRepository;
 use Webkul\Core\Contracts\Validations\Slug;
-use Webkul\Product\Repositories\ProductRepository;
+use Sarga\API\Repositories\ProductRepository;
 
 class IntegrationController extends Controller
 {
     protected $productRepository;
-    protected $attributeFamilyRepository;
 
-    public function __construct(ProductRepository $productRepository, AttributeFamilyRepository $attributeFamilyRepository)
+    public function __construct(ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
-        $this->attributeFamilyRepository = $attributeFamilyRepository;
     }
 
     public function store(){
@@ -49,11 +47,15 @@ class IntegrationController extends Controller
 
     public function create(){
 
-        $data = json_decode(request()->getContent(),true);
+        try {
+            $data = json_decode(request()->getContent(),true);
+        }
+        catch (\Exception $e){
+            return response()->json(['errors'=>$e->getMessage()],400);
+        }
 
         $validation = Validator::make($data, [
-            'type'                => 'required',
-            'category' => 'required',
+//            'category' => 'required',
             'sku'                 => ['required', 'unique:products,sku', new Slug],
             'images' => 'required',
             'name' => 'required',
@@ -62,28 +64,11 @@ class IntegrationController extends Controller
         ]);
 
         if ($validation->fails()) {
-            return response()->json($validation->getMessageBag()->all());
+            return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 
-        $product['sku'] = $data['sku'];
-
-        //todo test here add some attributes,families
-        $product['attribute_family_id'] = $this->getAttributeFamily(array_keys($data['attributes']));
-
-        $product['super_attributes']= [];
-
-        $product['type'] = ($data->color_variants != null || $data->size_variants != null) ? 'configurable':'simple';
-
-        //$this->productRepository->create($product);
+        return $this->productRepository->create($data);
 
     }
 
-    //find attribute family
-    private function getAttributeFamily($attrubetCodes){
-        if($attrubetCodes)
-            return $this->attributeFamilyRepository->whereHas('custom_attributes',function ($query) use ($attrubetCodes){
-                $query->whereIn('attributes.code',  $attrubetCodes);
-            },'=',count($attrubetCodes))->first()->id ?? 1;
-        return 1; //default attribute family
-    }
 }

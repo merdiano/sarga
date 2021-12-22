@@ -184,7 +184,6 @@ class ProductController extends Controller
             'sku'                 => ['required', 'unique:products,sku', new Slug],
         ]);
 
-        Log::info(request());
         $product = $this->productRepository->create(request()->all());
 
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Product']));

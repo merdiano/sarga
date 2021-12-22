@@ -53,24 +53,24 @@ class Product extends JsonResource
 
             'is_wishlisted'          => $this->wishlistHelper->getWishlistProduct($product) ? true : false,
             'is_item_in_cart'        => \Cart::hasProduct($product),
-            'show_quantity_changer'  => $this->when(
-                $product->type !== 'grouped',
-                $product->getTypeInstance()->showQuantityBox()
-            ),
+//            'show_quantity_changer'  => $this->when(
+//                $product->type !== 'grouped',
+//                $product->getTypeInstance()->showQuantityBox()
+//            ),
             /*
              * attributes
              */
-            'specifications' => app('Webkul\Product\Helpers\View')->getAdditionalData($product),
+//            'specifications' => app('Webkul\Product\Helpers\View')->getAdditionalData($product),
             /* product's extra information */
-            $this->merge($this->allProductExtraInfo()),
+//            $this->merge($this->allProductExtraInfo()),
 
             /* special price cases */
             $this->merge($this->specialPriceInfo()),
 
             /* super attributes */
-            $this->mergeWhen($productTypeInstance->isComposite(), [
-                'super_attributes' => Attribute::collection($product->super_attributes),
-            ]),
+//            $this->mergeWhen($productTypeInstance->isComposite(), [
+//                'super_attributes' => Attribute::collection($product->super_attributes),
+//            ]),
         ];
     }
 

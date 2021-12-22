@@ -27,16 +27,16 @@ class ProductVariant extends JsonResource
             'converted_price'  => core()->convertPrice($productTypeInstance->getMinimalPrice()),
             "color"            => $this->color,
             "size"=>$this->size,
-            "brand"=>$this->brand,
+//            "brand"=>$this->brand,
 
             "special_price"=> $this->special_price,
             "special_price_from"=>$this->special_price_from,
-              "special_price_to"=>$this->special_price_to,
-              "length"=>$this->length,
-              "width"=>$this->width,
-              "height"=>$this->height,
-              "weight"=>$this->weight,
-              "quantity" => $this->inventories->sum('qty')
+            "special_price_to"=>$this->special_price_to,
+//              "length"=>$this->length,
+//              "width"=>$this->width,
+//              "height"=>$this->height,
+//              "weight"=>$this->weight,
+//              "quantity" => $this->inventories->sum('qty')
         ];
     }
 
