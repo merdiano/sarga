@@ -21,6 +21,7 @@ class Vendor extends JsonResource
             'shop_title' => $this->shop_title,
             'logo'       => $this->logo_url,
             'banner'     => $this->banner_url,
+            'brand_id'   => $this->brand_attribute_id,
             'categories' => SellerCategory::collection($this->categories),
         ];
     }

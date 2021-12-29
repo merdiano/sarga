@@ -10,14 +10,14 @@ Route::group(['middleware' => ['web', 'admin', 'admin_locale'], 'prefix' => conf
      * Channels routes.
      */
 
-    Route::get('/channels/create', [ChannelController::class, 'create'])->defaults('_config', [
-        'view' => 'sarga_admin::settings.channels.create',
-    ])->name('admin.channels.create');
-
-
-    Route::get('/channels/edit/{id}', [ChannelController::class, 'edit'])->defaults('_config', [
-        'view' => 'sarga_admin::settings.channels.edit',
-    ])->name('admin.channels.edit');
+//    Route::get('/channels/create', [ChannelController::class, 'create'])->defaults('_config', [
+//        'view' => 'sarga_admin::settings.channels.create',
+//    ])->name('admin.channels.create');
+//
+//
+//    Route::get('/channels/edit/{id}', [ChannelController::class, 'edit'])->defaults('_config', [
+//        'view' => 'sarga_admin::settings.channels.edit',
+//    ])->name('admin.channels.edit');
 
     /*
      * Scrap

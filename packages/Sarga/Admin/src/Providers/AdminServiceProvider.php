@@ -20,6 +20,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'sarga_admin');
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
         $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'sarga');
+        $this->app->register(EventServiceProvider::class);
     }
 
     public function register()
