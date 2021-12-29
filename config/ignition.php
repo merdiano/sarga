@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'theme' => env('IGNITION_THEME', 'dark'),
+    'theme' => env('IGNITION_THEME', 'light'),
 
     /*
     |--------------------------------------------------------------------------

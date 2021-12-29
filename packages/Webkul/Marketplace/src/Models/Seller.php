@@ -82,4 +82,8 @@ class Seller extends Model implements SellerContract
     {
         return $this->hasMany(OrderProxy::modelClass(), 'marketplace_seller_id');
     }
+
+    public function categories(){
+        return $this->hasMany(SellerCategoryProxy::modelClass(),'seller_id');
+    }
 }

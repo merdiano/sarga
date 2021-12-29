@@ -3,37 +3,60 @@
 namespace Webkul\Sales\Repositories;
 
 use Illuminate\Container\Container as App;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\DB;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Sales\Contracts\Invoice;
-use Webkul\Sales\Generators\InvoiceSequencer;
-
+use Webkul\Marketplace\Repositories\OrderRepository as SellerOrderRepository;
+use Webkul\Marketplace\Repositories\SellerRepository;
+use Webkul\Marketplace\Repositories\ProductRepository as MpProductRepository;
 class InvoiceRepository extends Repository
 {
     /**
-     * Order repository instance.
+     * OrderRepository object
      *
      * @var \Webkul\Sales\Repositories\OrderRepository
      */
     protected $orderRepository;
 
+     /**
+     * SellerRepository object
+     *
+     * @var mixed
+     */
+    protected $sellerRepository;
+
+
     /**
-     * Order's item repository instance.
+     * MpProductRepository object
+     *
+     * @var mixed
+     */
+    protected $mpProductRepository;
+
+    /**
+     * SellerOrderRepository object
+     *
+     * @var \Webkul\Marketplace\Repositories\OrderRepository as SellerOrderRepository
+     */
+    protected $sellerOrderRepository;
+
+    /**
+     * OrderItemRepository object
      *
      * @var \Webkul\Sales\Repositories\OrderItemRepository
      */
     protected $orderItemRepository;
 
     /**
-     * Invoice's item repository instance.
+     * InvoiceItemRepository object
      *
      * @var \Webkul\Sales\Repositories\InvoiceItemRepository
      */
     protected $invoiceItemRepository;
 
     /**
-     * Downloadable link purchased repository instance.
+     * DownloadableLinkPurchasedRepository object
      *
      * @var \Webkul\Sales\Repositories\DownloadableLinkPurchasedRepository
      */
@@ -53,8 +76,12 @@ class InvoiceRepository extends Repository
         OrderItemRepository $orderItemRepository,
         InvoiceItemRepository $invoiceItemRepository,
         DownloadableLinkPurchasedRepository $downloadableLinkPurchasedRepository,
+        SellerOrderRepository $sellerOrderRepository,
+        SellerRepository $sellerRepository,
+        MpProductRepository $mpProductRepository,
         App $app
-    ) {
+    )
+    {
         $this->orderRepository = $orderRepository;
 
         $this->orderItemRepository = $orderItemRepository;
@@ -65,30 +92,36 @@ class InvoiceRepository extends Repository
 
         $this->downloadableLinkPurchasedRepository = $downloadableLinkPurchasedRepository;
 
+        $this->sellerOrderRepository = $sellerOrderRepository;
+
+        $this->sellerRepository = $sellerRepository;
+
+        $this->mpProductRepository = $mpProductRepository;
+
         parent::__construct($app);
     }
 
     /**
-     * Specify model class name.
+     * Specify Model class name
      *
      * @return string
      */
-    public function model()
+
+    function model()
     {
         return Invoice::class;
     }
 
     /**
-     * Create invoice.
-     *
      * @param  array  $data
-     * @param  string $invoiceState
-     * @param  string $orderState
      * @return \Webkul\Sales\Contracts\Invoice
      */
-    public function create(array $data, $invoiceState = null, $orderState = null)
+    public function create(array $data)
     {
+
         DB::beginTransaction();
+
+
 
         try {
             Event::dispatch('sales.invoice.save.before', $data);
@@ -97,17 +130,10 @@ class InvoiceRepository extends Repository
 
             $totalQty = array_sum($data['invoice']['items']);
 
-            if (isset($invoiceState)) {
-                $state = $invoiceState;
-            } else {
-                $state = "paid";
-            }
-
             $invoice = $this->model->create([
-                'increment_id'          => $this->generateIncrementId(),
                 'order_id'              => $order->id,
                 'total_qty'             => $totalQty,
-                'state'                 => $state,
+                'state'                 => 'paid',
                 'base_currency_code'    => $order->base_currency_code,
                 'channel_currency_code' => $order->channel_currency_code,
                 'order_currency_code'   => $order->order_currency_code,
@@ -135,10 +161,10 @@ class InvoiceRepository extends Repository
                     'base_price'           => $orderItem->base_price,
                     'total'                => $orderItem->price * $qty,
                     'base_total'           => $orderItem->base_price * $qty,
-                    'tax_amount'           => (($orderItem->tax_amount / $orderItem->qty_ordered) * $qty),
-                    'base_tax_amount'      => (($orderItem->base_tax_amount / $orderItem->qty_ordered) * $qty),
-                    'discount_amount'      => (($orderItem->discount_amount / $orderItem->qty_ordered) * $qty),
-                    'base_discount_amount' => (($orderItem->base_discount_amount / $orderItem->qty_ordered) * $qty),
+                    'tax_amount'           => ( ($orderItem->tax_amount / $orderItem->qty_ordered) * $qty ),
+                    'base_tax_amount'      => ( ($orderItem->base_tax_amount / $orderItem->qty_ordered) * $qty ),
+                    'discount_amount'      => ( ($orderItem->discount_amount / $orderItem->qty_ordered) * $qty ),
+                    'base_discount_amount' => ( ($orderItem->base_discount_amount / $orderItem->qty_ordered) * $qty ),
                     'product_id'           => $orderItem->product_id,
                     'product_type'         => $orderItem->product_type,
                     'additional'           => $orderItem->additional,
@@ -147,8 +173,8 @@ class InvoiceRepository extends Repository
                 if ($orderItem->getTypeInstance()->isComposite()) {
                     foreach ($orderItem->children as $childOrderItem) {
                         $finalQty = $childOrderItem->qty_ordered
-                            ? ($childOrderItem->qty_ordered / $orderItem->qty_ordered) * $qty
-                            : $orderItem->qty_ordered;
+                                    ? ($childOrderItem->qty_ordered / $orderItem->qty_ordered) * $qty
+                                    : $orderItem->qty_ordered;
 
                         $this->invoiceItemRepository->create([
                             'invoice_id'           => $invoice->id,
@@ -170,8 +196,7 @@ class InvoiceRepository extends Repository
                             'additional'           => $childOrderItem->additional,
                         ]);
 
-                        if (
-                            $childOrderItem->product
+                        if ($childOrderItem->product
                             && ! $childOrderItem->getTypeInstance()->isStockable()
                             && $childOrderItem->getTypeInstance()->showQuantityBox()
                         ) {
@@ -185,8 +210,7 @@ class InvoiceRepository extends Repository
 
                         $this->orderItemRepository->collectTotals($childOrderItem);
                     }
-                } elseif (
-                    $orderItem->product
+                } elseif ($orderItem->product
                     && ! $orderItem->getTypeInstance()->isStockable()
                     && $orderItem->getTypeInstance()->showQuantityBox()
                 ) {
@@ -207,11 +231,7 @@ class InvoiceRepository extends Repository
 
             $this->orderRepository->collectTotals($order);
 
-            if (isset($orderState)) {
-                $this->orderRepository->updateOrderStatus($order, $orderState);
-            } else {
-                $this->orderRepository->updateOrderStatus($order);
-            }
+            $this->orderRepository->updateOrderStatus($order);
 
             Event::dispatch('sales.invoice.save.after', $invoice);
         } catch (\Exception $e) {
@@ -226,23 +246,12 @@ class InvoiceRepository extends Repository
     }
 
     /**
-     * Generate increment id.
-     *
-     * @return int
-     */
-    public function generateIncrementId()
-    {
-        return app(InvoiceSequencer::class)->resolveGeneratorClass();
-    }
-
-    /**
-     * Collect totals.
-     *
-     * @param  \Webkul\Sales\Models\Invoice  $invoice
-     * @return \Webkul\Sales\Models\Invoice
+     * @param  \Webkul\Sales\Contracts\Invoice  $invoice
+     * @return \Webkul\Sales\Contracts\Invoice
      */
     public function collectTotals($invoice)
     {
+
         $invoice->sub_total = $invoice->base_sub_total = 0;
         $invoice->tax_amount = $invoice->base_tax_amount = 0;
         $invoice->discount_amount = $invoice->base_discount_amount = 0;
@@ -261,13 +270,54 @@ class InvoiceRepository extends Repository
         $invoice->shipping_amount = $invoice->order->shipping_amount;
         $invoice->base_shipping_amount = $invoice->order->base_shipping_amount;
 
+        $mpProduct = $this->mpProductRepository->findOneWhere(['product_id' => $invoiceItem->product_id, 'price' => $invoiceItem->price]);
+
+        $seller = null;
+
+        if ($mpProduct) {
+            $seller = $mpProduct->seller;
+        }
+
+        if($seller) {
+
+            $shipping = $this->sellerOrderRepository->where('order_id',$invoice->order->id)
+            ->where('marketplace_seller_id',$seller->id)
+            ->first();
+
+            if($shipping->shipping_amount) {
+
+                $invoice->shipping_amount = $shipping->shipping_amount;
+                $invoice->base_shipping_amount = $shipping->shipping_amount;
+
+            }
+
+        }
+
         $invoice->discount_amount += $invoice->order->shipping_discount_amount;
         $invoice->base_discount_amount += $invoice->order->base_shipping_discount_amount;
 
         if ($invoice->order->shipping_amount) {
+
             foreach ($invoice->order->invoices as $prevInvoice) {
+
                 if ((float) $prevInvoice->shipping_amount) {
-                    $invoice->shipping_amount = $invoice->base_shipping_amount = 0;
+
+                    if($seller) {
+
+                        $shipping = $this->sellerOrderRepository->where('order_id',$invoice->order->id)
+                        ->where('marketplace_seller_id',$seller->id)
+                        ->first();
+
+                        if($shipping->shipping_amount) {
+
+                            $invoice->shipping_amount = $shipping->shipping_amount;
+
+                        }
+
+                    } else {
+                        $invoice->shipping_amount = $invoice->base_shipping_amount = 0;
+                    }
+
                 }
 
                 if ($prevInvoice->id != $invoice->id) {
@@ -283,17 +333,5 @@ class InvoiceRepository extends Repository
         $invoice->save();
 
         return $invoice;
-    }
-
-    /**
-     * @param \Webkul\Sales\Contracts\Invoice $invoice
-     * @return void
-     */
-    public function updateState($invoice, $status)
-    {
-        $invoice->state = $status;
-        $invoice->save();
-
-        return true;
     }
 }

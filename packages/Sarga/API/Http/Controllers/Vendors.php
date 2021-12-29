@@ -18,9 +18,10 @@ class Vendors extends Controller
 
     public function index()
     {
-        $vendors = $this->vendorRepository->select('marketplace_sellers.id','url','logo','banner','shop_title','categories')
+        $vendors = $this->vendorRepository->select('marketplace_sellers.id','url','logo','banner','shop_title')
             ->where('is_approved',true)
-            ->leftJoin('seller_categories','marketplace_sellers.id','=','seller_categories.seller_id')
+            ->with(['categories:seller_id,type,categories'])
+//            ->leftJoin('seller_categories','marketplace_sellers.id','=','seller_categories.seller_id')
             ->get();
 
         return Vendor::collection($vendors);

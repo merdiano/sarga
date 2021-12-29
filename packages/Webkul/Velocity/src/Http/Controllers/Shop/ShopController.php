@@ -3,13 +3,14 @@
 namespace Webkul\Velocity\Http\Controllers\Shop;
 
 use Illuminate\Http\Request;
-use Webkul\Product\Facades\ProductImage;
 use Webkul\Velocity\Http\Shop\Controllers;
 use Webkul\Checkout\Contracts\Cart as CartModel;
 use Cart;
 
+
 class ShopController extends Controller
 {
+
     /**
      * Index to handle the view loaded with the search results
      *
@@ -29,14 +30,14 @@ class ShopController extends Controller
         if ($product) {
             $productReviewHelper = app('Webkul\Product\Helpers\Review');
 
-            $galleryImages = ProductImage::getProductBaseImage($product);
+            $galleryImages = productimage()->getProductBaseImage($product);
 
             $response = [
                 'status'  => true,
                 'details' => [
                     'name'         => $product->name,
                     'urlKey'       => $product->url_key,
-                    'priceHTML'    => view('shop::products.price', ['product' => $product])->render(),
+                    'priceHTML'    => $product->getTypeInstance()->getPriceHtml(),
                     'totalReviews' => $productReviewHelper->getTotalReviews($product),
                     'rating'       => ceil($productReviewHelper->getAverageRating($product)),
                     'image'        => $galleryImages['small_image_url'],
@@ -62,16 +63,18 @@ class ShopController extends Controller
         if (! $slug) {
             abort(404);
         }
-        
+
+        $unApprovedProductId = $this->mpProductRepository->findWhere(['is_approved' => 0, 'is_owner' => 1])->pluck('product_id');
+
         switch ($slug) {
             case 'new-products':
             case 'featured-products':
                 $count = request()->get('count');
 
                 if ($slug == "new-products") {
-                    $products = $this->velocityProductRepository->getNewProducts($count);
+                    $products = $this->velocityProductRepository->getNewProducts($count)->whereNotIn('product_id', $unApprovedProductId);;
                 } else if ($slug == "featured-products") {
-                    $products = $this->velocityProductRepository->getFeaturedProducts($count);
+                    $products = $this->velocityProductRepository->getFeaturedProducts($count)->whereNotIn('product_id', $unApprovedProductId);;
                 }
 
                 $response = [
@@ -84,9 +87,7 @@ class ShopController extends Controller
                                 return $this->velocityHelper->formatProduct($product);
                             }
                         }
-                    })->reject(function ($product) {
-                        return is_null($product);
-                    })->values(),
+                    }),
                 ];
 
                 break;
@@ -178,7 +179,6 @@ class ShopController extends Controller
             'name'               => $category->name,
             'children'           => $formattedChildCategory,
             'category_icon_path' => $category->category_icon_path,
-            'image'              => $category->image
         ];
     }
 
@@ -198,25 +198,10 @@ class ShopController extends Controller
     public function getItemsCount()
     {
         if ($customer = auth()->guard('customer')->user()) {
-
-            if (! core()->getConfigData('catalog.products.homepage.out_of_stock_items')) {
-                $wishlistItemsCount = $this->wishlistRepository->getModel()
-                    ->leftJoin('products as ps', 'wishlist.product_id', '=', 'ps.id')
-                    ->leftJoin('product_inventories as pv', 'ps.id', '=', 'pv.product_id')
-                    ->where(function ($qb) {
-                        $qb
-                            ->WhereIn('ps.type', ['configurable', 'grouped', 'downloadable', 'bundle', 'booking'])
-                            ->orwhereIn('ps.type', ['simple', 'virtual'])->where('pv.qty' , '>' , 0);
-                    })
-                    ->where('wishlist.customer_id' , $customer->id)
-                    ->where('wishlist.channel_id'  , core()->getCurrentChannel()->id)
-                    ->count('wishlist.id');
-            } else {
-                $wishlistItemsCount = $this->wishlistRepository->count([
-                    'customer_id' => $customer->id,
-                    'channel_id'  => core()->getCurrentChannel()->id,
-                ]);
-            }
+            $wishlistItemsCount = $this->wishlistRepository->count([
+                'customer_id' => $customer->id,
+                'channel_id'  => core()->getCurrentChannel()->id,
+            ]);
 
             $comparedItemsCount = $this->compareProductsRepository->count([
                 'customer_id' => $customer->id,
@@ -258,36 +243,26 @@ class ShopController extends Controller
         ]);
     }
 
-    /**
-     * This method will fetch products from category.
-     *
-     * @param  int  $categoryId
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function getCategoryProducts($categoryId)
     {
-        /* fetch category details */
-        $categoryDetails = $this->categoryRepository->find($categoryId);
+        $products = $this->productRepository->getAll($categoryId);
 
-        /* if category not found then return empty response */
-        if (! $categoryDetails) {
-            return response()->json([
-                'products' => [],
-                'paginationHTML' => ''
-            ]);
+        $productItems = $products->items();
+        $productsArray = $products->toArray();
+
+        if ($productItems) {
+            $formattedProducts = [];
+
+            foreach ($productItems as $product) {
+                array_push($formattedProducts, $this->velocityHelper->formatProduct($product));
+            }
+
+            $productsArray['data'] = $formattedProducts;
         }
 
-        /* fetching products */
-        $products = $this->productRepository->getAll($categoryId);
-        $products->withPath($categoryDetails->slug);
-
-        /* sending response */
-        return response()->json([
-            'products' => collect($products->items())->map(function ($product) {
-                return $this->velocityHelper->formatProduct($product);
-            }),
-            'paginationHTML' => $products->appends(request()->input())->links()->toHtml()
+        return response()->json($response ?? [
+            'products'       => $productsArray['data'],
+            'paginationHTML' => $products->appends(request()->input())->links()->toHtml(),
         ]);
     }
 }

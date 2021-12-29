@@ -13,6 +13,7 @@ use Webkul\Customer\Repositories\WishlistRepository;
 use Webkul\Category\Repositories\CategoryRepository;
 use Webkul\Velocity\Repositories\Product\ProductRepository as VelocityProductRepository;
 use Webkul\Velocity\Repositories\VelocityCustomerCompareProductRepository as CustomerCompareProductRepository;
+use Webkul\Marketplace\Repositories\ProductRepository as MpProductRepository;
 
 class Controller extends BaseController
 {
@@ -74,6 +75,8 @@ class Controller extends BaseController
      */
     protected $compareProductsRepository;
 
+    protected $mpProductRepository;
+
 
     /**
      * Create a new controller instance.
@@ -94,7 +97,8 @@ class Controller extends BaseController
         WishlistRepository $wishlistRepository,
         CategoryRepository $categoryRepository,
         VelocityProductRepository $velocityProductRepository,
-        CustomerCompareProductRepository $compareProductsRepository
+        CustomerCompareProductRepository $compareProductsRepository,
+        MpProductRepository $mpProductRepository
     ) {
         $this->_config = request('_config');
 
@@ -111,5 +115,7 @@ class Controller extends BaseController
         $this->velocityProductRepository = $velocityProductRepository;
 
         $this->compareProductsRepository = $compareProductsRepository;
+
+        $this->mpProductRepository = $mpProductRepository;
     }
 }
