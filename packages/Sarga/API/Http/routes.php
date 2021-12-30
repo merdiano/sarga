@@ -6,9 +6,11 @@ use Sarga\API\Http\Controllers\Channels;
 use Sarga\API\Http\Controllers\IntegrationController;
 use Sarga\API\Http\Controllers\Vendors;
 use Sarga\API\Http\Controllers\Products;
+use Sarga\Shop\Repositories\CategoryRepository;
 use Webkul\API\Http\Controllers\Shop\ResourceController;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
 use Sarga\API\Http\Resources\Catalog\AttributeOption;
+use Sarga\API\Http\Resources\Catalog\Category;
 
 Route::group(['prefix' => 'api'], function ($router) {
     Route::group(['middleware' => ['locale', 'currency']], function ($router) {
@@ -19,9 +21,13 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::get('vendors',[Vendors::class,'index']);
 
         //category routes
-        Route::get('descendant-categories', [Categories::class, 'index']);
+        Route::get('descendant-categories', [Categories::class, 'index'])->name('api.descendant-categories');
         Route::get('category-brands/{id}', [Categories::class, 'brands']);
 
+        Route::get('categories', [ResourceController::class, 'index'])->defaults('_config', [
+            'repository' => CategoryRepository::class,
+            'resource' => Category::class,
+        ])->name('api.categories');
         //attributes by code
         Route::get('attribute-options', [ResourceController::class, 'index'])->defaults('_config', [
             'repository' => AttributeOptionRepository::class,

@@ -17,6 +17,7 @@ class Category extends JsonResource
     {
         return [
             'id'                 => $this->id,
+            'parent_id'          => $this->parent_id,
 //            'code'               => $this->code,
             'name'               => $this->name,
             'slug'               => $this->slug,
@@ -32,7 +33,13 @@ class Category extends JsonResource
 //            'additional'         => is_array($this->resource->additional)
 //                ? $this->resource->additional
 //                : json_decode($this->resource->additional, true),
-            'children'           => Category::collection($this->children)
+            $this->mergeWhen($this->showChildren(), [
+                'children' => Category::collection($this->children),
+            ])
         ];
+    }
+
+    private function showChildren(){
+        return request()->route()->getName() === 'api.descendant-categories';
     }
 }
