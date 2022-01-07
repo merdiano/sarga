@@ -24,20 +24,44 @@ class ProductVariant extends JsonResource
             'parent_id'        => $this->parent_id,
             'additional'       => $this->additional,
             'price'            => $productTypeInstance->getMinimalPrice(),
-            'converted_price'  => core()->convertPrice($productTypeInstance->getMinimalPrice()),
+            'converted_price'  => core()->currency($productTypeInstance->getMinimalPrice()),
             "color"            => $this->color,
-            "size"=>$this->size,
+            "size"             => $this->size,
 //            "brand"=>$this->brand,
 
-            "special_price"=> $this->special_price,
-            "special_price_from"=>$this->special_price_from,
-            "special_price_to"=>$this->special_price_to,
-//              "length"=>$this->length,
-//              "width"=>$this->width,
-//              "height"=>$this->height,
-//              "weight"=>$this->weight,
-//              "quantity" => $this->inventories->sum('qty')
+            /* special price cases */
+            $this->merge($this->specialPriceInfo()),
+
         ];
     }
+    /**
+     * Get special price information.
+     *
+     * @return array
+     */
+    private function specialPriceInfo()
+    {
+        $product = $this->product ? $this->product : $this;
 
+        $productTypeInstance = $product->getTypeInstance();
+
+        return [
+            'special_price'          => $this->when(
+                $productTypeInstance->haveSpecialPrice(),
+                core()->convertPrice($productTypeInstance->getSpecialPrice())
+            ),
+            'formatted_special_price' => $this->when(
+                $productTypeInstance->haveSpecialPrice(),
+                core()->currency($productTypeInstance->getSpecialPrice())
+            ),
+            'regular_price'          => $this->when(
+                $productTypeInstance->haveSpecialPrice(),
+                data_get($productTypeInstance->getProductPrices(), 'regular_price.price')
+            ),
+            'formatted_regular_price' => $this->when(
+                $productTypeInstance->haveSpecialPrice(),
+                data_get($productTypeInstance->getProductPrices(), 'regular_price.formated_price')
+            ),
+        ];
+    }
 }
