@@ -61,7 +61,10 @@ class ProductRepository extends WProductRepository
             $product['super_attributes']['color'] = $this->attributeValues($colors,'color');
         }
 
-        $productCreated = $this->model()->create($product);
+        $productCreated = $this->getModel()->create($product);
+        //product flat
+        //attributes
+        //images
 
         if($product['type'] != 'configurable'){
             Event::dispatch('catalog.product.create.after', $product);

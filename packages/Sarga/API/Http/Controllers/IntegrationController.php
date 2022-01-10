@@ -56,7 +56,7 @@ class IntegrationController extends Controller
 
         $validation = Validator::make($data, [
 //            'category' => 'required',
-            'sku'                 => ['required', 'unique:products,sku', new Slug],
+            'product_code' => ['required', 'unique:products,sku', new Slug],
             'images' => 'required',
             'name' => 'required',
             'url_key'=> 'required',
@@ -67,7 +67,9 @@ class IntegrationController extends Controller
             return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 
+        //todo return product id
         return $this->productRepository->create($data);
+
 
     }
 

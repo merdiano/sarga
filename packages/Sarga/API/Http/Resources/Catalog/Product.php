@@ -66,9 +66,9 @@ class Product extends JsonResource
             $this->merge($this->specialPriceInfo()),
 
             /* super attributes */
-//            $this->mergeWhen($productTypeInstance->isComposite(), [
-//                'super_attributes' => Attribute::collection($product->super_attributes),
-//            ]),
+            $this->mergeWhen($productTypeInstance->isComposite(), [
+                'super_attributes' => Attribute::collection($product->super_attributes),
+            ]),
         ];
     }
 
