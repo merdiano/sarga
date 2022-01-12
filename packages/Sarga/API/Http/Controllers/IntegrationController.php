@@ -73,7 +73,6 @@ class IntegrationController extends Controller
             return response()->json(['success'=>false]);
         }
 
-
     }
 
 }

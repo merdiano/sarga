@@ -67,6 +67,7 @@ class ProductRepository extends WProductRepository
                 'name' => $data['name'],
                 'weight' => 0,
                 'status' => 1,
+                'visible_individually' => 1,
                 'url_key' => $parentProduct->sku,
                 'short_description' => $data['url_key'],
                 'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
@@ -104,6 +105,7 @@ class ProductRepository extends WProductRepository
                                     'price' => $sizeVariant['price'],
                                     'weight' => 0,
                                     'status' => 1,
+                                    'visible_individually' => 1,
                                     'url_key' => $variant->sku,
                                     'short_description' => $colorVariant['url_key'],
                                     'description' => $description
@@ -119,6 +121,7 @@ class ProductRepository extends WProductRepository
                                 'price' => Arr::get($colorVariant, 'price.discountedPrice.value'),
                                 'weight' => 0,
                                 'status' => 1,
+                                'visible_individually' => 1,
                                 'url_key' => $variant->sku,
                                 'short_description' => $colorVariant['url_key'],
                                 'description' => $description
@@ -139,6 +142,7 @@ class ProductRepository extends WProductRepository
                             'price' => $sizeVariant['price'],
                             'weight' => 0,
                             'status' => 1,
+                            'visible_individually' => 1,
                             'url_key' => $variant->sku,
                             'short_description' => $data['url_key'],
                             'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
