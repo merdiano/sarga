@@ -67,8 +67,11 @@ class IntegrationController extends Controller
             return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 
-        //todo return product id
-        return $this->productRepository->create($data);
+        if($id = $this->productRepository->create($data)){
+            return response()->json(['success'=>true,'product_id' => $id]);
+        }else{
+            return response()->json(['success'=>false]);
+        }
 
 
     }

@@ -13,6 +13,7 @@ class ProductImage extends Model implements ProductImageContract
     protected $fillable = [
         'path',
         'product_id',
+        'type'
     ];
 
     /**
@@ -36,6 +37,9 @@ class ProductImage extends Model implements ProductImageContract
      */
     public function getUrlAttribute()
     {
+        if($this->type == 'cdn'){
+            return env('TRENDYOL_CDN','https://cdn.dsmcdn.com').$this->path;
+        }
         return $this->url();
     }
 
