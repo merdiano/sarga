@@ -27,4 +27,10 @@ class Categories extends Controller
         );
     }
 
+    public function details($id){
+        $children = $this->categoryRepository->findWhere(['parent_id' => $id, 'status'=>1])
+            ->orderBy('position', 'ASC');
+
+    }
+
 }

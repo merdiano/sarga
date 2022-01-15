@@ -22,7 +22,7 @@ Route::group(['prefix' => 'api'], function ($router) {
 
         //category routes
         Route::get('descendant-categories', [Categories::class, 'index'])->name('api.descendant-categories');
-        Route::get('category-brands/{id}', [Categories::class, 'brands']);
+        Route::get('category-details/{id}', [Categories::class, 'details']);
 
         Route::get('categories', [ResourceController::class, 'index'])->defaults('_config', [
             'repository' => CategoryRepository::class,
