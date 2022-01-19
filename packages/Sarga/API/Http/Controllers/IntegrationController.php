@@ -7,13 +7,16 @@ use Illuminate\Support\Facades\Validator;
 use Webkul\API\Http\Controllers\Shop\Controller;
 use Webkul\Core\Contracts\Validations\Slug;
 use Sarga\API\Repositories\ProductRepository;
+use Webkul\Marketplace\Repositories\SellerRepository;
 
 class IntegrationController extends Controller
 {
     protected $productRepository;
+    protected $sellerRepository;
 
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, SellerRepository $sellerRepository)
     {
+        $this->sellerRepository = $sellerRepository;
         $this->productRepository = $productRepository;
     }
 
@@ -55,20 +58,25 @@ class IntegrationController extends Controller
         }
 
         $validation = Validator::make($data, [
-//            'category' => 'required',
+            'category' => 'required',
             'product_code' => ['required', 'unique:products,sku', new Slug],
             'images' => 'required',
             'name' => 'required',
             'url_key'=> 'required',
             'price' => 'required',
+            'vendor' => 'required'
         ]);
 
         if ($validation->fails()) {
             return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 
-        if($id = $this->productRepository->create($data)){
-            return response()->json(['success'=>true,'product_id' => $id]);
+        if($product = $this->productRepository->create($data)){
+            $seller = $this->sellerRepository->findOneByField('shop_title',$data['vendor']);
+            if($seller){
+                $sellerProduct = $this->productRepository->createSellerProduct($product, $seller->id);
+            }
+            return response()->json(['success'=>true,'product_id' => $product->id]);
         }else{
             return response()->json(['success'=>false]);
         }

@@ -34,6 +34,19 @@ class Products extends ProductController
         );
     }
 
+    /**
+     * Returns product's additional information.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function configurableConfig($id)
+    {
 
+        $product = $this->productRepository->findOrFail($id);
+        return response()->json([
+            'data' => app('Webkul\Product\Helpers\ConfigurableOption')->getConfigurationConfig($this->productRepository->findOrFail($id)),
+        ]);
+    }
 
 }

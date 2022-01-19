@@ -162,7 +162,7 @@ class ProductRepository extends WProductRepository
             Event::dispatch('catalog.product.create.after', $parentProduct);
 
             DB::commit();
-            return $parentProduct->id;
+            return $parentProduct;
         }
         catch(\Exception $ex){
             DB::rollBack();
@@ -172,6 +172,34 @@ class ProductRepository extends WProductRepository
 
     }
 
+    public function createSellerProduct($product, $seller_id){
+        Event::dispatch('marketplace.catalog.product.create.before');
+
+
+        $sellerProduct = parent::create([
+            'marketplace_seller_id' => $seller_id,
+            'is_approved'           => 1,
+            'condition'             => 'new',
+            'description'           => 'scraped product',
+            'is_owner'              => 1,
+            'product_id'            => $product->id,
+        ]);
+
+        foreach ($sellerProduct->product->variants as $baseVariant) {
+            parent::create([
+                'parent_id' => $sellerProduct->id,
+                'product_id' => $baseVariant->id,
+                'is_owner' => 1,
+                'marketplace_seller_id' => $seller_id,
+                'is_approved' => 1,
+                'condition'             => 'new',
+            ]);
+        }
+
+        Event::dispatch('marketplace.catalog.product.create.after', $sellerProduct);
+
+        return $sellerProduct;
+    }
     private function assignImages($product,$images){
         foreach($images as $image){
             $this->imageRepository->create([
