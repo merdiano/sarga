@@ -18,7 +18,9 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::get('channels',[Channels::class, 'index']);
 
         //Vendors
-        Route::get('vendors',[Vendors::class,'index']);
+        Route::get('vendors',[Vendors::class,'index'])->name('api.vendors');
+        Route::get('vendor/products/{vendor_id}',[Vendors::class,'vendor_products'])->name('api.vendor.products');
+
 
         //category routes
         Route::get('descendant-categories', [Categories::class, 'index'])->name('api.descendant-categories');

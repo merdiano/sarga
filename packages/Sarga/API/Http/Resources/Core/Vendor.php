@@ -3,7 +3,7 @@
 namespace Sarga\API\Http\Resources\Core;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Sarga\API\Http\Resources\Catalog\SellerCategory;
+use Sarga\API\Http\Resources\Catalog\Category;
 
 class Vendor extends JsonResource
 {
@@ -22,7 +22,7 @@ class Vendor extends JsonResource
             'logo'       => $this->logo_url,
             'banner'     => $this->banner_url,
             'brand_id'   => $this->brand_attribute_id,
-            'categories' => SellerCategory::collection($this->categories),
+            'categories' => Category::collection($this->main_categories),
         ];
     }
 }

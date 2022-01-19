@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Webkul\Attribute\Repositories\AttributeGroupRepository;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Product\Models\ProductAttributeValueProxy;
 use Webkul\Product\Repositories\ProductAttributeValueRepository;
 use Webkul\Product\Repositories\ProductFlatRepository;
 use Webkul\Product\Repositories\ProductImageRepository;
@@ -170,6 +171,112 @@ class ProductRepository extends WProductRepository
             return false;
         }
 
+    }
+
+    /**
+     * Returns the all products of the seller
+     *
+     * @param integer $seller
+     * @return Collection
+     */
+    public function findAllBySeller($seller_id,$category_id = null)
+    {
+        $params = request()->input();
+
+        $results = app('Webkul\Product\Repositories\ProductFlatRepository')->scopeQuery(function($query) use($seller_id, $params,$category_id) {
+            $channel = request()->get('channel') ?: (core()->getCurrentChannelCode() ?: core()->getDefaultChannelCode());
+
+            $locale = request()->get('locale') ?: app()->getLocale();
+
+            $qb = $query->distinct()
+                ->addSelect('product_flat.*')
+                ->join('product_flat as variants', 'product_flat.id', '=', DB::raw('COALESCE(' . DB::getTablePrefix() . 'variants.parent_id, ' . DB::getTablePrefix() . 'variants.id)'))
+                ->leftJoin('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
+                ->leftJoin('product_attribute_values', 'product_attribute_values.product_id', '=', 'variants.product_id')
+                ->addSelect(DB::raw('IF( product_flat.special_price_from IS NOT NULL
+                            AND product_flat.special_price_to IS NOT NULL , IF( NOW( ) >= product_flat.special_price_from
+                            AND NOW( ) <= product_flat.special_price_to, IF( product_flat.special_price IS NULL OR product_flat.special_price = 0 , product_flat.price, LEAST( product_flat.special_price, product_flat.price ) ) , product_flat.price ) , IF( product_flat.special_price_from IS NULL , IF( product_flat.special_price_to IS NULL , IF( product_flat.special_price IS NULL OR product_flat.special_price = 0 , product_flat.price, LEAST( product_flat.special_price, product_flat.price ) ) , IF( NOW( ) <= product_flat.special_price_to, IF( product_flat.special_price IS NULL OR product_flat.special_price = 0 , product_flat.price, LEAST( product_flat.special_price, product_flat.price ) ) , product_flat.price ) ) , IF( product_flat.special_price_to IS NULL , IF( NOW( ) >= product_flat.special_price_from, IF( product_flat.special_price IS NULL OR product_flat.special_price = 0 , product_flat.price, LEAST( product_flat.special_price, product_flat.price ) ) , product_flat.price ) , product_flat.price ) ) ) AS price1'))
+
+                ->leftJoin('products', 'product_flat.product_id', '=', 'products.id')
+                ->leftJoin('marketplace_products', 'product_flat.product_id', '=', 'marketplace_products.product_id')
+                ->where('product_flat.visible_individually', 1)
+                ->where('product_flat.status', 1)
+                ->where('product_flat.channel', $channel)
+                ->where('product_flat.locale', $locale)
+                ->whereNotNull('product_flat.url_key')
+                ->where('marketplace_products.marketplace_seller_id', $seller_id)
+                ->where('marketplace_products.is_approved', 1);
+
+            $qb->addSelect(DB::raw('(CASE WHEN marketplace_products.is_owner = 0 THEN marketplace_products.price ELSE product_flat.price END) AS price2'));
+
+            if ($category_id) {
+                $qb->whereIn('product_categories.category_id', explode(',', $category_id));
+            }
+
+            $queryBuilder = $qb->leftJoin('product_flat as flat_variants', function($qb) use($channel, $locale) {
+                $qb->on('product_flat.id', '=', 'flat_variants.parent_id')
+                    ->where('flat_variants.channel', $channel)
+                    ->where('flat_variants.locale', $locale);
+            });
+
+            if (isset($params['sort'])) {
+                $attribute = $this->attributeRepository->findOneByField('code', $params['sort']);
+
+                if ($params['sort'] == 'price') {
+                    $qb->orderBy($attribute->code, $params['order']);
+                } else {
+                    $qb->orderBy($params['sort'] == 'created_at' ? 'product_flat.created_at' : $attribute->code, $params['order']);
+                }
+            }
+
+            //brand attribute added code
+            $attributeFilters = $this->attributeRepository
+                ->getProductDefaultAttributes(array_keys(
+                    request()->input()
+                ));
+
+            if (count($attributeFilters) > 0) {
+                $qb = $qb->where(function ($filterQuery) use ($attributeFilters) {
+
+                    foreach ($attributeFilters as $attribute) {
+                        $filterQuery->orWhere(function ($attributeQuery) use ($attribute) {
+
+                            $column = DB::getTablePrefix() . 'product_attribute_values.' . ProductAttributeValueProxy::modelClass()::$attributeTypeFields[$attribute->type];
+
+                            $filterInputValues = explode(',', request()->get($attribute->code));
+
+                            # define the attribute we are filtering
+                            $attributeQuery = $attributeQuery->where('product_attribute_values.attribute_id', $attribute->id);
+
+                            # apply the filter values to the correct column for this type of attribute.
+                            if ($attribute->type != 'price') {
+
+                                $attributeQuery->where(function ($attributeValueQuery) use ($column, $filterInputValues) {
+                                    foreach ($filterInputValues as $filterValue) {
+                                        if (! is_numeric($filterValue)) {
+                                            continue;
+                                        }
+                                        $attributeValueQuery->orWhereRaw("find_in_set(?, {$column})", [$filterValue]);
+                                    }
+                                });
+
+                            } else {
+                                $attributeQuery->where($column, '>=', core()->convertToBasePrice(current($filterInputValues)))
+                                    ->where($column, '<=', core()->convertToBasePrice(end($filterInputValues)));
+                            }
+                        });
+                    }
+
+                });
+
+                $qb->groupBy('variants.id');
+                $qb->havingRaw('COUNT(*) = ' . count($attributeFilters));
+            }
+
+            return $qb->groupBy('product_flat.id');
+        })->paginate(isset($params['limit']) ? $params['limit'] : 9);
+
+        return $results;
     }
 
     public function createSellerProduct($product, $seller_id){
