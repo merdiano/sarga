@@ -23,6 +23,7 @@ class ProductRepository extends WProductRepository
     protected $productFlatRepository;
     protected $attributeValueRepository;
     protected $imageRepository;
+    protected $vendorProductRepository;
     protected $fillableTypes = ['sku', 'name', 'url_key', 'short_description', 'description', 'price', 'weight', 'status'];
     public function __construct(AttributeRepository $attributeRepository,
                                 App $app,
@@ -30,6 +31,7 @@ class ProductRepository extends WProductRepository
                                 ProductFlatRepository $productFlatRepository,
                                 ProductAttributeValueRepository $productAttributeValueRepository,
                                 ProductImageRepository $productImageRepository,
+                                VendorProductRepository $vendorProductRepository,
                                 AttributeOptionRepository $optionRepository)
     {
         $this->attributeGroupRepo = $attributeGroupRepo;
@@ -37,6 +39,7 @@ class ProductRepository extends WProductRepository
         $this->attributeValueRepository = $productAttributeValueRepository;
         $this->productFlatRepository = $productFlatRepository;
         $this->imageRepository = $productImageRepository;
+        $this->vendorProductRepository = $vendorProductRepository;
         parent::__construct($attributeRepository, $app);
     }
 
@@ -282,8 +285,7 @@ class ProductRepository extends WProductRepository
     public function createSellerProduct($product, $seller_id){
         Event::dispatch('marketplace.catalog.product.create.before');
 
-
-        $sellerProduct = parent::create([
+        $sellerProduct = $this->vendorProductRepository->create([
             'marketplace_seller_id' => $seller_id,
             'is_approved'           => 1,
             'condition'             => 'new',
@@ -293,7 +295,7 @@ class ProductRepository extends WProductRepository
         ]);
 
         foreach ($sellerProduct->product->variants as $baseVariant) {
-            parent::create([
+            $this->vendorProductRepository->create([
                 'parent_id' => $sellerProduct->id,
                 'product_id' => $baseVariant->id,
                 'is_owner' => 1,
