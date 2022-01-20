@@ -72,7 +72,7 @@ class IntegrationController extends Controller
         ]);
 
         if ($validation->fails()) {
-            Log::info('validation fails');
+            Log::info($validation->getMessageBag()->all());
             return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 
