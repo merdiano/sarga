@@ -72,6 +72,7 @@ class IntegrationController extends Controller
         ]);
 
         if ($validation->fails()) {
+            Log::info('validation fails');
             return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 
@@ -82,6 +83,7 @@ class IntegrationController extends Controller
             }
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }else{
+            Log::info('creat product fails fails');
             return response()->json(['success'=>false]);
         }
 
