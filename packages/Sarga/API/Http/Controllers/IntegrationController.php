@@ -63,7 +63,7 @@ class IntegrationController extends Controller
 
         $validation = Validator::make($data, [
             'categories' => 'required',
-            'sku' => ['required', 'unique:products,sku', new Slug],
+//            'sku' => ['required', 'unique:products,sku', new Slug],
             'images' => 'required',
             'name' => 'required',
             'url_key'=> 'required',
@@ -76,7 +76,10 @@ class IntegrationController extends Controller
             return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 
-        if($product = $this->productRepository->create($data)){
+        if($product = $this->productRepository->findOneByField('sku',$data['sku'])){
+            return response()->json(['success'=>true,'product_id' => $product->id]);
+        }
+        elseif($product = $this->productRepository->create($data)){
             $seller = $this->sellerRepository->findOneByField('shop_title',$data['vendor']);
             if($seller){
                 $sellerProduct = $this->productRepository->createSellerProduct($product, $seller->id);
