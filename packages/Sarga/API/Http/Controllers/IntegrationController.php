@@ -56,6 +56,7 @@ class IntegrationController extends Controller
         }
         catch (\Exception $e){
             return response()->json(['errors'=>$e->getMessage()],400);
+            Log::error($ex);
         }
 
         Log::info($data);
