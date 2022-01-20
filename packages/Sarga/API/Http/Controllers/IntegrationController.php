@@ -59,7 +59,7 @@ class IntegrationController extends Controller
             Log::error($ex);
         }
 
-        Log::info($data);
+        Log::info(request()->getContent());
 
         $validation = Validator::make($data, [
             'category' => 'required',
