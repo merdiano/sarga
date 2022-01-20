@@ -2,6 +2,7 @@
 
 namespace Sarga\API\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Webkul\API\Http\Controllers\Shop\Controller;
@@ -56,6 +57,8 @@ class IntegrationController extends Controller
         catch (\Exception $e){
             return response()->json(['errors'=>$e->getMessage()],400);
         }
+
+        Log::info($data);
 
         $validation = Validator::make($data, [
             'category' => 'required',
