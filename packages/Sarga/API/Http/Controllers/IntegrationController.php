@@ -63,7 +63,7 @@ class IntegrationController extends Controller
 
         $validation = Validator::make($data, [
             'categories' => 'required',
-            'product_code' => ['required', 'unique:products,sku', new Slug],
+            'sku' => ['required', 'unique:products,sku', new Slug],
             'images' => 'required',
             'name' => 'required',
             'url_key'=> 'required',
