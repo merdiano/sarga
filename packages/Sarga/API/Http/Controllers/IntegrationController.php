@@ -55,8 +55,8 @@ class IntegrationController extends Controller
             $data = json_decode(request()->getContent(),true);
         }
         catch (\Exception $e){
+            Log::error($e);
             return response()->json(['errors'=>$e->getMessage()],400);
-            Log::error($ex);
         }
 
         Log::info(request()->getContent());
@@ -84,7 +84,7 @@ class IntegrationController extends Controller
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }else{
             Log::info('creat product fails fails');
-            return response()->json(['success'=>false]);
+            return response()->json(['success'=>false],400);
         }
 
     }
