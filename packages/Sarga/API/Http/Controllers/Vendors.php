@@ -43,6 +43,7 @@ class Vendors extends Controller
                     ->with(['children'=> function($q){
                         $q->orderBy('position','asc');
                     }])
+                    ->orderBy('position','asc')
                     ->get();
 
             }

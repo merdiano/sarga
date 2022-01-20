@@ -22,7 +22,10 @@ class Vendor extends JsonResource
             'logo'       => $this->logo_url,
             'banner'     => $this->banner_url,
             'brand_id'   => $this->brand_attribute_id,
-            'categories' => Category::collection($this->main_categories),
+            $this->mergeWhen(!empty($this->main_categories),[
+                'categories' => Category::collection($this->main_categories)
+            ])
+
         ];
     }
 }
