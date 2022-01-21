@@ -86,6 +86,7 @@ class ProductRepository extends WProductRepository
             }
 
             if ($product['type'] == 'configurable') {
+                $variant = null;
                 //create variants color
                 if (!empty($data['color_variants'])) {
                     $attribute = $this->attributeRepository->findOneByField('code', 'color');
@@ -94,8 +95,6 @@ class ProductRepository extends WProductRepository
                     foreach ($data['color_variants'] as $colorVariant) {
                         $description = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $colorVariant['descriptions']));
                         if (!empty($colorVariant['size_variants'])) {
-
-
                             foreach ($colorVariant['size_variants'] as $sizeVariant) {
                                 $variant = $this->createVariant($parentProduct, $colorVariant['product_number'] . $sizeVariant['size']);
 
@@ -157,7 +156,9 @@ class ProductRepository extends WProductRepository
                         $this->assignAttributes($variant, $attributes);
                     }
                 }
-                //todo default_variant_id
+                if($variant){
+                    $parentProduct->getTypeInstance()->setDefaultVariantId($variant->id);
+                }
             }
 
             // assign attributes
@@ -455,6 +456,22 @@ class ProductRepository extends WProductRepository
             ->first();
 
         return $grups;
+
+    }
+
+    public function variants($product_id){
+        $channel = core()->getRequestedChannelCode();
+
+        $locale = core()->getRequestedLocaleCode();
+
+        return $this->productFlatRepository->where('product_flat.channel', $channel)
+            ->where('product_flat.locale', $locale)
+//            ->whereNotNull('product_flat.url_key')
+            ->where('product_flat.status',1)
+            ->whereIn('product_flat.product_id',function($query) use($product_id) {
+                $query->select('products.id')->from('products')->where('products.parent_id',$product_id);
+            })
+            ->get();
 
     }
 }

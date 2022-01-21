@@ -40,6 +40,7 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::get('products', [Products::class, 'index']);
 
         Route::get('products/{id}', [Products::class, 'get']);
+        Route::get('products/{id}/variants', [Products::class, 'variants']);
     });
 
     Route::group(['prefix' => 'scrap','middleware' =>['scrap']], function ($router){
