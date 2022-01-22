@@ -71,17 +71,16 @@ class Products extends ProductController
                 $last_attribute = $product->super_attributes->last();
                 foreach($variants as $variant){
                     $option = $this->attributeOptionRepository->getOptionLabel($variant->{$attribute_main->code});
+                    $variant->{$last_attribute->code} = $this->attributeOptionRepository->getOptionLabel($variant->{$last_attribute->code});
                     $data[$attribute_main->code][$option]['image'] = $variant->images;
-                    $data[$attribute_main->code][$option][$last_attribute->code][] = $variant->makeHidden(['type','created']);
+                    $data[$attribute_main->code][$option][$last_attribute->code][] = $variant;
                 }
             }
             else{
                 foreach($variants as $variant){
                     $option = $this->attributeOptionRepository->getOptionLabel($variant->{$attribute_main->code});
 
-                    $data[$attribute_main->code][$option] = [
-                        'product' => ProductResource::make($variant)
-                    ];
+                    $data[$attribute_main->code][$option] = $variant;
                 }
             }
 
