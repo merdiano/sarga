@@ -62,7 +62,7 @@ class Products extends ProductController
 
             $variants = $product->variants->makeHidden(['type','created_at','updated_at','parent_id','attribute_family_id',
                 'additional','new','featured','visible_individually','status','guest_checkout','meta_title','meta_keywords',
-                'product_flats','attribute_family','short_description','sku']);
+                'product_flats','attribute_family','short_description','sku','brand']);
             $data = array();
 
             $attribute_main = $product->super_attributes->first();
@@ -73,9 +73,10 @@ class Products extends ProductController
                 foreach($variants as $variant){
                     $option = $this->attributeOptionRepository->getOptionLabel($variant->{$attribute_main->code});
                     $last_option = $this->attributeOptionRepository->getOptionLabel($variant->{$last_attribute->code});
-                    $variant->{$last_attribute->code} = $last_option;
+                    $product = $variant->toArray();
+                    $product[$last_attribute->code] = $last_option;
                     $data[$attribute_main->code][$option]['image'] = $variant->images;
-                    $data[$attribute_main->code][$option][$last_attribute->code][] = $variant;
+                    $data[$attribute_main->code][$option][$last_attribute->code][] = $product;
                 }
             }
             else{
