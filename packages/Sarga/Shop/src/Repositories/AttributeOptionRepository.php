@@ -14,6 +14,6 @@ class AttributeOptionRepository extends WAttributeOptionRepository
             $options[$option_id] = $this->find($option_id);
         }
 
-        return $options[$option_id]->label;
+        return $options[$option_id]->label ?? $options[$option_id]->admin_name;
     }
 }
