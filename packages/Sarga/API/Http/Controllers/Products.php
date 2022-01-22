@@ -73,17 +73,15 @@ class Products extends ProductController
                 foreach($variants as $variant){
                     $option = $this->attributeOptionRepository->getOptionLabel($variant->{$attribute_main->code});
                     $last_option = $this->attributeOptionRepository->getOptionLabel($variant->{$last_attribute->code});
-                    $product = $variant->toArray();
-                    $product[$last_attribute->code] = $last_option;
                     $data[$attribute_main->code][$option]['image'] = $variant->images;
-                    $data[$attribute_main->code][$option][$last_attribute->code][] = $product;
+                    $data[$attribute_main->code][$option][$last_attribute->code][$last_option] =  ProductResource::make($variant);
                 }
             }
             else{
                 foreach($variants as $variant){
                     $option = $this->attributeOptionRepository->getOptionLabel($variant->{$attribute_main->code});
 
-                    $data[$attribute_main->code][$option] = $variant;
+                    $data[$attribute_main->code][$option] = ProductResource::make($variant);
                 }
             }
 
