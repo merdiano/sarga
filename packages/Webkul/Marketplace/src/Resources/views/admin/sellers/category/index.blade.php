@@ -19,8 +19,8 @@
 
         <div class="page-content">
 
-            @inject('sellerCategory', 'Webkul\Marketplace\DataGrids\Admin\SellerCategoryDataGrid')
-            {!! $sellerCategory->render() !!}
+{{--            @inject('sellerCategory', 'Webkul\Marketplace\DataGrids\Admin\SellerCategoryDataGrid')--}}
+{{--            {!! $sellerCategory->render() !!}--}}
 
         </div>
     </div>
