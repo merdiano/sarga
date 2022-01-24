@@ -100,6 +100,9 @@
                                     <option value="description_only">
                                         {{ __('admin::app.catalog.categories.description-only') }}
                                     </option>
+                                    <option value="promotion">
+                                        Promotion
+                                    </option>
                                 </select>
                                 <span class="control-error" v-if="errors.has('display_mode')">@{{ errors.first('display_mode') }}</span>
                             </div>
