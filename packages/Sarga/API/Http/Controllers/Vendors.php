@@ -34,26 +34,27 @@ class Vendors extends Controller
 //            ->leftJoin('seller_categories','marketplace_sellers.id','=','seller_categories.seller_id')
             ->get();
 
-//        foreach ($vendors as $vendor){
-//            if($vendor->categories && $mainCats = $vendor->categories->where('type','main')->first()){
-//                $cat_ids = json_decode($mainCats->categories,true);
-////                $vendor->test = Category::collection($this->categoryRepository->getVisibleCategoryTree($cat_ids[0]));
-//                $vendor->main_categories = $this->categoryRepository->whereIn('id',$cat_ids)
-//                    ->select('id','image','position','parent_id','display_mode','category_icon_path')
-//                    ->where('status',1)
-//                    ->with(['children'=> function($q){
-//                        $q->orderBy('position','asc');
-//                    }])
-//                    ->orderBy('position','asc')
-//                    ->get();
-//                if($vendor->main_categories->count()){
-//                    foreach($vendor->main_categories as $category){
-//                        $category->filters = app(ProductFlatRepository::class)->getProductsRelatedFilterableAttributes($category);
-//                    }
-//                }
-//
-//            }
-//        }
+        foreach ($vendors as $vendor){
+            if($vendor->categories && $mainCats = $vendor->categories->where('type','main')->first()){
+                $cat_ids = json_decode($mainCats->categories,true);
+//                $vendor->test = Category::collection($this->categoryRepository->getVisibleCategoryTree($cat_ids[0]));
+                $vendor->main_categories = $this->categoryRepository->whereIn('id',$cat_ids)
+                    ->select('id','image','position','parent_id','display_mode','category_icon_path')
+                    ->where('status',1)
+                    ->with(['children'=> function($q){
+                        $q->orderBy('position','asc');
+                    }])
+                    ->orderBy('position','asc')
+                    ->get();
+                if($vendor->main_categories->count()){
+                    foreach($vendor->main_categories as $category){
+                        $category->filters = app(ProductFlatRepository::class)->getProductsRelatedFilterableAttributes($category);
+                    }
+                }
+
+            }
+        }
+        return $vendors;
         return Vendor::collection($vendors);
     }
 
