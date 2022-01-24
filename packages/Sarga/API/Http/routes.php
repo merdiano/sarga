@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Sarga\API\Http\Controllers\Customers;
 use Sarga\API\Http\Controllers\Categories;
 use Sarga\API\Http\Controllers\Channels;
 use Sarga\API\Http\Controllers\IntegrationController;
@@ -47,4 +48,8 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::put('upload',[IntegrationController::class,'bulk_upload']);
         Route::put('create',[IntegrationController::class,'create']);
     });
+
+    Route::post('customer/register', [Customers::class, 'register']);
+    Route::post('customer/login', [Customers::class, 'login']);
+    Route::put('customer/profile', [Customers::class, 'update']);
 });
