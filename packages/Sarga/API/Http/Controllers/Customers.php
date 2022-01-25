@@ -8,10 +8,23 @@ use Illuminate\Support\Facades\Validator;
 use Webkul\API\Http\Controllers\Shop\SessionController;
 use Webkul\API\Http\Resources\Customer\Customer as CustomerResource;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
+use Webkul\Customer\Repositories\CustomerRepository;
 
 
 class Customers extends SessionController
 {
+    public function __construct(CustomerRepository $customerRepository)
+    {
+        $this->guard = request()->has('token') ? 'api' : 'customer';
+
+        auth()->setDefaultDriver($this->guard);
+
+        $this->middleware('auth:' . $this->guard, ['only' => ['get', 'update', 'destroy']]);
+
+        $this->_config = request('_config');
+
+        $this->customerRepository = $customerRepository;
+    }
 
     /**
      * Method to store user's sign up form data to DB.
@@ -20,9 +33,6 @@ class Customers extends SessionController
      */
     public function register(Request $request,CustomerGroupRepository $groupRepository)
     {
-        $request->validate([
-
-        ]);
 
         $validation = Validator::make($request->all(), [
             'first_name' => 'required|string',
@@ -76,10 +86,6 @@ class Customers extends SessionController
      */
     public function login(Request $request)
     {
-        $request->validate([
-            'phone'      => 'required|digits:8',
-            'password'   => 'required|min:6',
-        ]);
 
         $validation = Validator::make($request->all(), [
             'phone'      => 'required|digits:8',
@@ -119,7 +125,7 @@ class Customers extends SessionController
     {
         $customer = auth($this->guard)->user();
 
-        $this->validate(request(), [
+        $validation = Validator::make(request(), [
             'first_name'    => 'required',
             'last_name'     => 'required',
             'gender'        => 'in:Male,Female',
@@ -129,6 +135,10 @@ class Customers extends SessionController
             'password'      => 'min:6',
         ]);
 
+        if ($validation->fails()) {
+
+            return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
+        }
         $data = request()->only('first_name', 'last_name', 'gender', 'date_of_birth', 'email', 'password','phone');
 
         if (! isset($data['password']) || ! $data['password']) {
