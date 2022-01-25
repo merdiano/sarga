@@ -13,19 +13,6 @@ use Webkul\Customer\Repositories\CustomerRepository;
 
 class Customers extends SessionController
 {
-    public function __construct(CustomerRepository $customerRepository)
-    {
-        $this->guard = request()->has('token') ? 'api' : 'customer';
-
-        auth()->setDefaultDriver($this->guard);
-
-        $this->middleware('auth:' . $this->guard, ['only' => ['get', 'update', 'destroy']]);
-
-        $this->_config = request('_config');
-
-        $this->customerRepository = $customerRepository;
-    }
-
     /**
      * Method to store user's sign up form data to DB.
      *
@@ -121,11 +108,11 @@ class Customers extends SessionController
      *
      * @return \Illuminate\Http\Response
      */
-    public function update()
+    public function update(Request $request)
     {
         $customer = auth($this->guard)->user();
 
-        $validation = Validator::make(request(), [
+        $validation = Validator::make($request->all(), [
             'first_name'    => 'required',
             'last_name'     => 'required',
             'gender'        => 'in:Male,Female',
