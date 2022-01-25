@@ -49,7 +49,11 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::put('create',[IntegrationController::class,'create']);
     });
 
-    Route::post('customer/register', [Customers::class, 'register']);
-    Route::post('customer/login', [Customers::class, 'login']);
-    Route::put('customer/profile', [Customers::class, 'update']);
+    Route::group(['prefix' => 'customer'],function ($router){
+        Route::post('register', [Customers::class, 'register']);
+        Route::post('login', [Customers::class, 'login']);
+        Route::put('profile', [Customers::class, 'update']);
+    });
+
+
 });

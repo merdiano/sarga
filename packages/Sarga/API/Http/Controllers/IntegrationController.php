@@ -59,8 +59,6 @@ class IntegrationController extends Controller
             return response()->json(['errors'=>$e->getMessage()],400);
         }
 
-        Log::info(request()->getContent());
-
         $validation = Validator::make($data, [
             'categories' => 'required',
 //            'sku' => ['required', 'unique:products,sku', new Slug],
@@ -72,7 +70,7 @@ class IntegrationController extends Controller
         ]);
 
         if ($validation->fails()) {
-            Log::info($validation->getMessageBag()->all());
+
             return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 

@@ -4,26 +4,38 @@ namespace Sarga\API\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Validator;
 use Webkul\API\Http\Controllers\Shop\SessionController;
 use Webkul\API\Http\Resources\Customer\Customer as CustomerResource;
+use Webkul\Customer\Repositories\CustomerGroupRepository;
 
 
 class Customers extends SessionController
 {
+
     /**
      * Method to store user's sign up form data to DB.
      *
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request)
+    public function register(Request $request,CustomerGroupRepository $groupRepository)
     {
         $request->validate([
+
+        ]);
+
+        $validation = Validator::make($request->all(), [
             'first_name' => 'required|string',
             'last_name'  => 'required|string',
             'phone'      => 'required|digits:8|unique:customers,phone',
             'password'   => 'required|min:6',
             'gender'     => 'in:Male,Female'
         ]);
+
+        if ($validation->fails()) {
+
+            return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
+        }
 
         $data = [
             'first_name'  => $request->get('first_name'),
@@ -33,7 +45,7 @@ class Customers extends SessionController
             'channel_id'  => core()->getCurrentChannel()->id,
             'is_verified' => 1,
             'gender'      => $request->get('gender'),
-            'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id
+            'customer_group_id' => $groupRepository->findOneWhere(['code' => 'general'])->id
         ];
 
         Event::dispatch('customer.registration.before');
@@ -68,6 +80,16 @@ class Customers extends SessionController
             'phone'      => 'required|digits:8',
             'password'   => 'required|min:6',
         ]);
+
+        $validation = Validator::make($request->all(), [
+            'phone'      => 'required|digits:8',
+            'password'   => 'required|min:6',
+        ]);
+
+        if ($validation->fails()) {
+
+            return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
+        }
 
         $jwtToken = null;
 
