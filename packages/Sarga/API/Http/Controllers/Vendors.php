@@ -46,15 +46,15 @@ class Vendors extends Controller
                     }])
                     ->orderBy('position','asc')
                     ->get();
-                if($vendor->main_categories->count()){
-                    foreach($vendor->main_categories as $category){
-                        $category->filters = app(ProductFlatRepository::class)->getProductsRelatedFilterableAttributes($category);
-                    }
-                }
+//                if($vendor->main_categories->count()){
+//                    foreach($vendor->main_categories as $category){
+//                        $category->filters = app(ProductFlatRepository::class)->getProductsRelatedFilterableAttributes($category);
+//                    }
+//                }
 
             }
         }
-        return $vendors;
+//        return $vendors;
         return Vendor::collection($vendors);
     }
 

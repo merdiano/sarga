@@ -286,7 +286,8 @@ return [
 
         Sarga\Shop\Providers\ShopServiceProvider::class,
         Sarga\API\Providers\APIServiceProvider::class,
-        Sarga\Admin\Providers\AdminServiceProvider::class
+        Sarga\Admin\Providers\AdminServiceProvider::class,
+        Sarga\Brand\Providers\BrandServiceProvider::class,
     ],
 
     /*

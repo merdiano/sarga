@@ -108,7 +108,8 @@
             "Webkul\\Marketplace\\": "packages/Webkul/Marketplace/src",
             "Sarga\\Shop\\": "packages/Sarga/Shop/src",
             "Sarga\\API\\": "packages/Sarga/API",
-            "Sarga\\Admin\\": "packages/Sarga/Admin/src"
+            "Sarga\\Admin\\": "packages/Sarga/Admin/src",
+            "Sarga\\Brand\\": "packages/Sarga/Brand/src"
         }
     },
     "autoload-dev": {
