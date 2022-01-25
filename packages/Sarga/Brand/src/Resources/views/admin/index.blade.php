@@ -12,9 +12,14 @@
 
             <div class="page-action">
                 <a href="{{ route('admin.catalog.brand.create') }}" class="btn btn-lg btn-primary">
-                    {{ __('brand::app.create_brand') }}
+                    {{ __('brand::app.add_brand') }}
                 </a>
             </div>
+        </div>
+        <div class="page-content">
+
+{{--            {!! app('Sarga\Brand\DataGrids\BrandDataGrid')->render() !!}--}}
+
         </div>
     </div>
 @stop

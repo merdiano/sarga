@@ -26,6 +26,15 @@ class BrandController extends Controller
         return view($this->_config['view']);
     }
 
+    public function store(){
+        $this->validate(request(), [
+            'code'       => ['required', 'unique:brands,code', new \Webkul\Core\Contracts\Validations\Code],
+            'name' => 'required',
+        ]);
+
+        $data = request()->all();
+    }
+
     public function edit($id){
         $brand = $this->brandRepository->find($id);
         return view($this->_config['view'], compact('brand'));

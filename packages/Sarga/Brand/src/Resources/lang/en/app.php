@@ -2,5 +2,8 @@
 return [
     'brand' => 'Brand',
     'brands' => 'Brands',
-    'create_brand' => 'Create brand'
+    'add_brand' => 'Add Brand',
+    'save_brand' => 'Save Brand',
+    'code' => 'Brand Code',
+    'name' => 'Brand Name',
 ];
