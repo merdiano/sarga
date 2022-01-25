@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="content">
-        <form method="POST" action="{{ route('admin.catalog.brands.store') }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.catalog.brand.store') }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
         </form>
     </div>
 @stop

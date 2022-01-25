@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Sarga\Brand\Contracts\Brand as BrandContract;
+
 class Brand extends Model implements BrandContract
 {
     protected $fillable = [

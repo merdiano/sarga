@@ -11,32 +11,34 @@ Route::group(['middleware' => ['web', 'admin', 'admin_locale'], 'prefix' => conf
          * Categories routes.
          */
         Route::get('/brands', [BrandController::class, 'index'])->defaults('_config', [
-            'view' => 'admin::catalog.categories.index',
-        ])->name('admin.catalog.categories.index');
+            'view' => 'brand::admin.index',
+        ])->name('admin.catalog.brand.index');
 
         Route::get('/brands/create', [BrandController::class, 'create'])->defaults('_config', [
-            'view' => 'admin::catalog.categories.create',
-        ])->name('admin.catalog.categories.create');
+            'view' => 'brand::admin.create',
+        ])->name('admin.catalog.brand.create');
 
         Route::post('/brands/create', [BrandController::class, 'store'])->defaults('_config', [
-            'redirect' => 'admin.catalog.categories.index',
-        ])->name('admin.catalog.categories.store');
+            'redirect' => 'admin.catalog.brand.index',
+        ])->name('admin.catalog.brand.store');
 
         Route::get('/brands/edit/{id}', [BrandController::class, 'edit'])->defaults('_config', [
-            'view' => 'admin::catalog.categories.edit',
-        ])->name('admin.catalog.categories.edit');
+            'view' => 'brand::admin.edit',
+        ])->name('admin.catalog.brand.edit');
 
         Route::put('/brands/edit/{id}', [BrandController::class, 'update'])->defaults('_config', [
-            'redirect' => 'admin.catalog.categories.index',
-        ])->name('admin.catalog.categories.update');
+            'redirect' => 'admin.catalog.brand.index',
+        ])->name('admin.catalog.brand.update');
 
-        Route::post('/brands/delete/{id}', [BrandController::class, 'destroy'])->name('admin.catalog.categories.delete');
+        Route::post('/brands/delete/{id}', [BrandController::class, 'destroy'])
+            ->name('admin.catalog.brand.delete');
 
         Route::post('brands/massdelete', [BrandController::class, 'massDestroy'])->defaults('_config', [
-            'redirect' => 'admin.catalog.categories.index',
-        ])->name('admin.catalog.categories.massdelete');
+            'redirect' => 'admin.catalog.brand.index',
+        ])->name('admin.catalog.brand.massdelete');
 
-        Route::post('/brands/product/count', [BrandController::class, 'productCount'])->name('admin.catalog.categories.product.count');
+        Route::post('/brands/product/count', [BrandController::class, 'productCount'])
+            ->name('admin.catalog.brand.product.count');
     });
 });
 
