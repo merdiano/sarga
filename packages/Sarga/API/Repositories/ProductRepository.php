@@ -7,6 +7,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Sarga\Brand\Repositories\BrandRepository;
 use Webkul\Attribute\Repositories\AttributeGroupRepository;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
 use Webkul\Attribute\Repositories\AttributeRepository;
@@ -24,7 +26,10 @@ class ProductRepository extends WProductRepository
     protected $attributeValueRepository;
     protected $imageRepository;
     protected $vendorProductRepository;
+    protected $brandRepository;
+
     protected $fillableTypes = ['sku', 'name', 'url_key', 'short_description', 'description', 'price', 'weight', 'status'];
+
     public function __construct(AttributeRepository $attributeRepository,
                                 App $app,
                                 AttributeGroupRepository $attributeGroupRepo,
@@ -32,6 +37,7 @@ class ProductRepository extends WProductRepository
                                 ProductAttributeValueRepository $productAttributeValueRepository,
                                 ProductImageRepository $productImageRepository,
                                 VendorProductRepository $vendorProductRepository,
+                                BrandRepository $brandRepository,
                                 AttributeOptionRepository $optionRepository)
     {
         $this->attributeGroupRepo = $attributeGroupRepo;
@@ -40,6 +46,8 @@ class ProductRepository extends WProductRepository
         $this->productFlatRepository = $productFlatRepository;
         $this->imageRepository = $productImageRepository;
         $this->vendorProductRepository = $vendorProductRepository;
+        $this->brandRepository = $brandRepository;
+
         parent::__construct($attributeRepository, $app);
     }
 
@@ -83,6 +91,29 @@ class ProductRepository extends WProductRepository
 
             if(!empty($data['categories'])){
                 $parentProduct->categories()->attach($data['categories']);
+            }
+
+            if($data['vendor'] && $seller = $this->vendorRepository->findOneByField('shop_title',$data['vendor'])){
+                $this->createSellerProduct($product, $seller->id);
+            }
+
+            if(!empty($data['brand'])){
+                $brand = $this->brandRepository->firstOrCreate(['code' =>Str::slug($data['brand'])],[
+                    'name' =>$data['brand'],
+                    'status' =>1,
+                ]);
+
+                if($brand){
+                    $brand->products()->attach($parentProduct->id);
+
+                    if(!empty($data['categories'])){
+                        $brand->categories()->attach($data['categories']);
+                    }
+
+                    if($seller){
+                        $brand->sellers()->attach($seller->id);
+                    }
+                }
             }
 
             if ($product['type'] == 'configurable') {

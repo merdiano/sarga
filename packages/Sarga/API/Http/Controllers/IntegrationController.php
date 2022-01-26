@@ -78,10 +78,7 @@ class IntegrationController extends Controller
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }
         elseif($product = $this->productRepository->create($data)){
-            $seller = $this->sellerRepository->findOneByField('shop_title',$data['vendor']);
-            if($seller){
-                $sellerProduct = $this->productRepository->createSellerProduct($product, $seller->id);
-            }
+
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }else{
             Log::info('creat product fails fails');
