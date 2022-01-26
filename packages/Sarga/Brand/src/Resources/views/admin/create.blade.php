@@ -79,6 +79,37 @@
                             {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.description_images.controls.after') !!}
                         </div>
                     </accordian>
+                    <accordian :title="'{{ __('marketplace::app.admin.layouts.sellers') }}'" :active="true">
+                        <div slot="body">
+                                <div class="control-group" :class="[errors.has('sellers[]') ? 'has-error' : '']">
+                                    <label for="sellers" class="required">{{ __('marketplace::app.admin.layouts.sellers') }}</label>
+                                    <select class="control" name="sellers[]" v-validate="'required'" data-vv-as="&quot;{{ __('marketplace::app.admin.layouts.sellers') }}&quot;" multiple>
+
+                                        @foreach ($sellers as $seller)
+                                            <option value="{{ $seller->id }}" {{ old('sellers') && in_array($seller->id, old('sellers')) ? 'selected' : ''}}>
+                                                {{ $seller->shop_title}}
+                                            </option>
+                                        @endforeach
+
+                                    </select>
+                                    <span class="control-error" v-if="errors.has('sellers[]')">
+                                    @{{ errors.first('sellers[]') }}
+                                </span>
+                                </div>
+                        </div>
+                    </accordian>
+                    @if ($categories->count())
+
+                        <accordian :title="'{{ __('admin::app.catalog.products.categories') }}'" :active="false">
+                            <div slot="body">
+
+                                <tree-view behavior="normal" value-field="id" name-field="categories" input-type="checkbox" items='@json($categories)'
+                                            fallback-locale="{{ config('app.fallback_locale') }}">
+
+                                </tree-view>
+                            </div>
+                        </accordian>
+                    @endif
                 </div>
             </div>
         </form>

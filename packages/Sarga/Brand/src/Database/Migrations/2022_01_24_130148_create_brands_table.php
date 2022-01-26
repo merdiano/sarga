@@ -22,6 +22,27 @@ class CreateBrandsTable extends Migration
             $table->boolean('status')->default(0);
             $table->timestamps();
         });
+
+        Schema::create('category_brands',function (Blueprint $table) {
+            $table->integer('category_id')->unsigned();
+            $table->integer('brand_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+        });
+
+        Schema::create('product_brands',function (Blueprint $table) {
+            $table->integer('product_id')->unsigned();
+            $table->integer('brand_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+        });
+
+        Schema::create('seller_brands',function (Blueprint $table) {
+            $table->integer('seller_id')->unsigned();
+            $table->integer('brand_id')->unsigned();
+            $table->foreign('seller_id')->references('id')->on('marketplace_sellers')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+        });
     }
 
     /**
@@ -32,5 +53,8 @@ class CreateBrandsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('brands');
+        Schema::dropIfExists('category_brands');
+        Schema::dropIfExists('product_brands');
+        Schema::dropIfExists('seller_brands');
     }
 }

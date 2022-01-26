@@ -1,8 +1,12 @@
 <?php namespace Sarga\Brand\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 use Sarga\Brand\Contracts\Brand as BrandContract;
+use Webkul\Category\Models\CategoryProxy;
+use Webkul\Marketplace\Models\SellerProxy;
+use Webkul\Product\Models\ProductProxy;
 
 class Brand extends Model implements BrandContract
 {
@@ -31,5 +35,23 @@ class Brand extends Model implements BrandContract
     public function getImageUrlAttribute()
     {
         return $this->image_url();
+    }
+
+    /**
+     * The products that belong to the category.
+     */
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductProxy::modelClass(), 'product_brands');
+    }
+
+    public function sellers():BelongsToMany
+    {
+        return $this->belongsToMany(SellerProxy::modelClass(), 'seller_brands');
+    }
+
+    public function categories():BelongsToMany
+    {
+        return $this->belongsToMany(CategoryProxy::modelClass(), 'category_brands');
     }
 }

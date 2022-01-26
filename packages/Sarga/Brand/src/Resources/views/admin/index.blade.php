@@ -18,7 +18,7 @@
         </div>
         <div class="page-content">
 
-{{--            {!! app('Sarga\Brand\DataGrids\BrandDataGrid')->render() !!}--}}
+            {!! app('Sarga\Brand\DataGrids\BrandDataGrid')->render() !!}
 
         </div>
     </div>

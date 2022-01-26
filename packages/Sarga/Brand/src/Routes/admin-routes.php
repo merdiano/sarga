@@ -26,7 +26,7 @@ Route::group(['middleware' => ['web', 'admin', 'admin_locale'], 'prefix' => conf
             'view' => 'brand::admin.edit',
         ])->name('admin.catalog.brand.edit');
 
-        Route::put('/brands/edit/{id}', [BrandController::class, 'update'])->defaults('_config', [
+        Route::post('/brands/edit/{id}', [BrandController::class, 'update'])->defaults('_config', [
             'redirect' => 'admin.catalog.brand.index',
         ])->name('admin.catalog.brand.update');
 
