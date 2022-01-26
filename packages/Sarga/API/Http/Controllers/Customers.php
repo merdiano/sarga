@@ -108,7 +108,7 @@ class Customers extends SessionController
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function store(Request $request)
     {
         $customer = auth($this->guard)->user();
 
