@@ -73,4 +73,8 @@ class BrandRepository extends Repository
             $brand->save();
         }
     }
+
+    public function actives(){
+        return $this->findByField('status',1);
+    }
 }

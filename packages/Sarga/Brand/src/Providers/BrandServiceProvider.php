@@ -1,6 +1,8 @@
 <?php namespace Sarga\Brand\Providers;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+
 class BrandServiceProvider extends ServiceProvider
 {
     /**
@@ -14,6 +16,8 @@ class BrandServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../Routes/brand-routes.php');
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'brand');
         $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'brand');
+//        Log::info('brandd service provider');
+        $this->app->register(EventServiceProvider::class);
 //        CategoryProxy::observe(CategoryObserver::class);
     }
 

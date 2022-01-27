@@ -11,11 +11,11 @@ Route::group(['middleware' => ['web', 'admin', 'admin_locale'], 'prefix' => conf
          * Categories routes.
          */
         Route::get('/brands', [BrandController::class, 'index'])->defaults('_config', [
-            'view' => 'brand::admin.index',
+            'view' => 'brand::admin.catalog.brand.index',
         ])->name('admin.catalog.brand.index');
 
         Route::get('/brands/create', [BrandController::class, 'create'])->defaults('_config', [
-            'view' => 'brand::admin.create',
+            'view' => 'brand::admin.catalog.brand.create',
         ])->name('admin.catalog.brand.create');
 
         Route::post('/brands/create', [BrandController::class, 'store'])->defaults('_config', [
@@ -23,7 +23,7 @@ Route::group(['middleware' => ['web', 'admin', 'admin_locale'], 'prefix' => conf
         ])->name('admin.catalog.brand.store');
 
         Route::get('/brands/edit/{id}', [BrandController::class, 'edit'])->defaults('_config', [
-            'view' => 'brand::admin.edit',
+            'view' => 'brand::admin.catalog.brand.edit',
         ])->name('admin.catalog.brand.edit');
 
         Route::post('/brands/edit/{id}', [BrandController::class, 'update'])->defaults('_config', [

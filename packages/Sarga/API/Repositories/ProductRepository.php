@@ -72,6 +72,9 @@ class ProductRepository extends WProductRepository
             } else
                 $product['attribute_family_id'] = $product['type'] == 'configurable' ? 2 : 1;
 
+            if(!empty($data['brand']) && $brand = $this->brandRepository->findOneByField('name' , $data['brand'])){
+                $product['brand_id'] = $brand->id;
+            }
             //create product
             $parentProduct = $this->getModel()->create($product);
             $this->assignAttributes($parentProduct, [
@@ -95,25 +98,6 @@ class ProductRepository extends WProductRepository
 
             if($data['vendor'] && $seller = $this->vendorRepository->findOneByField('shop_title',$data['vendor'])){
                 $this->createSellerProduct($product, $seller->id);
-            }
-
-            if(!empty($data['brand'])){
-                $brand = $this->brandRepository->firstOrCreate(['code' =>Str::slug($data['brand'])],[
-                    'name' =>$data['brand'],
-                    'status' =>1,
-                ]);
-
-                if($brand){
-                    $brand->products()->attach($parentProduct->id);
-
-                    if(!empty($data['categories'])){
-                        $brand->categories()->attach($data['categories']);
-                    }
-
-                    if($seller){
-                        $brand->sellers()->attach($seller->id);
-                    }
-                }
             }
 
             if ($product['type'] == 'configurable') {

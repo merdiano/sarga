@@ -12,6 +12,7 @@ use Webkul\API\Http\Controllers\Shop\ResourceController;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
 use Sarga\API\Http\Resources\Catalog\AttributeOption;
 use Sarga\API\Http\Resources\Catalog\Category;
+use Webkul\Core\Repositories\CountryStateRepository;
 
 Route::group(['prefix' => 'api'], function ($router) {
     Route::group(['middleware' => ['locale', 'currency']], function ($router) {
@@ -42,6 +43,11 @@ Route::group(['prefix' => 'api'], function ($router) {
 
         Route::get('products/{id}', [Products::class, 'get']);
         Route::get('products/{id}/variants', [Products::class, 'variants']);
+
+        Route::get('states', [ResourceController::class, 'index'])->defaults('_config', [
+            'repository' => CountryStateRepository::class,
+            'resource' => Category::class,
+        ]);
     });
 
     Route::group(['prefix' => 'scrap','middleware' =>['scrap']], function ($router){
