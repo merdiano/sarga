@@ -2,10 +2,13 @@
 
 namespace Sarga\API\Http\Controllers;
 
+use Sarga\API\Http\Resources\Catalog\Brand;
 use Sarga\API\Http\Resources\Catalog\Product as ProductResource;
 use Sarga\API\Http\Resources\Core\Vendor;
 use Sarga\API\Repositories\ProductRepository;
+use Sarga\Brand\Repositories\BrandRepository;
 use Sarga\Shop\Repositories\CategoryRepository;
+use Sarga\Shop\Repositories\VendorRepository;
 use Webkul\API\Http\Controllers\Shop\Controller;
 use Webkul\Marketplace\Repositories\SellerRepository;
 use Webkul\Product\Repositories\ProductFlatRepository;
@@ -15,15 +18,12 @@ class Vendors extends Controller
 
     protected $vendorRepository;
     protected $categoryRepository;
-    protected $productRepository;
 
-    public function __construct(SellerRepository $sellerRepository,
-                                ProductRepository $productRepository,
+    public function __construct(VendorRepository $sellerRepository,
                                 CategoryRepository $categoryRepository)
     {
         $this->vendorRepository = $sellerRepository;
         $this->categoryRepository = $categoryRepository;
-        $this->productRepository = $productRepository;
     }
 
     public function index()
@@ -58,7 +58,14 @@ class Vendors extends Controller
         return Vendor::collection($vendors);
     }
 
-    public function vendor_products($vendor_id){
-        return ProductResource::collection($this->productRepository->findAllBySeller($vendor_id,request()->input('category_id')));
+    public function products(ProductRepository $productRepository,$seller_id){
+        $products = $productRepository->findAllBySeller($seller_id,request()->input('category_id'));
+
+        return ProductResource::collection($products);
+    }
+
+    public function brands(BrandRepository $brandRepository, $seller_id){
+
+        return Brand::collection($brandRepository->findAllBySeller($seller_id));
     }
 }

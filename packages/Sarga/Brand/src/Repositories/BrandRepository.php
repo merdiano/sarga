@@ -77,4 +77,22 @@ class BrandRepository extends Repository
     public function actives(){
         return $this->findByField('status',1);
     }
+
+    public function findAllBySeller($seller_id){
+        $query = $this->leftJoin('seller_brands as sb','sb.brand_id','=','brands.id')
+            ->where('sb.seller_id',$seller_id);
+
+        if(request()->has('category_id')){
+            $query->leftJoin('category_brands as cb','cb.brand_id','=','brands.id')
+                ->where('cb.category_id',request()->get('category_id'));
+        }
+
+        $limit = request()->get('limit') ?? 10;
+        $page = request()->get('page') ?? 1;
+
+        return $query->orderBy('position', 'ASC')
+            ->skip(($page-1) * $limit)
+            ->take($limit)
+            ->get();
+    }
 }
