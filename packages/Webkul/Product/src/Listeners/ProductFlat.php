@@ -149,9 +149,9 @@ class ProductFlat
                     $table->dropColumn($attribute->code . '_label');
                 }
             });
-            
+
             $this->productFlatRepository->updateAttributeColumn( $attribute , $this );
-            
+
         }
     }
 

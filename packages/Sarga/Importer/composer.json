@@ -1,0 +1,30 @@
+{
+    "name": "sarga/importer",
+    "description": "Porduct importer for Sarga.",
+    "license": "MIT",
+
+    "authors": [
+        {
+            "name": "merdan muhammedow",
+            "email": "merdan.m@gmail.com"
+        }
+    ],
+
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Sarga\\Importer\\": "src/"
+        }
+    },
+
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ImporterServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+
+    "minimum-stability": "dev"
+}

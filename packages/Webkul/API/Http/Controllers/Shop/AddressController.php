@@ -80,6 +80,8 @@ class AddressController extends Controller
             request()->merge([
                 'address1' => implode(PHP_EOL, array_filter(request()->input('address1'))),
                 'customer_id' => $customer->id,
+                'country' => 'Turkmenistan',
+                'postcode' => '0000'
             ]);
         }
 
@@ -87,10 +89,10 @@ class AddressController extends Controller
             'address1' => 'string|required',
             'company' => 'string|nullable',
             'vat_id' => 'string|nullable',
-            'country' => 'string|required',
+//            'country' => 'string|required',
             'state' => 'string|nullable',
             'city' => 'string|required',
-            'postcode' => 'required',
+//            'postcode' => 'required',
             'phone' => 'required',
         ]);
 
@@ -105,7 +107,7 @@ class AddressController extends Controller
     /**
      * Update the specified resource in storage.
      * @param int $id
-     * 
+     *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -117,16 +119,19 @@ class AddressController extends Controller
             ]);
         }
 
-        request()->merge(['address1' => implode(PHP_EOL, array_filter(request()->input('address1')))]);
+        request()->merge(['address1' => implode(PHP_EOL, array_filter(request()->input('address1'))),
+            'country' => 'Turkmenistan',
+            'postcode' => '0000'
+        ]);
 
         $this->validate(request(), [
             'address1' => 'string|required',
             'company' => 'string|nullable',
             'vat_id' => 'string|nullable',
-            'country' => 'string|required',
+//            'country' => 'string|required',
             'state' => 'string|nullable',
             'city' => 'string|required',
-            'postcode' => 'required',
+//            'postcode' => 'required',
             'phone' => 'required',
         ]);
 

@@ -32,7 +32,7 @@
                 <div class="product-information" style="display: inline-flex;">
 
                     <div class="product-image">
-                        <img src="{{ asset($product->product->base_image_url ?? 'vendor/webkul/ui/assets/images/product/meduim-product-placeholder.png') }} }}" style="width: 300px; height: 350px;"/>
+                        <img src="{{ asset($product->product->base_image_url ?? 'vendor/webkul/ui/assets/images/product/meduim-product-placeholder.png') }}" style="width: 300px; height: 350px;"/>
                     </div>
 
                     <div class="product-details" style="padding-left: 20px;">

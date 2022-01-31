@@ -42,15 +42,13 @@ class Product extends JsonResource
             'type'                   => $product->type,
             'name'                   => $product->name,
             'url_key'                => $product->url_key,
-            'price'                  => $productTypeInstance->getMinimalPrice(),
-            'converted_price'         => core()->convertPrice($productTypeInstance->getMinimalPrice()),
+            'price'                  => core()->convertPrice($productTypeInstance->getMinimalPrice()),
+            'formatted_price'        => core()->currency($productTypeInstance->getMinimalPrice()),
             'short_description'      => $product->short_description,
             'description'            => $product->description,
             'images'                 => ProductImage::collection($product->images),
-
             /* product's checks */
             'in_stock'               => $product->haveSufficientQuantity(1),
-
             'is_wishlisted'          => $this->wishlistHelper->getWishlistProduct($product) ? true : false,
             'is_item_in_cart'        => \Cart::hasProduct($product),
 //            'show_quantity_changer'  => $this->when(
@@ -88,9 +86,9 @@ class Product extends JsonResource
         return [
             'special_price'          => $this->when(
                 $productTypeInstance->haveSpecialPrice(),
-                $productTypeInstance->getSpecialPrice()
+                core()->convertPrice($productTypeInstance->getSpecialPrice())
             ),
-            'formated_special_price' => $this->when(
+            'formatted_special_price' => $this->when(
                 $productTypeInstance->haveSpecialPrice(),
                 core()->currency($productTypeInstance->getSpecialPrice())
             ),
@@ -98,7 +96,7 @@ class Product extends JsonResource
                 $productTypeInstance->haveSpecialPrice(),
                 data_get($productTypeInstance->getProductPrices(), 'regular_price.price')
             ),
-            'formated_regular_price' => $this->when(
+            'formatted_regular_price' => $this->when(
                 $productTypeInstance->haveSpecialPrice(),
                 data_get($productTypeInstance->getProductPrices(), 'regular_price.formated_price')
             ),

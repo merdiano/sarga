@@ -178,7 +178,7 @@ class SellerCategoryController extends Controller
      */
     public function massDestroy()
     {
-        $indexs = request()->all();
+        $indexs = explode(',', request()->input('indexes'));
 
         foreach($indexs as $id) {
 

@@ -40,6 +40,10 @@ class Category extends JsonResource
     }
 
     private function showChildren(){
-        return request()->route()->getName() === 'api.descendant-categories';
+        switch (request()->route()->getName()){
+            case 'api.descendant-categories':
+            case 'api.vendors': return true;
+            default : return false;
+        }
     }
 }

@@ -87,7 +87,7 @@ class SellerCategoryDataGrid extends DataGrid
         $this->addMassAction([
             'type'   => 'delete',
             'label'  => trans('marketplace::app.admin.sellers.delete'),
-            'action' => route('admin.marketplace.sellers.massdelete'),
+            'action' => route('admin.marketplace.seller.category.mass-delete'),
             'method' => 'POST',
             'title'  => ''
         ], true) ;
