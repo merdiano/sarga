@@ -2,6 +2,7 @@
 
 namespace Sarga\API\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Catalog\Attribute;
 use Sarga\API\Http\Resources\Catalog\AttributeOption;
 use Sarga\API\Http\Resources\Catalog\ProductVariant;
@@ -69,14 +70,13 @@ class Products extends ProductController
                 'product_flats','attribute_family','short_description','sku','brand']);
 
             $attribute = $product->super_attributes->first();
-            $data =[];
             $distinctVariants =  $variants->unique($attribute->code);//->only([$attribute_main->code]);
 
             $gr_data = array('attribute' => SuperAttribute::make($attribute),'options' =>[]);
 
-//            return $attribute->options->whereIn('id',$distinctVariants->pluck($attribute->code)->toArray());
             foreach($distinctVariants as $variant){
-                $option = $attribute->options->where('id',$variant->{$attribute->code})->first();
+                $option = $attribute->options->firstWhere('id',$variant->{$attribute->code});
+
                 $item = [
                     'option' => $option->admin_name,
                     'images' => $variant->images,
@@ -84,11 +84,19 @@ class Products extends ProductController
 
                 if($product->super_attributes->count()>1 && $option){
                     $last_attribute = $product->super_attributes->last();
+
+                    $products =  $variants->where($attribute->code,$variant->{$attribute->code})
+                        ->map(function ($item,$key) use ($last_attribute){
+                        $option = $last_attribute->options->where('id',$item->{$last_attribute->code})->first();
+
+                        return ProductVariant::make($item,$option);
+                    });
+
                     $item['variants']['attribute'] = SuperAttribute::make($last_attribute);
-                    $item['variants']['products'] = ProductResource::collection($variants->where($attribute->code,$variant->{$attribute->code}),$last_attribute);
+                    $item['variants']['products'] = $products->values();
                 }
                 else{
-                    $item['product'] = ProductVariant::make($variants);
+                    $item['product'] = ProductVariant::make($variant,$option);
                 }
                 $gr_data['options'][] = $item;
             }

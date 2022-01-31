@@ -12,12 +12,13 @@ class ProductVariant extends JsonResource
      * @return void
      */
 
-    public function __construct($resource,$attribute)
+    public function __construct($resource, $opion)
     {
 //        $this->productReviewHelper = app('Webkul\Product\Helpers\Review');
 
         $this->wishlistHelper = app('Webkul\Customer\Helpers\Wishlist');
-        $this->attribute = $attribute;
+        $this->option = $opion;
+        $this->wishlistHelper = app('Webkul\Customer\Helpers\Wishlist');
         parent::__construct($resource);
     }
     /**
@@ -34,15 +35,20 @@ class ProductVariant extends JsonResource
         /* get type instance */
         $productTypeInstance = $product->getTypeInstance();
         return [
-            'id'               => $this->id,
-            'parent_id'        => $this->parent_id,
-            'additional'       => $this->additional,
-            'price'            => $productTypeInstance->getMinimalPrice(),
-            'converted_price'  => core()->currency($productTypeInstance->getMinimalPrice()),
-            "attribute"            => $this->attribute,
+            'id'                => $this->id,
+            'name'              => $product->name,
+            'url_key'           => $product->url_key,
+            'price'             => core()->convertPrice($productTypeInstance->getMinimalPrice()),
+            'formatted_price'   => core()->currency($productTypeInstance->getMinimalPrice()),
+            'short_description' => $product->short_description,
+            'description'       => $product->description,
+            "option_value"            => $this->option->admin_name,
 //            "size"             => $this->size,
 //            "brand"=>$this->brand,
-
+            /* product's checks */
+            'in_stock'               => $product->haveSufficientQuantity(1),
+            'is_wishlisted'          => $this->wishlistHelper->getWishlistProduct($product) ? true : false,
+            'is_item_in_cart'        => \Cart::hasProduct($product),
             /* special price cases */
             $this->merge($this->specialPriceInfo()),
 
