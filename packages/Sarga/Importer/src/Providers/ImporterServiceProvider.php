@@ -1,9 +1,9 @@
-<?php
+<?php namespace Sarga\Importer\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
-class ScrapServiceProvider extends ServiceProvider
+class ImporterServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.

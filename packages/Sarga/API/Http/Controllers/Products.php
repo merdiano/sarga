@@ -2,6 +2,10 @@
 
 namespace Sarga\API\Http\Controllers;
 
+use Sarga\API\Http\Resources\Catalog\Attribute;
+use Sarga\API\Http\Resources\Catalog\AttributeOption;
+use Sarga\API\Http\Resources\Catalog\ProductVariant;
+use Sarga\API\Http\Resources\Catalog\SuperAttribute;
 use Sarga\API\Repositories\ProductRepository;
 use Webkul\API\Http\Controllers\Shop\ProductController;
 use Sarga\API\Http\Resources\Catalog\Product as ProductResource;
@@ -57,35 +61,39 @@ class Products extends ProductController
                     ->where('status',1);
             }]);
         }])->find($id);
-//        return $product;
+//        return $product->variants; //Attribute::make($product->super_attributes->first());
         if(!empty($product) && $product->super_attributes->isNotEmpty() && $product->variants->isNotEmpty()){
 
             $variants = $product->variants->makeHidden(['type','created_at','updated_at','parent_id','attribute_family_id',
                 'additional','new','featured','visible_individually','status','guest_checkout','meta_title','meta_keywords',
                 'product_flats','attribute_family','short_description','sku','brand']);
-            $data = array();
 
-            $attribute_main = $product->super_attributes->first();
+            $attribute = $product->super_attributes->first();
+            $data =[];
+            $distinctVariants =  $variants->unique($attribute->code);//->only([$attribute_main->code]);
 
-            if($product->super_attributes->count() > 1){
+            $gr_data = array('attribute' => SuperAttribute::make($attribute),'options' =>[]);
 
-                $last_attribute = $product->super_attributes->last();
-                foreach($variants as $variant){
-                    $option = $this->attributeOptionRepository->getOptionLabel($variant->{$attribute_main->code});
-                    $last_option = $this->attributeOptionRepository->getOptionLabel($variant->{$last_attribute->code});
-                    $data[$attribute_main->code][$option]['image'] = $variant->images;
-                    $data[$attribute_main->code][$option][$last_attribute->code][$last_option] =  ProductResource::make($variant);
+//            return $attribute->options->whereIn('id',$distinctVariants->pluck($attribute->code)->toArray());
+            foreach($distinctVariants as $variant){
+                $option = $attribute->options->where('id',$variant->{$attribute->code})->first();
+                $item = [
+                    'option' => $option->admin_name,
+                    'images' => $variant->images,
+                ];
+
+                if($product->super_attributes->count()>1 && $option){
+                    $last_attribute = $product->super_attributes->last();
+                    $item['variants']['attribute'] = SuperAttribute::make($last_attribute);
+                    $item['variants']['products'] = ProductResource::collection($variants->where($attribute->code,$variant->{$attribute->code}),$last_attribute);
                 }
-            }
-            else{
-                foreach($variants as $variant){
-                    $option = $this->attributeOptionRepository->getOptionLabel($variant->{$attribute_main->code});
-
-                    $data[$attribute_main->code][$option] = ProductResource::make($variant);
+                else{
+                    $item['product'] = ProductVariant::make($variants);
                 }
+                $gr_data['options'][] = $item;
             }
 
-            return response()->json($data);
+            return response()->json($gr_data);
         }
         else{
             return response()->json(['message' => 'not found'],404);

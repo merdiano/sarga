@@ -1,6 +1,6 @@
 {
-    "name": "sarga/scrap",
-    "description": "Scrap for Sarga.",
+    "name": "sarga/importer",
+    "description": "Porduct importer for Sarga.",
     "license": "MIT",
 
     "authors": [
@@ -13,14 +13,14 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Sarga\\Scrap\\": "src/"
+            "Sarga\\Importer\\": "src/"
         }
     },
 
     "extra": {
         "laravel": {
             "providers": [
-                "Sarga\\Scrap\\Providers\\ScrapServiceProvider"
+                "ImporterServiceProvider"
             ],
             "aliases": {}
         }

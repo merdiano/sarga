@@ -7,6 +7,20 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class ProductVariant extends JsonResource
 {
     /**
+     * Create a new resource instance.
+     *
+     * @return void
+     */
+
+    public function __construct($resource,$attribute)
+    {
+//        $this->productReviewHelper = app('Webkul\Product\Helpers\Review');
+
+        $this->wishlistHelper = app('Webkul\Customer\Helpers\Wishlist');
+        $this->attribute = $attribute;
+        parent::__construct($resource);
+    }
+    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request
@@ -25,8 +39,8 @@ class ProductVariant extends JsonResource
             'additional'       => $this->additional,
             'price'            => $productTypeInstance->getMinimalPrice(),
             'converted_price'  => core()->currency($productTypeInstance->getMinimalPrice()),
-            "color"            => $this->color,
-            "size"             => $this->size,
+            "attribute"            => $this->attribute,
+//            "size"             => $this->size,
 //            "brand"=>$this->brand,
 
             /* special price cases */
