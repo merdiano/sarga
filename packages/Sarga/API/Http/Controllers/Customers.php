@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Validator;
 use Webkul\API\Http\Controllers\Shop\SessionController;
 use Webkul\API\Http\Resources\Customer\Customer as CustomerResource;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
-use Webkul\Customer\Repositories\CustomerRepository;
-
 
 class Customers extends SessionController
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\DataFaker\Repositories;
+namespace Sarga\Shop\Repositories;
 
 use Webkul\Product\Repositories\ProductRepository as Product;
 use DB;

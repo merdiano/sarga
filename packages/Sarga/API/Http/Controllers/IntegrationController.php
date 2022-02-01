@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Webkul\API\Http\Controllers\Shop\Controller;
 use Webkul\Core\Contracts\Validations\Slug;
-use Sarga\API\Repositories\ProductRepository;
+use Sarga\Shop\Repositories\ProductRepository;
 use Webkul\Marketplace\Repositories\SellerRepository;
 
 class IntegrationController extends Controller

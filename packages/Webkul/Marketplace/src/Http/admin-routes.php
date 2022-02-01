@@ -2,8 +2,7 @@
 
 Route::group(['middleware' => ['web'],'prefix'=>config('app.admin_url')], function () {
 
-    Route::prefix('
-    marketplace')->group(function () {
+    Route::prefix('marketplace')->group(function () {
 
         Route::group(['middleware' => ['admin']], function () {
 

@@ -2,12 +2,9 @@
 
 namespace Sarga\API\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
-use Sarga\API\Http\Resources\Catalog\Attribute;
-use Sarga\API\Http\Resources\Catalog\AttributeOption;
 use Sarga\API\Http\Resources\Catalog\ProductVariant;
 use Sarga\API\Http\Resources\Catalog\SuperAttribute;
-use Sarga\API\Repositories\ProductRepository;
+use Sarga\Shop\Repositories\ProductRepository;
 use Webkul\API\Http\Controllers\Shop\ProductController;
 use Sarga\API\Http\Resources\Catalog\Product as ProductResource;
 use Sarga\Shop\Repositories\AttributeOptionRepository;

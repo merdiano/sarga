@@ -57,6 +57,10 @@ class CreateBrandsTable extends Migration
      */
     public function down()
     {
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('brand_id');
+        });
+
         Schema::dropIfExists('category_brands');
 //        Schema::dropIfExists('product_brands');
         Schema::dropIfExists('seller_brands');

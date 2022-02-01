@@ -5,7 +5,7 @@ namespace Sarga\API\Http\Controllers;
 use Sarga\API\Http\Resources\Catalog\Brand;
 use Sarga\API\Http\Resources\Catalog\Product as ProductResource;
 use Sarga\API\Http\Resources\Core\Vendor;
-use Sarga\API\Repositories\ProductRepository;
+use Sarga\Shop\Repositories\ProductRepository;
 use Sarga\Brand\Repositories\BrandRepository;
 use Sarga\Shop\Repositories\CategoryRepository;
 use Sarga\Shop\Repositories\VendorRepository;

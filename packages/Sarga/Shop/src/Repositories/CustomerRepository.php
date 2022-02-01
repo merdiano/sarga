@@ -1,13 +1,10 @@
 <?php
 
-namespace Webkul\DataFaker\Repositories;
+namespace Sarga\Shop\Repositories;
 
-use Webkul\Core\Eloquent\Repository;
 use Webkul\Core\Repositories\CountryRepository;
 use Webkul\Core\Repositories\CountryStateRepository;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
-use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
 
 /**
  * Customer Reposotory

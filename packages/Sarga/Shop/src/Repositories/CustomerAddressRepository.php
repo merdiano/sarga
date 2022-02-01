@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\DataFaker\Repositories;
+namespace Sarga\Shop\Repositories;
 
 use Webkul\Core\Repositories\CountryRepository;
 use Webkul\Core\Repositories\CountryStateRepository;

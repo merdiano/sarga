@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\DataFaker\Repositories;
+namespace Sarga\Shop\Repositories;
 
 use Illuminate\Container\Container as App;
 use Webkul\Core\Eloquent\Repository;
@@ -12,7 +12,6 @@ use Webkul\DataFaker\Repositories\RelatedProductRepository;
 use Webkul\Product\Repositories\ProductImageRepository;
 use Webkul\Product\Repositories\ProductFlatRepository as ProductFlat;
 use Webkul\Product\Repositories\ProductRepository as Product;
-use Webkul\Product\Models\ProductAttributeValue;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Category\Repositories\CategoryRepository;
 use Illuminate\Support\Facades\Storage;

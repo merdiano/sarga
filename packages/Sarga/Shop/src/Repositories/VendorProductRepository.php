@@ -1,6 +1,6 @@
 <?php
 
-namespace Sarga\API\Repositories;
+namespace Sarga\Shop\Repositories;
 
 use Illuminate\Container\Container as App;
 use Webkul\Core\Eloquent\Repository;

@@ -223,7 +223,7 @@ class ProductFlat
                             'locale'     => $locale->code,
                         ]);
                     }
-
+                    $productFlat->brand_id = $product->brand_id;
                     foreach ($familyAttributes[$product->attribute_family->id] as $attribute) {
                         if ($parentProduct && ! in_array($attribute->code, array_merge($superAttributes[$parentProduct->id], $this->fillableAttributeCodes))) {
                             continue;
