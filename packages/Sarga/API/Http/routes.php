@@ -33,6 +33,7 @@ Route::group(['prefix' => 'api'], function ($router) {
             'repository' => CategoryRepository::class,
             'resource' => Category::class,
         ])->name('api.categories');
+        Route::get('categories/{id}/filters',[Categories::class,'filters']);
         //attributes by code
         Route::get('attribute-options', [ResourceController::class, 'index'])->defaults('_config', [
             'repository' => AttributeOptionRepository::class,
