@@ -588,7 +588,7 @@ class ProductRepository extends Repository
      *
      * @return array
      */
-    private function getDefaultSortByOption()
+    public function getDefaultSortByOption()
     {
         $value = core()->getConfigData('catalog.products.storefront.sort_by');
 
@@ -606,7 +606,7 @@ class ProductRepository extends Repository
      *
      * @return object
      */
-    private function checkSortAttributeAndGenerateQuery($query, $sort, $direction)
+    public function checkSortAttributeAndGenerateQuery($query, $sort, $direction)
     {
         $attribute = $this->attributeRepository->findOneByField('code', $sort);
 
