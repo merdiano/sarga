@@ -2,6 +2,7 @@
 
 namespace Webkul\CartRule\Models;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,11 +33,19 @@ class CartRuleCoupon extends Model implements CartRuleCouponContract
     }
 
     /**
+     * Get the cart rule that owns the cart rule coupon.
+     */
+    public function coupon_usage()
+    {
+        return $this->hasMany(CartRuleCouponUsageProxy::modelClass());
+    }
+
+    /**
      * Create a new factory instance for the model
      *
-     * @return CartRuleCouponFactory
+     * @return Factory
      */
-    protected static function newFactory(): CartRuleCouponFactory
+    protected static function newFactory(): Factory
     {
         return CartRuleCouponFactory::new();
     }

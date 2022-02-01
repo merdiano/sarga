@@ -100,6 +100,8 @@
                                         @php echo str_replace($key, 'Image', $message[0]); @endphp
                                     @endforeach
                                 </span>
+
+                                <span class="control-info mt-10">{{ __('admin::app.catalog.categories.image-size') }}</span>   
                             </div>
 
                             {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.description_images.controls.after') !!}
@@ -130,7 +132,7 @@
                         <div slot="body">
                             <?php $selectedaAtributes = old('attributes') ? old('attributes') : ['11']  ?>
 
-                            <div class="control-group" :class="[errors.has('attributes[]') ? 'has-error' : '']">
+                            <div class="control-group multi-select" :class="[errors.has('attributes[]') ? 'has-error' : '']">
                                 <label for="attributes" class="required">{{ __('admin::app.catalog.categories.attributes') }}</label>
                                 <select class="control" name="attributes[]" v-validate="'required'" data-vv-as="&quot;{{ __('admin::app.catalog.categories.attributes') }}&quot;" multiple>
 
@@ -227,8 +229,6 @@
                         width: "100%",
                         plugins: 'image imagetools media wordcount save fullscreen code table lists link hr',
                         toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor link hr | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent  | removeformat | code | table',
-                        uploadRoute: '{{ route('admin.tinymce.upload') }}',
-                        csrfToken: '{{ csrf_token() }}',
                     });
                 });
             },

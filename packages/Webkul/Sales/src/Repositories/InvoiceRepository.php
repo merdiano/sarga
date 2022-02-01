@@ -70,6 +70,7 @@ class InvoiceRepository extends Repository
      * @param  \Webkul\Sales\Repositories\InvoiceItemRepository  $invoiceItemRepository
      * @param  \Webkul\Sales\Repositories\DownloadableLinkPurchasedRepository  $downloadableLinkPurchasedRepository
      * @param  \Illuminate\Container\Container  $app
+     * @return void
      */
     public function __construct(
         OrderRepository $orderRepository,
@@ -114,7 +115,9 @@ class InvoiceRepository extends Repository
 
     /**
      * @param  array  $data
-     * @return \Webkul\Sales\Contracts\Invoice
+     * @param  string $invoiceState
+     * @param  string $orderState
+     * @return \Webkul\Sales\Models\Invoice
      */
     public function create(array $data)
     {
@@ -130,10 +133,16 @@ class InvoiceRepository extends Repository
 
             $totalQty = array_sum($data['invoice']['items']);
 
+            if (isset($invoiceState)) {
+                $state = $invoiceState;
+            } else {
+                $state = 'paid';
+            }
+
             $invoice = $this->model->create([
                 'order_id'              => $order->id,
                 'total_qty'             => $totalQty,
-                'state'                 => 'paid',
+                'state'                 => $state,
                 'base_currency_code'    => $order->base_currency_code,
                 'channel_currency_code' => $order->channel_currency_code,
                 'order_currency_code'   => $order->order_currency_code,
@@ -246,6 +255,42 @@ class InvoiceRepository extends Repository
     }
 
     /**
+     * Have product to invoice.
+     *
+     * @param  array  $data
+     * @return bool
+     */
+    public function haveProductToInvoice(array $data): bool
+    {
+        foreach ($data['invoice']['items'] as $qty) {
+            if ((int) $qty) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Is valid quantity.
+     *
+     * @param  array  $data
+     * @return bool
+     */
+    public function isValidQuantity(array $data): bool
+    {
+        foreach ($data['invoice']['items'] as $itemId => $qty) {
+            $orderItem = $this->orderItemRepository->find($itemId);
+
+            if ($qty > $orderItem->qty_to_invoice) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @param  \Webkul\Sales\Contracts\Invoice  $invoice
      * @return \Webkul\Sales\Contracts\Invoice
      */
@@ -333,5 +378,19 @@ class InvoiceRepository extends Repository
         $invoice->save();
 
         return $invoice;
+    }
+
+    /**
+     * Update state.
+     *
+     * @param  \Webkul\Sales\Models\Invoice $invoice
+     * @return void
+     */
+    public function updateState($invoice, $status)
+    {
+        $invoice->state = $status;
+        $invoice->save();
+
+        return true;
     }
 }

@@ -32,7 +32,7 @@
         @include('shop::layouts.styles')
     </head>
 
-    <body @if (core()->getCurrentLocale() && core()->getCurrentLocale()->direction == 'rtl') class="rtl" @endif>
+    <body @if (core()->getCurrentLocale() && core()->getCurrentLocale()->direction === 'rtl') class="rtl" @endif>
         {!! view_render_event('bagisto.shop.layout.body.before') !!}
 
         {{-- main app --}}
@@ -59,11 +59,11 @@
 
                             {{-- mobile header --}}
                             <div class="vc-small-screen container">
-                                @include('velocity::shop.layouts.header.mobile')
+                                @include('shop::layouts.header.mobile')
                             </div>
 
                             {{-- desktop header --}}
-                            @include('velocity::shop.layouts.header.desktop')
+                            @include('shop::layouts.header.desktop')
 
                         </header>
 

@@ -8,6 +8,8 @@ class CustomerAddressForm extends FormRequest
 {
     /**
      * Rules.
+     *
+     * @var array
      */
     protected $rules = [];
 
@@ -100,7 +102,7 @@ class CustomerAddressForm extends FormRequest
      */
     private function getCustomerAddressIds(): string
     {
-        if ($customer = auth('customer')->user()) {
+        if ($customer = auth()->guard()->user()) {
             return $customer->addresses->pluck('id')->join(',');
         }
 

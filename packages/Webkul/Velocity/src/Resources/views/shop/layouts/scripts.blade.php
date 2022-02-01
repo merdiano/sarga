@@ -1,7 +1,8 @@
-<script
-    type="text/javascript"
-    src="{{ asset('themes/velocity/assets/js/velocity-core.js') }}">
-</script>
+<script type="text/javascript" src="{{ asset(mix('/js/manifest.js', 'themes/velocity/assets')) }}"></script>
+
+<script type="text/javascript" src="{{ asset(mix('/js/velocity-core.js', 'themes/velocity/assets')) }}"></script>
+
+<script type="text/javascript" src="{{ asset(mix('/js/components.js', 'themes/velocity/assets')) }}"></script>
 
 <script type="text/javascript">
     (() => {
@@ -30,7 +31,9 @@
      * @param {!string} method
      * @param {!string} csrfToken
      */
-    function submitWishlistForm(action, method, csrfToken) {
+    function submitWishlistForm(action, method, isConfirm, csrfToken) {
+        if (isConfirm && ! confirm('{{ __('shop::app.checkout.cart.cart-remove-action') }}')) return;
+
         let form = document.createElement('form');
             form.method = 'POST';
             form.action = action;

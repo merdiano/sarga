@@ -8,20 +8,20 @@ use Webkul\Customer\Repositories\CustomerGroupRepository;
 class CustomerGroupController extends Controller
 {
     /**
-     * Contains route related configuration
+     * Contains route related configuration.
      *
      * @var array
-    */
+     */
     protected $_config;
 
     /**
-     * CustomerGroupRepository object
+     * Customer group repository instance.
      *
      * @var \Webkul\Customer\Repositories\CustomerGroupRepository
-    */
+     */
     protected $customerGroupRepository;
 
-     /**
+    /**
      * Create a new controller instance.
      *
      * @param  \Webkul\Customer\Repositories\CustomerGroupRepository  $customerGroupRepository;
@@ -40,7 +40,7 @@ class CustomerGroupController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\View\View
-    */
+     */
     public function index()
     {
         return view($this->_config['view']);
@@ -56,7 +56,7 @@ class CustomerGroupController extends Controller
         return view($this->_config['view']);
     }
 
-     /**
+    /**
      * Store a newly created resource in storage.
      *
      * @return \Illuminate\Http\Response
@@ -79,7 +79,7 @@ class CustomerGroupController extends Controller
         return redirect()->route($this->_config['redirect']);
     }
 
-     /**
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -92,7 +92,7 @@ class CustomerGroupController extends Controller
         return view($this->_config['view'], compact('group'));
     }
 
-     /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  int  $id
@@ -133,7 +133,7 @@ class CustomerGroupController extends Controller
                 session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Customer Group']));
 
                 return response()->json(['message' => true], 200);
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 session()->flash('error', trans('admin::app.response.delete-failed', ['name' => 'Customer Group']));
             }
         }

@@ -37,15 +37,13 @@
 
             {!! view_render_event('bagisto.admin.layout.nav-top.after') !!}
 
-
             {!! view_render_event('bagisto.admin.layout.nav-left.before') !!}
 
             @include ('admin::layouts.nav-left')
 
             {!! view_render_event('bagisto.admin.layout.nav-left.after') !!}
 
-
-            <div class="content-container">
+            <div :class="isMenuOpen ? 'content-container padding-container-navbar-expand' : 'content-container padding-container-navbar-not-expand'">
 
                 {!! view_render_event('bagisto.admin.layout.content.before') !!}
 
@@ -58,6 +56,10 @@
 
         <script type="text/javascript">
             window.flashMessages = [];
+
+            if(localStorage.getItem('dark-mode') == 'true'){
+                document.body.classList.toggle("dark-mode");
+            }    
 
             @foreach (['success', 'warning', 'error', 'info'] as $key)
                 @if ($value = session($key))
@@ -130,8 +132,6 @@
                             countKeyUp = countKeyUp + pageUp;
 
                             $('.navbar-left').css("top", countKeyUp + "px");
-                        } else {
-                            $('.navbar-left').css("position", "fixed");
                         }
                     });
 

@@ -2,16 +2,19 @@
 
 namespace Webkul\User\Models;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Webkul\User\Contracts\Admin as AdminContract;
 use Webkul\User\Database\Factories\AdminFactory;
 use Webkul\User\Notifications\AdminResetPassword;
 
-class Admin extends Authenticatable implements AdminContract
+class Admin extends Authenticatable implements AdminContract, JWTSubject
 {
-    use HasFactory, Notifiable;
+    use HasFactory, HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -77,10 +80,30 @@ class Admin extends Authenticatable implements AdminContract
     /**
      * Create a new factory instance for the model.
      *
-     * @return AdminFactory
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    protected static function newFactory(): AdminFactory
+    protected static function newFactory(): Factory
     {
-        return AdminFactory::new();
+        return AdminFactory::new ();
+    }
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims(): array
+    {
+        return [];
     }
 }

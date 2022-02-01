@@ -4,6 +4,17 @@
     {{ __('admin::app.catalog.products.edit-title') }}
 @stop
 
+@push('css')
+    <style>
+        @media only screen and (max-width: 768px){
+            .content-container .content .page-header .page-title .control-group .control{
+                width: 100% !important;
+                margin-top:-25px !important;
+            }
+        }
+    </style>
+@endpush
+
 @section('content')
     <div class="content">
         @php
@@ -221,8 +232,6 @@
                 plugins: 'image imagetools media wordcount save fullscreen code table lists link hr',
                 toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor link hr | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent  | removeformat | code | table',
                 image_advtab: true,
-                uploadRoute: '{{ route('admin.tinymce.upload') }}',
-                csrfToken: '{{ csrf_token() }}',
             });
         });
     </script>
