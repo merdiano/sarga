@@ -51,6 +51,7 @@ class Product extends JsonResource
             'in_stock'               => $product->haveSufficientQuantity(1),
             'is_wishlisted'          => $this->wishlistHelper->getWishlistProduct($product) ? true : false,
             'is_item_in_cart'        => \Cart::hasProduct($product),
+            'shop_title'             => $this->shop_title,
 //            'show_quantity_changer'  => $this->when(
 //                $product->type !== 'grouped',
 //                $product->getTypeInstance()->showQuantityBox()
