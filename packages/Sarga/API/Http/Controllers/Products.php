@@ -69,7 +69,11 @@ class Products extends ProductController
             $attribute = $product->super_attributes->first();
             $distinctVariants =  $variants->unique($attribute->code);//->only([$attribute_main->code]);
 
-            $gr_data = array('attribute' => SuperAttribute::make($attribute),'options' =>[]);
+            $gr_data = array(
+                'attribute' => SuperAttribute::make($attribute),
+                'options' =>[],
+                'level' => $product->super_attributes->count()
+            );
 
             foreach($distinctVariants as $variant){
                 $option = $attribute->options->firstWhere('id',$variant->{$attribute->code});
