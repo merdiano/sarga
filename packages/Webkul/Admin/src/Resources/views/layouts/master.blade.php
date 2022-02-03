@@ -59,7 +59,7 @@
 
             if(localStorage.getItem('dark-mode') == 'true'){
                 document.body.classList.toggle("dark-mode");
-            }    
+            }
 
             @foreach (['success', 'warning', 'error', 'info'] as $key)
                 @if ($value = session($key))

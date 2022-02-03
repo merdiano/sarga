@@ -197,10 +197,10 @@ class MarketplaceServiceProvider extends ServiceProvider
             __DIR__ . '/../Http/Controllers/Shop/Velocity/Controller.php' => __DIR__ .'/../../../Velocity/src/Http/Controllers/Shop/Controller.php',
         ]);
 
-        $this->publishes([
-            __DIR__ . '/../Resources/views/admin/layouts/nav-left.blade.php' => resource_path('views/vendor/admin/layouts/nav-left.blade.php'),
-        ]);
-
+//        $this->publishes([
+//            __DIR__ . '/../Resources/views/admin/layouts/nav-left.blade.php' => resource_path('views/vendor/admin/layouts/nav-left.blade.php'),
+//        ]);
+//
         $this->publishes([
             __DIR__ . '/../Resources/views/admin/dashboard/index.blade.php' => resource_path('views/vendor/admin/dashboard/index.blade.php'),
         ]);

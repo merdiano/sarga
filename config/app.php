@@ -275,7 +275,7 @@ return [
         Webkul\SocialLogin\Providers\SocialLoginServiceProvider::class,
         Webkul\DebugBar\Providers\DebugBarServiceProvider::class,
         Webkul\Marketing\Providers\MarketingServiceProvider::class,
-        Webkul\Notification\Providers\NotificationServiceProvider::class
+        Webkul\Notification\Providers\NotificationServiceProvider::class,
         Webkul\Marketplace\Providers\MarketplaceServiceProvider::class,
 
         Sarga\Shop\Providers\ShopServiceProvider::class,

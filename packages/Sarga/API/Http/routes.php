@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Sarga\API\Http\Controllers\Addresses;
 use Sarga\API\Http\Controllers\Customers;
 use Sarga\API\Http\Controllers\Categories;
 use Sarga\API\Http\Controllers\Channels;
@@ -14,8 +15,8 @@ use Sarga\API\Http\Resources\Catalog\AttributeOption;
 use Sarga\API\Http\Resources\Catalog\Category;
 use Webkul\Core\Repositories\CountryStateRepository;
 
-Route::group(['prefix' => 'api'], function ($router) {
-    Route::group(['middleware' => ['locale', 'currency']], function ($router) {
+Route::group(['prefix' => 'api'], function () {
+    Route::group(['middleware' => ['locale', 'currency']], function () {
         //Channel routes
         Route::get('channels',[Channels::class, 'index']);
 
@@ -24,16 +25,15 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::get('vendor/products/{vendor_id}',[Vendors::class,'products'])->name('api.vendor.products');
         Route::get('vendor/brands/{vendor_id}',[Vendors::class,'brands'])->name('api.vendor.brands');
 
-
         //category routes
         Route::get('descendant-categories', [Categories::class, 'index'])->name('api.descendant-categories');
         Route::get('category-details/{id}', [Categories::class, 'details']);
-
         Route::get('categories', [ResourceController::class, 'index'])->defaults('_config', [
             'repository' => CategoryRepository::class,
             'resource' => Category::class,
         ])->name('api.categories');
         Route::get('categories/{id}/filters',[Categories::class,'filters']);
+
         //attributes by code
         Route::get('attribute-options', [ResourceController::class, 'index'])->defaults('_config', [
             'repository' => AttributeOptionRepository::class,
@@ -42,7 +42,6 @@ Route::group(['prefix' => 'api'], function ($router) {
 
         //Product routes
         Route::get('products', [Products::class, 'index']);
-
         Route::get('products/{id}', [Products::class, 'get']);
         Route::get('products/{id}/variants', [Products::class, 'variants']);
 
@@ -52,16 +51,27 @@ Route::group(['prefix' => 'api'], function ($router) {
         ]);
     });
 
-    Route::group(['prefix' => 'scrap','middleware' =>['scrap']], function ($router){
+    //scrap
+    Route::group(['prefix' => 'scrap','middleware' =>['scrap']], function (){
         Route::put('upload',[IntegrationController::class,'bulk_upload']);
         Route::put('create',[IntegrationController::class,'create']);
     });
 
-    Route::group(['prefix' => 'customer'],function ($router){
+    //customer
+    Route::group(['prefix' => 'customer'],function (){
         Route::post('register', [Customers::class, 'register']);
         Route::post('login', [Customers::class, 'login']);
-        Route::put('profile', [Customers::class, 'store']);
+        Route::group(['middleware' => ['auth:sanctum', 'sanctum.customer']], function () {
+            Route::put('profile', [Customers::class, 'update']);
+            /**
+             * Customer address routes.
+             */
+            Route::get('addresses', [Addresses::class, 'index']);
+            Route::post('addresses', [Addresses::class, 'create']);
+            Route::get('addresses/{id}', [Addresses::class, 'show']);
+            Route::put('addresses/{id}', [Addresses::class, 'update']);
+            Route::delete('addresses/{id}', [Addresses::class, 'destroy']);
+        });
     });
-
 
 });
