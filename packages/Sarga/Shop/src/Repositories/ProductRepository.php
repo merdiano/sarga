@@ -101,6 +101,14 @@ class ProductRepository extends WProductRepository
                 $qb->where('product_flat.status', 1);
             }
 
+            if (isset($params['new'])){
+                $qb->where('product_flat.new', $params['new']);
+            }
+
+            if (isset($params['featured'])){
+                $qb->where('product_flat.featured', $params['featured']);
+            }
+
             if (is_null(request()->input('visible_individually'))) {
                 $qb->where('product_flat.visible_individually', 1);
             }
@@ -434,7 +442,13 @@ class ProductRepository extends WProductRepository
             if ($category_id) {
                 $qb->whereIn('product_categories.category_id', explode(',', $category_id));
             }
+            if (isset($params['new'])){
+                $qb->where('product_flat.new', $params['new']);
+            }
 
+            if (isset($params['featured'])){
+                $qb->where('product_flat.featured', $params['featured']);
+            }
             $queryBuilder = $qb->leftJoin('product_flat as flat_variants', function($qb) use($channel, $locale) {
                 $qb->on('product_flat.id', '=', 'flat_variants.parent_id')
                     ->where('flat_variants.channel', $channel)
