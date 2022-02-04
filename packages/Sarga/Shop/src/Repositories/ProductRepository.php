@@ -310,7 +310,7 @@ class ProductRepository extends WProductRepository
             }
 
             if($data['vendor'] && $seller = $this->vendorRepository->findOneByField('shop_title',$data['vendor'])){
-                $this->createSellerProduct($product, $seller->id);
+                $this->createSellerProduct($parentProduct, $seller->id);
             }
 
             if ($product['type'] == 'configurable') {
