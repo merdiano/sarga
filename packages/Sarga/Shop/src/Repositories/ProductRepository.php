@@ -371,6 +371,8 @@ class ProductRepository extends WProductRepository
                             'price' => $sizeVariant['price'],
                             'weight' => 0,
                             'status' => 1,
+                            'featured'=> 0,
+                            'new' => 1,
                             'visible_individually' => 1,
                             'url_key' => $variant->sku,
                             'short_description' => $data['url_key'],

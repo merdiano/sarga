@@ -42,16 +42,14 @@ class ProductVariant extends JsonResource
             'formatted_price'   => core()->currency($productTypeInstance->getMinimalPrice()),
             'short_description' => $product->short_description,
             'description'       => $product->description,
-            "option_value"            => $this->option->admin_name,
-//            "size"             => $this->size,
-//            "brand"=>$this->brand,
+            "option_value"      => $this->option->admin_name,
             /* product's checks */
-            'in_stock'               => $product->haveSufficientQuantity(1),
-            'is_wishlisted'          => $this->wishlistHelper->getWishlistProduct($product) ? true : false,
-            'is_item_in_cart'        => \Cart::hasProduct($product),
+            'in_stock'          => $product->haveSufficientQuantity(1),
+            'is_wishlisted'     => $this->wishlistHelper->getWishlistProduct($product) ? true : false,
+            'is_item_in_cart'   => \Cart::hasProduct($product),
             /* special price cases */
             $this->merge($this->specialPriceInfo()),
-
+            'images'            => ProductImage::collection($product->images),
         ];
     }
     /**
