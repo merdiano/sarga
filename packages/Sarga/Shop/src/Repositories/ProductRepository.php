@@ -39,6 +39,7 @@ class ProductRepository extends WProductRepository
                                 ProductAttributeValueRepository $productAttributeValueRepository,
                                 ProductImageRepository $productImageRepository,
                                 VendorProductRepository $vendorProductRepository,
+                                VendorRepository $vendorRepository,
                                 BrandRepository $brandRepository,
                                 AttributeOptionRepository $optionRepository)
     {
@@ -49,6 +50,7 @@ class ProductRepository extends WProductRepository
         $this->imageRepository = $productImageRepository;
         $this->vendorProductRepository = $vendorProductRepository;
         $this->brandRepository = $brandRepository;
+        $this->vendorRepository = $vendorRepository;
 
         parent::__construct($attributeRepository, $app);
     }
