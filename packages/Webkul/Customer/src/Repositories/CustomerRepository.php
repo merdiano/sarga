@@ -2,26 +2,60 @@
 
 namespace Webkul\Customer\Repositories;
 
-use Webkul\Core\Eloquent\Repository;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
+use Webkul\Core\Eloquent\Repository;
 
 class CustomerRepository extends Repository
 {
     /**
-     * Specify Model class name
+     * Specify model class name.
      *
      * @return mixed
      */
-
-    function model()
+    public function model()
     {
-        return 'Webkul\Customer\Contracts\Customer';
+        return \Webkul\Customer\Contracts\Customer::class;
+    }
+
+    /**
+     * Create customer.
+     *
+     * @param  array  $attributes
+     * @return mixed
+     */
+    public function create($attributes)
+    {
+        Event::dispatch('customer.registration.before');
+
+        $customer = parent::create($attributes);
+
+        Event::dispatch('customer.registration.after', $customer);
+
+        return $customer;
+    }
+
+    /**
+     * Update customer.
+     *
+     * @param  array  $attributes
+     * @return mixed
+     */
+    public function update(array $attributes, $id)
+    {
+        Event::dispatch('customer.update.before');
+
+        $customer = parent::update($attributes, $id);
+
+        Event::dispatch('customer.update.after', $customer);
+
+        return $customer;
     }
 
     /**
      * Check if customer has order pending or processing.
      *
-     * @param Webkul\Customer\Models\Customer
+     * @param  \Webkul\Customer\Models\Customer
      * @return boolean
      */
     public function checkIfCustomerHasOrderPendingOrProcessing($customer)
@@ -34,7 +68,7 @@ class CustomerRepository extends Repository
     /**
      * Check if bulk customers, if they have order pending or processing.
      *
-     * @param array
+     * @param  array
      * @return boolean
      */
     public function checkBulkCustomerIfTheyHaveOrderPendingOrProcessing($customerIds)
@@ -54,11 +88,11 @@ class CustomerRepository extends Repository
      * Upload customer's images.
      *
      * @param  array  $data
-     * @param  \Webkul\Customer\Contracts\Customer  $customer
+     * @param  \Webkul\Customer\Models\Customer  $customer
      * @param  string $type
      * @return void
      */
-    public function uploadImages($data, $customer, $type = "image")
+    public function uploadImages($data, $customer, $type = 'image')
     {
         if (isset($data[$type])) {
             $request = request();

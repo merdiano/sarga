@@ -31,7 +31,7 @@
     <script type="text/x-template" id="cart-template">
         <div class="container">
             <section class="cart-details row no-margin col-12">
-                <h2 class="fw6 col-12">{{ __('shop::app.checkout.cart.title') }}</h2>
+                <h2 class="cart-details-header fw6 col-12">{{ __('shop::app.checkout.cart.title') }}</h2>
 
                 @if ($cart)
                     <div class="cart-details-header col-lg-6 col-md-12">
@@ -59,9 +59,9 @@
                                     @csrf
 
                                     @foreach ($cart->items as $key => $item)
-
                                         @php
                                             $productBaseImage = $item->product->getTypeInstance()->getBaseImage($item);
+
                                             $product = $item->product;
 
                                             $productPrice = $product->getTypeInstance()->getProductPrices();
@@ -73,10 +73,9 @@
                                             } else {
                                                 $url_key = $product->url_key;
                                             }
-
                                         @endphp
 
-                                        <div class="row col-12" v-if="!isMobileDevice">
+                                        <div class="row col-12 destop-view">
                                             <a
                                                 title="{{ $product->name }}"
                                                 class="product-image-container col-2"
@@ -128,15 +127,15 @@
                                                 <div class="no-padding col-12 cursor-pointer fs16">
                                                     @auth('customer')
                                                         @if ($showWishlist)
-                                                            @if ($item->parent_id != 'null' ||$item->parent_id != null)
-                                                                <div @click="removeLink('{{ __('shop::app.checkout.cart.cart-remove-action') }}')" class="alert-wishlist">
+                                                            @if ($item->parent_id != 'null' || $item->parent_id != null)
+                                                                <div class="alert-wishlist">
                                                                     @include('shop::products.wishlist', [
                                                                         'route' => route('shop.movetowishlist', $item->id),
                                                                         'text' => "<span class='align-vertical-super'>$moveToWishlist</span>"
                                                                     ])
                                                                 </div>
                                                             @else
-                                                                <div @click="removeLink('{{ __('shop::app.checkout.cart.cart-remove-action') }}')" class="alert-wishlist">
+                                                                <div class="alert-wishlist">
                                                                     @include('shop::products.wishlist', [
                                                                         'route' => route('shop.movetowishlist', $item->child->id),
                                                                         'text' => "<span class='align-vertical-super'>$moveToWishlist</span>"
@@ -184,7 +183,7 @@
                                             @endif
                                         </div>
 
-                                        <div class="row col-12" v-else>
+                                        <div class="row col-12 mobile-view">
                                             <a
                                                 title="{{ $product->name }}"
                                                 class="product-image-container col-2"
@@ -196,31 +195,30 @@
                                                     alt="{{ $product->name }}">
                                             </a>
 
-                                            <div class="col-10 pr0 item-title">
+                                            <div class="col-10 pr0 pl0 item-title">
                                                 <a
                                                     href="{{ route('shop.productOrCategory.index', $url_key) }}"
                                                     title="{{ $product->name }}"
-                                                    class="unset col-12 no-padding">
+                                                    class="unset col-2 no-padding">
 
                                                     <span class="fs20 fw6 link-color">{{ $product->name }}</span>
                                                 </a>
 
                                                 @if (isset($item->additional['attributes']))
-                                                    <div class="row col-12 no-padding no-margin">
-
+                                                    <div class="row col-8 no-padding no-margin">
                                                         @foreach ($item->additional['attributes'] as $attribute)
                                                             <b>{{ $attribute['attribute_name'] }} : </b>{{ $attribute['option_label'] }}</br>
                                                         @endforeach
-
                                                     </div>
                                                 @endif
 
                                                 <div class="col-12 no-padding">
-                                                    @include ('shop::products.price', ['product' => $product])
+                                                @include ('shop::products.price', ['product' => $product])
+                                                    
                                                 </div>
 
                                                 <div class="row col-12 remove-padding-margin actions">
-                                                    <div class="product-quantity col-lg-4 col-6 no-padding">
+                                                <div class="product-quantity col-lg-4 col-6 no-padding">
                                                         <quantity-changer
                                                             :control-name="'qty[{{$item->id}}]'"
                                                             quantity="{{ $item->quantity }}"
@@ -235,9 +233,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     @endforeach
                                 </div>
 
@@ -286,7 +282,6 @@
                     @endif
 
                 {!! view_render_event('bagisto.shop.checkout.cart.summary.after', ['cart' => $cart]) !!}
-
             </section>
         </div>
     </script>
@@ -295,6 +290,7 @@
         (() => {
             Vue.component('cart-component', {
                 template: '#cart-template',
+
                 data: function () {
                     return {
                         isMobileDevice: this.isMobile(),
@@ -308,6 +304,6 @@
                     }
                 }
             })
-        })()
+        })();
     </script>
 @endpush

@@ -44,7 +44,7 @@
 
                     @foreach ($comparableAttributes as $attribute)
                         <tr>
-                            <td>
+                            <td class="header">
                                 <span class="fs16">{{ isset($attribute['name']) ? $attribute['name'] : $attribute['admin_name'] }}</span>
                             </td>
 
@@ -212,6 +212,10 @@
                 },
 
                 'removeProductCompare': function (productId) {
+                    if (productId == 'all' && ! confirm('{{ __('shop::app.customer.compare.confirm-remove-all') }}')) {
+                        return;
+                    }
+
                     if (this.isCustomer) {
                         this.$http.delete(`${this.$root.baseUrl}/comparison?productId=${productId}`)
                         .then(response => {

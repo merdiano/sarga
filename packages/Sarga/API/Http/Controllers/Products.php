@@ -73,7 +73,11 @@ class Products extends ProductController
 
             $distinctVariants =  $variants->unique($attribute->code);
 
-            $gr_data = array('attribute' => SuperAttribute::make($attribute),'options' =>[]);
+            $gr_data = array(
+                'attribute' => SuperAttribute::make($attribute),
+                'options' =>[],
+                'level' => $product->super_attributes->count()
+            );
 
             foreach($distinctVariants as $variant)
             {

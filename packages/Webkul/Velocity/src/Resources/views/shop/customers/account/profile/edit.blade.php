@@ -6,8 +6,8 @@
 
 @section('page-detail-wrapper')
     <div class="account-head mb-15">
-        <span class="back-icon"><a href="{{ route('customer.account.index') }}"><i class="icon icon-menu-back"></i></a></span>
         <span class="account-heading">{{ __('shop::app.customer.account.profile.index.title') }}</span>
+
         <span></span>
     </div>
 
@@ -62,9 +62,14 @@
                         class="control styled-select"
                         data-vv-as="&quot;{{ __('shop::app.customer.account.profile.gender') }}&quot;">
 
-                        <option value=""  @if ($customer->gender == "") selected @endif></option>
-                        <option
-                            value="Other"
+                        <option value=""
+                            @if ($customer->gender == "")
+                                selected="selected"
+                            @endif>
+                            {{ __('admin::app.customers.customers.select-gender') }}
+                        </option>
+
+                        <option value="Other"
                             @if ($customer->gender == "Other")
                                 selected="selected"
                             @endif>
@@ -104,14 +109,16 @@
                 </label>
 
                 <div class="col-12">
-                    <input
-                        type="date"
-                        name="date_of_birth"
-                        placeholder="dd/mm/yyyy"
-                        value="{{ old('date_of_birth') ?? $customer->date_of_birth }}"
-                        v-validate="" data-vv-as="&quot;{{ __('shop::app.customer.account.profile.dob') }}&quot;" />
+                    <date id="date-of-birth">
+                        <input
+                            type="date"
+                            name="date_of_birth"
+                            placeholder="dd/mm/yyyy"
+                            value="{{ old('date_of_birth') ?? $customer->date_of_birth }}"
+                            v-validate="" data-vv-as="&quot;{{ __('shop::app.customer.account.profile.dob') }}&quot;" />
+                    </date>
 
-                        <span class="control-error" v-if="errors.has('date_of_birth')" v-text="errors.first('date_of_birth')"></span>
+                    <span class="control-error" v-if="errors.has('date_of_birth')" v-text="errors.first('date_of_birth')"></span>
                 </div>
             </div>
 
@@ -147,6 +154,7 @@
                 <label class="col-12">
                     {{ __('admin::app.catalog.categories.image') }}
                 </label>
+
                 <div class="col-12">
                     <image-wrapper :button-label="'{{ __('admin::app.catalog.products.add-image-btn-title') }}'" input-name="image" :multiple="false" :images='"{{ $customer->image_url }}"'></image-wrapper>
 

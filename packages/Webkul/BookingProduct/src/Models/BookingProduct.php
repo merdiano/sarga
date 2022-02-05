@@ -2,7 +2,9 @@
 
 namespace Webkul\BookingProduct\Models;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
+use Webkul\Product\Models\ProductProxy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Webkul\BookingProduct\Database\Factories\BookingProductFactory;
 use Webkul\BookingProduct\Contracts\BookingProduct as BookingProductContract;
@@ -78,10 +80,18 @@ class BookingProduct extends Model implements BookingProductContract
     /**
      * Create a new factory instance for the model.
      *
-     * @return BookingProductFactory
+     * @return Factory
      */
-    protected static function newFactory(): BookingProductFactory
+    protected static function newFactory(): Factory
     {
         return BookingProductFactory::new();
+    }
+
+    /**
+     * The Product belong to the product booking.
+     */
+    public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ProductProxy::modelClass());
     }
 }

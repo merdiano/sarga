@@ -2,8 +2,8 @@
 
 namespace Webkul\User\Http\Controllers;
 
-use Hash;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Webkul\User\Http\Requests\UserForm;
 use Webkul\User\Repositories\AdminRepository;
@@ -89,11 +89,7 @@ class UserController extends Controller
             $data['api_token'] = Str::random(80);
         }
 
-        Event::dispatch('user.admin.create.before');
-
-        $admin = $this->adminRepository->create($data);
-
-        Event::dispatch('user.admin.create.after', $admin);
+        $this->adminRepository->create($data);
 
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'User']));
 
@@ -130,15 +126,7 @@ class UserController extends Controller
             return $data;
         }
 
-        Event::dispatch('user.admin.update.before', $id);
-
-        $admin = $this->adminRepository->update($data, $id);
-
-        if (isset($data['password']) && $data['password']) {
-            Event::dispatch('user.admin.update-password', $admin);
-        }
-
-        Event::dispatch('user.admin.update.after', $admin);
+        $this->adminRepository->update($data, $id);
 
         session()->flash('success', trans('admin::app.response.update-success', ['name' => 'User']));
 
@@ -158,8 +146,6 @@ class UserController extends Controller
         if ($this->adminRepository->count() == 1) {
             session()->flash('error', trans('admin::app.response.last-delete-error', ['name' => 'Admin']));
         } else {
-            Event::dispatch('user.admin.delete.before', $id);
-
             if (auth()->guard('admin')->user()->id == $id) {
                 return response()->json([
                     'redirect' => route('super.users.confirm', ['id' => $id]),
@@ -170,8 +156,6 @@ class UserController extends Controller
                 $this->adminRepository->delete($id);
 
                 session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Admin']));
-
-                Event::dispatch('user.admin.delete.after', $id);
 
                 return response()->json(['message' => true], 200);
             } catch (\Exception $e) {
@@ -256,7 +240,13 @@ class UserController extends Controller
 
         $isStatusChangedToInactive = (int) $data['status'] === 0 && (int) $user->status === 1;
 
-        if ($isStatusChangedToInactive && $this->adminRepository->countAdminsWithAllAccessAndActiveStatus() === 1) {
+        if (
+            $isStatusChangedToInactive
+            && (
+                auth()->guard('admin')->user()->id === (int) $id
+                || $this->adminRepository->countAdminsWithAllAccessAndActiveStatus() === 1
+            )
+        ) {
             return $this->cannotChangeRedirectResponse('status');
         }
 
@@ -264,8 +254,8 @@ class UserController extends Controller
          * Is user with `permission_type` all role changed.
          */
         $isRoleChanged = $user->role->permission_type === 'all'
-            && isset($data['role_id'])
-            && (int) $data['role_id'] !== $user->role_id;
+        && isset($data['role_id'])
+        && (int) $data['role_id'] !== $user->role_id;
 
         if ($isRoleChanged && $this->adminRepository->countAdminsWithAllAccess() === 1) {
             return $this->cannotChangeRedirectResponse('role');
@@ -283,7 +273,7 @@ class UserController extends Controller
     private function cannotChangeRedirectResponse(string $columnName): \Illuminate\Http\RedirectResponse
     {
         session()->flash('error', trans('admin::app.response.cannot-change', [
-            'name' => $columnName
+            'name' => $columnName,
         ]));
 
         return redirect()->route($this->_config['redirect']);

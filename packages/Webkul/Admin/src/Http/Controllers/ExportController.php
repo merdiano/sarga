@@ -32,7 +32,7 @@ class ExportController extends Controller
 
         $path = '\Webkul\Admin\DataGrids' . '\\' . last($gridName);
 
-        $gridInstance = new $path;
+        $gridInstance = app($path);
 
         $records = $gridInstance->export();
 

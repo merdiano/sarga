@@ -10,6 +10,33 @@
     $channelLocales = core()->getAllLocalesByRequestedChannel()['locales'];
 @endphp
 
+@push('css')
+
+    <style>
+        @media only screen and (max-width: 680px){
+
+            .content-container .content .page-header .page-title {
+                float: left;
+                width: 100%;
+                margin-bottom: 12px;
+            }
+           
+            .content-container .content .page-header .page-action button {
+                position: absolute;
+                right: 2px;
+                top: 10px !important;
+            }
+
+            .content-container .content .page-header .control-group {
+                margin-top:16px !important;
+                width: 100% !important;
+                margin-left: 0px !important;
+            }
+        }
+    </style>
+
+@endpush
+
 @section('content')
     <div class="content">
         <form
@@ -117,9 +144,6 @@
                             value="{{ $metaData ? $metaData->header_content_count : '5' }}" />
                     </div>
 
-
-
-
                     <div class="control-group">
                         <label style="width:100%;">
                             {{ __('velocity::app.admin.meta-data.home-page-content') }}
@@ -217,6 +241,8 @@
                                 :button-label="'{{ __('velocity::app.admin.meta-data.add-image-btn-title') }}'">
                             </image-wrapper>
                         @endif
+
+                        <span class="control-info mt-10">{{ __('velocity::app.admin.meta-data.image-four-resolution') }}</span>
                     </div>
 
                     <div class="control-group">
@@ -258,6 +284,7 @@
                                 :button-label="'{{ __('velocity::app.admin.meta-data.add-image-btn-title') }}'">
                             </image-wrapper>
                         @endif
+                        <span class="control-info mt-10">{{ __('velocity::app.admin.meta-data.image-three-resolution') }}</span>
                     </div>
 
                     <div class="control-group">
@@ -296,6 +323,7 @@
                                 :button-label="'{{ __('velocity::app.admin.meta-data.add-image-btn-title') }}'">
                             </image-wrapper>
                         @endif
+                        <span class="control-info mt-10">{{ __('velocity::app.admin.meta-data.image-two-resolution') }}</span>
                     </div>
                 </div>
             </accordian>

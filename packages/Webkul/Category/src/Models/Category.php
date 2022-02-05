@@ -2,6 +2,7 @@
 
 namespace Webkul\Category\Models;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Webkul\Core\Eloquent\TranslatableModel;
 use Kalnoy\Nestedset\NodeTrait;
 use Illuminate\Support\Facades\Storage;
@@ -166,9 +167,9 @@ class Category extends TranslatableModel implements CategoryContract
     /**
      * Create a new factory instance for the model.
      *
-     * @return CategoryFactory
+     * @return Factory
      */
-    protected static function newFactory(): CategoryFactory
+    protected static function newFactory(): Factory
     {
         return CategoryFactory::new();
     }

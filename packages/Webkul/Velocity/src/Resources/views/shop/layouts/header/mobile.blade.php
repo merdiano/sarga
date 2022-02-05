@@ -18,7 +18,7 @@
 
     {{-- this is default content if js is not loaded --}}
     <div class="row">
-        <div class="col-6">
+        <div class="col-sm-6 col-xs-12">
             <div class="hamburger-wrapper">
                 <i class="rango-toggle hamburger"></i>
             </div>
@@ -28,7 +28,7 @@
             </a>
         </div>
 
-        <div class="right-vc-header col-6">
+        <div class="right-vc-header col-sm-6 col-xs-12">
             <a href="{{ auth()->guard('customer')->check() ? route('velocity.customer.product.compare') : route('velocity.product.compare') }}" class="compare-btn unset">
                 <i class="material-icons">compare_arrows</i>
             </a>
@@ -123,10 +123,17 @@
     <template v-slot:extra-navigation>
         <li>
             @auth('customer')
+                <form id="customerLogout" action="{{ route('customer.session.destroy') }}" method="POST">
+                    @csrf
+
+                    @method('DELETE')
+                </form>
+
                 <a
                     class="unset"
-                    href="{{ route('customer.session.destroy') }}">
-                    <span>{{ __('shop::app.header.logout') }}</span>
+                    href="{{ route('customer.session.destroy') }}"
+                    onclick="event.preventDefault(); document.getElementById('customerLogout').submit();">
+                    {{ __('shop::app.header.logout') }}
                 </a>
             @endauth
 

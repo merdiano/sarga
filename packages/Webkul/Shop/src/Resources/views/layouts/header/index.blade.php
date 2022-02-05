@@ -174,11 +174,17 @@
                                     @endif
 
                                     <li>
-                                        <a href="{{ route('shop.checkout.cart.index') }}">{{ __('shop::app.header.cart') }}</a>
-                                    </li>
+                                        <form id="customerLogout" action="{{ route('customer.session.destroy') }}" method="POST">
+                                            @csrf
 
-                                    <li>
-                                        <a href="{{ route('customer.session.destroy') }}">{{ __('shop::app.header.logout') }}</a>
+                                            @method('DELETE')
+                                        </form>
+
+                                        <a
+                                            href="{{ route('customer.session.destroy') }}"
+                                            onclick="event.preventDefault(); document.getElementById('customerLogout').submit();">
+                                            {{ __('shop::app.header.logout') }}
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
@@ -236,7 +242,7 @@
 
                 <input type="file" :id="'image-search-container-' + _uid" ref="image_search_input" v-on:change="uploadImage()"/>
 
-                <img :id="'uploaded-image-url-' +  + _uid" :src="uploaded_image_url" alt="" width="20" height="20" />
+                <img :id="'uploaded-image-url-' +  + _uid" :src="uploaded_image_url" alt="" width="20" height="20" style="display:none" />
             </label>
         </div>
     </script>
