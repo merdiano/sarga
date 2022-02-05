@@ -662,7 +662,7 @@ class Core
             $amount = 0;
         }
 
-        return $this->formatPrice($this->convertPrice($amount), $this->getCurrentCurrency()->code);
+        return $this->formatPrice($this->convertPrice($amount));
     }
 
     /**
@@ -673,26 +673,9 @@ class Core
      */
     public function currencySymbol($code)
     {
-        $formatter = new \NumberFormatter('tr_TR' . '@currency=' . $code, \NumberFormatter::CURRENCY);
+        $formatter = new \NumberFormatter(app()->getLocale() . '@currency=' . $code, \NumberFormatter::CURRENCY);
 
         return $formatter->getSymbol(\NumberFormatter::CURRENCY_SYMBOL);
-    }
-
-    /**
-     * Format and convert price with currency symbol.
-     *
-     * @param  float  $price
-     * @return string
-     */
-    public function formatPrice($price, $currencyCode)
-    {
-        if (is_null($price)) {
-            $price = 0;
-        }
-
-        $formatter = new \NumberFormatter('ru_RU', \NumberFormatter::CURRENCY);
-
-        return $formatter->formatCurrency($price, $currencyCode);
     }
 
     /**
@@ -702,7 +685,7 @@ class Core
      */
     public function getAccountJsSymbols()
     {
-        $formater = new \NumberFormatter('tr_TR', \NumberFormatter::CURRENCY);
+        $formater = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
 
         $pattern = $formater->getPattern();
 
@@ -715,6 +698,38 @@ class Core
             'decimal' => $formater->getSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL),
             'format'  => $pattern,
         ];
+    }
+
+    /**
+     * Format and convert price with currency symbol.
+     *
+     * @param  float  $price
+     * @param  string (optional)  $currencyCode
+     * @return string
+     */
+    public function formatPrice($price, $currencyCode = null)
+    {
+        if (is_null($price)) {
+            $price = 0;
+        }
+
+        $currency = $currencyCode
+            ? $this->getAllCurrencies()->where('code', $currencyCode)->first()
+            : $this->getCurrentCurrency();
+
+        $formatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
+
+        if ($symbol = $currency->symbol) {
+            if ($this->currencySymbol($currency) == $symbol) {
+                return $formatter->formatCurrency($price, $currency->code);
+            }
+
+            $formatter->setSymbol(\NumberFormatter::CURRENCY_SYMBOL, $symbol);
+
+            return $formatter->format($this->convertPrice($price));
+        }
+
+        return $formatter->formatCurrency($price, $currency->code);
     }
 
     /**
@@ -731,7 +746,7 @@ class Core
             $price = 0;
         }
 
-        $formater = new \NumberFormatter('tr_TR', \NumberFormatter::CURRENCY);
+        $formater = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
 
         if ($symbol = $this->getBaseCurrency()->symbol) {
             if ($this->currencySymbol($this->getBaseCurrencyCode()) == $symbol) {
@@ -860,13 +875,7 @@ class Core
         }
 
         if (! $coreConfigValue) {
-            $fields = explode('.', $field);
-
-            array_shift($fields);
-
-            $field = implode('.', $fields);
-
-            return Config::get($field);
+            return $this->getDefaultConfig($field);
         }
 
         return $coreConfigValue->value;
@@ -949,6 +958,36 @@ class Core
         } else {
             return false;
         }
+    }
+
+    /**
+     * Is country required.
+     *
+     * @return bool
+     */
+    public function isCountryRequired()
+    {
+        return $this->getConfigData('customer.address.requirements.country') == 1;
+    }
+
+    /**
+     * Is state required.
+     *
+     * @return bool
+     */
+    public function isStateRequired()
+    {
+        return $this->getConfigData('customer.address.requirements.state') == 1;
+    }
+
+    /**
+     * Is postcode required.
+     *
+     * @return bool
+     */
+    public function isPostCodeRequired()
+    {
+        return $this->getConfigData('customer.address.requirements.postcode') == 1;
     }
 
     /**
@@ -1291,5 +1330,24 @@ class Core
         }
 
         return $coreConfigValue;
+    }
+
+    /**
+     * Get default config.
+     *
+     * @param  string  $field
+     * @return mixed
+     */
+    protected function getDefaultConfig($field)
+    {
+        $configFieldInfo = $this->getConfigField($field);
+
+        $fields = explode('.', $field);
+
+        array_shift($fields);
+
+        $field = implode('.', $fields);
+
+        return Config::get($field, $configFieldInfo['default'] ?? null);
     }
 }
