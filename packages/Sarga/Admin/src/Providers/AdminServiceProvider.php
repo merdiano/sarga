@@ -4,8 +4,6 @@ namespace Sarga\Admin\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use Webkul\Admin\Http\Middleware\Locale;
-use Webkul\Core\Tree;
 
 class AdminServiceProvider extends ServiceProvider
 {
