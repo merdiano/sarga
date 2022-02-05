@@ -33,11 +33,11 @@ class Configurable extends AbstractType
      */
     protected $additionalViews = [
         'admin::catalog.products.accordians.images',
+        'admin::catalog.products.accordians.videos',
         'admin::catalog.products.accordians.categories',
         'admin::catalog.products.accordians.variations',
         'admin::catalog.products.accordians.channels',
         'admin::catalog.products.accordians.product-links',
-        'admin::catalog.products.accordians.videos',
     ];
 
     /**
@@ -350,7 +350,7 @@ class Configurable extends AbstractType
      * Fill required fields.
      *
      * @param  array  $data
-     * @param  int    $id
+     * @param  int  $id
      * @return \Webkul\Product\Contracts\Product
      */
     public function fillRequiredFields(array $data): array
@@ -368,7 +368,7 @@ class Configurable extends AbstractType
     /**
      * Check variant option availability.
      *
-     * @param  array                              $data
+     * @param  array  $data
      * @param  \Webkul\Product\Contracts\Product  $product
      * @return bool
      */
@@ -656,9 +656,13 @@ class Configurable extends AbstractType
 
         if (isset($options1['selected_configurable_option']) && isset($options2['selected_configurable_option'])) {
             return $options1['selected_configurable_option'] === $options2['selected_configurable_option'];
-        } elseif (! isset($options1['selected_configurable_option'])) {
+        }
+
+        if (! isset($options1['selected_configurable_option'])) {
             return false;
-        } elseif (! isset($options2['selected_configurable_option'])) {
+        }
+
+        if (! isset($options2['selected_configurable_option'])) {
             return false;
         }
     }

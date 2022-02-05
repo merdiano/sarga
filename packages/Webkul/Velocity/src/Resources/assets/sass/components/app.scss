@@ -742,6 +742,11 @@
                 }
             }
         }
+
+        .misc {
+            display: flex;
+            justify-content: space-between;
+        }
     }
 
     .continue-shopping-btn {
@@ -757,6 +762,21 @@
 
         .control-error {
             padding: 10px 0;
+        }
+    }
+}
+
+
+@media only screen and (max-width: 375px) {
+    .cart-details {
+        .cart-content {
+            .misc {
+                flex-direction: column;
+
+                button {
+                    margin-top: 10px;
+                }
+            }
         }
     }
 }
@@ -957,12 +977,6 @@
 
                 .card {
                     height: 100%;
-
-                    ul {
-                        li {
-                            display: inline-block;
-                        }
-                    }
                 }
             }
 
@@ -1340,12 +1354,6 @@
 
             h5 {
                 font-size: 14px;
-            }
-
-            ul {
-                li {
-                    display: inline-block;
-                }
             }
 
             .add-address-button {
@@ -2489,7 +2497,7 @@
 }
 
 @media only screen and (max-width: 425px) {
-  
+
     .cart-details {
 
         .cart-content {
