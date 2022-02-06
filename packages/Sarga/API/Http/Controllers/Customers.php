@@ -33,7 +33,7 @@ class Customers extends AuthController
             return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 
-        $data = [
+        $customer = $this->customerRepository->create([
             'first_name'  => $request->get('first_name'),
             'last_name'   => $request->get('last_name'),
             'phone'       => $request->get('phone'),
@@ -42,21 +42,7 @@ class Customers extends AuthController
             'is_verified' => 1,
             'gender'      => $request->get('gender'),
             'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id
-        ];
-
-        Event::dispatch('customer.registration.before');
-
-        $customer = $this->customerRepository->create($data);
-
-        Event::dispatch('customer.registration.after', $customer);
-
-        if (! $jwtToken = auth()->guard($this->guard)->attempt($request->only(['phone', 'password']))) {
-            return response()->json([
-                'error' => 'Invalid Email or Password',
-            ], 401);
-        }
-
-        Event::dispatch('customer.after.login', $request->get('phone'));
+        ]);
 
         return response([
             'data'    => new \Webkul\RestApi\Http\Resources\V1\Shop\Customer\CustomerResource($customer),
