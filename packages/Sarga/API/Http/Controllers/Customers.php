@@ -6,9 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Webkul\API\Http\Controllers\Shop\SessionController;
 use Webkul\API\Http\Resources\Customer\Customer as CustomerResource;
-use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\AuthController;
 
 class Customers extends AuthController
@@ -18,7 +16,7 @@ class Customers extends AuthController
      *
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request,CustomerGroupRepository $groupRepository)
+    public function register(Request $request)
     {
 
         $validation = Validator::make($request->all(), [
@@ -43,7 +41,7 @@ class Customers extends AuthController
             'channel_id'  => core()->getCurrentChannel()->id,
             'is_verified' => 1,
             'gender'      => $request->get('gender'),
-            'customer_group_id' => $groupRepository->findOneWhere(['code' => 'general'])->id
+            'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id
         ];
 
         Event::dispatch('customer.registration.before');
