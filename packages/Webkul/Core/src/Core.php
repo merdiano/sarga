@@ -717,7 +717,7 @@ class Core
             ? $this->getAllCurrencies()->where('code', $currencyCode)->first()
             : $this->getCurrentCurrency();
 
-        $formatter = new \NumberFormatter('tr_TR', \NumberFormatter::CURRENCY);
+        $formatter = new \NumberFormatter('ru_RU', \NumberFormatter::CURRENCY);
 
         if ($symbol = $currency->symbol) {
             if ($this->currencySymbol($currency) == $symbol) {
@@ -746,7 +746,7 @@ class Core
             $price = 0;
         }
 
-        $formater = new \NumberFormatter('tr_TR', \NumberFormatter::CURRENCY);
+        $formater = new \NumberFormatter('ru_RU', \NumberFormatter::CURRENCY);
 
         if ($symbol = $this->getBaseCurrency()->symbol) {
             if ($this->currencySymbol($this->getBaseCurrencyCode()) == $symbol) {
