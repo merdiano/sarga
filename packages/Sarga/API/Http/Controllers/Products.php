@@ -41,7 +41,7 @@ class Products extends ProductController
      */
     public function get($id)
     {
-        return  ($product = $this->productRepository->findl($id))?
+        return  ($product = $this->productRepository->find($id))?
             new ProductResource($product) :
             response()->json(['error' => 'not found'],404);
     }
