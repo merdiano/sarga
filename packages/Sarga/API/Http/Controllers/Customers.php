@@ -4,12 +4,14 @@ namespace Sarga\API\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Webkul\API\Http\Controllers\Shop\SessionController;
 use Webkul\API\Http\Resources\Customer\Customer as CustomerResource;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
+use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\AuthController;
 
-class Customers extends SessionController
+class Customers extends AuthController
 {
     /**
      * Method to store user's sign up form data to DB.
@@ -24,7 +26,8 @@ class Customers extends SessionController
             'last_name'  => 'required|string',
             'phone'      => 'required|digits:8|unique:customers,phone',
             'password'   => 'required|min:6',
-            'gender'     => 'in:Male,Female'
+            'gender'     => 'in:Male,Female',
+            'device_name'=> 'required'
         ]);
 
         if ($validation->fails()) {
@@ -57,10 +60,10 @@ class Customers extends SessionController
 
         Event::dispatch('customer.after.login', $request->get('phone'));
 
-        return response()->json([
-            'token'   => $jwtToken,
-            'message' => 'Logged in successfully.',
-            'data'    => new CustomerResource($customer),
+        return response([
+            'data'    => new \Webkul\RestApi\Http\Resources\V1\Shop\Customer\CustomerResource($customer),
+            'message' => 'Registered in successfully.',
+            'token'   => $customer->createToken($request->device_name, ['role:customer'])->plainTextToken,
         ]);
     }
 
@@ -75,6 +78,7 @@ class Customers extends SessionController
         $validation = Validator::make($request->all(), [
             'phone'      => 'required|digits:8',
             'password'   => 'required|min:6',
+            'device_name' => 'required',
         ]);
 
         if ($validation->fails()) {
@@ -82,22 +86,25 @@ class Customers extends SessionController
             return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 
-        $jwtToken = null;
+        $customer = $this->customerRepository->where('phone', $request->phone)->first();
 
-        if (! $jwtToken = auth()->guard($this->guard)->attempt($request->only(['phone', 'password']))) {
+        if (! $customer || ! Hash::check($request->password, $customer->password)) {
             return response()->json([
-                'error' => 'Invalid Phone Number or Password',
+                'error' => 'The provided credentials are incorrect.',
             ], 401);
         }
 
         Event::dispatch('customer.after.login', $request->get('phone'));
 
-        $customer = auth($this->guard)->user();
+        /**
+         * Preventing multiple token creation.
+         */
+        $customer->tokens()->delete();
 
-        return response()->json([
-            'token'   => $jwtToken,
+        return response([
+            'data'    => new \Webkul\RestApi\Http\Resources\V1\Shop\Customer\CustomerResource($customer),
             'message' => 'Logged in successfully.',
-            'data'    => new CustomerResource($customer),
+            'token'   => $customer->createToken($request->device_name, ['role:customer'])->plainTextToken,
         ]);
     }
 
@@ -108,7 +115,7 @@ class Customers extends SessionController
      */
     public function store(Request $request)
     {
-        $customer = auth($this->guard)->user();
+        $customer = $request->user();
 
         $validation = Validator::make($request->all(), [
             'first_name'    => 'required',
