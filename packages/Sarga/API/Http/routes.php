@@ -67,10 +67,16 @@ Route::group(['prefix' => 'api'], function () {
              * Customer address routes.
              */
             Route::get('addresses', [Addresses::class, 'index']);
-            Route::post('addresses', [Addresses::class, 'create']);
-            Route::get('addresses/{id}', [Addresses::class, 'show']);
-            Route::put('addresses/{id}', [Addresses::class, 'update']);
+            Route::post('addresses', [Addresses::class, 'createAddress']);
+            Route::put('addresses/{id}', [Addresses::class, 'updateAddress']);
             Route::delete('addresses/{id}', [Addresses::class, 'destroy']);
+            /**
+             * Recipients
+             */
+            Route::get('recipients', [Addresses::class, 'recipients']);
+            Route::post('recipients', [Addresses::class, 'createRecipient']);
+            Route::put('recipients/{id}', [Addresses::class, 'updateRecipient']);
+            Route::delete('recipients/{id}', [Addresses::class, 'destroy']);
         });
     });
 

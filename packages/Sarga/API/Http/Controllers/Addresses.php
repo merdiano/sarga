@@ -2,31 +2,100 @@
 
 namespace Sarga\API\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Sarga\API\Http\Requests\AddressRequest;
+use Sarga\API\Http\Requests\RecipientRequest;
+use Sarga\API\Http\Resources\Customer\AddressResource;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\AddressController;
-use Webkul\RestApi\Http\Resources\V1\Shop\Customer\CustomerAddressResource;
+
 
 class Addresses extends AddressController
 {
     /**
-     * Store address.
+     * Get customer addresses.
      *
-     * @param  \Webkul\Customer\Http\Requests\CustomerAddressRequest  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function create(AddressRequest $request)
+    public function index(Request $request)
+    {
+         $addresses = $request->user()
+            ->addresses()
+            ->where('address_type','customer')
+            ->get();
+
+        return response([
+            'data' => AddressResource::collection($addresses),
+        ]);
+    }
+
+    public function recipients(Request $request){
+
+        $addresses = $request->user()
+            ->addresses()
+            ->where('address_type','recipient')
+            ->get();
+
+        return response([
+            'data' => AddressResource::collection($addresses),
+        ]);
+    }
+
+    public function createAddress(AddressRequest $request)
     {
         $data = $request->all();
         $data['address1'] = implode(PHP_EOL, array_filter($data['address1']));
         $data['customer_id'] = $request->user()->id;
-        $data['country'] = 'Turkmenistan';
-        $data['postcode'] = '0000';
+//        $data['country'] = 'Turkmenistan';
+//        $data['postcode'] = '0000';
+        $data['first_name'] = $request->user()->first_name;
+        $data['last_name'] = $request->user()->last_name;
+        $data['company_name'] = $request->get('note');
+        $data['address_type'] = 'customer';
 
         $customerAddress = $this->customerAddressRepository->create($data);
 
         return response([
-            'data'    => new CustomerAddressResource($customerAddress),
+            'data'    => new AddressResource($customerAddress),
             'message' => 'Your address has been created successfully.',
+        ]);
+    }
+
+    public function createRecipient(RecipientRequest $request){
+        $data = $request->all();
+        $data['address_type'] = 'recipient';
+        $data['customer_id'] = $request->user()->id;
+        $data['address1'] = 'recipient';
+        $data['city'] = 'recipient';
+
+        $customerAddress = $this->customerAddressRepository->create($data);
+
+        return response([
+            'data'    => new AddressResource($customerAddress),
+            'message' => 'Your recipient has been created successfully.',
+        ]);
+    }
+
+    public function updateAddress(AddressRequest $request, int $id)
+    {
+        $data = $request->all();
+        $data['address1'] = implode(PHP_EOL, array_filter($data['address1']));
+        $data['company_name'] = $request->get('note');
+        $customerAddress = $this->customerAddressRepository->update($data, $id);
+
+        return response([
+            'data'    => new AddressResource($customerAddress),
+            'message' => 'Your address has been updated successfully.',
+        ]);
+    }
+
+    public function updateRecipient(RecipientRequest $request, int $id)
+    {
+        $recipient = $this->customerAddressRepository->update($request->all(), $id);
+
+        return response([
+            'data'    => new AddressResource($recipient),
+            'message' => 'Your recipient has been updated successfully.',
         ]);
     }
 }
