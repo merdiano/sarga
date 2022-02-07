@@ -4,7 +4,7 @@ namespace Sarga\API\Http\Resources\Customer;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AddressResource extends JsonResource
+class RecipientResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

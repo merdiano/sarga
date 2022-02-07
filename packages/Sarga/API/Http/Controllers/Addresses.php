@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Sarga\API\Http\Requests\AddressRequest;
 use Sarga\API\Http\Requests\RecipientRequest;
 use Sarga\API\Http\Resources\Customer\AddressResource;
+use Sarga\API\Http\Resources\Customer\RecipientResource;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\AddressController;
 
 
@@ -68,10 +69,8 @@ class Addresses extends AddressController
         $data['address1'] = 'recipient';
         $data['city'] = 'recipient';
 
-        $customerAddress = $this->customerAddressRepository->create($data);
-
         return response([
-            'data'    => new AddressResource($customerAddress),
+            'data'    => new RecipientResource($this->customerAddressRepository->create($data)),
             'message' => 'Your recipient has been created successfully.',
         ]);
     }
@@ -94,7 +93,7 @@ class Addresses extends AddressController
         $recipient = $this->customerAddressRepository->update($request->all(), $id);
 
         return response([
-            'data'    => new AddressResource($recipient),
+            'data'    => new RecipientResource($recipient),
             'message' => 'Your recipient has been updated successfully.',
         ]);
     }
