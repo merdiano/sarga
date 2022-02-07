@@ -90,16 +90,14 @@ class Products extends ProductController
 
                 if($product->super_attributes->count()>1 && $option)
                 {
-                    $last_attribute = $product->super_attributes->last();
-
                     $products =  $variants->where($attribute->code,$variant->{$attribute->code})
-                        ->map(function ($item,$key) use ($last_attribute){
-                        $option = $last_attribute->options->where('id',$item->{$last_attribute->code})->first();
+                        ->map(function ($item,$key) use ($product){
+//                        $option = $last_attribute->options->where('id',$item->{$last_attribute->code})->first();
 
-                        return ProductVariant::make($item,$option);
+                        return ProductVariant::make($item,$product->super_attributes);
                     });
 
-                    $item['variants']['attribute'] = SuperAttribute::make($last_attribute);
+                    $item['variants']['attribute'] = SuperAttribute::make($product->super_attributes->last());
                     $item['variants']['products'] = $products->values();
                 }
                 else

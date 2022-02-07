@@ -12,13 +12,9 @@ class ProductVariant extends JsonResource
      * @return void
      */
 
-    public function __construct($resource, $opion)
+    public function __construct($resource, $attributes)
     {
-//        $this->productReviewHelper = app('Webkul\Product\Helpers\Review');
-
-        $this->wishlistHelper = app('Webkul\Customer\Helpers\Wishlist');
-        $this->option = $opion;
-        $this->wishlistHelper = app('Webkul\Customer\Helpers\Wishlist');
+        $this->attributes = $attributes;
         parent::__construct($resource);
     }
     /**
@@ -42,7 +38,7 @@ class ProductVariant extends JsonResource
             'formatted_price'   => core()->currency($productTypeInstance->getMinimalPrice()),
             'short_description' => $product->short_description,
             'description'       => $product->description,
-            "option_value"      => $this->option->admin_name,
+            "option_value"      => $this->last_attribute_value(),
             /* product's checks */
             'in_stock'          => $product->haveSufficientQuantity(1),
             'is_wishlisted'     => $this->wishlistHelper->getWishlistProduct($product) ? true : false,
@@ -50,7 +46,25 @@ class ProductVariant extends JsonResource
             /* special price cases */
             $this->merge($this->specialPriceInfo()),
             'images'            => ProductImage::collection($product->images),
+            'attributes'        => $this->super_attributes()->toArray(),
         ];
+    }
+
+    private function super_attributes(){
+        return $this->attributes->map(function($item, $key){
+            return [
+                'code' => $item->code,
+                'value' => $this->{$item->code},
+                'name' => $item->name,
+                'label' => $item->options->where('id',$this->{$item->code})->first()->admin_name
+            ];
+        });
+    }
+
+    private function last_attribute_value(){
+        $last_attribute = $this->attributes->last();
+        $option = $last_attribute->options->where('id',$this->{$last_attribute->code})->first();
+        return $option->admin_name;
     }
     /**
      * Get special price information.
