@@ -57,7 +57,7 @@ class Carts extends CartController
             $cart = Cart::getCart();
 
             return response([
-                'data'    => $cart ? new \Webkul\RestApi\Http\Resources\V1\Shop\Checkout\CartResource($cart) : null,
+                'data'    => $cart ? new CartResource($cart) : null,
                 'message' => __('rest-api::app.checkout.cart.item.success'),
             ]);
         } catch (Exception $e) {
