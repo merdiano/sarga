@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Sarga\API\Http\Controllers\Addresses;
+use Sarga\API\Http\Controllers\Carts;
+use Sarga\API\Http\Controllers\Checkout;
 use Sarga\API\Http\Controllers\Customers;
 use Sarga\API\Http\Controllers\Categories;
 use Sarga\API\Http\Controllers\Channels;
@@ -77,6 +79,38 @@ Route::group(['prefix' => 'api'], function () {
             Route::post('recipients', [Addresses::class, 'createRecipient']);
             Route::put('recipients/{id}', [Addresses::class, 'updateRecipient']);
             Route::delete('recipients/{id}', [Addresses::class, 'destroy']);
+
+            /**
+             * Customer cart routes.
+             */
+            Route::get('customer/cart', [Carts::class, 'get']);
+
+            Route::post('customer/cart/add/{productId}', [Carts::class, 'add']);
+
+            Route::put('customer/cart/update', [Carts::class, 'update']);
+
+            Route::delete('customer/cart/remove/{cartItemId}', [Carts::class, 'removeItem']);
+
+            Route::delete('customer/cart/empty', [Carts::class, 'empty']);
+
+            Route::post('customer/cart/move-to-wishlist/{cartItemId}', [Carts::class, 'moveToWishlist']);
+
+            Route::post('customer/cart/coupon', [Carts::class, 'applyCoupon']);
+
+            Route::delete('customer/cart/coupon', [Carts::class, 'removeCoupon']);
+
+            /**
+             * Customer checkout routes.
+             */
+            Route::post('customer/checkout/save-address', [Checkout::class, 'saveAddress']);
+
+            Route::post('customer/checkout/save-shipping', [Checkout::class, 'saveShipping']);
+
+            Route::post('customer/checkout/save-payment', [Checkout::class, 'savePayment']);
+
+            Route::post('customer/checkout/check-minimum-order', [Checkout::class, 'checkMinimumOrder']);
+
+            Route::post('customer/checkout/save-order', [Checkout::class, 'saveOrder']);
         });
     });
 
