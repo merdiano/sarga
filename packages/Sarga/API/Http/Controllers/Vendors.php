@@ -32,7 +32,7 @@ class Vendors extends Controller
             ->get();
 
         foreach ($vendors as $vendor){
-            if($vendor->categories && $mainCats = $vendor->categories->where('type','main')->first()){
+            if($vendor->categories && $mainCats = $vendor->categories->first()){
                 $cat_ids = json_decode($mainCats->categories,true);
 //                $vendor->test = Category::collection($this->categoryRepository->getVisibleCategoryTree($cat_ids[0]));
                 $vendor->main_categories = $this->categoryRepository->whereIn('id',$cat_ids)

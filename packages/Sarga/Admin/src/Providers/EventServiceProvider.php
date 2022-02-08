@@ -16,8 +16,8 @@ class EventServiceProvider extends ServiceProvider
 {
 
     public function boot(){
-        Event::listen('marketplace.sellers.account.profile.edit.before', function($viewRenderEventManager) {
-            $viewRenderEventManager->addTemplate('sarga_admin::sellers.seller-brand');
-        });
+//        Event::listen('marketplace.sellers.account.profile.edit.before', function($viewRenderEventManager) {
+//            $viewRenderEventManager->addTemplate('sarga_admin::sellers.seller-brand');
+//        });
     }
 }
