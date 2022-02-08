@@ -83,34 +83,34 @@ Route::group(['prefix' => 'api'], function () {
             /**
              * Customer cart routes.
              */
-            Route::get('customer/cart', [Carts::class, 'get']);
+            Route::get('cart', [Carts::class, 'get']);
 
-            Route::post('customer/cart/add/{productId}', [Carts::class, 'add']);
+            Route::post('cart/add/{productId}', [Carts::class, 'add']);
 
-            Route::put('customer/cart/update', [Carts::class, 'update']);
+            Route::put('cart/update', [Carts::class, 'update']);
 
-            Route::delete('customer/cart/remove/{cartItemId}', [Carts::class, 'removeItem']);
+            Route::delete('cart/remove/{cartItemId}', [Carts::class, 'removeItem']);
 
-            Route::delete('customer/cart/empty', [Carts::class, 'empty']);
+            Route::delete('cart/empty', [Carts::class, 'empty']);
 
-            Route::post('customer/cart/move-to-wishlist/{cartItemId}', [Carts::class, 'moveToWishlist']);
+            Route::post('cart/move-to-wishlist/{cartItemId}', [Carts::class, 'moveToWishlist']);
 
-            Route::post('customer/cart/coupon', [Carts::class, 'applyCoupon']);
+            Route::post('cart/coupon', [Carts::class, 'applyCoupon']);
 
-            Route::delete('customer/cart/coupon', [Carts::class, 'removeCoupon']);
+            Route::delete('cart/coupon', [Carts::class, 'removeCoupon']);
 
             /**
              * Customer checkout routes.
              */
-            Route::post('customer/checkout/save-address', [Checkout::class, 'saveAddress']);
+            Route::post('checkout/save-address', [Checkout::class, 'saveAddress']);
 
-            Route::post('customer/checkout/save-shipping', [Checkout::class, 'saveShipping']);
+            Route::post('checkout/save-shipping', [Checkout::class, 'saveShipping']);
 
-            Route::post('customer/checkout/save-payment', [Checkout::class, 'savePayment']);
+            Route::post('checkout/save-payment', [Checkout::class, 'savePayment']);
 
-            Route::post('customer/checkout/check-minimum-order', [Checkout::class, 'checkMinimumOrder']);
+            Route::post('checkout/check-minimum-order', [Checkout::class, 'checkMinimumOrder']);
 
-            Route::post('customer/checkout/save-order', [Checkout::class, 'saveOrder']);
+            Route::post('checkout/save-order', [Checkout::class, 'saveOrder']);
         });
     });
 
