@@ -4,12 +4,13 @@ namespace Sarga\API\Http\Resources\Checkout;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Sarga\API\Http\Resources\Catalog\Product as ProductResource;
+use Webkul\Marketplace\Repositories\ProductRepository;
 
 class CartItemResource extends JsonResource
 {
     public function __construct($resource)
     {
-        $this->sellerProductRepository = app(Webkul\Marketplace\Repositories\ProductRepository::class);
+        $this->sellerProductRepository = app(ProductRepository::class);
         parent::__construct($resource);
     }
 
