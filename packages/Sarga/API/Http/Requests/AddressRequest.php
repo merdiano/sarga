@@ -18,7 +18,7 @@ class AddressRequest extends CustomerAddressRequest
         return [
             'note' => [new AlphaNumericSpace,'max:191'],
             'address1'      => ['required', 'array'],
-            'state'        => ['required', new AlphaNumericSpace],
+//            'state'        => ['required', new AlphaNumericSpace],
             'city'         => ['required'],
         ];
     }

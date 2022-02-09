@@ -3,6 +3,7 @@
 namespace Sarga\API\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Sarga\API\Http\Requests\AddressRequest;
 use Sarga\API\Http\Requests\RecipientRequest;
 use Sarga\API\Http\Resources\Customer\AddressResource;
@@ -90,11 +91,17 @@ class Addresses extends AddressController
 
     public function updateRecipient(RecipientRequest $request, int $id)
     {
-        $recipient = $this->customerAddressRepository->update($request->all(), $id);
+        if($recipient = \DB::table('addresses')->find($id)){
+            $recipient->update($request->all());
+            return response([
+                'data'    => new RecipientResource($recipient),
+                'message' => 'Your recipient has been updated successfully.',
+            ]);
+        }
 
         return response([
-            'data'    => new RecipientResource($recipient),
-            'message' => 'Your recipient has been updated successfully.',
+            'error' => 'not found';
         ]);
+
     }
 }
