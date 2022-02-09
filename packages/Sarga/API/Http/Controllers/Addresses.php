@@ -100,7 +100,7 @@ class Addresses extends AddressController
         }
 
         return response([
-            'error' => 'not found';
+            'error' => 'not found'
         ]);
 
     }
