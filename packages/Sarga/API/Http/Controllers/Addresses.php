@@ -91,8 +91,7 @@ class Addresses extends AddressController
 
     public function updateRecipient(RecipientRequest $request, int $id)
     {
-        if($recipient = \DB::table('addresses')->find($id)){
-            $recipient->update($request->all());
+        if($recipient = \DB::table('addresses')->where('id',$id)->update($request->all())){
             return response([
                 'data'    => new RecipientResource($recipient),
                 'message' => 'Your recipient has been updated successfully.',
