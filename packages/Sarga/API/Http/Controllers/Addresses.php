@@ -39,7 +39,7 @@ class Addresses extends AddressController
             ->get();
 
         return response([
-            'data' => AddressResource::collection($addresses),
+            'data' => RecipientResource::collection($addresses),
         ]);
     }
 
