@@ -41,7 +41,6 @@ class ProductVariant extends JsonResource
             "option_value"      => $this->last_attribute_value(),
             /* product's checks */
             'in_stock'          => $product->haveSufficientQuantity(1),
-            'is_wishlisted'     => $this->wishlistHelper->getWishlistProduct($product) ? true : false,
             'is_item_in_cart'   => \Cart::hasProduct($product),
             /* special price cases */
             $this->merge($this->specialPriceInfo()),
