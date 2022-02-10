@@ -8,12 +8,6 @@ use Webkul\Marketplace\Repositories\ProductRepository;
 
 class CartItemResource extends JsonResource
 {
-    public function __construct($resource)
-    {
-        $this->sellerProductRepository = app(ProductRepository::class);
-        parent::__construct($resource);
-    }
-
     /**
      * Transform the resource into an array.
      *
@@ -22,10 +16,8 @@ class CartItemResource extends JsonResource
      */
     public function toArray($request)
     {
-        $seller = $this->sellerProductRepository->getSellerByProductId($this->product_id);
         return [
             'id'                            => $this->id,
-            'vendor'                        => $this->when($seller,$seller->shop_title),
             'quantity'                      => $this->quantity,
             'name'                          => $this->name,
             'base_total_weight'             => $this->base_total_weight,

@@ -4,10 +4,16 @@ namespace Sarga\API\Http\Resources\Checkout;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Sarga\API\Http\Resources\Customer\AddressResource;
+use Webkul\Marketplace\Repositories\ProductRepository;
 use Webkul\Tax\Helpers\Tax;
 
 class CartResource extends JsonResource
 {
+    public function __construct($resource)
+    {
+        $this->sellerProductRepository = app(ProductRepository::class);
+        parent::__construct($resource);
+    }
     /**
      * Transform the resource into an array.
      *
@@ -30,33 +36,33 @@ class CartResource extends JsonResource
             'items_count'                        => $this->items_count,
             'items_qty'                          => $this->items_qty,
             'grand_total'                        => $this->grand_total,
-            'formatted_grand_total'               => core()->formatPrice($this->grand_total, $this->cart_currency_code),
+            'formatted_grand_total'              => core()->formatPrice($this->grand_total, $this->cart_currency_code),
             'base_grand_total'                   => $this->base_grand_total,
-            'formatted_base_grand_total'          => core()->formatBasePrice($this->base_grand_total),
+            'formatted_base_grand_total'         => core()->formatBasePrice($this->base_grand_total),
             'sub_total'                          => $this->sub_total,
-            'formatted_sub_total'                 => core()->formatPrice($this->sub_total, $this->cart_currency_code),
+            'formatted_sub_total'                => core()->formatPrice($this->sub_total, $this->cart_currency_code),
             'base_sub_total'                     => $this->base_sub_total,
-            'formatted_base_sub_total'            => core()->formatBasePrice($this->base_sub_total),
+            'formatted_base_sub_total'           => core()->formatBasePrice($this->base_sub_total),
             'tax_total'                          => $this->tax_total,
-            'formatted_tax_total'                 => core()->formatPrice($this->tax_total, $this->cart_currency_code),
+            'formatted_tax_total'                => core()->formatPrice($this->tax_total, $this->cart_currency_code),
             'base_tax_total'                     => $this->base_tax_total,
-            'formatted_base_tax_total'            => core()->formatBasePrice($this->base_tax_total),
+            'formatted_base_tax_total'           => core()->formatBasePrice($this->base_tax_total),
             'discount'                           => $this->discount_amount,
-            'formatted_discount'                  => core()->formatPrice($this->discount_amount, $this->cart_currency_code),
+            'formatted_discount'                 => core()->formatPrice($this->discount_amount, $this->cart_currency_code),
             'base_discount'                      => $this->base_discount_amount,
-            'formatted_base_discount'             => core()->formatBasePrice($this->base_discount_amount),
+            'formatted_base_discount'            => core()->formatBasePrice($this->base_discount_amount),
             'checkout_method'                    => $this->checkout_method,
-            'items'                              => CartItemResource::collection($this->items),
+            'vendors'                            => $this->groupByVendors($this->items),
             'selected_shipping_rate'             => new CartShippingRateResource($this->selected_shipping_rate),
             'payment'                            => new CartPaymentResource($this->payment),
             'billing_address'                    => new AddressResource($this->billing_address),
             'shipping_address'                   => new AddressResource($this->shipping_address),
             'taxes'                              => json_encode($taxes, JSON_FORCE_OBJECT),
-            'formatted_taxes'                     => json_encode($formatedTaxes, JSON_FORCE_OBJECT),
+            'formatted_taxes'                    => json_encode($formatedTaxes, JSON_FORCE_OBJECT),
             'base_taxes'                         => json_encode($baseTaxes, JSON_FORCE_OBJECT),
-            'formatted_base_taxes'                => json_encode($formatedBaseTaxes, JSON_FORCE_OBJECT),
-            'formatted_discounted_sub_total'      => core()->formatPrice($this->sub_total - $this->discount_amount, $this->cart_currency_code),
-            'formatted_base_discounted_sub_total' => core()->formatPrice($this->base_sub_total - $this->base_discount_amount, $this->cart_currency_code),
+            'formatted_base_taxes'               => json_encode($formatedBaseTaxes, JSON_FORCE_OBJECT),
+            'formatted_discounted_sub_total'     => core()->formatPrice($this->sub_total - $this->discount_amount, $this->cart_currency_code),
+            'formatted_base_discounted_sub_total'=> core()->formatPrice($this->base_sub_total - $this->base_discount_amount, $this->cart_currency_code),
         ];
     }
 
@@ -80,5 +86,14 @@ class CartResource extends JsonResource
         }
 
         return $result;
+    }
+
+    private function groupByVendors($items){
+        $data = array();
+        foreach($items as $item){
+            $seller = $this->sellerProductRepository->getSellerByProductId($item->product_id);
+            $data[$seller->shop_title ?? 'default'][] = CartItemResource::make($item);
+        }
+        return $data;
     }
 }
