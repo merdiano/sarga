@@ -33,8 +33,8 @@ class Addresses extends AddressController
 
     public function recipients(Request $request){
 
-        $addresses = $request->user()
-            ->addresses()
+        $addresses = DB::table('addresses')
+            ->where('customer_id',$request->user()->id)
             ->where('address_type','recipient')
             ->get();
 
