@@ -61,7 +61,7 @@ class ProductVariant extends JsonResource
     }
 
     private function last_attribute_value(){
-        $last_attribute = $this->attributes->last();
+        $last_attribute = is_countable($this->attributes)?$this->attributes->last():$this->attributes;
         $option = $last_attribute->options->where('id',$this->{$last_attribute->code})->first();
         return $option->admin_name;
     }
