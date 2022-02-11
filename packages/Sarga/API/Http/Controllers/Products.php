@@ -2,6 +2,7 @@
 
 namespace Sarga\API\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Catalog\ProductVariant;
 use Sarga\API\Http\Resources\Catalog\SuperAttribute;
 use Sarga\Shop\Repositories\ProductRepository;
@@ -93,7 +94,7 @@ class Products extends ProductController
                     $products =  $variants->where($attribute->code,$variant->{$attribute->code})
                         ->map(function ($item,$key) use ($product){
 //                        $option = $last_attribute->options->where('id',$item->{$last_attribute->code})->first();
-
+                            Log::info($product->super_attributes);
                         return ProductVariant::make($item,$product->super_attributes);
                     });
 

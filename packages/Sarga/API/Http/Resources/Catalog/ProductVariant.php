@@ -3,6 +3,7 @@
 namespace Sarga\API\Http\Resources\Catalog;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Log;
 
 class ProductVariant extends JsonResource
 {
@@ -61,9 +62,16 @@ class ProductVariant extends JsonResource
     }
 
     private function last_attribute_value(){
-        $last_attribute = is_countable($this->attributes)?$this->attributes->last():$this->attributes;
-        $option = $last_attribute->options->where('id',$this->{$last_attribute->code})->first();
-        return $option->admin_name;
+
+        $last_attribute = is_countable($this->attributes) ? $this->attributes->last() : $this->attributes;
+
+        if(!empty($last_attribute->options))
+        {
+            $option = $last_attribute->options->where('id',$this->{$last_attribute->code})->first();
+            return $option->admin_name;
+        }
+
+        return null;
     }
     /**
      * Get special price information.
