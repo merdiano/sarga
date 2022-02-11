@@ -94,7 +94,7 @@ class Products extends ProductController
                     $products =  $variants->where($attribute->code,$variant->{$attribute->code})
                         ->map(function ($item,$key) use ($product){
 //                        $option = $last_attribute->options->where('id',$item->{$last_attribute->code})->first();
-                            Log::info($product->super_attributes);
+//                            Log::info($product->super_attributes);
                         return ProductVariant::make($item,$product->super_attributes);
                     });
 
