@@ -46,19 +46,30 @@ class ProductVariant extends JsonResource
             /* special price cases */
             $this->merge($this->specialPriceInfo()),
             'images'            => ProductImage::collection($product->images),
-            'attributes'        => $this->super_attributes()->toArray(),
+            'attributes'        => $this->super_attributes(),
         ];
     }
 
     private function super_attributes(){
-        return $this->attributes->map(function($item, $key){
+        if(is_countable($this->attributes)){
+            return $this->attributes->map(function($item, $key){
+                return [
+                    'code' => $item->code,
+                    'value' => $this->{$item->code},
+                    'name' => $item->name,
+                    'label' => $item->options->where('id',$this->{$item->code})->first()->admin_name
+                ];
+            })->toArray();
+        }else{
+            $item = $this->attributes;
             return [
                 'code' => $item->code,
                 'value' => $this->{$item->code},
                 'name' => $item->name,
                 'label' => $item->options->where('id',$this->{$item->code})->first()->admin_name
             ];
-        });
+        }
+
     }
 
     private function last_attribute_value(){
