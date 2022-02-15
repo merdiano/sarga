@@ -74,7 +74,7 @@ class ProductVariant extends JsonResource
 
     private function last_attribute_value(){
 
-        $last_attribute = is_countable($this->attributes) ? $this->attributes->last() : $this->attributes;
+        $last_attribute = $this->attributes->last();
 
         if(!empty($last_attribute->options))
         {

@@ -89,13 +89,12 @@ class Products extends ProductController
                     'images' => $variant->images,
                 ];
 
-                if($product->super_attributes->count()>1 && $option)
+                $attributes = $product->super_attributes;
+                if($attributes->count()>1 && $option)
                 {
-                    $products =  $variants->where($attribute->code,$variant->{$attribute->code})
-                        ->map(function ($item,$key) use ($product){
-//                        $option = $last_attribute->options->where('id',$item->{$last_attribute->code})->first();
-//                            Log::info($product->super_attributes);
-                        return ProductVariant::make($item,$product->super_attributes);
+                    $products = $variants->where($attribute->code,$variant->{$attribute->code})
+                        ->map(function ($item,$key) use ($attributes){
+                        return ProductVariant::make($item,$attributes);
                     });
 
                     $item['variants']['attribute'] = SuperAttribute::make($product->super_attributes->last());
@@ -103,7 +102,7 @@ class Products extends ProductController
                 }
                 else
                 {
-                    $item['product'] = ProductVariant::make($variant,$option);
+                    $item['product'] = ProductVariant::make($variant,$attributes);
                 }
                 $gr_data['options'][] = $item;
             }
