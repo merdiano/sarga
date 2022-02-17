@@ -292,7 +292,7 @@ class ProductRepository extends WProductRepository
             $parentProduct = $this->getModel()->create($product);
             $this->assignAttributes($parentProduct, [
                 'sku' => $parentProduct->sku,
-                'price' => Arr::get($data, 'price.discountedPrice.value'),$data['price'],
+                'price' => Arr::get($data, 'price.discountedPrice.value'),
                 'name' => $data['name'],
                 'weight' => 0,
                 'status' => 1,
