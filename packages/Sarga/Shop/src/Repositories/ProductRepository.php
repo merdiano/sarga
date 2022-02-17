@@ -594,11 +594,18 @@ class ProductRepository extends WProductRepository
                         ]);
                     }
                 } else {
-                    $this->attributeValueRepository->create([
-                        'product_id'   => $product->id,
-                        'attribute_id' => $attribute->id,
-                        'value'        => $value,
-                    ]);
+                    try {
+                        $attr = [
+                            'product_id'   => $product->id,
+                            'attribute_id' => $attribute->id,
+                            'value'        => $value,
+                        ];
+                        $this->attributeValueRepository->create($attr);
+                    }catch (\Exception $e) {
+                        Log::error($e);
+                        Log::info($attr);
+                    }
+
                 }
             }
         }
