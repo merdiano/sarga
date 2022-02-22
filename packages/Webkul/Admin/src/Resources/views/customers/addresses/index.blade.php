@@ -10,7 +10,7 @@
             <div class="page-title">
                 <h1>
                     <i class="icon angle-left-icon back-link" onclick="window.location = '{{ route('admin.customer.edit', ['id' => $customer->id]) }}'"></i>
-                    
+
                     {{ __('admin::app.customers.addresses.title', ['customer_name' => $customer->first_name . ' ' . $customer->last_name]) }}
                 </h1>
             </div>
@@ -25,9 +25,7 @@
         {!! view_render_event('bagisto.admin.customer.addresses.list.before') !!}
 
         <div class="page-content">
-
-            {!! app('Webkul\Admin\DataGrids\AddressDataGrid')->render() !!}
-            
+            <datagrid-plus src="{{ route('admin.customer.addresses.index', $customer->id) }}"></datagrid-plus>
         </div>
 
         {!! view_render_event('bagisto.admin.customer.addresses.list.after') !!}

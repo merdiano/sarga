@@ -3,6 +3,7 @@
 namespace Webkul\Product\Http\Controllers;
 
 use Illuminate\Support\Facades\Event;
+use Webkul\Admin\DataGrids\CustomerReviewDataGrid;
 use Webkul\Product\Repositories\ProductReviewRepository;
 
 class ReviewController extends Controller
@@ -41,6 +42,10 @@ class ReviewController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return app(CustomerReviewDataGrid::class)->toJson();
+        }
+
         return view($this->_config['view']);
     }
 
@@ -85,16 +90,12 @@ class ReviewController extends Controller
         try {
             $this->productReviewRepository->delete($id);
 
-            session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Review']));
-
-            return response()->json(['message' => true], 200);
+            return response()->json(['message' => trans('admin::app.response.delete-success', ['name' => 'Review'])]);
         } catch (\Exception $e) {
             report($e);
-
-            session()->flash('success', trans('admin::app.response.delete-failed', ['name' => 'Review']));
         }
 
-        return response()->json(['message' => false], 400);
+        return response()->json(['message' => trans('admin::app.response.delete-failed', ['name' => 'Review'])], 500);
     }
 
     /**
@@ -154,20 +155,26 @@ class ReviewController extends Controller
                 $review = $this->productReviewRepository->findOneByField('id', $value);
 
                 try {
-                    if ($data['massaction-type'] == 'update') {
-                        if ($data['update-options'] == 1) {
-                            Event::dispatch('customer.review.update.before', $value);
+                    if (! isset($data['massaction-type'])) {
+                        return redirect()->back();
+                    }
 
-                            $review->update(['status' => 'approved']);
+                    if (! $data['massaction-type'] == 'update') {
+                        return redirect()->back();
+                    }
 
-                            Event::dispatch('customer.review.update.after', $review);
-                        } elseif ($data['update-options'] == 0) {
-                            $review->update(['status' => 'pending']);
-                        } elseif ($data['update-options'] == 2) {
-                            $review->update(['status' => 'disapproved']);
-                        } else {
-                            continue;
-                        }
+                    if ($data['update-options'] == 1) {
+                        Event::dispatch('customer.review.update.before', $value);
+
+                        $review->update(['status' => 'approved']);
+
+                        Event::dispatch('customer.review.update.after', $review);
+                    } elseif ($data['update-options'] == 0) {
+                        $review->update(['status' => 'pending']);
+                    } elseif ($data['update-options'] == 2) {
+                        $review->update(['status' => 'disapproved']);
+                    } else {
+                        continue;
                     }
                 } catch (\Exception $e) {
                     $suppressFlash = true;

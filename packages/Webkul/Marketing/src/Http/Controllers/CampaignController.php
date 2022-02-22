@@ -2,6 +2,7 @@
 
 namespace Webkul\Marketing\Http\Controllers;
 
+use Webkul\Admin\DataGrids\CampaignDataGrid;
 use Webkul\Marketing\Repositories\CampaignRepository;
 
 class CampaignController extends Controller
@@ -40,6 +41,10 @@ class CampaignController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return app(CampaignDataGrid::class)->toJson();
+        }
+
         return view($this->_config['view']);
     }
 
@@ -124,13 +129,9 @@ class CampaignController extends Controller
         try {
             $this->campaignRepository->delete($id);
 
-            session()->flash('success', trans('admin::app.marketing.campaigns.delete-success'));
+            return response()->json(['message' => trans('admin::app.marketing.campaigns.delete-success')]);
+        } catch (\Exception $e) {}
 
-            return response()->json(['message' => true], 200);
-        } catch (\Exception $e) {
-            session()->flash('error', trans('admin::app.response.delete-failed', ['name' => 'Email Campaign']));
-        }
-
-        return response()->json(['message' => false], 400);
+        return response()->json(['message' => trans('admin::app.response.delete-failed', ['name' => 'Email Campaign'])], 500);
     }
 }

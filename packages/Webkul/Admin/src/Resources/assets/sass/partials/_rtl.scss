@@ -10,9 +10,7 @@
             text-align: left;
 
             .profile-info {
-                
-                .profile-info-div {                   
-
+                .profile-info-div {
                     .profile-info-icon {
                         margin-right: 0px !important;
                         margin-left: 10px !important;
@@ -27,6 +25,20 @@
         }
     }
 
+    .icon.search-icon.search-btn {
+        position: absolute;
+        z-index: 1;
+        left: 35px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .icon.search-icon.search-btn {
+            position: absolute;
+            margin-top: 6px;
+            right: 150px;
+        }
+    }
+
     .navbar-left {
         border-left: 1px solid rgba(162, 162, 162, 0.2);
         border-right: none;
@@ -37,6 +49,7 @@
 
     .content-container {
         padding-left: 0px;
+        padding-right: 56px;
 
         .content .page-header {
             .page-title {
@@ -139,7 +152,7 @@
         }
     }
 
-    .tree-container>.tree-item {
+    .tree-container > .tree-item {
         padding-right: 0px;
     }
 
@@ -147,17 +160,30 @@
         margin-left: 5px;
     }
 
-    .image-wrapper .image-item {
-        margin-right: 0px;
-        margin-left: 20px;
+    .image-wrapper {
+        width: auto;
 
-        .remove-image {
+        .image-item {
             margin-right: 0px;
+            margin-left: 20px;
+
+            .remove-image {
+                margin-right: 0px;
+            }
+        }
+    }
+
+    .variant-image {
+        .trash-icon {
+            position: absolute;
+            cursor: pointer;
+            margin-top: 25%;
+            left: 0;
         }
     }
 
     .control-group label.required::before {
-        content: "*";
+        content: '*';
         color: #fc6868;
         font-weight: 700;
     }

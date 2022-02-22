@@ -4,6 +4,7 @@ namespace Webkul\Tax\Http\Controllers;
 
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Validators\Failure;
+use Webkul\Admin\DataGrids\TaxRateDataGrid;
 use Webkul\Admin\Imports\DataGridImport;
 use Webkul\Tax\Repositories\TaxRateRepository;
 
@@ -53,6 +54,10 @@ class TaxRateController extends Controller
      */
     public function show()
     {
+        if (request()->ajax()) {
+            return app(TaxRateDataGrid::class)->toJson();
+        }
+
         return view($this->_config['view']);
     }
 
@@ -139,14 +144,10 @@ class TaxRateController extends Controller
         try {
             $this->taxRateRepository->delete($id);
 
-            session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Tax Rate']));
+            return response()->json(['message' => trans('admin::app.response.delete-success', ['name' => 'Tax Rate'])]);
+        } catch (\Exception $e) {}
 
-            return response()->json(['message' => true], 200);
-        } catch (\Exception $e) {
-            session()->flash('error', trans('admin::app.response.delete-failed', ['name' => 'Tax Rate']));
-        }
-
-        return response()->json(['message' => false], 400);
+        return response()->json(['message' => trans('admin::app.response.delete-failed', ['name' => 'Tax Rate'])], 500);
     }
 
     /**

@@ -2497,6 +2497,8 @@ accordian {
  */
 .rating-reviews {
     .rating-header {
+        display: flex;
+        justify-content: space-between;
         padding: 20px 0;
     }
 
@@ -2842,7 +2844,7 @@ section.cart {
 
                 .misc-controls {
                     position: relative;
-                    top: 300px;
+                    top: 320px;
                     margin-top: 0px;
                 }
             }
@@ -2887,8 +2889,7 @@ section.cart {
         .cart-content {
             .left-side {
                 .misc-controls {
-                    display: block;
-                    top: 300px;
+                    top: 320px;
 
                     div {
                         button {
@@ -2903,10 +2904,6 @@ section.cart {
                         }
                     }
                 }
-            }
-
-            .right-side {
-                top: -100px;
             }
         }
     }
@@ -4933,4 +4930,12 @@ body {
 
 .d-inline-block {
     display: inline-block;
+}
+
+.icon-position {
+    margin-left: -30px; 
+    cursor: pointer; 
+    vertical-align: sub;
+    position: absolute;
+    margin-top: 15px;
 }

@@ -2,6 +2,7 @@
 
 namespace Webkul\Marketing\Http\Controllers;
 
+use Webkul\Admin\DataGrids\EventDataGrid;
 use Webkul\Marketing\Repositories\EventRepository;
 
 class EventController extends Controller
@@ -40,6 +41,10 @@ class EventController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return app(EventDataGrid::class)->toJson();
+        }
+
         return view($this->_config['view']);
     }
 
@@ -126,13 +131,9 @@ class EventController extends Controller
         try {
             $this->eventRepository->delete($id);
 
-            session()->flash('success', trans('admin::app.marketing.events.delete-success'));
+            return response()->json(['message' => trans('admin::app.marketing.events.delete-success')]);
+        } catch (\Exception $e) {}
 
-            return response()->json(['message' => true], 200);
-        } catch (\Exception $e) {
-            session()->flash('error', trans('admin::app.response.delete-failed', ['name' => 'Event']));
-        }
-
-        return response()->json(['message' => false], 400);
+        return response()->json(['message' => trans('admin::app.response.delete-failed', ['name' => 'Event'])], 500);
     }
 }

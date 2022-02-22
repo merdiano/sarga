@@ -3,6 +3,7 @@
 namespace Webkul\CatalogRule\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Webkul\Admin\DataGrids\CatalogRuleDataGrid;
 use Webkul\CatalogRule\Helpers\CatalogRuleIndex;
 use Webkul\CatalogRule\Repositories\CatalogRuleRepository;
 
@@ -54,6 +55,10 @@ class CatalogRuleController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return app(CatalogRuleDataGrid::class)->toJson();
+        }
+
         return view($this->_config['view']);
     }
 
@@ -151,13 +156,9 @@ class CatalogRuleController extends Controller
         try {
             $this->catalogRuleRepository->delete($id);
 
-            session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Catalog Rule']));
+            return response()->json(['message' => trans('admin::app.response.delete-success', ['name' => 'Catalog Rule'])]);
+        } catch (\Exception $e) {}
 
-            return response()->json(['message' => true], 200);
-        } catch (\Exception $e) {
-            session()->flash('error', trans('admin::app.response.delete-failed', ['name' => 'Catalog Rule']));
-        }
-
-        return response()->json(['message' => false], 400);
+        return response()->json(['message' => trans('admin::app.response.delete-failed', ['name' => 'Catalog Rule'])], 400);
     }
 }

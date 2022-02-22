@@ -2,6 +2,7 @@
 
 namespace Webkul\Marketing\Http\Controllers;
 
+use Webkul\Admin\DataGrids\EmailTemplateDataGrid;
 use Webkul\Marketing\Repositories\TemplateRepository;
 
 class TemplateController extends Controller
@@ -40,6 +41,10 @@ class TemplateController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return app(EmailTemplateDataGrid::class)->toJson();
+        }
+
         return view($this->_config['view']);
     }
 
@@ -120,13 +125,9 @@ class TemplateController extends Controller
         try {
             $this->templateRepository->delete($id);
 
-            session()->flash('success', trans('admin::app.marketing.templates.delete-success'));
+            return response()->json(['message' => trans('admin::app.marketing.templates.delete-success')]);
+        } catch (\Exception $e) {}
 
-            return response()->json(['message' => true], 200);
-        } catch (\Exception $e) {
-            session()->flash('error', trans('admin::app.response.delete-failed', ['name' => 'Email Template']));
-        }
-
-        return response()->json(['message' => false], 400);
+        return response()->json(['message' => trans('admin::app.response.delete-failed', ['name' => 'Email Template'])], 400);
     }
 }

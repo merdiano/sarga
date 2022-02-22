@@ -6,13 +6,12 @@ use Illuminate\Http\Request;
 use Webkul\Velocity\Http\Shop\Controllers;
 use Webkul\Checkout\Contracts\Cart as CartModel;
 use Cart;
-
+use Webkul\Product\Facades\ProductImage;
 
 class ShopController extends Controller
 {
-
     /**
-     * Index to handle the view loaded with the search results
+     * Index to handle the view loaded with the search results.
      *
      * @return \Illuminate\View\View
      */
@@ -23,6 +22,12 @@ class ShopController extends Controller
         return view($this->_config['view'])->with('results', $results ? $results : null);
     }
 
+    /**
+     * Fetch product details.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
     public function fetchProductDetails($slug)
     {
         $product = $this->productRepository->findBySlug($slug);
@@ -41,7 +46,7 @@ class ShopController extends Controller
                     'totalReviews' => $productReviewHelper->getTotalReviews($product),
                     'rating'       => ceil($productReviewHelper->getAverageRating($product)),
                     'image'        => $galleryImages['small_image_url'],
-                ]
+                ],
             ];
         } else {
             $response = [
@@ -54,6 +59,8 @@ class ShopController extends Controller
     }
 
     /**
+     * Fetch category details.
+     *
      * @return \Illuminate\Http\Response
      */
     public function categoryDetails()
@@ -124,24 +131,28 @@ class ShopController extends Controller
     }
 
     /**
+     * Fetch categories.
+     *
      * @return array
      */
     public function fetchCategories()
     {
         $formattedCategories = [];
+
         $categories = $this->categoryRepository->getVisibleCategoryTree(core()->getCurrentChannel()->root_category_id);
 
         foreach ($categories as $category) {
-            array_push($formattedCategories, $this->getCategoryFilteredData($category));
+            $formattedCategories[] = $this->getCategoryFilteredData($category);
         }
 
         return [
-            'status'     => true,
             'categories' => $formattedCategories,
         ];
     }
 
     /**
+     * Fetch fancy category.
+     *
      * @param  string  $slug
      * @return array
      */
@@ -152,7 +163,7 @@ class ShopController extends Controller
         if ($categoryDetails) {
             $response = [
                 'status'          => true,
-                'categoryDetails' => $this->getCategoryFilteredData($categoryDetails)
+                'categoryDetails' => $this->getCategoryFilteredData($categoryDetails),
             ];
         }
 
@@ -162,27 +173,8 @@ class ShopController extends Controller
     }
 
     /**
-     * @param  \Webkul\Category\Contracts\Category  $category
-     * @return array
-     */
-    private function getCategoryFilteredData($category)
-    {
-        $formattedChildCategory = [];
-
-        foreach ($category->children as $child) {
-            array_push($formattedChildCategory, $this->getCategoryFilteredData($child));
-        }
-
-        return [
-            'id'                 => $category->id,
-            'slug'               => $category->slug,
-            'name'               => $category->name,
-            'children'           => $formattedChildCategory,
-            'category_icon_path' => $category->category_icon_path,
-        ];
-    }
-
-    /**
+     * Get wishlist.
+     *
      * @return \Illuminate\View\View
      */
     public function getWishlistList()
@@ -191,42 +183,56 @@ class ShopController extends Controller
     }
 
     /**
-     * this function will provide the count of wishlist and comparison for logged in user
+     * This function will provide the count of wishlist and comparison for logged in user.
      *
      * @return \Illuminate\Http\Response
      */
     public function getItemsCount()
     {
         if ($customer = auth()->guard('customer')->user()) {
-            $wishlistItemsCount = $this->wishlistRepository->count([
-                'customer_id' => $customer->id,
-                'channel_id'  => core()->getCurrentChannel()->id,
-            ]);
+
+            if (! core()->getConfigData('catalog.products.homepage.out_of_stock_items')) {
+                $wishlistItemsCount = $this->wishlistRepository->getModel()
+                    ->leftJoin('products as ps', 'wishlist.product_id', '=', 'ps.id')
+                    ->leftJoin('product_inventories as pv', 'ps.id', '=', 'pv.product_id')
+                    ->where(function ($qb) {
+                        $qb
+                            ->WhereIn('ps.type', ['configurable', 'grouped', 'downloadable', 'bundle', 'booking'])
+                            ->orwhereIn('ps.type', ['simple', 'virtual'])->where('pv.qty', '>', 0);
+                    })
+                    ->where('wishlist.customer_id', $customer->id)
+                    ->where('wishlist.channel_id', core()->getCurrentChannel()->id)
+                    ->count('wishlist.id');
+            } else {
+                $wishlistItemsCount = $this->wishlistRepository->count([
+                    'customer_id' => $customer->id,
+                    'channel_id'  => core()->getCurrentChannel()->id,
+                ]);
+            }
 
             $comparedItemsCount = $this->compareProductsRepository->count([
                 'customer_id' => $customer->id,
             ]);
 
             $response = [
-                'status' => true,
+                'status'                  => true,
                 'compareProductsCount'    => $comparedItemsCount,
                 'wishlistedProductsCount' => $wishlistItemsCount,
             ];
         }
 
         return response()->json($response ?? [
-            'status' => false
+            'status' => false,
         ]);
     }
 
     /**
-     * This function will provide details of multiple product
+     * This method will provide details of multiple product.
      *
      * @return \Illuminate\Http\Response
      */
     public function getDetailedProducts()
     {
-        // for product details
         if ($items = request()->get('items')) {
             $moveToCart = request()->get('moveToCart');
 
@@ -239,12 +245,31 @@ class ShopController extends Controller
         }
 
         return response()->json($response ?? [
-            'status' => false
+            'status' => false,
         ]);
     }
 
+    /**
+     * This method will fetch products from category.
+     *
+     * @param  int  $categoryId
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getCategoryProducts($categoryId)
     {
+        /* fetch category details */
+        $categoryDetails = $this->categoryRepository->find($categoryId);
+
+        /* if category not found then return empty response */
+        if (! $categoryDetails) {
+            return response()->json([
+                'products'       => [],
+                'paginationHTML' => '',
+            ]);
+        }
+
+        /* fetching products */
         $products = $this->productRepository->getAll($categoryId);
 
         $productItems = $products->items();
@@ -259,10 +284,36 @@ class ShopController extends Controller
 
             $productsArray['data'] = $formattedProducts;
         }
-
-        return response()->json($response ?? [
-            'products'       => $productsArray['data'],
+        /* sending response */
+        return response()->json([
+            'products'       => collect($products->items())->map(function ($product) {
+                return $this->velocityHelper->formatProduct($product);
+            }),
             'paginationHTML' => $products->appends(request()->input())->links()->toHtml(),
         ]);
+    }
+
+    /**
+     * Get category filtered data.
+     *
+     * @param  \Webkul\Category\Contracts\Category  $category
+     * @return array
+     */
+    private function getCategoryFilteredData($category)
+    {
+        $formattedChildCategory = [];
+
+        foreach ($category->children as $child) {
+            $formattedChildCategory[] = $this->getCategoryFilteredData($child);
+        }
+
+        return [
+            'id'                => $category->id,
+            'slug'              => $category->slug,
+            'name'              => $category->name,
+            'children'          => $formattedChildCategory,
+            'category_icon_url' => $category->category_icon_url,
+            'image_url'         => $category->image_url,
+        ];
     }
 }
