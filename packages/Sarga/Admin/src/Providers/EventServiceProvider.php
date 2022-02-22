@@ -16,8 +16,12 @@ class EventServiceProvider extends ServiceProvider
 {
 
     public function boot(){
-//        Event::listen('marketplace.sellers.account.profile.edit.before', function($viewRenderEventManager) {
-//            $viewRenderEventManager->addTemplate('sarga_admin::sellers.seller-brand');
+//        Event::listen('bagisto.admin.catalog.category.create_form_accordian.general.after', function($viewRenderEventManager) {
+//            $viewRenderEventManager->addTemplate('sarga_admin::catalog.categories.scrap.create');
+//        });
+//
+//        Event::listen('bagisto.admin.catalog.category.edit_form_accordian.general.after', function($viewRenderEventManager) {
+//            $viewRenderEventManager->addTemplate('sarga_admin::catalog.categories.scrap.edit');
 //        });
     }
 }

@@ -35,5 +35,10 @@ class AdminServiceProvider extends ServiceProvider
             dirname(__DIR__) . '/Config/menu.php',
             'menu.admin'
         );
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/system.php',
+            'core'
+        );
     }
 }

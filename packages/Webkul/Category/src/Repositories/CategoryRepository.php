@@ -5,6 +5,7 @@ namespace Webkul\Category\Repositories;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Webkul\Category\Models\CategoryTranslationProxy;
 use Webkul\Core\Eloquent\Repository;
@@ -71,6 +72,7 @@ class CategoryRepository extends Repository
 
         Event::dispatch('catalog.category.update.before', $id);
 
+        Log::info($data);
         $data = $this->setSameAttributeValueToAllLocale($data, 'slug');
 
         $category->update($data);

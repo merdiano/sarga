@@ -45,18 +45,6 @@
                                 <input type="text" v-validate="'required'" class="control" id="slug" name="slug" value="{{ old('slug') }}" data-vv-as="&quot;{{ __('admin::app.catalog.categories.slug') }}&quot;" v-slugify/>
                                 <span class="control-error" v-if="errors.has('slug')">@{{ errors.first('slug') }}</span>
                             </div>
-                            <div class="control-group" :class="[errors.has('trendyol_url') ? 'has-error' : '']">
-                                <label for="trendyol_url">Trendyol URL</label>
-                                <input type="text" class="control" id="trendyol_url" name="trendyol_url"
-                                       value="{{ old('trendyol_url') }}" data-vv-as="&quot;Trendyol URL&quot;"/>
-                                <span class="control-error" v-if="errors.has('trendyol_url')">@{{ errors.first('trendyol_url') }}</span>
-                            </div>
-                            <div class="control-group" :class="[errors.has('lcw_url') ? 'has-error' : '']">
-                                <label for="lcw_url">LCW URL</label>
-                                <input type="text" class="control" id="lcw_url" name="lcw_url"
-                                       value="{{ old('lcw_url') }}" data-vv-as="&quot;LCW URL&quot;"/>
-                                <span class="control-error" v-if="errors.has('lcw_url')">@{{ errors.first('lcw_url') }}</span>
-                            </div>
                             <div class="control-group" :class="[errors.has('status') ? 'has-error' : '']">
                                 <label for="status" class="required">{{ __('admin::app.catalog.categories.visible-in-menu') }}</label>
                                 <select class="control" v-validate="'required'" id="status" name="status" data-vv-as="&quot;{{ __('admin::app.catalog.categories.visible-in-menu') }}&quot;">
@@ -81,6 +69,7 @@
                     </accordian>
 
                     {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.general.after') !!}
+                    @include('sarga_admin::catalog.categories.scrap.create')
 
                     {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.description_images.before') !!}
 
