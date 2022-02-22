@@ -1,32 +1,97 @@
 <?php
 return[
+    /**
+     * Shipping method.
+     */
     [
-        'key'    => 'general.general.locale_options',
-        'name'   => 'admin::app.admin.system.locale-options',
-        'sort'   => 1,
+        'key'  => 'sales.carriers',
+        'name' => 'admin::app.admin.system.shipping-methods',
+        'sort' => 2,
+    ], [
+        'key'    => 'sales.carriers.courier',
+        'name'   => 'Courier',
+        'sort'   => 3,
         'fields' => [
             [
-                'name'          => 'weight_unit',
-                'title'         => 'admin::app.admin.system.weight-unit',
-                'type'          => 'select',
-                'options'       => [
-                    [
-                        'title' => 'lbs',
-                        'value' => 'lbs',
-                    ], [
-                        'title' => 'kgs',
-                        'value' => 'kgs',
-                    ],
-                ],
-                'channel_based' => true,
-            ],
-            [
+                'name'          => 'title',
+                'title'         => 'admin::app.admin.system.title',
+                'type'          => 'depends',
+                'depend'        => 'active:1',
+                'validation'    => 'required_if:active,1',
+                'channel_based' => false,
+                'locale_based'  => true,
+            ], [
+                'name'          => 'description',
+                'title'         => 'admin::app.admin.system.description',
+                'type'          => 'textarea',
+                'channel_based' => false,
+                'locale_based'  => true,
+            ], [
                 'name'          => 'weight_price',
-                'title'         => 'Agyrlyk bahasy',
-                'type'          => 'number',
-                'validate'      => 'required|numeric|min:0',
-                'channel_based' => true,
+                'title'         => 'Weight price(kg)',
+                'type'          => 'depends',
+                'depend'        => 'active:1',
+                'validation'    => 'required_if:active,1',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ], [
+                'name'          => 'active',
+                'title'         => 'admin::app.admin.system.status',
+                'type'          => 'boolean',
+                'validation'    => 'required',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ], [
+                'name'          => 'is_calculate_tax',
+                'title'         => 'admin::app.admin.system.calculate-tax',
+                'type'          => 'boolean',
+                'validation'    => 'required',
+                'channel_based' => false,
+                'locale_based'  => false,
             ],
-        ]
-    ]
+        ],
+    ], [
+        'key'    => 'sales.carriers.pickup',
+        'name'   => 'Pickup',
+        'sort'   => 4,
+        'fields' => [
+            [
+                'name'          => 'title',
+                'title'         => 'admin::app.admin.system.title',
+                'type'          => 'depends',
+                'depend'        => 'active:1',
+                'validation'    => 'required_if:active,1',
+                'channel_based' => false,
+                'locale_based'  => true,
+            ], [
+                'name'          => 'description',
+                'title'         => 'admin::app.admin.system.description',
+                'type'          => 'textarea',
+                'channel_based' => false,
+                'locale_based'  => true,
+            ], [
+                'name'          => 'weight_price',
+                'title'         => 'Weight price(kg)',
+                'type'          => 'depends',
+                'depend'        => 'active:1',
+                'validation'    => 'required_if:active,1',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ], [
+                'name'          => 'active',
+                'title'         => 'admin::app.admin.system.status',
+                'type'          => 'boolean',
+                'validation'    => 'required',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ], [
+                'name'          => 'is_calculate_tax',
+                'title'         => 'admin::app.admin.system.calculate-tax',
+                'type'          => 'boolean',
+                'validation'    => 'required',
+                'channel_based' => false,
+                'locale_based'  => false,
+            ],
+        ],
+    ],
 ];
