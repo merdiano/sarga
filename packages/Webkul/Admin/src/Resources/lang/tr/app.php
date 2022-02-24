@@ -79,7 +79,9 @@ return [
         'email-templates'          => 'Email Templates',
         'discount'                 => 'İndirim',
         'cms'                      => 'CMS',
-        'transactions'             => 'Transactions',
+        'transactions'             => 'işlemler',
+        'mode'                     => 'mod',
+        'account-title'            => 'Hesap',
     ],
 
     'acl' => [
@@ -512,6 +514,16 @@ return [
             'save-btn-title'                => 'Ürün Kaydet',
             'general'                       => 'Geneş',
             'product-type'                  => 'Ürün Tipi',
+            'type'                          => [
+                'simple'                        => 'basit',
+                'booking'                       => 'rezervasyon',
+                'bundle'                        => 'demet',
+                'downloadable'                  => 'indirilebilir',
+                'grouped'                       => 'gruplandırılmış',
+                'virtual'                       => 'gerçek',            
+                'configurable'                  => 'yapılandırılabilir',
+
+            ], 
             'simple'                        => 'Basit',
             'configurable'                  => 'Ayarlanabilir',
             'familiy'                       => 'Nitelik Grubu',

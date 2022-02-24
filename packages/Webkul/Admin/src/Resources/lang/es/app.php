@@ -83,7 +83,9 @@ return [
         'events'                   => 'Eventos',
         'discount'                 => 'Descuento',
         'cms'                      => 'CMS',
-        'transactions'             => 'Transacciones',
+        'transactions'             => 'Transakcioj',
+        'mode'                     => 'Reĝimo',
+        'account-title'            => 'Konto',
     ],
 
     'acl' => [
@@ -525,6 +527,16 @@ return [
             'save-btn-title'                => 'Guardar producto',
             'general'                       => 'General',
             'product-type'                  => 'Tipo de producto',
+            'type'                          => [
+                'simple'                        => 'simpla',
+                'booking'                       => 'mendo',
+                'bundle'                        => 'pakaĵo',
+                'downloadable'                  => 'elŝutebla',
+                'grouped'                       => 'grupigitaj',
+                'virtual'                       => 'virtuala',            
+                'configurable'                  => 'agordebla',
+
+            ], 
             'simple'                        => 'Simple',
             'configurable'                  => 'Configurable',
             'familiy'                       => 'Familia de atributos',

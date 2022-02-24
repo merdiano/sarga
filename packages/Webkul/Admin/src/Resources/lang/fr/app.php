@@ -84,6 +84,8 @@ return [
         'cms'                      => 'CMS',
         'transactions'             => 'Transactions',
         'newsletter-subscriptions' => 'Abonnement à la Newsletter',
+        'mode'                     => 'mode',
+        'account-title'            => 'Compte',
     ],
 
     'acl' => [
@@ -524,6 +526,16 @@ return [
             'save-btn-title'                => 'Enregistrer le produit',
             'general'                       => 'Général',
             'product-type'                  => 'type de produit',
+            'type'                          => [
+                'simple'                        => 'Facile',
+                'booking'                       => 'réservation',
+                'bundle'                        => 'empaqueter',
+                'downloadable'                  => 'téléchargeable',
+                'grouped'                       => 'groupé',
+                'virtual'                       => 'virtuelle',            
+                'configurable'                  => 'configurable',
+
+            ], 
             'simple'                        => 'Simple',
             'configurable'                  => 'Configurable',
             'familiy'                       => 'Famille d\'attributs',

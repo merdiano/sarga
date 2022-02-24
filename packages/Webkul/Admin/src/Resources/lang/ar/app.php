@@ -82,7 +82,9 @@ return [
         'email-templates'          => 'Email Templates',
         'discount'                 => 'خصم',
         'cms'                      => 'CMS',
-        'transactions'             => 'Transactions',
+        'transactions'             => 'المعاملات',
+        'mode'                     => 'الوضع',
+        'account-title'            => 'حساب',
     ],
 
     'acl' => [
@@ -515,6 +517,16 @@ return [
             'save-btn-title'                => 'احفظ المنتج',
             'general'                       => 'ألف-لمحة عامة',
             'product-type'                  => 'نوع المنتج',
+            'type'                          => [
+                'simple'                        => 'بسيط',
+                'booking'                       => 'الحجز',
+                'bundle'                        => 'حزمة',
+                'downloadable'                  => 'للتحميل',
+                'grouped'                       => 'مجمعة',
+                'virtual'                       => 'افتراضية',            
+                'configurable'                  => 'شكلي',
+
+            ], 
             'simple'                        => 'بسيط',
             'configurable'                  => 'مهيء',
             'familiy'                       => 'الصفة الأسرة',
