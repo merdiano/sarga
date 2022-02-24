@@ -1,10 +1,6 @@
 [
     {
         "country_id":1,
-        "name":"Turkiýa"
-    },
-    {
-        "country_id":2,
         "name":"Türkmenistan"
     }
 ]
