@@ -26,7 +26,7 @@ class Checkout extends CheckoutController
 
         return response([
             'rates' => $rates,
-            'pickup_addresses' => core()->getCurrentChannel()->inventory_sources()->all()
+            'pickup_addresses' => core()->getCurrentChannel()->inventory_sources()->get()
         ]);
     }
 
