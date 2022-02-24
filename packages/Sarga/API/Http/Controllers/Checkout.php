@@ -14,6 +14,22 @@ use Webkul\Shipping\Facades\Shipping;
 
 class Checkout extends CheckoutController
 {
+    public function shipments(){
+        $rates = [];
+
+        foreach (Shipping::getGroupedAllShippingRates() as $code => $shippingMethod) {
+            $rates[] = [
+                'carrier_title' => $shippingMethod['carrier_title'],
+                'rates'         => CartShippingRateResource::collection(collect($shippingMethod['rates'])),
+            ];
+        }
+
+        return response([
+            'rates' => $rates,
+            'pickup_addresses' => core()->getCurrentChannel()->inventory_sources()->all()
+        ]);
+    }
+
     /**
      * Save customer address.
      *

@@ -84,34 +84,29 @@ Route::group(['prefix' => 'api'], function () {
              * Customer cart routes.
              */
             Route::get('cart', [Carts::class, 'get']);
-
             Route::post('cart/add/{productId}', [Carts::class, 'add']);
-
             Route::put('cart/update', [Carts::class, 'update']);
-
             Route::delete('cart/remove/{cartItemId}', [Carts::class, 'removeItem']);
-
             Route::delete('cart/empty', [Carts::class, 'empty']);
-
             Route::post('cart/move-to-wishlist/{cartItemId}', [Carts::class, 'moveToWishlist']);
-
             Route::post('cart/coupon', [Carts::class, 'applyCoupon']);
-
             Route::delete('cart/coupon', [Carts::class, 'removeCoupon']);
 
-            /**
-             * Customer checkout routes.
-             */
-            Route::post('checkout/save-address', [Checkout::class, 'saveAddress']);
-
-            Route::post('checkout/save-shipping', [Checkout::class, 'saveShipping']);
-
-            Route::post('checkout/save-payment', [Checkout::class, 'savePayment']);
-
-            Route::post('checkout/check-minimum-order', [Checkout::class, 'checkMinimumOrder']);
-
-            Route::post('checkout/save-order', [Checkout::class, 'saveOrder']);
         });
     });
 
+    Route::group(['prefix' =>'checkout'], function (){
+        Route::get('shipments', [Checkout::class, 'shipments']);
+
+        Route::group(['middleware' => ['auth:sanctum', 'sanctum.customer']], function () {
+            /**
+             * Customer checkout routes.
+             */
+            Route::post('save-address', [Checkout::class, 'saveAddress']);
+            Route::post('save-shipping', [Checkout::class, 'saveShipping']);
+            Route::post('save-payment', [Checkout::class, 'savePayment']);
+            Route::post('check-minimum-order', [Checkout::class, 'checkMinimumOrder']);
+            Route::post('save-order', [Checkout::class, 'saveOrder']);
+        });
+    });
 });
