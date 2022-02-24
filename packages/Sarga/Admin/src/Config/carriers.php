@@ -9,7 +9,7 @@ return [
         'is_calculate_tax' => false,
         'weight_price'     => '10',
         'type'             => 'per_unit',
-        'class'            => 'Webkul\Shipping\Shipment\Pickup',
+        'class'            => 'Sarga\Admin\Shipment\Pickup',
     ],
 
     'courier'             => [
