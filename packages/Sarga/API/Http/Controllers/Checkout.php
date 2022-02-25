@@ -3,9 +3,11 @@
 namespace Sarga\API\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Sarga\API\Http\Resources\Checkout\CartResource;
 use Sarga\API\Http\Resources\Checkout\CartShippingRateResource;
+use Sarga\API\Http\Resources\Checkout\PickupAddress;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Checkout\Http\Requests\CustomerAddressForm;
 use Webkul\Payment\Facades\Payment;
@@ -17,6 +19,8 @@ class Checkout extends CheckoutController
     public function shipments(){
         $rates = [];
 
+        Shipping::collectRates();
+
         foreach (Shipping::getGroupedAllShippingRates() as $code => $shippingMethod) {
             $rates[] = [
                 'carrier_title' => $shippingMethod['carrier_title'],
@@ -24,9 +28,10 @@ class Checkout extends CheckoutController
             ];
         }
 
+        $addresses = core()->getCurrentChannel()->inventory_sources()->get();
         return response([
             'rates' => $rates,
-            'pickup_addresses' => core()->getCurrentChannel()->inventory_sources()->get()
+            'pickup_addresses' => PickupAddress::collection($addresses)
         ]);
     }
 

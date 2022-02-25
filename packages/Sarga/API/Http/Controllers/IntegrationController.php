@@ -36,19 +36,6 @@ class IntegrationController extends Controller
         return $product;
     }
 
-
-    public function bulk_upload(){
-
-        $products = json_decode(request()->getContent());
-        Storage::put('scrap/products' . time() . '.txt', request()->getContent());
-
-        foreach ($products as $product){
-
-
-        }
-
-    }
-
     public function create(){
 
         try {
