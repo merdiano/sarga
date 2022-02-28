@@ -69,12 +69,32 @@ class Product extends JsonResource
             $this->merge($this->specialPriceInfo()),
 
             /* super attributes */
-//            $this->mergeWhen($productTypeInstance->isComposite(), [
-//                'super_attributes' => Attribute::collection($product->super_attributes),
-//            ]),
+            $this->mergeWhen($productTypeInstance->isComposite(), [
+                'super_attributes' => $this->super_attributes,
+            ]),
         ];
     }
+    private function super_attributes(){
+        if(is_countable($this->super_attributes)){
+            return $this->super_attributes->map(function($item, $key){
+                return [
+                    'code' => $item->code,
+                    'value' => $this->{$item->code},
+                    'name' => $item->name,
+                    'label' => $item->options->where('id',$this->{$item->code})->first()->admin_name
+                ];
+            })->toArray();
+        }else{
+            $item = $this->super_attributes;
+            return [
+                'code' => $item->code,
+                'value' => $this->{$item->code},
+                'name' => $item->name,
+                'label' => $item->options->where('id',$this->{$item->code})->first()->admin_name
+            ];
+        }
 
+    }
     /**
      * Get special price information.
      *

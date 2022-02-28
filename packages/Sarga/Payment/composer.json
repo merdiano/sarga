@@ -1,0 +1,14 @@
+{
+    "name": "merdan/payment",
+    "description": "Local payment methods",
+    "require": {
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "merdiano",
+            "email": "merdan.m@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}

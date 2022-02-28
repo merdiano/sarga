@@ -282,6 +282,7 @@ return [
         Sarga\API\Providers\APIServiceProvider::class,
         Sarga\Admin\Providers\AdminServiceProvider::class,
         Sarga\Brand\Providers\BrandServiceProvider::class,
+        Sarga\Payment\Providers\PaymentServiceProvider::class,
     ],
 
     /*
