@@ -13,7 +13,7 @@ return [
         'title' => 'Altyn Asyr',
         'description' => 'Altyn Asyr Kartly Töleg',
         'api_url' => 'https://mpi.gov.tm/payment/rest/',
-        'class' => 'Payment\Methods\AltynAsyr',
+        'class' => 'Sarga\Payment\Methods\AltynAsyr',
         'active' => false,
         'sort' => 4
     ],
@@ -22,7 +22,7 @@ return [
         'title' =>'TFEB',
         'description' => 'THE STATE BANK FOR FOREIGN ECONOMIC AFFAIRS OF TURKMENISTAN',
         'api_url' => 'https://ecomt.tfeb.gov.tm/v1/orders/',
-        'class' => 'Payment\Methods\TFEB',
+        'class' => 'Sarga\Payment\Methods\TFEB',
         'active' => false,
         'sort' => 5
     ]
