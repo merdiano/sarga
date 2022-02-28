@@ -15,15 +15,13 @@ class CartItemProduct extends JsonResource
      */
     public function toArray($request)
     {
-        /* assign product */
-        $product = $this->product ? $this->product : $this;
         return [
             'id'                => $this->id,
-            'name'              => $product->name,
-            'images'            => ProductImage::collection($product->images),
+            'name'              => $this->name,
+            'images'            => ProductImage::collection($this->images),
             /* super attributes */
-            $this->mergeWhen(!empty($this->product->parent), [
-                'super_attributes' => $this->super_attributes($this->product->parent->super_attributes),
+            $this->mergeWhen(!empty($this->parent && $this->parent->super_attributes), [
+                'super_attributes' => $this->super_attributes($this->parent->super_attributes),
             ]),
         ];
     }
