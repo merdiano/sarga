@@ -22,8 +22,8 @@ class CartItemProduct extends JsonResource
             'name'              => $product->name,
             'images'            => ProductImage::collection($product->images),
             /* super attributes */
-            $this->mergeWhen(!empty($product->parent), [
-                'super_attributes' => $this->super_attributes($product->parent->super_attributes),
+            $this->mergeWhen(!empty($this->product->parent), [
+                'super_attributes' => $this->super_attributes($this->product->parent->super_attributes),
             ]),
         ];
     }
