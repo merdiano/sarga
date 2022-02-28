@@ -102,13 +102,7 @@ Route::group(['prefix' => 'api'], function () {
             /**
              * Customer checkout routes.
              */
-            Route::get('checkout/shipments', [Checkout::class, 'shipments']);
-
-            Route::post('checkout/save-address', [Checkout::class, 'saveAddress']);
-
-            Route::post('checkout/save-shipping', [Checkout::class, 'saveShipping']);
-
-            Route::post('checkout/save-payment', [Checkout::class, 'savePayment']);
+            Route::get('checkout', [Checkout::class, 'index']);
 
             Route::post('checkout/check-minimum-order', [Checkout::class, 'checkMinimumOrder']);
 

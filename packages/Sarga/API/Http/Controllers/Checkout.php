@@ -12,11 +12,21 @@ use Webkul\Checkout\Facades\Cart;
 use Webkul\Checkout\Http\Requests\CustomerAddressForm;
 use Webkul\Payment\Facades\Payment;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\CheckoutController;
+use Webkul\RestApi\Http\Resources\V1\Shop\Sales\OrderResource;
+use Webkul\Sales\Repositories\OrderRepository;
 use Webkul\Shipping\Facades\Shipping;
 
 class Checkout extends CheckoutController
 {
-    public function shipments(){
+    public function index(){
+        if (Cart::hasError()){
+            return response([
+                'success' => false,
+                'message' => 'Korzina ustarel. Pozhaluysta obnavite korzinu'
+
+            ],400);
+        }
+
         $rates = [];
 
         Shipping::collectRates();
@@ -30,106 +40,62 @@ class Checkout extends CheckoutController
 
         $addresses = core()->getCurrentChannel()->inventory_sources()->get();
         return response([
-            'rates' => $rates,
-            'pickup_addresses' => PickupAddress::collection($addresses)
+            'shipping_rates' => $rates,
+            'pickup_addresses' => PickupAddress::collection($addresses),
+            'payment_methods' => Payment::getPaymentMethods()
         ]);
     }
 
-    /**
-     * Save customer address.
-     *
-     * @param  \Webkul\Checkout\Http\Requests\CustomerAddressForm  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function saveAddress(CustomerAddressForm $request)
-    {
-        $data = $request->all();
+    public function saveOrder(OrderRepository $orderRepository){
+        //save address
+        $addresses['billing'] = request()->get('billing');
+        $addresses['shipping'] = request()->get('shipping');
 
-        $data['billing']['address1'] = implode(PHP_EOL, array_filter($data['billing']['address1']));
+        $addresses['billing']['address1'] = implode(PHP_EOL, array_filter($addresses['billing']['address1']));
 
-        $data['shipping']['address1'] = implode(PHP_EOL, array_filter($data['shipping']['address1']));
+        $addresses['shipping']['address1'] = implode(PHP_EOL, array_filter($addresses['shipping']['address1']));
 
-        if (isset($data['billing']['id']) && str_contains($data['billing']['id'], 'address_')) {
-            unset($data['billing']['id']);
-            unset($data['billing']['address_id']);
+        if (isset($addresses['billing']['id']) && str_contains($addresses['billing']['id'], 'address_')) {
+            unset($addresses['billing']['id']);
+            unset($addresses['billing']['address_id']);
         }
 
-        if (isset($data['shipping']['id']) && Str::contains($data['shipping']['id'], 'address_')) {
-            unset($data['shipping']['id']);
-            unset($data['shipping']['address_id']);
+        if (isset($addresses['shipping']['id']) && Str::contains($addresses['shipping']['id'], 'address_')) {
+            unset($addresses['shipping']['id']);
+            unset($addresses['shipping']['address_id']);
         }
 
-        if (Cart::hasError() || ! Cart::saveCustomerAddress($data) || ! Shipping::collectRates()) {
-            abort(400);
-        }
+        $shippingMethod = request()->get('shipping_method');
+        $payment = request()->get('payment');
 
-        $rates = [];
-
-        foreach (Shipping::getGroupedAllShippingRates() as $code => $shippingMethod) {
-            $rates[] = [
-                'carrier_title' => $shippingMethod['carrier_title'],
-                'rates'         => CartShippingRateResource::collection(collect($shippingMethod['rates'])),
-            ];
-        }
-
-        Cart::collectTotals();
-
-        return response([
-            'data'    => [
-                'rates' => $rates,
-                'cart'  => new CartResource(Cart::getCart()),
-            ],
-            'message' => 'Address saved successfully.',
-        ]);
-    }
-
-    /**
-     * Save shipping method.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function saveShipping(Request $request)
-    {
-        $shippingMethod = $request->get('shipping_method');
-
-        if (Cart::hasError()
-            || ! $shippingMethod
-            || ! Cart::saveShippingMethod($shippingMethod)
-        ) {
+        if (Cart::hasError() ||
+            ! Cart::saveCustomerAddress($addresses) ||
+            ! Cart::saveShippingMethod($shippingMethod) ||
+            ! Cart::savePaymentMethod($payment)) {
             abort(400);
         }
 
         Cart::collectTotals();
 
-        return response([
-            'data'    => [
-                'methods' => Payment::getPaymentMethods(),
-                'cart'    => new CartResource(Cart::getCart()),
-            ],
-            'message' => 'Shipping method saved successfully.',
-        ]);
-    }
+        $this->validateOrder();
 
-    /**
-     * Save payment method.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function savePayment(Request $request)
-    {
-        $payment = $request->get('payment');
+        $cart = Cart::getCart();
 
-        if (Cart::hasError() || ! $payment || ! Cart::savePaymentMethod($payment)) {
-            abort(400);
+        if ($redirectUrl = Payment::getRedirectUrl($cart)) {
+            return response([
+                'redirect_url' => $redirectUrl,
+            ]);
         }
 
+        $order = $orderRepository->create(Cart::prepareDataForOrder());
+
+        Cart::deActivateCart();
+
         return response([
             'data'    => [
-                'cart' => new CartResource(Cart::getCart()),
+                'order' => new OrderResource($order),
             ],
-            'message' => 'Payment method saved successfully.',
+            'message' => 'Order saved successfully.',
         ]);
     }
 
