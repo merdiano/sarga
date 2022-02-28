@@ -27,7 +27,7 @@ class CartItemProduct extends JsonResource
                 ]),
             ];
         }catch (\Exception $ex){
-            Log::info($this);
+            Log::info($this->parent);
             return [
                 'id'                => $this->id,
                 'name'              => $this->name,
