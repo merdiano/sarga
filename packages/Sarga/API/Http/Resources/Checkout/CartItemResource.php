@@ -45,7 +45,7 @@ class CartItemResource extends JsonResource
                 ? $this->resource->additional
                 : json_decode($this->resource->additional, true),
             'child'                         => new self($this->child),
-            'product'                       => $this->when($this->product_id, new ProductResource($this->product)),
+            'product'                       => $this->when($this->product_id, new CartItemProduct($this->product)),
         ];
     }
 }
