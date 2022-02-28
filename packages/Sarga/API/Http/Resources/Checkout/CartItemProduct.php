@@ -3,6 +3,7 @@
 namespace Sarga\API\Http\Resources\Checkout;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Catalog\ProductImage;
 
 class CartItemProduct extends JsonResource
@@ -15,15 +16,25 @@ class CartItemProduct extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id'                => $this->id,
-            'name'              => $this->name,
-            'images'            => ProductImage::collection($this->images),
-            /* super attributes */
-            $this->mergeWhen(!empty($this->parent && $this->parent->super_attributes), [
-                'super_attributes' => $this->super_attributes($this->parent->super_attributes),
-            ]),
-        ];
+        try{
+            return [
+                'id'                => $this->id,
+                'name'              => $this->name,
+                'images'            => ProductImage::collection($this->images),
+                /* super attributes */
+                $this->mergeWhen(!empty($this->parent && $this->parent->super_attributes), [
+                    'super_attributes' => $this->super_attributes($this->parent->super_attributes),
+                ]),
+            ];
+        }catch (\Exception $ex){
+            Log::info($this);
+            return [
+                'id'                => $this->id,
+                'name'              => $this->name,
+                'images'            => ProductImage::collection($this->images),
+            ];
+        }
+
     }
 
     private function super_attributes($attributes){
