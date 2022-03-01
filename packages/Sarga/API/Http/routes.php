@@ -51,6 +51,60 @@ Route::group(['prefix' => 'api'], function () {
             'repository' => CountryStateRepository::class,
             'resource' => Category::class,
         ]);
+        //customer
+        Route::group(['prefix' => 'customer'],function (){
+            Route::post('register', [Customers::class, 'register']);
+            Route::post('login', [Customers::class, 'login']);
+            Route::group(['middleware' => ['auth:sanctum', 'sanctum.customer']], function () {
+                Route::put('profile', [Customers::class, 'update']);
+                /**
+                 * Customer address routes.
+                 */
+                Route::get('addresses', [Addresses::class, 'index']);
+                Route::post('addresses', [Addresses::class, 'createAddress']);
+                Route::put('addresses/{id}', [Addresses::class, 'updateAddress']);
+                Route::delete('addresses/{id}', [Addresses::class, 'destroy']);
+                /**
+                 * Recipients
+                 */
+                Route::get('recipients', [Addresses::class, 'recipients']);
+                Route::post('recipients', [Addresses::class, 'createRecipient']);
+                Route::put('recipients/{id}', [Addresses::class, 'updateRecipient']);
+                Route::delete('recipients/{id}', [Addresses::class, 'destroy']);
+
+                /**
+                 * Customer cart routes.
+                 */
+                Route::get('cart', [Carts::class, 'get']);
+
+                Route::post('cart/add/{productId}', [Carts::class, 'add']);
+
+                Route::put('cart/update', [Carts::class, 'update']);
+
+                Route::delete('cart/remove/{cartItemId}', [Carts::class, 'removeItem']);
+
+                Route::delete('cart/empty', [Carts::class, 'empty']);
+
+                Route::post('cart/move-to-wishlist/{cartItemId}', [Carts::class, 'moveToWishlist']);
+
+                Route::post('cart/coupon', [Carts::class, 'applyCoupon']);
+
+                Route::delete('cart/coupon', [Carts::class, 'removeCoupon']);
+
+                /**
+                 * Customer checkout routes.
+                 */
+                Route::get('checkout', [Checkout::class, 'index']);
+
+                Route::post('checkout/save-shipping', [Checkout::class, 'saveShipping']);
+
+                Route::post('checkout/save-payment', [Checkout::class, 'savePayment']);
+
+                Route::post('checkout/check-minimum-order', [Checkout::class, 'checkMinimumOrder']);
+
+                Route::post('checkout/save-order', [Checkout::class, 'saveOrder']);
+            });
+        });
     });
 
     //scrap
@@ -59,54 +113,5 @@ Route::group(['prefix' => 'api'], function () {
         Route::put('create',[IntegrationController::class,'create']);
     });
 
-    //customer
-    Route::group(['prefix' => 'customer'],function (){
-        Route::post('register', [Customers::class, 'register']);
-        Route::post('login', [Customers::class, 'login']);
-        Route::group(['middleware' => ['auth:sanctum', 'sanctum.customer']], function () {
-            Route::put('profile', [Customers::class, 'update']);
-            /**
-             * Customer address routes.
-             */
-            Route::get('addresses', [Addresses::class, 'index']);
-            Route::post('addresses', [Addresses::class, 'createAddress']);
-            Route::put('addresses/{id}', [Addresses::class, 'updateAddress']);
-            Route::delete('addresses/{id}', [Addresses::class, 'destroy']);
-            /**
-             * Recipients
-             */
-            Route::get('recipients', [Addresses::class, 'recipients']);
-            Route::post('recipients', [Addresses::class, 'createRecipient']);
-            Route::put('recipients/{id}', [Addresses::class, 'updateRecipient']);
-            Route::delete('recipients/{id}', [Addresses::class, 'destroy']);
 
-            /**
-             * Customer cart routes.
-             */
-            Route::get('cart', [Carts::class, 'get']);
-
-            Route::post('cart/add/{productId}', [Carts::class, 'add']);
-
-            Route::put('cart/update', [Carts::class, 'update']);
-
-            Route::delete('cart/remove/{cartItemId}', [Carts::class, 'removeItem']);
-
-            Route::delete('cart/empty', [Carts::class, 'empty']);
-
-            Route::post('cart/move-to-wishlist/{cartItemId}', [Carts::class, 'moveToWishlist']);
-
-            Route::post('cart/coupon', [Carts::class, 'applyCoupon']);
-
-            Route::delete('cart/coupon', [Carts::class, 'removeCoupon']);
-
-            /**
-             * Customer checkout routes.
-             */
-            Route::get('checkout', [Checkout::class, 'index']);
-
-            Route::post('checkout/check-minimum-order', [Checkout::class, 'checkMinimumOrder']);
-
-            Route::post('checkout/save-order', [Checkout::class, 'saveOrder']);
-        });
-    });
 });

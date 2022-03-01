@@ -14,6 +14,9 @@ class Shipping
      */
     protected $rates = [];
 
+    public function getRates(){
+        return $this->rates;
+    }
     /**
      * Collects rate from available shipping methods.
      *

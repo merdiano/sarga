@@ -53,12 +53,9 @@ class Pickup extends AbstractShipping
         $cart = Cart::getCart();
 
         if ($price = $this->getConfigData('weight_price') ) {
-            foreach ($cart->items as $item) {
-                if ($item->product->getTypeInstance()->isStockable()) {
-                    $cartShippingRate->price += core()->convertPrice($price) * $item->total_weight;
-                    $cartShippingRate->base_price += $price * $item->total_weight;
-                }
-            }
+            $total_weight = $cart->items->sum('total_weight');
+            $cartShippingRate->price = core()->convertPrice($price * $total_weight);
+            $cartShippingRate->base_price = $price * $total_weight;
         }
 
         return $cartShippingRate;

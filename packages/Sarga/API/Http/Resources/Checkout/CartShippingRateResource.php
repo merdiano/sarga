@@ -15,19 +15,16 @@ class CartShippingRateResource extends JsonResource
      */
     public function toArray($request)
     {
-        $cart = Cart::getCart();
 
         return [
-            'id'                  => $this->id,
+//            'id'                  => $this->id,
             'carrier'             => $this->carrier,
             'carrier_title'       => $this->carrier_title,
             'method'              => $this->method,
             'method_title'        => $this->method_title,
             'method_description'  => $this->method_description,
             'price'               => $this->price,
-            'formatted_price'      => core()->formatPrice($this->price, $cart->cart_currency_code),
-            'base_price'          => $this->base_price,
-            'formatted_base_price' => core()->formatBasePrice($this->base_price),
+            'formatted_price'      => core()->formatPrice($this->base_price),
 
         ];
     }

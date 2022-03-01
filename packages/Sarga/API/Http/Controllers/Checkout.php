@@ -22,82 +22,61 @@ class Checkout extends CheckoutController
         if (Cart::hasError()){
             return response([
                 'success' => false,
-                'message' => 'Korzina ustarel. Pozhaluysta obnavite korzinu'
+                'message' => 'Refresh cart'
 
             ],400);
         }
 
-        $rates = [];
-
         Shipping::collectRates();
-
-        foreach (Shipping::getGroupedAllShippingRates() as $code => $shippingMethod) {
-            $rates[] = [
-                'carrier_title' => $shippingMethod['carrier_title'],
-                'rates'         => CartShippingRateResource::collection(collect($shippingMethod['rates'])),
-            ];
-        }
 
         $addresses = core()->getCurrentChannel()->inventory_sources()->get();
         return response([
-            'shipping_rates' => $rates,
+            'rates' => CartShippingRateResource::collection(Shipping::getRates()),
             'pickup_addresses' => PickupAddress::collection($addresses),
-            'payment_methods' => Payment::getPaymentMethods()
         ]);
     }
+    /**
+     * Save shipping method.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function saveShipping(Request $request)
+    {
+        $data = $request->all();
 
-    public function saveOrder(OrderRepository $orderRepository){
-        //save address
-        $addresses['billing'] = request()->get('billing');
-        $addresses['shipping'] = request()->get('shipping');
+        $data['billing']['address1'] = implode(PHP_EOL, array_filter($data['billing']['address1']));
 
-        $addresses['billing']['address1'] = implode(PHP_EOL, array_filter($addresses['billing']['address1']));
+        $data['shipping']['address1'] = implode(PHP_EOL, array_filter($data['shipping']['address1']));
 
-        $addresses['shipping']['address1'] = implode(PHP_EOL, array_filter($addresses['shipping']['address1']));
-
-        if (isset($addresses['billing']['id']) && str_contains($addresses['billing']['id'], 'address_')) {
-            unset($addresses['billing']['id']);
-            unset($addresses['billing']['address_id']);
+        if (isset($data['billing']['id']) && str_contains($data['billing']['id'], 'address_')) {
+            unset($data['billing']['id']);
+            unset($data['billing']['address_id']);
         }
 
-        if (isset($addresses['shipping']['id']) && Str::contains($addresses['shipping']['id'], 'address_')) {
-            unset($addresses['shipping']['id']);
-            unset($addresses['shipping']['address_id']);
+        if (isset($data['shipping']['id']) && Str::contains($data['shipping']['id'], 'address_')) {
+            unset($data['shipping']['id']);
+            unset($data['shipping']['address_id']);
         }
 
-        $shippingMethod = request()->get('shipping_method');
-        $payment = request()->get('payment');
-
-        if (Cart::hasError() ||
-            ! Cart::saveCustomerAddress($addresses) ||
-            ! Cart::saveShippingMethod($shippingMethod) ||
-            ! Cart::savePaymentMethod($payment)) {
+        $shippingMethod = $request->get('shipping_method');
+        if (Cart::hasError() || ! Cart::saveCustomerAddress($data)
+            || ! $shippingMethod
+            || ! Cart::saveShippingMethod($shippingMethod)) {
             abort(400);
         }
 
         Cart::collectTotals();
 
-        $this->validateOrder();
-
-        $cart = Cart::getCart();
-
-        if ($redirectUrl = Payment::getRedirectUrl($cart)) {
-            return response([
-                'redirect_url' => $redirectUrl,
-            ]);
-        }
-
-        $order = $orderRepository->create(Cart::prepareDataForOrder());
-
-        Cart::deActivateCart();
-
         return response([
             'data'    => [
-                'order' => new OrderResource($order),
+                'methods' => Payment::getPaymentMethods(),
+                'cart'    => new CartResource(Cart::getCart()),
             ],
-            'message' => 'Order saved successfully.',
+            'message' => 'Shipping method saved successfully.',
         ]);
     }
+
 
     /**
      * Check for minimum order.

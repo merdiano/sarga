@@ -7,7 +7,7 @@ return [
         'description'      => 'Pickup from address',
         'active'           => true,
         'is_calculate_tax' => false,
-        'weight_price'     => '10',
+        'weight_price'     => '40',
         'type'             => 'per_unit',
         'class'            => 'Sarga\Admin\Shipment\Pickup',
     ],
@@ -18,7 +18,7 @@ return [
         'description'      => 'Courier Shipping',
         'active'           => true,
         'is_calculate_tax' => false,
-        'weight_price'     => '10',
+        'weight_price'     => '40',
         'class'            => 'Sarga\Admin\Shipment\Courier',
     ]
 ];
