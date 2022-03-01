@@ -14,9 +14,6 @@ class Shipping
      */
     protected $rates = [];
 
-    public function getRates(){
-        return $this->rates;
-    }
     /**
      * Collects rate from available shipping methods.
      *
@@ -135,7 +132,12 @@ class Shipping
                 'code'         => $object->getCode(),
                 'method'       => $object->getMethod(),
                 'method_title' => $object->getTitle(),
-                'description'  => $object->getDescription()
+                'description'  => $object->getDescription(),
+                'formatted_price'   => core()->currency($object->getConfigData('weight_price')),
+                'price'   => core()->convertPrice($object->getConfigData('weight_price')),
+                'outlet_delivery'    => (double)$object->getConfigData('outlet_delivery'),
+                'delivery_day_min'   => (double)$object->getConfigData('delivery_day_min'),
+                'delivery_day_max'   => (double)$object->getConfigData('delivery_day_max'),
             ];
         }
 

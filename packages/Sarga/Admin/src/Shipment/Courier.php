@@ -54,10 +54,11 @@ class Courier extends AbstractShipping
 
         if ($price = $this->getConfigData('weight_price')) {
             $total_weight = $cart->items->sum('total_weight');
-            $cartShippingRate->price = core()->convertPrice($price * $total_weight,$cart->cart_currency_code);
+            $cartShippingRate->price = core()->convertPrice($price * $total_weight);
             $cartShippingRate->base_price = $price * $total_weight;
         }
 
         return $cartShippingRate;
     }
+
 }

@@ -27,11 +27,9 @@ class Checkout extends CheckoutController
             ],400);
         }
 
-        Shipping::collectRates();
-
         $addresses = core()->getCurrentChannel()->inventory_sources()->get();
         return response([
-            'rates' => CartShippingRateResource::collection(Shipping::getRates()),
+            'shipping' => Shipping::getShippingMethods(),
             'pickup_addresses' => PickupAddress::collection($addresses),
         ]);
     }

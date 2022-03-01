@@ -7,7 +7,10 @@ return [
         'description'      => 'Pickup from address',
         'active'           => true,
         'is_calculate_tax' => false,
-        'weight_price'     => '40',
+        'weight_price'     => '20',
+        'delivery_day_min' => '20',
+        'delivery_day_max' => '25',
+        'outlet_delivery'  => '2',
         'type'             => 'per_unit',
         'class'            => 'Sarga\Admin\Shipment\Pickup',
     ],
@@ -18,7 +21,10 @@ return [
         'description'      => 'Courier Shipping',
         'active'           => true,
         'is_calculate_tax' => false,
-        'weight_price'     => '40',
+        'weight_price'     => '20',
+        'delivery_day_min' => '20',
+        'delivery_day_max' => '25',
+        'outlet_delivery'  => '2',
         'class'            => 'Sarga\Admin\Shipment\Courier',
     ]
 ];
