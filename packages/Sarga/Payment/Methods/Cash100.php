@@ -4,7 +4,7 @@ namespace Sarga\Payment\Methods;
 
 use Webkul\Payment\Payment\Payment;
 
-class CashBeforeDelivery extends Payment
+class Cash100 extends Payment
 {
     /**
      * Payment method code
