@@ -1,7 +1,7 @@
 <?php
 return [
     'cash100' =>[
-        'code'        => 'cashbeforedelivery',
+        'code'        => 'cash100',
         'title'       => "I\\'ll pay by cash with deposit 100%",
         'description' => 'Pay deposit 100% to gain 10% discount',
         'class'       => 'Sarga\Payment\Methods\Cash100',
@@ -9,7 +9,7 @@ return [
         'sort'        => 2,
     ],
     'cash50' =>[
-        'code'        => 'cashbeforedelivery',
+        'code'        => 'cash50',
         'title'       => "I\\'ll pay by cash with deposit 50%",
         'description' => 'Pay deposit 50%',
         'class'       => 'Sarga\Payment\Methods\Cash50',
@@ -17,7 +17,7 @@ return [
         'sort'        => 2,
     ],
     'terminal100'  => [
-        'code'        => 'terminal',
+        'code'        => 'terminal100',
         'title'       => "I\\'ll pay by card on terminal",
         'description' => '50% deposit is taken before delivery',
         'class'       => 'Sarga\Payment\Methods\Terminal100',
@@ -25,7 +25,7 @@ return [
         'sort'        => 3,
     ],
     'terminal50'  => [
-        'code'        => 'terminal',
+        'code'        => 'terminal50',
         'title'       => "I\\'ll pay by card on terminal",
         'description' => '50% deposit is taken before delivery',
         'class'       => 'Sarga\Payment\Methods\Terminal50',
