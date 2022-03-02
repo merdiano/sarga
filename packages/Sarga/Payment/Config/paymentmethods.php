@@ -18,7 +18,7 @@ return [
     ],
     'terminal100'  => [
         'code'        => 'terminal100',
-        'title'       => "I\\'ll pay by card on terminal",
+        'title'       => "I\\'ll pay by card on terminal with deposit 100%",
         'description' => '50% deposit is taken before delivery',
         'class'       => 'Sarga\Payment\Methods\Terminal100',
         'active'      => true,
@@ -26,7 +26,7 @@ return [
     ],
     'terminal50'  => [
         'code'        => 'terminal50',
-        'title'       => "I\\'ll pay by card on terminal",
+        'title'       => "I\\'ll pay by card on terminal with deposit 50%",
         'description' => '50% deposit is taken before delivery',
         'class'       => 'Sarga\Payment\Methods\Terminal50',
         'active'      => true,

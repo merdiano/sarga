@@ -61,7 +61,7 @@ class Checkout extends CheckoutController
         if (Cart::hasError() || ! Cart::saveCustomerAddress($data)
             || ! $shippingMethod
             || ! Cart::saveShippingMethod($shippingMethod)) {
-            abort(400);
+            return response(['message'=>'error. wrong shipment method or address'],400);
         }
 
         Cart::collectTotals();
