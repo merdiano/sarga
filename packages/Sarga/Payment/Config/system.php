@@ -1,6 +1,14 @@
 <?php
 
 return [
+    /**
+     * Payment methods.
+     */
+    [
+        'key'  => 'sales.paymentmethods',
+        'name' => 'admin::app.admin.system.payment-methods',
+        'sort' => 3,
+    ],
     [
         'key'    => 'sales.paymentmethods.cash100',
         'name'   => 'Nakit 100',
@@ -9,29 +17,28 @@ return [
             [
                 'name'          => 'title',
                 'title'         => 'admin::app.admin.system.title',
-                'type'          => 'depends',
-                'depend'        => 'active:1',
+                'type'          => 'text',
                 'validation'    => 'required_if:active,1',
-                'channel_based' => true,
+                'channel_based' => false,
                 'locale_based'  => true,
             ], [
                 'name'          => 'description',
                 'title'         => 'admin::app.admin.system.description',
                 'type'          => 'textarea',
-                'channel_based' => true,
+                'channel_based' => false,
                 'locale_based'  => true,
             ], [
                 'name'          => 'instructions',
                 'title'         => 'admin::app.admin.system.instructions',
                 'type'          => 'textarea',
-                'channel_based' => true,
+                'channel_based' => false,
                 'locale_based'  => true,
             ], [
                 'name'          => 'generate_invoice',
                 'title'         => 'admin::app.admin.system.generate-invoice',
                 'type'          => 'boolean',
                 'default_value' => false,
-                'channel_based' => true,
+                'channel_based' => false,
                 'locale_based'  => false,
             ], [
                 'name'          => 'invoice_status',
@@ -48,7 +55,7 @@ return [
                     ],
                 ],
                 'info'          => 'admin::app.admin.system.generate-invoice-applicable',
-                'channel_based' => true,
+                'channel_based' => false,
                 'locale_based'  => false,
             ], [
                 'name'          => 'order_status',
@@ -67,15 +74,15 @@ return [
                     ],
                 ],
                 'info'          => 'admin::app.admin.system.generate-invoice-applicable',
-                'channel_based' => true,
+                'channel_based' => false,
                 'locale_based'  => false,
             ], [
                 'name'          => 'active',
                 'title'         => 'admin::app.admin.system.status',
                 'type'          => 'boolean',
                 'validation'    => 'required',
-                'channel_based' => true,
-                'locale_based'  => true,
+                'channel_based' => false,
+                'locale_based'  => false,
             ], [
                 'name'    => 'sort',
                 'title'   => 'admin::app.admin.system.sort_order',
@@ -106,29 +113,28 @@ return [
             [
                 'name'          => 'title',
                 'title'         => 'admin::app.admin.system.title',
-                'type'          => 'depends',
-                'depend'        => 'active:1',
+                'type'          => 'text',
                 'validation'    => 'required_if:active,1',
-                'channel_based' => true,
+                'channel_based' => false,
                 'locale_based'  => true,
             ], [
                 'name'          => 'description',
                 'title'         => 'admin::app.admin.system.description',
                 'type'          => 'textarea',
-                'channel_based' => true,
+                'channel_based' => false,
                 'locale_based'  => true,
             ], [
                 'name'          => 'instructions',
                 'title'         => 'admin::app.admin.system.instructions',
                 'type'          => 'textarea',
-                'channel_based' => true,
+                'channel_based' => false,
                 'locale_based'  => true,
             ], [
                 'name'          => 'generate_invoice',
                 'title'         => 'admin::app.admin.system.generate-invoice',
                 'type'          => 'boolean',
                 'default_value' => false,
-                'channel_based' => true,
+                'channel_based' => false,
                 'locale_based'  => false,
             ], [
                 'name'          => 'invoice_status',
@@ -145,7 +151,7 @@ return [
                     ],
                 ],
                 'info'          => 'admin::app.admin.system.generate-invoice-applicable',
-                'channel_based' => true,
+                'channel_based' => false,
                 'locale_based'  => false,
             ], [
                 'name'          => 'order_status',
@@ -164,15 +170,15 @@ return [
                     ],
                 ],
                 'info'          => 'admin::app.admin.system.generate-invoice-applicable',
-                'channel_based' => true,
+                'channel_based' => false,
                 'locale_based'  => false,
             ], [
                 'name'          => 'active',
                 'title'         => 'admin::app.admin.system.status',
                 'type'          => 'boolean',
                 'validation'    => 'required',
-                'channel_based' => true,
-                'locale_based'  => true,
+                'channel_based' => false,
+                'locale_based'  => false,
             ], [
                 'name'    => 'sort',
                 'title'   => 'admin::app.admin.system.sort_order',
@@ -203,8 +209,7 @@ return [
             [
                 'name'          => 'title',
                 'title'         => 'admin::app.admin.system.title',
-                'type'          => 'depends',
-                'depend'        => 'active:1',
+                'type'          => 'text',
                 'validation'    => 'required_if:active,1',
                 'channel_based' => false,
                 'locale_based'  => true,
@@ -269,7 +274,7 @@ return [
                 'type'          => 'boolean',
                 'validation'    => 'required',
                 'channel_based' => false,
-                'locale_based'  => true,
+                'locale_based'  => false,
             ], [
                 'name'    => 'sort',
                 'title'   => 'admin::app.admin.system.sort_order',
@@ -299,8 +304,7 @@ return [
             [
                 'name'          => 'title',
                 'title'         => 'admin::app.admin.system.title',
-                'type'          => 'depends',
-                'depend'        => 'active:1',
+                'type'          => 'text',
                 'validation'    => 'required_if:active,1',
                 'channel_based' => false,
                 'locale_based'  => true,
@@ -365,7 +369,7 @@ return [
                 'type'          => 'boolean',
                 'validation'    => 'required',
                 'channel_based' => false,
-                'locale_based'  => true,
+                'locale_based'  => false,
             ], [
                 'name'    => 'sort',
                 'title'   => 'admin::app.admin.system.sort_order',
@@ -391,13 +395,12 @@ return [
     [
         'key' => 'sales.paymentmethods.altynasyr',
         'name' => 'Online AltynAsyr',
-        'sort' => 4,
+        'sort' => 5,
         'fields' => [
             [
                 'name'          => 'title',
                 'title'         => 'admin::app.admin.system.title',
-                'type'          => 'depends',
-                'depend'        => 'active:1',
+                'type'          => 'text',
                 'validation'    => 'required_if:active,1',
                 'channel_based' => false,
                 'locale_based'  => true,

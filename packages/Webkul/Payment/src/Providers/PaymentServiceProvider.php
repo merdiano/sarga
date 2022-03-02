@@ -29,7 +29,7 @@ class PaymentServiceProvider extends ServiceProvider
     {
         $this->registerFacades();
 
-        $this->registerConfig();
+//        $this->registerConfig();
     }
     /**
      * Register Bouncer as a singleton.
