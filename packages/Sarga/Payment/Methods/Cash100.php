@@ -11,7 +11,7 @@ class Cash100 extends Payment
      *
      * @var string
      */
-    protected $code  = 'cashbeforedelivery';
+    protected $code  = 'cash100';
 
     public function getRedirectUrl()
     {

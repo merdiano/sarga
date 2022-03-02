@@ -11,7 +11,7 @@ class Terminal100 extends Payment
      *
      * @var string
      */
-    protected $code  = 'terminal';
+    protected $code  = 'terminal100';
 
     public function getRedirectUrl()
     {
