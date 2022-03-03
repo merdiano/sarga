@@ -45,7 +45,6 @@ class CartResource extends JsonResource
             'formatted_discount'                 => core()->formatPrice($this->base_discount_amount, $this->cart_currency_code),
             'checkout_method'                    => $this->checkout_method,
             'vendors'                            => $this->groupByVendors($this->items),
-            'selected_shipping_rate'             => new CartShippingRateResource($this->selected_shipping_rate),
             'payment'                            => new CartPaymentResource($this->payment),
             'billing_address'                    => new AddressResource($this->billing_address),
             'shipping_address'                   => new AddressResource($this->shipping_address),

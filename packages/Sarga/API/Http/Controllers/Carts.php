@@ -25,12 +25,13 @@ class Carts extends CartController
             'data' => $cart ? new CartResource($cart) : null,
         ]);
     }
+
     /**
      * Add item to the cart.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Webkul\Customer\Repositories\WishlistRepository $wishlistRepository
-     * @param  int  $productId
+     * @param \Illuminate\Http\Request $request
+     * @param \Webkul\Customer\Repositories\WishlistRepository $wishlistRepository
+     * @param int $productId
      * @return \Illuminate\Http\Response
      */
     public function add(Request $request, WishlistRepository $wishlistRepository, int $productId)
@@ -57,7 +58,7 @@ class Carts extends CartController
             $cart = Cart::getCart();
 
             return response([
-                'data'    => $cart ? new CartResource($cart) : null,
+                'data' => $cart ? new CartResource($cart) : null,
                 'message' => __('rest-api::app.checkout.cart.item.success'),
             ]);
         } catch (Exception $e) {
@@ -70,8 +71,8 @@ class Carts extends CartController
     /**
      * Update the cart.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Webkul\Checkout\Repositories\CartItemRepository  $cartItemRepository
+     * @param \Illuminate\Http\Request $request
+     * @param \Webkul\Checkout\Repositories\CartItemRepository $cartItemRepository
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, CartItemRepository $cartItemRepository)
@@ -103,14 +104,15 @@ class Carts extends CartController
         $cart = Cart::getCart();
 
         return response([
-            'data'    => $cart ? new CartResource($cart) : null,
+            'data' => $cart ? new CartResource($cart) : null,
             'message' => __('rest-api::app.checkout.cart.quantity.success'),
         ]);
     }
+
     /**
      * Remove item from the cart.
      *
-     * @param  int  $cartItemId
+     * @param int $cartItemId
      * @return \Illuminate\Http\Response
      */
     public function removeItem($cartItemId)
@@ -126,16 +128,18 @@ class Carts extends CartController
         $cart = Cart::getCart();
 
         return response([
-            'data'    => $cart ? new CartResource($cart) : null,
+            'data' => $cart ? new CartResource($cart) : null,
             'message' => __('rest-api::app.checkout.cart.item.success'),
         ]);
     }
+
     /**
      * Empty the cart.
      *
      * @return \Illuminate\Http\Response
      */
-    function empty() {
+    function empty()
+    {
         Event::dispatch('checkout.cart.delete.before');
 
         Cart::deActivateCart();
@@ -145,14 +149,15 @@ class Carts extends CartController
         $cart = Cart::getCart();
 
         return response([
-            'data'    => $cart ? new CartResource($cart) : null,
+            'data' => $cart ? new CartResource($cart) : null,
             'message' => __('rest-api::app.checkout.cart.item.success-remove'),
         ]);
     }
+
     /**
      * Move cart item to wishlist.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function moveToWishlist($cartItemId)
@@ -168,8 +173,59 @@ class Carts extends CartController
         $cart = Cart::getCart();
 
         return response([
-            'data'    => $cart ? new CartResource($cart) : null,
+            'data' => $cart ? new CartResource($cart) : null,
             'message' => __('rest-api::app.checkout.cart.move-wishlist.success'),
         ]);
+    }
+
+    /**
+     * Apply the coupon code.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function applyCoupon(Request $request)
+    {
+        $couponCode = $request->code;
+
+        try {
+            if (strlen($couponCode)) {
+                Cart::setCouponCode($couponCode)->collectTotals();
+
+                if (Cart::getCart()->coupon_code == $couponCode) {
+                    return response([
+                        'message' => __('rest-api::app.checkout.cart.coupon.success'),
+                        'cart' => new CartResource(Cart::getCart())
+                    ]);
+                }
+            }
+
+            return response([
+                'message' => __('rest-api::app.checkout.cart.coupon.invalid'),
+            ], 400);
+        } catch (\Exception $e) {
+            report($e);
+
+            return response([
+                'message' => __('rest-api::app.checkout.cart.coupon.apply-issue'),
+            ], 400);
+
+        }
+    }
+
+    /**
+     * Remove the coupon code.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function removeCoupon()
+    {
+        Cart::removeCouponCode()->collectTotals();
+
+        return response([
+            'message' => __('rest-api::app.checkout.cart.coupon.remove'),
+            'cart' => new CartResource(Cart::getCart())
+        ]);
+
     }
 }
