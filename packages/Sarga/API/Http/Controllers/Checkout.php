@@ -28,6 +28,7 @@ class Checkout extends CheckoutController
         return response([
             'shipping' => Shipping::getShippingMethods(),
             'pickup_addresses' => PickupAddress::collection($addresses),
+            'payment' => Payment::getPaymentMethods(),
         ]);
     }
     /**
@@ -64,10 +65,7 @@ class Checkout extends CheckoutController
         Cart::collectTotals();
 
         return response([
-            'data'    => [
-                'methods' => Payment::getPaymentMethods(),
-                'cart'    => new CartResource(Cart::getCart()),
-            ],
+            'cart'    => new CartResource(Cart::getCart()),
             'message' => 'Shipping method saved successfully.',
         ]);
     }
@@ -91,9 +89,7 @@ class Checkout extends CheckoutController
         }
         Cart::collectTotals();
         return response([
-            'data'    => [
-                'cart' => new CartResource(Cart::getCart()),
-            ],
+            'cart' => new CartResource(Cart::getCart()),
             'message' => 'Payment method saved successfully.',
         ]);
     }
