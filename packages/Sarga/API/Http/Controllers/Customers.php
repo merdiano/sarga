@@ -7,10 +7,30 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Webkul\API\Http\Resources\Customer\Customer as CustomerResource;
+use Webkul\Customer\Repositories\CustomerAddressRepository;
+use Webkul\Customer\Repositories\CustomerGroupRepository;
+use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\AuthController;
 
 class Customers extends AuthController
 {
+    /**
+     * Controller instance.
+     *
+     * @param  \Webkul\Customer\Repositories\CustomerRepository  $customerRepository
+     * @param  \Webkul\Customer\Repositories\CustomerGroupRepository  $customerGroupRepository
+     * @return void
+     */
+    public function __construct(
+        CustomerRepository $customerRepository,
+        CustomerGroupRepository $customerGroupRepository,
+        CustomerAddressRepository $addressRepository
+    ) {
+        parent::__construct($customerRepository, $customerGroupRepository);
+
+        $this->addressRepository = $addressRepository;
+
+    }
     /**
      * Method to store user's sign up form data to DB.
      *
@@ -42,6 +62,16 @@ class Customers extends AuthController
             'is_verified' => 1,
             'gender'      => $request->get('gender'),
             'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => 'general'])->id
+        ]);
+
+        $this->addressRepository->create([
+            'address_type' => 'recipient',
+            'address1' => 'recipient',
+            'city' => 'recipient',
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'phone' => $request->get('phone'),
+            'customer_id' => $customer->id
         ]);
 
         return response([

@@ -23,7 +23,7 @@ class Checkout extends CheckoutController
 
             ],400);
         }
-
+        //inventory source goes as shipping addresses
         $addresses = core()->getCurrentChannel()->inventory_sources()->get();
         return response([
             'shipping' => Shipping::getShippingMethods(),
