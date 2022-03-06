@@ -2,6 +2,9 @@
 
 namespace Sarga\Shop\Providers;
 
+use Illuminate\Foundation\AliasLoader;
+use Sarga\Shop\ShoppingCart;
+use Webkul\Checkout\Facades\Cart;
 use Webkul\Core\Tree;
 use Illuminate\Routing\Router;
 use Illuminate\Pagination\Paginator;
@@ -43,6 +46,8 @@ class ShopServiceProvider extends ServiceProvider
         /* paginators */
 //        Paginator::defaultView('shop::partials.pagination');
 //        Paginator::defaultSimpleView('shop::partials.pagination');
+
+        $this->app->register(ModuleServiceProvider::class);
     }
 
     /**
@@ -52,9 +57,26 @@ class ShopServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerFacades();
 //        $this->registerConfig();
     }
+    /**
+     * Register cart as a singleton.
+     *
+     * @return void
+     */
+    protected function registerFacades(): void
+    {
+        $loader = AliasLoader::getInstance();
 
+        $loader->alias('shoppingcart', ShoppingCart::class);
+
+        $this->app->singleton('shoppingcart', function () {
+            return new ShoppingCart();
+        });
+
+        $this->app->bind('shoppingcart', ShoppingCart::class);
+    }
     /**
      * Bind the the data to the views.
      *

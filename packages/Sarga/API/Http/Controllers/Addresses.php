@@ -64,6 +64,7 @@ class Addresses extends AddressController
     }
 
     public function createRecipient(RecipientRequest $request){
+        //todo use recipient address repository
         $data = $request->all();
         $data['address_type'] = 'recipient';
         $data['customer_id'] = $request->user()->id;
@@ -91,6 +92,7 @@ class Addresses extends AddressController
 
     public function updateRecipient(RecipientRequest $request, int $id)
     {
+        //todo use recipient address repository
         if(\DB::table('addresses')->where('id',$id)->update($request->all())){
             return response([
                 'message' => 'Your recipient has been updated successfully.',

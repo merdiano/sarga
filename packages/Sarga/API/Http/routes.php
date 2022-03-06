@@ -16,6 +16,10 @@ use Webkul\Attribute\Repositories\AttributeOptionRepository;
 use Sarga\API\Http\Resources\Catalog\AttributeOption;
 use Sarga\API\Http\Resources\Catalog\Category;
 use Webkul\Core\Repositories\CountryStateRepository;
+use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\InvoiceController;
+use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\OrderController;
+use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\ShipmentController;
+use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\TransactionController;
 
 Route::group(['prefix' => 'api'], function () {
     Route::group(['middleware' => ['locale', 'currency']], function () {
@@ -103,6 +107,27 @@ Route::group(['prefix' => 'api'], function () {
                 Route::post('checkout/check-minimum-order', [Checkout::class, 'checkMinimumOrder']);
 
                 Route::post('checkout/save-order', [Checkout::class, 'saveOrder']);
+
+                /**
+                 * Customer sale routes.
+                 */
+                Route::get('orders', [OrderController::class, 'allResources']);
+
+                Route::get('orders/{id}', [OrderController::class, 'getResource']);
+
+                Route::post('orders/{id}/cancel', [OrderController::class, 'cancel']);
+
+                Route::get('invoices', [InvoiceController::class, 'allResources']);
+
+                Route::get('invoices/{id}', [InvoiceController::class, 'getResource']);
+
+                Route::get('shipments', [ShipmentController::class, 'allResources']);
+
+                Route::get('shipments/{id}', [ShipmentController::class, 'getResource']);
+
+                Route::get('transactions', [TransactionController::class, 'allResources']);
+
+                Route::get('transactions/{id}', [TransactionController::class, 'getResource']);
             });
         });
     });

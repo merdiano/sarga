@@ -27,6 +27,10 @@ class BrandServiceProvider extends ServiceProvider
             dirname(__DIR__) . '/Config/menu.php',
             'menu.admin'
         );
-        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/concord.php','concord.modules');
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/concord.php',
+            'concord.modules'
+        );
     }
 }
