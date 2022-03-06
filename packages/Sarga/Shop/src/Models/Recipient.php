@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Webkul\Core\Models\Address;
-use Sarga\Contract\Recipient as RecipientContract;
+use Sarga\Shop\Contracts\Recipient as RecipientContract;
 use Webkul\Customer\Database\Factories\CustomerAddressFactory;
 
 class Recipient extends Address implements RecipientContract
