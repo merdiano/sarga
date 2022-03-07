@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Sarga\API\Http\Resources\Checkout\CartResource;
 use Sarga\API\Http\Resources\Checkout\PickupAddress;
-use Webkul\Checkout\Facades\Cart;
+use Sarga\Shop\Facades\ShoppingCart as Cart;
 use Webkul\Payment\Facades\Payment;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\CheckoutController;
 use Webkul\Sales\Repositories\OrderRepository;
