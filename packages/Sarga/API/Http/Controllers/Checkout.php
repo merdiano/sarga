@@ -56,7 +56,7 @@ class Checkout extends CheckoutController
         }
 
         $shippingMethod = $request->get('shipping_method');
-        if (Cart::hasError() || ! Cart::saveCustomerAddress($data) || ! Shipping::collectRates()
+        if (Cart::hasError() || ! Cart::saveAddress($data) || ! Shipping::collectRates()
             || ! $shippingMethod
             || ! Cart::saveShippingMethod($shippingMethod)) {
             return response(['message'=>'error. wrong shipment method or address'],400);
