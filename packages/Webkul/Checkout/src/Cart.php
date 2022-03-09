@@ -786,7 +786,7 @@ class Cart
      *
      * @param \Webkul\Checkout\Contracts\Cart $cart
      */
-    public function assignCustomerFields(\Webkul\Checkout\Contracts\Cart $cart): void
+    private function assignCustomerFields(\Webkul\Checkout\Contracts\Cart $cart): void
     {
         if (
             auth()->guard()->check()
@@ -923,7 +923,7 @@ class Cart
      * @param  $cart
      * @return array
      */
-    public function gatherBillingAddress($data, \Webkul\Checkout\Models\Cart $cart): array
+    private function gatherBillingAddress($data, \Webkul\Checkout\Models\Cart $cart): array
     {
         $customerAddress = [];
 
@@ -952,7 +952,7 @@ class Cart
      * @param  \Webkul\Checkout\Cart|null  $cart
      * @return array
      */
-    public function gatherShippingAddress($data, \Webkul\Checkout\Models\Cart $cart): array
+    private function gatherShippingAddress($data, \Webkul\Checkout\Models\Cart $cart): array
     {
         $customerAddress = [];
 
@@ -982,7 +982,7 @@ class Cart
      * @param  array  $shippingAddressData
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function linkAddresses(
+    private function linkAddresses(
         \Webkul\Checkout\Models\Cart $cart,
         array $billingAddressData,
         array $shippingAddressData
