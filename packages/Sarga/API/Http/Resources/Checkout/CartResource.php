@@ -48,10 +48,6 @@ class CartResource extends JsonResource
             'payment'                            => new CartPaymentResource($this->payment),
             'billing_address'                    => new AddressResource($this->billing_address),
             'shipping_address'                   => new AddressResource($this->shipping_address),
-            'taxes'                              => json_encode($taxes, JSON_FORCE_OBJECT),
-            'formatted_taxes'                    => json_encode($formatedTaxes, JSON_FORCE_OBJECT),
-            'base_taxes'                         => json_encode($baseTaxes, JSON_FORCE_OBJECT),
-            'formatted_base_taxes'               => json_encode($formatedBaseTaxes, JSON_FORCE_OBJECT),
             'formatted_discounted_sub_total'     => core()->formatPrice($this->base_sub_total - $this->base_discount_amount, $this->cart_currency_code)
         ];
     }

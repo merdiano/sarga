@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Sarga\API\Http\Resources\Checkout\CartResource;
 use Sarga\API\Http\Resources\Checkout\PickupAddress;
-use Sarga\Shop\Facades\ShoppingCart as Cart;
+use Webkul\Checkout\Facades\Cart;
 use Webkul\Payment\Facades\Payment;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\CheckoutController;
 use Webkul\Sales\Repositories\OrderRepository;
@@ -56,7 +56,7 @@ class Checkout extends CheckoutController
         }
 
         $shippingMethod = $request->get('shipping_method');
-        if (Cart::hasError() || ! Cart::saveAddress($data) || ! Shipping::collectRates()
+        if (Cart::hasError() || ! Cart::saveCustomerAddress($data) || ! Shipping::collectRates()
             || ! $shippingMethod
             || ! Cart::saveShippingMethod($shippingMethod)) {
             return response(['message'=>'error. wrong shipment method or address'],400);

@@ -58,13 +58,14 @@ class ShoppingCart extends \Webkul\Checkout\Cart
         $billingAddress = array_merge(
             $customerAddress,
             $data['billing'],
-            ['cart_id' => $cart->id],
+            ['cart_id' => $cart->id, 'customer_id' => $cart->customer_id],
             $this->fillAddressAttributes($data['billing'])
         );
 
         $this->linkAddresses($cart,$billingAddress,$billingAddress);
 
     }
+
     /**
      * Fill address attributes.
      *
