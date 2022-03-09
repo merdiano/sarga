@@ -21,7 +21,7 @@
         </div>
 
         <div class="control-group" :class="[errors.has('product_limit') ? 'has-error' : '']">
-            <label for="product_limit" class="required">Products limit(kg)</label>
+            <label for="product_limit" class="required">Products limit</label>
             <input type="text" v-validate="'required|numeric'" class="control" id="product_limit" name="product_limit" value="{{ old('product_limit',500)}}" data-vv-as="&quot;Products limit&quot;"/>
             <span class="control-error" v-if="errors.has('product_limit')">@{{ errors.first('product_limit') }}</span>
         </div>
