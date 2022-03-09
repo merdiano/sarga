@@ -19,5 +19,11 @@
             <input type="text" v-validate="'required|decimal'" class="control" id="default_weight" name="default_weight" value="{{ old('default_weight',0.5)}}" data-vv-as="&quot;Default weight&quot;"/>
             <span class="control-error" v-if="errors.has('default_weight')">@{{ errors.first('default_weight') }}</span>
         </div>
+
+        <div class="control-group" :class="[errors.has('product_limit') ? 'has-error' : '']">
+            <label for="product_limit" class="required">Products limit(kg)</label>
+            <input type="text" v-validate="'required|numeric'" class="control" id="product_limit" name="product_limit" value="{{ old('product_limit',500)}}" data-vv-as="&quot;Products limit&quot;"/>
+            <span class="control-error" v-if="errors.has('product_limit')">@{{ errors.first('product_limit') }}</span>
+        </div>
     </div>
 </accordian>
