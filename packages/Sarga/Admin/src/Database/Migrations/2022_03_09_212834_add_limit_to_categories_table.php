@@ -14,7 +14,7 @@ class AddLimitToCategoriesTable extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->decimal('product_limit')->unsigned()->default(500);
+            $table->integer('product_limit')->unsigned()->default(500);
 
         });
     }
