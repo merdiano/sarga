@@ -290,8 +290,6 @@
                                                     <th>{{ __('admin::app.sales.orders.price') }}</th>
                                                     <th>{{ __('admin::app.sales.orders.item-status') }}</th>
                                                     <th>{{ __('admin::app.sales.orders.subtotal') }}</th>
-                                                    <th>{{ __('admin::app.sales.orders.tax-percent') }}</th>
-                                                    <th>{{ __('admin::app.sales.orders.tax-amount') }}</th>
                                                     @if ($order->base_discount_amount > 0)
                                                         <th>{{ __('admin::app.sales.orders.discount-amount') }}</th>
                                                     @endif
@@ -309,7 +307,7 @@
                                                         </td>
 
                                                         <td>
-                                                            {{ $item->name }}
+                                                            <a href="{{ url('https://www.trendyol.com'.strip_tags($item->product->short_description)) }}">{{ $item->name }}</a>
 
                                                             @if (isset($item->additional['attributes']))
                                                                 <div class="item-options">
@@ -347,10 +345,6 @@
                                                         </td>
 
                                                         <td>{{ core()->formatPrice($item->total,$order->order_currency_code) }}</td>
-
-                                                        <td>{{ $item->tax_percent }}%</td>
-
-                                                        <td>{{ core()->formatPrice($item->tax_amount,$order->order_currency_code) }}</td>
 
                                                         @if ($order->base_discount_amount > 0)
                                                             <td>{{ core()->formatPrice($item->discount_amount,$order->order_currency_code) }}</td>
