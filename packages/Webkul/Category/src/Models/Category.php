@@ -54,7 +54,8 @@ class Category extends TranslatableModel implements CategoryContract
         'additional',
         'trendyol_url',
         'lcw_url',
-        'default_weight'
+        'default_weight',
+        'product_limit'
     ];
 
     /**
