@@ -2,8 +2,9 @@
 
 namespace Sarga\API\Http\Controllers;
 
+use Sarga\API\Http\Resources\Customer\OrderResource;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\OrderController;
-use Webkul\RestApi\Http\Resources\V1\Shop\Sales\OrderResource;
+
 
 class Orders extends OrderController
 {
