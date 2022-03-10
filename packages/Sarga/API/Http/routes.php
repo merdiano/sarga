@@ -8,6 +8,7 @@ use Sarga\API\Http\Controllers\Customers;
 use Sarga\API\Http\Controllers\Categories;
 use Sarga\API\Http\Controllers\Channels;
 use Sarga\API\Http\Controllers\IntegrationController;
+use Sarga\API\Http\Controllers\Orders;
 use Sarga\API\Http\Controllers\Vendors;
 use Sarga\API\Http\Controllers\Products;
 use Sarga\Shop\Repositories\CategoryRepository;
@@ -17,7 +18,6 @@ use Sarga\API\Http\Resources\Catalog\AttributeOption;
 use Sarga\API\Http\Resources\Catalog\Category;
 use Webkul\Core\Repositories\CountryStateRepository;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\InvoiceController;
-use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\OrderController;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\ShipmentController;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\TransactionController;
 
@@ -111,11 +111,11 @@ Route::group(['prefix' => 'api'], function () {
                 /**
                  * Customer sale routes.
                  */
-                Route::get('orders', [OrderController::class, 'allResources']);
+                Route::get('orders', [Orders::class, 'allResources']);
 
-                Route::get('orders/{id}', [OrderController::class, 'getResource']);
+                Route::get('orders/{id}', [Orders::class, 'getResource']);
 
-                Route::post('orders/{id}/cancel', [OrderController::class, 'cancel']);
+                Route::post('orders/{id}/cancel', [Orders::class, 'cancel']);
 
                 Route::get('invoices', [InvoiceController::class, 'allResources']);
 

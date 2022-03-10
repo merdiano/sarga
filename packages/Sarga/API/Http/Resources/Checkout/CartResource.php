@@ -33,7 +33,7 @@ class CartResource extends JsonResource
             'shipping_method'                    => $this->shipping_method,
             'coupon_code'                        => $this->coupon_code,
             'is_gift'                            => $this->is_gift,
-            'items_count'                        => $this->items_count,
+            'items_count'                        => (int) $this->items_count,
             'items_qty'                          => (int) $this->items_qty,
             'grand_total'                        => (double) $this->grand_total,
             'formatted_grand_total'              => core()->formatPrice($this->base_grand_total),
