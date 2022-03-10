@@ -4,12 +4,18 @@ namespace Sarga\API\Http\Resources\Customer;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use Webkul\Marketplace\Repositories\ProductRepository;
 use Webkul\RestApi\Http\Resources\V1\Admin\Sale\InvoiceResource;
 use Webkul\RestApi\Http\Resources\V1\Admin\Sale\OrderAddressResource;
 use Webkul\RestApi\Http\Resources\V1\Admin\Sale\ShipmentResource;
 
 class OrderResource extends JsonResource
 {
+    public function __construct($resource)
+    {
+        $this->sellerProductRepository = app(ProductRepository::class);
+        parent::__construct($resource);
+    }
     /**
      * Transform the resource into an array.
      *

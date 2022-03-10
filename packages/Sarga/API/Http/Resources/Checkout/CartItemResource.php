@@ -4,7 +4,7 @@ namespace Sarga\API\Http\Resources\Checkout;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Sarga\API\Http\Resources\Catalog\Product as ProductResource;
-use Sarga\API\Http\Resources\Catalog\ProductVariant;
+use Webkul\Marketplace\Repositories\ProductRepository;
 
 class CartItemResource extends JsonResource
 {
@@ -33,7 +33,7 @@ class CartItemResource extends JsonResource
                 ? $this->resource->additional
                 : json_decode($this->resource->additional, true),
             'child'                         => new self($this->child),
-            'product'                       => $this->when($this->product_id, new ProductVariant($this->product->parent->super_attributes??null))
+            'product'                       => $this->when($this->product_id, new CartItemProduct($this->product)),
         ];
     }
 }

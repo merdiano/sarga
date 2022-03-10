@@ -22,11 +22,6 @@ class CartResource extends JsonResource
      */
     public function toArray($request): array
     {
-        $taxes = Tax::getTaxRatesWithAmount($this, false);
-        $baseTaxes = Tax::getTaxRatesWithAmount($this, true);
-
-        $formatedTaxes = $this->formatTaxAmounts($taxes, false);
-        $formatedBaseTaxes = $this->formatTaxAmounts($baseTaxes, true);
 
         return [
             'id'                                 => $this->id,
