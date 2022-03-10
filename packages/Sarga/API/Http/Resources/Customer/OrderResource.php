@@ -35,39 +35,39 @@ class OrderResource extends JsonResource
             'shipping_description'               => $this->shipping_description,
             'coupon_code'                        => $this->coupon_code,
             'is_gift'                            => $this->is_gift,
-            'total_item_count'                   => (int)$this->total_item_count,
-            'total_qty_ordered'                  => (int)$this->total_qty_ordered,
+            'total_item_count'                   => (int) $this->total_item_count,
+            'total_qty_ordered'                  => (int) $this->total_qty_ordered,
             'base_currency_code'                 => $this->base_currency_code,
             'channel_currency_code'              => $this->channel_currency_code,
             'order_currency_code'                => $this->order_currency_code,
-            'grand_total'                        => (double)$this->grand_total,
+            'grand_total'                        => (double) $this->grand_total,
             'formatted_grand_total'               => core()->formatPrice($this->base_grand_total, $this->order_currency_code),
 
-            'grand_total_invoiced'               => (double)$this->grand_total_invoiced,
+            'grand_total_invoiced'               => (double) $this->grand_total_invoiced,
             'formatted_grand_total_invoiced'      => core()->formatPrice($this->base_grand_total_invoiced, $this->order_currency_code),
 
-            'grand_total_refunded'               => (double)$this->grand_total_refunded,
+            'grand_total_refunded'               => (double) $this->grand_total_refunded,
             'formatted_grand_total_refunded'      => core()->formatPrice($this->base_grand_total_refunded, $this->order_currency_code),
 
-            'sub_total'                          => (double)$this->sub_total,
+            'sub_total'                          => (double) $this->sub_total,
             'formatted_sub_total'                 => core()->formatPrice($this->base_sub_total, $this->order_currency_code),
 
-            'sub_total_invoiced'                 => (double)$this->sub_total_invoiced,
+            'sub_total_invoiced'                 => (double) $this->sub_total_invoiced,
             'formatted_sub_total_invoiced'        => core()->formatPrice($this->base_sub_total_invoiced, $this->order_currency_code),
 
-            'sub_total_refunded'                 => (double)$this->sub_total_refunded,
+            'sub_total_refunded'                 => (double) $this->sub_total_refunded,
 //            'formatted_sub_total_refunded'        => core()->formatPrice($this->sub_total_refunded, $this->order_currency_code),
-            'discount_percent'                   => $this->discount_percent,
-            'discount_amount'                    => (double)$this->discount_amount,
+            'discount_percent'                   => (double) $this->discount_percent,
+            'discount_amount'                    => (double) $this->discount_amount,
             'formatted_discount_amount'           => core()->formatPrice($this->base_discount_amount, $this->order_currency_code),
 
             'discount_invoiced'                  => (double)$this->discount_invoiced,
             'formatted_discount_invoiced'         => core()->formatPrice($this->base_discount_invoiced, $this->order_currency_code),
 
-            'discount_refunded'                  => (double)$this->discount_refunded,
+            'discount_refunded'                  => (double) $this->discount_refunded,
             'formatted_discount_refunded'         => core()->formatPrice($this->base_discount_refunded, $this->order_currency_code),
 
-            'shipping_amount'                    => (double)$this->shipping_amount,
+            'shipping_amount'                    => (double) $this->shipping_amount,
             'formatted_shipping_amount'           => core()->formatPrice($this->base_shipping_amount, $this->order_currency_code),
 
             'shipping_invoiced'                  => $this->shipping_invoiced,
