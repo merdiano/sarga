@@ -23,7 +23,7 @@ class OrderItemResource extends JsonResource
             'product'                           => $this->when($this->product_id, new CartItemProduct($this->product)),
             'coupon_code'                       => $this->coupon_code,
             'weight'                            => (double) $this->weight,
-            'total_weight'                      => $this->total_weight,
+            'total_weight'                      => (double) $this->total_weight,
             'qty_ordered'                       => (int) $this->qty_ordered,
             'qty_canceled'                      => (int) $this->qty_canceled,
             'qty_invoiced'                      => (int) $this->qty_invoiced,
