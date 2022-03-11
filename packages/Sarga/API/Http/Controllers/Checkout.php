@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Sarga\API\Http\Resources\Checkout\CartResource;
 use Sarga\API\Http\Resources\Checkout\PickupAddress;
+use Sarga\API\Http\Resources\Customer\OrderResource;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Payment\Facades\Payment;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\CheckoutController;
 use Webkul\Sales\Repositories\OrderRepository;
 use Webkul\Shipping\Facades\Shipping;
-use Sarga\API\Http\Resources\Sales\Order as OrderResource;
+
 
 class Checkout extends CheckoutController
 {
