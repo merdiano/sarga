@@ -303,7 +303,7 @@
 
                                                     <tr>
                                                         <td>
-                                                            {{ $item->getTypeInstance()->getOrderedItem($item)->sku }}
+                                                            <a href="{{route('admin.catalog.products.edit',['id'=>$item->product_id])}}">{{ $item->getTypeInstance()->getOrderedItem($item)->sku }}</a>
                                                         </td>
 
                                                         <td>
