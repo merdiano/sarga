@@ -17,4 +17,8 @@ class Orders extends OrderController
     {
         return OrderResource::class;
     }
+
+    public function cancelItem(){
+
+    }
 }

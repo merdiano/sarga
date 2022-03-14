@@ -117,6 +117,8 @@ Route::group(['prefix' => 'api'], function () {
 
                 Route::post('orders/{id}/cancel', [Orders::class, 'cancel']);
 
+                Route::post('orders/{id}/cancel/{item_id}', [Orders::class, 'cancelItem']);
+
                 Route::get('invoices', [InvoiceController::class, 'allResources']);
 
                 Route::get('invoices/{id}', [InvoiceController::class, 'getResource']);

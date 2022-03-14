@@ -4,6 +4,7 @@ namespace Sarga\API\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Sarga\API\Http\Resources\Catalog\Attribute;
+use Sarga\API\Http\Resources\Catalog\Brand;
 use Sarga\API\Http\Resources\Catalog\Category;
 use Sarga\Shop\Repositories\CategoryRepository;
 
@@ -35,12 +36,15 @@ class Categories extends Controller
     }
 
     public function filters($id){
-        $category = $this->categoryRepository->with('filterableAttributes')->find($id);
+        $category = $this->categoryRepository->with(['filterableAttributes','brands'])->find($id);
 
         if($category)
-            return Attribute::collection($category->filterableAttributes);
+            return response([
+                'attributes' =>Attribute::collection($category->filterableAttributes),
+                'brands' => Brand::collection($category->brands),
+                ]);
         else{
-            return response()->json(['error'=>'not found'],404);
+            return response(['error'=>'not found'],404);
         }
     }
 
