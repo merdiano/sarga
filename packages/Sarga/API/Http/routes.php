@@ -20,6 +20,7 @@ use Webkul\Core\Repositories\CountryStateRepository;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\InvoiceController;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\ShipmentController;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\TransactionController;
+use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\WishlistController;
 
 Route::group(['prefix' => 'api'], function () {
     Route::group(['middleware' => ['locale', 'currency']], function () {
@@ -68,6 +69,14 @@ Route::group(['prefix' => 'api'], function () {
                 Route::post('addresses', [Addresses::class, 'createAddress']);
                 Route::put('addresses/{id}', [Addresses::class, 'updateAddress']);
                 Route::delete('addresses/{id}', [Addresses::class, 'destroy']);
+                /**
+                 * Customer wishlist routes.
+                 */
+                Route::get('wishlist', [WishlistController::class, 'index']);
+
+                Route::post('wishlist/{id}', [WishlistController::class, 'addOrRemove']);
+
+                Route::post('wishlist/{id}/move-to-cart', [WishlistController::class, 'moveToCart']);
                 /**
                  * Recipients
                  */
