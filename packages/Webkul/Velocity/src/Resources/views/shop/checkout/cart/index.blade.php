@@ -12,19 +12,8 @@
 
 @push('css')
     <style type="text/css">
-        .quantity {
-            width: unset;
-            float: right;
-        }
-
-        .alert-wishlist {
-            display: inline-block;
-            position: relative;
-            top: -2px;
-        }
-
         @media only screen and (max-width: 600px) {
-            .rango-delete{
+            .rango-delete {
                 margin-top: 10px;
                 margin-left: -10px !important;
             }
@@ -38,10 +27,10 @@
     <script type="text/x-template" id="cart-template">
         <div class="container">
             <section class="cart-details row no-margin col-12">
-                <h2 class="cart-details-header fw6 col-12">{{ __('shop::app.checkout.cart.title') }}</h2>
+                <h2 class="fw6 col-12">{{ __('shop::app.checkout.cart.title') }}</h2>
 
                 @if ($cart)
-                    <div class="cart-details-header col-lg-6 col-md-12">
+                    <div class="cart-details-header col-lg-7 col-md-12">
                         <div class="row cart-header col-12 no-padding">
                             <span class="col-8 fw6 fs16 pr0">
                                 {{ __('velocity::app.checkout.items') }}
@@ -108,7 +97,7 @@
 
                                                 @if (isset($item->additional['attributes']))
                                                     @foreach ($item->additional['attributes'] as $attribute)
-                                                        <div class="row col-12 no-padding no-margin display-block">
+                                                        <div class="row col-12 no-padding no-margin display-block item-attribute">
                                                             <label class="no-margin">
                                                                 {{ $attribute['attribute_name'] }}:
                                                             </label>
@@ -119,7 +108,7 @@
                                                     @endforeach
                                                 @endif
 
-                                                <div class="row col-12 no-padding no-margin">
+                                                <div class="row col-12 no-padding no-margin item-price">
                                                     <div class="product-price">
                                                         <span>{{ core()->currency($item->base_price) }}</span>
                                                     </div>
@@ -131,18 +120,18 @@
                                                     $showWishlist = core()->getConfigData('general.content.shop.wishlist_option') == "1" ? true : false;
                                                 @endphp
 
-                                                <div class="no-padding col-12 cursor-pointer fs16">
+                                                <div class="no-padding col-12 cursor-pointer fs16 item-actions">
                                                     @auth('customer')
                                                         @if ($showWishlist)
                                                             @if ($item->parent_id != 'null' || $item->parent_id != null)
-                                                                <div class="alert-wishlist">
+                                                                <div class="d-inline-block">
                                                                     @include('shop::products.wishlist', [
                                                                         'route' => route('shop.movetowishlist', $item->id),
                                                                         'text' => "<span class='align-vertical-super'>$moveToWishlist</span>"
                                                                     ])
                                                                 </div>
                                                             @else
-                                                                <div class="alert-wishlist">
+                                                                <div class="d-inline-block">
                                                                     @include('shop::products.wishlist', [
                                                                         'route' => route('shop.movetowishlist', $item->child->id),
                                                                         'text' => "<span class='align-vertical-super'>$moveToWishlist</span>"
@@ -154,11 +143,7 @@
 
                                                     <div class="d-inline-block">
                                                         <a
-                                                            class="unset
-                                                                @auth('customer')
-                                                                    ml10
-                                                                @endauth
-                                                            "
+                                                            class="unset"
                                                             href="{{ route('shop.checkout.cart.remove', ['id' => $item->id]) }}"
                                                             @click="removeLink('{{ __('shop::app.checkout.cart.cart-remove-action') }}')">
 
@@ -225,7 +210,7 @@
                 {!! view_render_event('bagisto.shop.checkout.cart.summary.after', ['cart' => $cart]) !!}
 
                     @if ($cart)
-                        <div class="col-lg-4 col-md-12 offset-lg-2 row order-summary-container">
+                        <div class="col-lg-4 col-md-12 offset-lg-1 row order-summary-container">
                             @include('shop::checkout.total.summary', ['cart' => $cart])
 
                             <coupon-component></coupon-component>
@@ -263,8 +248,9 @@
 
                 methods: {
                     removeLink(message) {
-                        if (! confirm(message))
+                        if (! confirm(message)) {
                             event.preventDefault();
+                        }
                     }
                 }
             })
