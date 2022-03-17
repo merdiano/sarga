@@ -37,7 +37,7 @@
                             <div class="control-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">{{ __('brand::app.name') }}</label>
                                 <input type="text" v-validate="'required'" class="control" id="name" name="name" value="{{ old('name',$brand->name) }}"
-                                       data-vv-as="&quot;{{ __('brand::app.name') }}&quot;" v-code/>
+                                       data-vv-as="&quot;{{ __('brand::app.name') }}&quot;"/>
                                 <span class="control-error" v-if="errors.has('name')">@{{ errors.first('name') }}</span>
                             </div>
                             <div class="control-group" :class="[errors.has('status') ? 'has-error' : '']">
