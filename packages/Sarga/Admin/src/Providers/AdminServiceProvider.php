@@ -22,7 +22,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../Resources/views/catalog/categories' => resource_path('views/vendor/admin/catalog/categories'),
             __DIR__ . '/../Resources/views/customers/addresses' => resource_path('views/vendor/admin/customers/addresses'),
-            __DIR__ . '/../Resources/views/sales/orders' => resource_path('views/vendor/admin/sales/orders'),
+            __DIR__ . '/../Resources/views/sales' => resource_path('views/vendor/admin/sales'),
             __DIR__ . '/../Resources/views/customers/edit.blade.php' => resource_path('views/vendor/admin/customers/edit.blade.php'),
         ]);
 
