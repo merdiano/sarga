@@ -13,7 +13,7 @@ Route::group(['middleware' => ['web', 'admin', 'admin_locale'], 'prefix' => conf
             'view' => 'admin::sales.orders.index',
         ])->name('admin.sales.orders.index');
 
-        Route::post('/orders/item/{id}/cancel', [\Sarga\Admin\Http\Controllers\Orders::class, 'cancelOrderItem'])
+        Route::get('/orders/item/{id}/cancel', [\Sarga\Admin\Http\Controllers\Orders::class, 'cancelOrderItem'])
             ->name('admin.sales.orders.cancel_item');
 
         Route::post('/shipments/create/{order_id}', [\Sarga\Admin\Http\Controllers\Shipments::class, 'store'])->defaults('_config', [
