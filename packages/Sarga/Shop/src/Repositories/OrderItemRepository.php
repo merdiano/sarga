@@ -24,7 +24,7 @@ class OrderItemRepository extends WOrderItemRepo
 
         foreach ($orderItems as $orderItem) {
             if ($orderItem->product) {
-                $this->orderItemRepository->returnQtyToProductInventory($orderItem);
+                $this->returnQtyToProductInventory($orderItem);
             }
 
             if ($orderItem->qty_ordered) {
