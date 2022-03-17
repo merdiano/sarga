@@ -41,6 +41,7 @@ class OrderItemRepository extends WOrderItemRepo
             }
         }
 
+        $this->collectTotals($item);
         return true;
     }
 }
