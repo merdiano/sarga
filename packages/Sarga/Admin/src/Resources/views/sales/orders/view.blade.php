@@ -353,9 +353,11 @@
 
                                                         <td>{{ core()->formatPrice($item->total + $item->tax_amount - $item->discount_amount,$order->order_currency_code) }}</td>
                                                         <td class="action">
+                                                            @if($item->canCancel())
                                                             <a href="{{ route('admin.sales.orders.cancel_item', $item->id) }}">
                                                                 <i class="icon trash-icon"></i>
                                                             </a>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach

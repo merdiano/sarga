@@ -23,6 +23,12 @@ class Orders extends OrderController
     }
 
     public function cancelOrderItem(OrderItemRepository $repository,$item_id){
+        if($repository->cancel($item_id)){
+            session()->flash('success', trans('admin::app.response.cancel-success', ['name' => 'Order Item']));
+        } else {
+            session()->flash('error', trans('admin::app.response.cancel-error', ['name' => 'Order Item']));
+        }
 
+        return redirect()->back();
     }
 }
