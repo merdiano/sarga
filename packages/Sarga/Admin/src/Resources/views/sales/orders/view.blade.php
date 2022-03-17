@@ -294,6 +294,7 @@
                                                         <th>{{ __('admin::app.sales.orders.discount-amount') }}</th>
                                                     @endif
                                                     <th>{{ __('admin::app.sales.orders.grand-total') }}</th>
+                                                    <th>{{ __('admin::app.sales.invoices.action') }}</th>
                                                 </tr>
                                             </thead>
 
@@ -351,6 +352,11 @@
                                                         @endif
 
                                                         <td>{{ core()->formatPrice($item->total + $item->tax_amount - $item->discount_amount,$order->order_currency_code) }}</td>
+                                                        <td class="action">
+                                                            <a href="{{ route('admin.sales.orders.cancel_item', $item->id) }}">
+                                                                <i class="icon trash-icon"></i>
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                         </table>

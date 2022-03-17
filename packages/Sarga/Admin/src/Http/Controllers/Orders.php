@@ -20,4 +20,8 @@ class Orders extends OrderController
 
         return view($this->_config['view']);
     }
+
+    public function cancelOrderItem($item_id){
+
+    }
 }
