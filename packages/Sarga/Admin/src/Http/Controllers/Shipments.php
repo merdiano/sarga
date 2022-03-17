@@ -1,6 +1,6 @@
 <?php
 
-namespace Sarga\Admin\src\Http\Controllers;
+namespace Sarga\Admin\Http\Controllers;
 
 use Webkul\Admin\Http\Controllers\Sales\ShipmentController;
 

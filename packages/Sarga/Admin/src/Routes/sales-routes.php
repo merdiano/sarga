@@ -16,7 +16,7 @@ Route::group(['middleware' => ['web', 'admin', 'admin_locale'], 'prefix' => conf
         Route::post('/orders/item/{id}/cancel', [\Sarga\Admin\Http\Controllers\Orders::class, 'cancelOrderItem'])
             ->name('admin.sales.orders.cancel_item');
 
-        Route::post('/shipments/create/{order_id}', [\Sarga\Admin\src\Http\Controllers\Shipments::class, 'store'])->defaults('_config', [
+        Route::post('/shipments/create/{order_id}', [\Sarga\Admin\Http\Controllers\Shipments::class, 'store'])->defaults('_config', [
             'redirect' => 'admin.sales.orders.view',
         ])->name('admin.sales.shipments.store');
     });
