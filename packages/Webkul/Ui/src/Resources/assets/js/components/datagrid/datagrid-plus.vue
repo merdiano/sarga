@@ -522,7 +522,7 @@
                                     <span
                                         class="massaction-remove"
                                         v-on:click="removeMassActions"
-                                        style="margin-right: 10px; margin-top: 3px"
+                                        style="margin-right: 10px; margin-top: 5px"
                                     >
                                         <span
                                             class="icon checkbox-dash-icon"
@@ -620,6 +620,7 @@
                                         type="checkbox"
                                         v-model="allSelected"
                                         v-on:change="selectAll"
+                                        :disabled="!records.data.length"
                                     />
 
                                     <label
@@ -718,11 +719,7 @@
                                             "
                                             v-on:click="
                                                 action.method != 'GET'
-                                                    ? typeof action.function !==
-                                                          'undefined' &&
-                                                      action.function
-                                                        ? action.function
-                                                        : doAction($event)
+                                                    ? doAction($event)
                                                     : {}
                                             "
                                             :data-method="action.method"
@@ -880,9 +877,13 @@ export default {
                 let datagridInfo = this.getCurrentDatagridInfo();
 
                 if (datagridInfo) {
-                    this.filterCurrentDatagridFromDatagridsInfo();
+                    /**
+                     * Will check this later. Don't remove it.
+                     */
+                    // this.filterCurrentDatagridFromDatagridsInfo();
 
                     this.url = datagridInfo.previousUrl;
+                    this.filters = datagridInfo.previousFilters;
                 }
             } else {
                 let datagridsInfo = this.getDatagridsInfo();
@@ -928,6 +929,7 @@ export default {
         getDatagridsInfoDefaults: function() {
             return {
                 id: this.id,
+                previousFilters: this.filters,
                 previousUrl: this.url
             };
         },

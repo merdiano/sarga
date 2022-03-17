@@ -236,6 +236,21 @@ label {
         .dropdown-list {
             top: 40px;
             right: 10px;
+
+            .modal-header {
+                padding: 20px;
+            }
+
+            .content {
+                padding: 5px 20px 15px 20px;
+            }
+
+            .modal-footer {
+                .theme-btn {
+                    width: 50%;
+                    text-align: center;
+                }
+            }
         }
     }
 
@@ -263,6 +278,7 @@ label {
         padding-left: 5px;
         position: relative;
         padding-right: 15px;
+        text-align: left;
     }
 
     .dropdown {
@@ -931,14 +947,14 @@ i.within-circle {
 .form-style {
     display: block;
     width: 100%;
-    height: 34px;
+    height: 36px;
     padding: 6px 12px;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.42857143;
-    color: #555;
+    color: rgba(0, 0, 0, 0.83);
     background-color: #fff;
     background-image: none;
-    border: 1px solid #ccc;
+    border: 1px solid #DCDCDC;
     border-radius: 0;
 }
 
