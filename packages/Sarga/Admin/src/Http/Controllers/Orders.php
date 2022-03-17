@@ -3,6 +3,7 @@
 namespace Sarga\Admin\Http\Controllers;
 
 use Sarga\Admin\DataGrids\OrderDataGrid;
+use Sarga\Shop\Repositories\OrderItemRepository;
 use Webkul\Admin\Http\Controllers\Sales\OrderController;
 
 class Orders extends OrderController
@@ -21,7 +22,7 @@ class Orders extends OrderController
         return view($this->_config['view']);
     }
 
-    public function cancelOrderItem($item_id){
+    public function cancelOrderItem(OrderItemRepository $repository,$item_id){
 
     }
 }

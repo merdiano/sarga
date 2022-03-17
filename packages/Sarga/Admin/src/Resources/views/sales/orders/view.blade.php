@@ -290,7 +290,7 @@
                                                     <th>{{ __('admin::app.sales.orders.price') }}</th>
                                                     <th>{{ __('admin::app.sales.orders.item-status') }}</th>
                                                     <th>{{ __('admin::app.sales.orders.subtotal') }}</th>
-                                                    @if ($order->base_discount_amount > 0)
+                                                    @if ($order->base_discount_amount != 0)
                                                         <th>{{ __('admin::app.sales.orders.discount-amount') }}</th>
                                                     @endif
                                                     <th>{{ __('admin::app.sales.orders.grand-total') }}</th>
@@ -347,7 +347,7 @@
 
                                                         <td>{{ core()->formatPrice($item->total,$order->order_currency_code) }}</td>
 
-                                                        @if ($order->base_discount_amount > 0)
+                                                        @if ($order->base_discount_amount != 0)
                                                             <td>{{ core()->formatPrice($item->discount_amount,$order->order_currency_code) }}</td>
                                                         @endif
 
