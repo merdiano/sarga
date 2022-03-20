@@ -353,7 +353,7 @@
 
                                                         <td>{{ core()->formatPrice($item->total + $item->tax_amount - $item->discount_amount,$order->order_currency_code) }}</td>
                                                         <td class="action">
-                                                            @if($item->canCancel())
+                                                            @if($item->canCancel() && in_array($order->status, ['pending','processing']) && $order->total_item_count>1)
                                                             <a href="{{ route('admin.sales.orders.cancel_item', $item->id) }}">
                                                                 <i class="icon trash-icon"></i>
                                                             </a>
@@ -458,18 +458,6 @@
                                             <td>{{ __('admin::app.sales.orders.total-refunded') }}</td>
                                             <td>-</td>
                                             <td>{{ core()->formatPrice($order->grand_total_refunded,$order->order_currency_code) }}</td>
-                                        </tr>
-
-                                        <tr class="bold">
-                                            <td>{{ __('admin::app.sales.orders.total-due') }}</td>
-
-                                            <td>-</td>
-
-                                            @if($order->status !== 'canceled')
-                                                <td>{{ core()->formatPrice($order->total_due,$order->order_currency_code) }}</td>
-                                            @else
-                                                <td id="due-amount-on-cancelled">{{ core()->formatBasePrice(0.00) }}</td>
-                                            @endif
                                         </tr>
                                     </table>
                                 </div>

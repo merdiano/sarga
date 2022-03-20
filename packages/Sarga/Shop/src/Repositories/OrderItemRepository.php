@@ -5,10 +5,9 @@ namespace Sarga\Shop\Repositories;
 use Webkul\Sales\Repositories\OrderItemRepository as WOrderItemRepo;
 class OrderItemRepository extends WOrderItemRepo
 {
-    public function cancel($itemId){
-        $item = $this->find($itemId);
+    public function cancel($item){
 
-        if(! $item || ! $item->qty_to_cancel) {
+        if(! $item->qty_to_cancel) {
             return false;
         }
 
@@ -41,7 +40,8 @@ class OrderItemRepository extends WOrderItemRepo
             }
         }
 
-        $this->collectTotals($item);
+        //todo order status check, calculate totals correct
         return true;
     }
+
 }

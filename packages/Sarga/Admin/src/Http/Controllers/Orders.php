@@ -61,7 +61,7 @@ class Orders extends OrderController
         if($this->orderItemRepository->cancel($orderItem))
         {
             $this->orderRepository->updateOrderStatus($order);
-
+            $this->orderRepository->calculateTotals($order,$orderItem);
             session()->flash('success', trans('admin::app.response.cancel-success', ['name' => 'Order Item']));
         }
         else
