@@ -36,10 +36,11 @@ class Categories extends Controller
     }
 
     public function filters($id){
-        $category = $this->categoryRepository->with(['filterableAttributes','brands'])->find($id);
+        $category = $this->categoryRepository->with(['filterableAttributes','brands','children'])->find($id);
 
         if($category)
             return response([
+                'subcategories' =>$category->children,
                 'attributes' =>Attribute::collection($category->filterableAttributes),
                 'brands' => Brand::collection($category->brands),
                 ]);

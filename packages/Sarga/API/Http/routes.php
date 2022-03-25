@@ -11,6 +11,7 @@ use Sarga\API\Http\Controllers\IntegrationController;
 use Sarga\API\Http\Controllers\Orders;
 use Sarga\API\Http\Controllers\Vendors;
 use Sarga\API\Http\Controllers\Products;
+use Sarga\API\Http\Controllers\Wishlists;
 use Sarga\Shop\Repositories\CategoryRepository;
 use Webkul\API\Http\Controllers\Shop\ResourceController;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
@@ -72,11 +73,9 @@ Route::group(['prefix' => 'api'], function () {
                 /**
                  * Customer wishlist routes.
                  */
-                Route::get('wishlist', [WishlistController::class, 'index']);
-
-                Route::post('wishlist/{id}', [WishlistController::class, 'addOrRemove']);
-
-                Route::post('wishlist/{id}/move-to-cart', [WishlistController::class, 'moveToCart']);
+                Route::get('wishlist', [Wishlists::class, 'index']);
+                Route::post('wishlist/{id}', [Wishlists::class, 'addOrRemove']);
+                Route::post('wishlist/{id}/move-to-cart', [Wishlists::class, 'moveToCart']);
                 /**
                  * Recipients
                  */
@@ -89,55 +88,35 @@ Route::group(['prefix' => 'api'], function () {
                  * Customer cart routes.
                  */
                 Route::get('cart', [Carts::class, 'get']);
-
                 Route::post('cart/add/{productId}', [Carts::class, 'add']);
-
                 Route::put('cart/update', [Carts::class, 'update']);
-
                 Route::delete('cart/remove/{cartItemId}', [Carts::class, 'removeItem']);
-
                 Route::delete('cart/empty', [Carts::class, 'empty']);
-
                 Route::post('cart/move-to-wishlist/{cartItemId}', [Carts::class, 'moveToWishlist']);
-
                 Route::post('cart/coupon', [Carts::class, 'applyCoupon']);
-
                 Route::delete('cart/coupon', [Carts::class, 'removeCoupon']);
 
                 /**
                  * Customer checkout routes.
                  */
                 Route::get('checkout', [Checkout::class, 'index']);
-
                 Route::post('checkout/save-shipping', [Checkout::class, 'saveShipping']);
-
                 Route::post('checkout/save-payment', [Checkout::class, 'savePayment']);
-
                 Route::post('checkout/check-minimum-order', [Checkout::class, 'checkMinimumOrder']);
-
                 Route::post('checkout/save-order', [Checkout::class, 'saveOrder']);
 
                 /**
                  * Customer sale routes.
                  */
                 Route::get('orders', [Orders::class, 'allResources']);
-
                 Route::get('orders/{id}', [Orders::class, 'getResource']);
-
                 Route::post('orders/{id}/cancel', [Orders::class, 'cancel']);
-
                 Route::post('orders/{id}/cancel/{item_id}', [Orders::class, 'cancelItem']);
-
                 Route::get('invoices', [InvoiceController::class, 'allResources']);
-
                 Route::get('invoices/{id}', [InvoiceController::class, 'getResource']);
-
                 Route::get('shipments', [ShipmentController::class, 'allResources']);
-
                 Route::get('shipments/{id}', [ShipmentController::class, 'getResource']);
-
                 Route::get('transactions', [TransactionController::class, 'allResources']);
-
                 Route::get('transactions/{id}', [TransactionController::class, 'getResource']);
             });
         });
@@ -148,6 +127,5 @@ Route::group(['prefix' => 'api'], function () {
         Route::put('upload',[IntegrationController::class,'bulk_upload']);
         Route::put('create',[IntegrationController::class,'create']);
     });
-
 
 });
