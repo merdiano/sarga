@@ -221,7 +221,7 @@ class Product extends JsonResource
     {
         $wishlist = false;
 
-        Log::info(auth()->guard()->user());
+        Log::info(auth()->guard('customer')->user());
         if ($customer = auth()->guard()->user()) {
             $wishlist = $customer->wishlist_items->filter(function ($item) use ($product) {
                 return $item->product_id == $product->product_id;
