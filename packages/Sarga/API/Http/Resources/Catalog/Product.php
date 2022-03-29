@@ -15,7 +15,7 @@ class Product extends JsonResource
     {
 //        $this->productReviewHelper = app('Webkul\Product\Helpers\Review');
 
-        $this->wishlistHelper = app('Webkul\Customer\Helpers\Wishlist');
+//        $this->wishlistHelper = app('Webkul\Customer\Helpers\Wishlist');
 
         parent::__construct($resource);
     }
@@ -49,7 +49,7 @@ class Product extends JsonResource
             'images'                 => ProductImage::collection($product->images),
             /* product's checks */
             'in_stock'               => $product->haveSufficientQuantity(1),
-            'is_wishlisted'          => $this->wishlistHelper->getWishlistProduct($product) ? true : false,
+            'is_wishlisted'          => $this->isWishlisted($product) ,
             'is_item_in_cart'        => \Cart::hasProduct($product),
             'shop_title'             => $this->shop_title,
             'new'                    => $this->new,
@@ -216,4 +216,16 @@ class Product extends JsonResource
         ];
     }
 
+    private function isWishlisted($product):bool
+    {
+        $wishlist = false;
+
+        if ($customer = auth()->guard()->user()) {
+            $wishlist = $customer->wishlist_items->filter(function ($item) use ($product) {
+                return $item->product_id == $product->product_id;
+            })->first();
+        }
+
+        return $wishlist ? true : false;
+    }
 }
