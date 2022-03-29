@@ -3,6 +3,7 @@
 namespace Sarga\API\Http\Resources\Catalog;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Log;
 
 class Product extends JsonResource
 {
@@ -220,6 +221,7 @@ class Product extends JsonResource
     {
         $wishlist = false;
 
+        Log::info(auth()->guard()->user());
         if ($customer = auth()->guard()->user()) {
             $wishlist = $customer->wishlist_items->filter(function ($item) use ($product) {
                 return $item->product_id == $product->product_id;
