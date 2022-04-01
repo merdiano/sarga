@@ -127,7 +127,7 @@ class Customers extends AuthController
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function update(Request $request)
     {
         $customer = $request->user();
 
