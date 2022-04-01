@@ -84,7 +84,7 @@ class Checkout extends CheckoutController
         if (Cart::hasError() || ! $payment || ! Cart::savePaymentMethod($payment)) {
             return response([
                 'success' => false,
-                'message' => 'Payment unsuccessfull'
+                'message' => 'Payment unsuccessful'
 
             ],400);
         }
