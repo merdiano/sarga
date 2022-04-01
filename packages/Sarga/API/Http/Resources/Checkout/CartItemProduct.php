@@ -42,7 +42,7 @@ class CartItemProduct extends JsonResource
                 return [
                     'code' => $item->code,
                     'value' => $this->{$item->code},
-                    'name' => $item->name,
+                    'name' => $item->name ?? $item->admin_name,
                     'label' => $item->options->where('id',$this->{$item->code})->first()->admin_name
                 ];
             })->toArray();
