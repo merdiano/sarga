@@ -211,8 +211,8 @@ class Product extends JsonResource
     {
         return [
 //            'variants' => ProductVariant::collection($product->variants)
-            'variants_count' => $product->variants->count(),
-            'color_count' => $product->variants()->groupBy('color')->count()
+            'variants_count' => $this->variants->count(),
+            'color_count' => $this->variants->groupBy('color')->count()
         ];
     }
 
