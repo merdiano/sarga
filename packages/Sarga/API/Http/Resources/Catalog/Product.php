@@ -29,13 +29,10 @@ class Product extends JsonResource
      */
     public function toArray($request)
     {
-        /* assign product */
         $product = $this->product ? $this->product : $this;
 
-        /* get type instance */
         $productTypeInstance = $product->getTypeInstance();
 
-        /* generating resource */
         return [
             /* product's information */
             'id'                     => $product->id,
@@ -213,7 +210,9 @@ class Product extends JsonResource
     private function getConfigurableProductInfo($product)
     {
         return [
-            'variants' => ProductVariant::collection($product->variants)
+//            'variants' => ProductVariant::collection($product->variants)
+            'variants_count' => $product->variants->count(),
+            'color_count' => $product->variants()->groupBy('color')->count()
         ];
     }
 
