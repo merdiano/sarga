@@ -1,0 +1,2804 @@
+ [
+    {
+      "id": 436,
+      "Tr": "Antre & Hol",
+      "Rus": "Банкетный Зал И Хол",
+      "Tm": "Banket Zaly"
+    },
+    {
+      "id": 435,
+      "Tr": "Çalışma Odası",
+      "Rus": "Рабочая Комната",
+      "Tm": "Iş Otagy"
+    },
+    {
+      "id": 434,
+      "Tr": "Salon & Oturma Odası",
+      "Rus": "Гостинная Комната",
+      "Tm": "Oturulýan We Myhman Otagy"
+    },
+    {
+      "id": 433,
+      "Tr": "Mısır Patlatma Makinesi",
+      "Rus": "Попкорн Аппарат",
+      "Tm": "Patyrak Aparat"
+    },
+    {
+      "id": 432,
+      "Tr": "Yoğurt Yapma Makinesi",
+      "Rus": "Аппарат Для Йогурта",
+      "Tm": "Gatyk Taýýarlaýjy Aparat"
+    },
+    {
+      "id": 431,
+      "Tr": "Ekmek Yapma Makinesi",
+      "Rus": "Аппарат Для Печки Хлеба",
+      "Tm": "Çörek Bişirmek Üçin Maşyn"
+    },
+    {
+      "id": 430,
+      "Tr": "Kıyma Makinesi",
+      "Rus": "Мясарубка",
+      "Tm": "Et Üweýji Maşyn"
+    },
+    {
+      "id": 429,
+      "Tr": "Akıllı Aydınlatma",
+      "Rus": "Умный Святильник",
+      "Tm": "Akylly Çyra"
+    },
+    {
+      "id": 428,
+      "Tr": "Kahve Makinesi Aksesuarı",
+      "Rus": "Кофе Аппарат",
+      "Tm": "Kofe Maşyny"
+    },
+    {
+      "id": 427,
+      "Tr": "Dikiş Makinesi Aksesuarı",
+      "Rus": "Аксессуары Для Швейной Машины",
+      "Tm": "Tikin Maşyn Aksesuarlary"
+    },
+    {
+      "id": 426,
+      "Tr": "Süpürge Aksesuarı",
+      "Rus": "Носадки Для Пылесоса",
+      "Tm": "Tozan Sorujy Üçin Esbaplar"
+    },
+    {
+      "id": 425,
+      "Tr": "Ekmek Kızartma Makinesi",
+      "Rus": "Тостер",
+      "Tm": "Çörek Kakatýan Maşyn"
+    },
+    {
+      "id": 424,
+      "Tr": "Dikiş Makinesi",
+      "Rus": "Швейная Машина",
+      "Tm": "Tikin Maşyny"
+    },
+    {
+      "id": 423,
+      "Tr": "Meyve Sıkacağı",
+      "Rus": "Соковыжиматель",
+      "Tm": "Sok Taýynlaýjy"
+    },
+    {
+      "id": 422,
+      "Tr": "Fritöz",
+      "Rus": "Фритюрница",
+      "Tm": "Gowurmak Üçin Aparat"
+    },
+    {
+      "id": 421,
+      "Tr": "Elektrikli Izgara",
+      "Rus": "Электрический Мангал",
+      "Tm": "Elektrikli Bişirme Paneli"
+    },
+    {
+      "id": 420,
+      "Tr": "Elektrikli Pişirici",
+      "Rus": "Мультиварка",
+      "Tm": "Elektrik Bişiriji"
+    },
+    {
+      "id": 419,
+      "Tr": "Mixer Seti",
+      "Rus": "Миксер",
+      "Tm": "Garyjy Aparat"
+    },
+    {
+      "id": 418,
+      "Tr": "Blender",
+      "Rus": "Блендер",
+      "Tm": "Blender"
+    },
+    {
+      "id": 417,
+      "Tr": "Tartı",
+      "Rus": "Весы",
+      "Tm": "Terezi"
+    },
+    {
+      "id": 416,
+      "Tr": "Tost Makinesi",
+      "Rus": "Тостер",
+      "Tm": "Tost Aparat"
+    },
+    {
+      "id": 415,
+      "Tr": "Rondo",
+      "Rus": "Измельчитель",
+      "Tm": "Dograýjy"
+    },
+    {
+      "id": 414,
+      "Tr": "Su Isıtıcı & Kettle",
+      "Rus": "Электрический Чайник И Кипятильник",
+      "Tm": "Tefal"
+    },
+    {
+      "id": 413,
+      "Tr": "Ütü",
+      "Rus": "Утюг",
+      "Tm": "Ütük"
+    },
+    {
+      "id": 412,
+      "Tr": "Kahve Makinesi",
+      "Rus": "Кофе Машина",
+      "Tm": "Kofe Aparaty"
+    },
+    {
+      "id": 411,
+      "Tr": "Çay Makinesi",
+      "Rus": "Электрический Чайник",
+      "Tm": "Çaý Aparaty"
+    },
+    {
+      "id": 410,
+      "Tr": "Süpürge",
+      "Rus": "Пылесос",
+      "Tm": "Tozan Sorujy"
+    },
+    {
+      "id": 409,
+      "Tr": "Paravan & Seperatör",
+      "Rus": "Ширма",
+      "Tm": "Goraýjy We Bölüjü"
+    },
+    {
+      "id": 408,
+      "Tr": "Kitap Tutucu",
+      "Rus": "Книгадержатель",
+      "Tm": "Kitaplyk"
+    },
+    {
+      "id": 407,
+      "Tr": "Tütsü & Buhurdanlık",
+      "Rus": "Декоротивный Паравой Освежитель Воздуха",
+      "Tm": "Bezeg Üçin Bug & Buhurdanlyk"
+    },
+    {
+      "id": 406,
+      "Tr": "Magnet",
+      "Rus": "Магнит",
+      "Tm": "Magnit"
+    },
+    {
+      "id": 405,
+      "Tr": "Duvar Örtüsü",
+      "Rus": "Пакрывалы И Пледы Для Стен",
+      "Tm": "Diwar Örtügi"
+    },
+    {
+      "id": 404,
+      "Tr": "Kapı Önü Aksesuarı",
+      "Rus": "Коврики И Прочее Декор Для Двери",
+      "Tm": "Gapy Üçin Bezegler"
+    },
+    {
+      "id": 403,
+      "Tr": "Yapışkanlı Folyo",
+      "Rus": "Обои",
+      "Tm": "Oboý"
+    },
+    {
+      "id": 402,
+      "Tr": "Dekoratif Kutu",
+      "Rus": "Декоротивные Коробки",
+      "Tm": "Bezeg Gutusy"
+    },
+    {
+      "id": 401,
+      "Tr": "Çerçeve & Albüm",
+      "Rus": "Рамки И Альбомы",
+      "Tm": "Ramka & Albom"
+    },
+    {
+      "id": 400,
+      "Tr": "Runner & Amerikan Servisi",
+      "Rus": "Наборы И Сервизы",
+      "Tm": "Nahar Stoly Üçin Örtükler & Naborlar"
+    },
+    {
+      "id": 399,
+      "Tr": "Duvar Dekorasyon Ürünleri",
+      "Rus": "Стенный Декор",
+      "Tm": "Diwar Bezegleri"
+    },
+    {
+      "id": 398,
+      "Tr": "Kırlent & Kırlent Kılıfı",
+      "Rus": "Чехлы Для Подушки",
+      "Tm": "Ýassyjak We Ýassyjak Daş"
+    },
+    {
+      "id": 397,
+      "Tr": "Duvar Kağıdı",
+      "Rus": "Обои Для Стен",
+      "Tm": "Oboý"
+    },
+    {
+      "id": 396,
+      "Tr": "Ayna",
+      "Rus": "Зеркала",
+      "Tm": "Aýna"
+    },
+    {
+      "id": 395,
+      "Tr": "Yapay & Kuru Çiçek",
+      "Rus": "Сухие Цветы И Букеты",
+      "Tm": "Emeli We Guradylan Gül"
+    },
+    {
+      "id": 394,
+      "Tr": "Aydınlatma",
+      "Rus": "Осветительные Приборы",
+      "Tm": "Ýagtylandyrma"
+    },
+    {
+      "id": 393,
+      "Tr": "Mumluk",
+      "Rus": "Фонари И Лампы",
+      "Tm": "Şemlik"
+    },
+    {
+      "id": 392,
+      "Tr": "Şamdan",
+      "Rus": "Подсвечник",
+      "Tm": "Bezegli Şemlik"
+    },
+    {
+      "id": 391,
+      "Tr": "Vazo",
+      "Rus": "Вазы",
+      "Tm": "Waza"
+    },
+    {
+      "id": 390,
+      "Tr": "Biblo",
+      "Rus": "Статуетки",
+      "Tm": "Heýkel"
+    },
+    {
+      "id": 389,
+      "Tr": "Kokular",
+      "Rus": "Одекалоны",
+      "Tm": "Ys Berijiler"
+    },
+    {
+      "id": 388,
+      "Tr": "Mum",
+      "Rus": "Свечки",
+      "Tm": "Şem"
+    },
+    {
+      "id": 387,
+      "Tr": "Tablo",
+      "Rus": "Картины",
+      "Tm": "Tablo"
+    },
+    {
+      "id": 386,
+      "Tr": "Duvar Sticker",
+      "Rus": "Наклейки Для Стен",
+      "Tm": "Diwar Stikeri"
+    },
+    {
+      "id": 385,
+      "Tr": "Masa Saati",
+      "Rus": "На Стольные Часы",
+      "Tm": "Stol Sagady"
+    },
+    {
+      "id": 384,
+      "Tr": "Duvar Saati",
+      "Rus": "Настенные Часы",
+      "Tm": "Diwar Sagady"
+    },
+    {
+      "id": 383,
+      "Tr": "Dekoratif Aksesuarlar",
+      "Rus": "Аксессуары Для Декор",
+      "Tm": "Bezeg Aksesuarlary"
+    },
+    {
+      "id": 382,
+      "Tr": "Tuvalet Fırçası",
+      "Rus": "Ерщик",
+      "Tm": "Hajathana Çotgasy"
+    },
+    {
+      "id": 381,
+      "Tr": "Çöp Kovası",
+      "Rus": "Туалетный Бак",
+      "Tm": "Zibil Bedresi"
+    },
+    {
+      "id": 380,
+      "Tr": "Banyo Perdesi",
+      "Rus": "Шторы",
+      "Tm": "Banýa Perdesi"
+    },
+    {
+      "id": 379,
+      "Tr": "Peştemal",
+      "Rus": "Халаты",
+      "Tm": "Halat"
+    },
+    {
+      "id": 378,
+      "Tr": "Plaj Havlusu",
+      "Rus": "Платнцы",
+      "Tm": "Deňiz Polotensasy"
+    },
+    {
+      "id": 377,
+      "Tr": "Banyo Tekstili",
+      "Rus": "Текстиль Набор Для Ванны",
+      "Tm": "Banýa Üçin Tekstil Harytlary"
+    },
+    {
+      "id": 376,
+      "Tr": "Klozet Takımı",
+      "Rus": "Коврики Для Ванны",
+      "Tm": "Banýa Halysy"
+    },
+    {
+      "id": 375,
+      "Tr": "Banyo Seti",
+      "Rus": "Набор Для Ванны",
+      "Tm": "Banýa Üçin Komplekt"
+    },
+    {
+      "id": 374,
+      "Tr": "Kahvaltı Takımı",
+      "Rus": "Набор Пасуд",
+      "Tm": "Ertirlik Tabaklary"
+    },
+    {
+      "id": 373,
+      "Tr": "Yemek Takımı",
+      "Rus": "Кухонный Сервиз",
+      "Tm": "Serwis Tabaklary"
+    },
+    {
+      "id": 372,
+      "Tr": "Tabak",
+      "Rus": "Тарелька",
+      "Tm": "Tabak"
+    },
+    {
+      "id": 371,
+      "Tr": "Çaydanlık",
+      "Rus": "Чайник",
+      "Tm": "Çäýnek"
+    },
+    {
+      "id": 370,
+      "Tr": "Mutfak Gereçleri",
+      "Rus": "Кухонный Утварь",
+      "Tm": "Beýleki Naharhana Üpjünçilikleri"
+    },
+    {
+      "id": 369,
+      "Tr": "Hazırlık",
+      "Rus": "Подготовка",
+      "Tm": "Taýýarlyk"
+    },
+    {
+      "id": 368,
+      "Tr": "Düdüklü Tencere",
+      "Rus": "Котел",
+      "Tm": "Basynçly Gazan"
+    },
+    {
+      "id": 367,
+      "Tr": "Endüstriyel Mutfak Ekipmanları",
+      "Rus": "Кухонный Гарнитур",
+      "Tm": "Aşhana Enjamlary"
+    },
+    {
+      "id": 366,
+      "Tr": "Matara",
+      "Rus": "Бутылка Для Воды",
+      "Tm": "Suw Horjuny"
+    },
+    {
+      "id": 365,
+      "Tr": "Suluk",
+      "Rus": "Пластиковые Бутылки",
+      "Tm": "Suwluk"
+    },
+    {
+      "id": 364,
+      "Tr": "Çay Ve Kahve Demleme",
+      "Rus": "Чайники И Кофейники",
+      "Tm": "Çaý We Kofe Demlemek"
+    },
+    {
+      "id": 363,
+      "Tr": "Yemek Hazırlık",
+      "Rus": "Кухонное Оборудование",
+      "Tm": "Nahar Taýýarlamak Üçin Enjamlar"
+    },
+    {
+      "id": 362,
+      "Tr": "Sofra",
+      "Rus": "Стол",
+      "Tm": "Saçak"
+    },
+    {
+      "id": 361,
+      "Tr": "Düzenleme",
+      "Rus": "Органайзер",
+      "Tm": "Tertipleşdirýän"
+    },
+    {
+      "id": 360,
+      "Tr": "Kadın Hijyen",
+      "Rus": "Женская Гигиена",
+      "Tm": "Zenan Arassaçylyk"
+    },
+    {
+      "id": 359,
+      "Tr": "Tıraş & Ağda & Epilasyon",
+      "Rus": "Бритвы, Станки И Депиляторы",
+      "Tm": "Sakgal Syrmak & Stanok & Epilýasiýa"
+    },
+    {
+      "id": 358,
+      "Tr": "Ağız Bakım",
+      "Rus": "Уход За Полости Рта",
+      "Tm": "Agyz İdeg"
+    },
+    {
+      "id": 357,
+      "Tr": "Parfüm & Deodorant",
+      "Rus": "Духи И Дезодоранты",
+      "Tm": "Atyr We Deodrant"
+    },
+    {
+      "id": 356,
+      "Tr": "Saç Bakım",
+      "Rus": "Уход За Волосами",
+      "Tm": "Saç İdeg"
+    },
+    {
+      "id": 355,
+      "Tr": "Makyaj",
+      "Rus": "Макиаж",
+      "Tm": "Makiýaž"
+    },
+    {
+      "id": 354,
+      "Tr": "Cilt Bakım",
+      "Rus": "Уход За Кожей Лица",
+      "Tm": "Deri İdegi"
+    },
+    {
+      "id": 353,
+      "Tr": "Çanta Aksesuarları",
+      "Rus": "Аксессуары Для Сумок",
+      "Tm": "Sumka Aksesuarlary"
+    },
+    {
+      "id": 352,
+      "Tr": "Valiz & Bavul",
+      "Rus": "Чемодан",
+      "Tm": "Çemodan"
+    },
+    {
+      "id": 351,
+      "Tr": "Postacı Çantası",
+      "Rus": "Сумка Почтальона",
+      "Tm": "Poçta Sumkasy"
+    },
+    {
+      "id": 350,
+      "Tr": "Spor Çantası",
+      "Rus": "Спортивная Сумка",
+      "Tm": "Sport Sumka"
+    },
+    {
+      "id": 349,
+      "Tr": "Bebek Bakım Çantası",
+      "Rus": "Сумки Для Мамы",
+      "Tm": "Çaga İdegi Üçin Sumka"
+    },
+    {
+      "id": 348,
+      "Tr": "Portföy & Clutch",
+      "Rus": "Портфель И Клатч",
+      "Tm": "Portfel"
+    },
+    {
+      "id": 347,
+      "Tr": "Bel Çantası",
+      "Rus": "Поясная Сумка",
+      "Tm": "Bil Sumka"
+    },
+    {
+      "id": 346,
+      "Tr": "Sırt Çantası",
+      "Rus": "Рюкзак",
+      "Tm": "Rýukzak"
+    },
+    {
+      "id": 345,
+      "Tr": "El Çantası",
+      "Rus": "Барсетка",
+      "Tm": "El Sumka"
+    },
+    {
+      "id": 344,
+      "Tr": "Omuz Çantası",
+      "Rus": "Сумка Через Плечо",
+      "Tm": "Egin Sumka"
+    },
+    {
+      "id": 343,
+      "Tr": "Plaj Giyim",
+      "Rus": "Купальники",
+      "Tm": "Kupalnik"
+    },
+    {
+      "id": 342,
+      "Tr": "Çorap",
+      "Rus": "Носки",
+      "Tm": "Jorap"
+    },
+    {
+      "id": 341,
+      "Tr": "Yastık",
+      "Rus": "Подушка",
+      "Tm": "Ýassyk"
+    },
+    {
+      "id": 340,
+      "Tr": "Yorgan",
+      "Rus": "Одеяло",
+      "Tm": "Ýorgan"
+    },
+    {
+      "id": 339,
+      "Tr": "Battaniye",
+      "Rus": "Одеяло",
+      "Tm": "Odeal"
+    },
+    {
+      "id": 338,
+      "Tr": "Tayt",
+      "Rus": "Лосины",
+      "Tm": "Sport Balak"
+    },
+    {
+      "id": 337,
+      "Tr": "Şort",
+      "Rus": "Шорты",
+      "Tm": "Şortik"
+    },
+    {
+      "id": 336,
+      "Tr": "Etek",
+      "Rus": "Юбка",
+      "Tm": "Ýupka"
+    },
+    {
+      "id": 335,
+      "Tr": "Pantolon",
+      "Rus": "Штаны",
+      "Tm": "Balak"
+    },
+    {
+      "id": 334,
+      "Tr": "Bluz & Tunik & Büstiyer",
+      "Rus": "Блузка",
+      "Tm": "Bluzka & Tunik & Bustier"
+    },
+    {
+      "id": 333,
+      "Tr": "Tesettür Giyim",
+      "Rus": "Платье",
+      "Tm": "Hijap Eşikleri"
+    },
+    {
+      "id": 332,
+      "Tr": "Elbise",
+      "Rus": "Вечерное Платье",
+      "Tm": "Köýnek"
+    },
+    {
+      "id": 331,
+      "Tr": "Jeans",
+      "Rus": "Джинсы",
+      "Tm": "Jeans"
+    },
+    {
+      "id": 330,
+      "Tr": "Gömlek",
+      "Rus": "Рубашка",
+      "Tm": "Köýnek"
+    },
+    {
+      "id": 329,
+      "Tr": "Ceket",
+      "Rus": "Жакеты И Костюмы",
+      "Tm": "Penjek"
+    },
+    {
+      "id": 328,
+      "Tr": "Eşofman",
+      "Rus": "Спортивка",
+      "Tm": "Sport Balak"
+    },
+    {
+      "id": 327,
+      "Tr": "Pike Takımı",
+      "Rus": "Простынь И Одеяла",
+      "Tm": "Ýassyk We Ýorgan Daşy Komplekt"
+    },
+    {
+      "id": 326,
+      "Tr": "Çarşaf Takımı",
+      "Rus": "Матрас И Подушки",
+      "Tm": "Ýatak Örtgüsi We Ýorgan Daşlary"
+    },
+    {
+      "id": 325,
+      "Tr": "Nevresim Takımı",
+      "Rus": "Спальный Набор",
+      "Tm": "Ýassyk We Ýorgan Daşy Komplekt"
+    },
+    {
+      "id": 324,
+      "Tr": "Salon Tekstili",
+      "Rus": "Текстиль Для Гостиной",
+      "Tm": "Oturma Otagy Üçin Tekstil"
+    },
+    {
+      "id": 323,
+      "Tr": "Mutfak Tekstili",
+      "Rus": "Кухонный Текстиль",
+      "Tm": "Aşhana Üçin Tekistil"
+    },
+    {
+      "id": 322,
+      "Tr": "Bornoz",
+      "Rus": "Халаты",
+      "Tm": "Banýo Halady"
+    },
+    {
+      "id": 321,
+      "Tr": "Halı & Kilim & Paspas",
+      "Rus": "Ковры И Коврики",
+      "Tm": "Haly We Palas"
+    },
+    {
+      "id": 320,
+      "Tr": "Perde",
+      "Rus": "Жалюз",
+      "Tm": "Perde"
+    },
+    {
+      "id": 319,
+      "Tr": "Yatak Odası Tekstili",
+      "Rus": "Спальный Текстиль",
+      "Tm": "Ýatak Örtgüsi We Ýorgan Daşlary"
+    },
+    {
+      "id": 318,
+      "Tr": "Cinsel Sağlık",
+      "Rus": "Контрецепция",
+      "Tm": "Jynsy Saglyk"
+    },
+    {
+      "id": 317,
+      "Tr": "Tıraş Sonrası Ürünler",
+      "Rus": "После Бритья",
+      "Tm": "Sakgal Syranyňdan Soň"
+    },
+    {
+      "id": 316,
+      "Tr": "Tıraş",
+      "Rus": "Бритва",
+      "Tm": "Stanok"
+    },
+    {
+      "id": 315,
+      "Tr": "Ağız Bakım",
+      "Rus": "Поласкователь",
+      "Tm": "Agyz İdegi"
+    },
+    {
+      "id": 314,
+      "Tr": "Parfüm & Deodorant",
+      "Rus": "Духи И Дезодоранты",
+      "Tm": "Atyr We Deodrant"
+    },
+    {
+      "id": 313,
+      "Tr": "Çanta Aksesuarları",
+      "Rus": "Брекли",
+      "Tm": "Sumka Dakylýan Bezegler"
+    },
+    {
+      "id": 312,
+      "Tr": "Okul Çantası",
+      "Rus": "Портфель",
+      "Tm": "Portfel"
+    },
+    {
+      "id": 311,
+      "Tr": "Spor Çanta",
+      "Rus": "Спортивная Сумка",
+      "Tm": "Sport Sumka"
+    },
+    {
+      "id": 310,
+      "Tr": "Valiz & Bavul",
+      "Rus": "Чемодан",
+      "Tm": "Çemodan"
+    },
+    {
+      "id": 309,
+      "Tr": "Portföy & Clutch",
+      "Rus": "Клатчь",
+      "Tm": "Portfel"
+    },
+    {
+      "id": 308,
+      "Tr": "Bel Çantası",
+      "Rus": "Поясная Сумка",
+      "Tm": "Bil Sumka"
+    },
+    {
+      "id": 307,
+      "Tr": "Postacı Çantası",
+      "Rus": "Сумка Почтальона",
+      "Tm": "Poçta Sumka"
+    },
+    {
+      "id": 306,
+      "Tr": "Sırt Çantası",
+      "Rus": "Рюкзак",
+      "Tm": "Rýukzak"
+    },
+    {
+      "id": 305,
+      "Tr": "El Çantası",
+      "Rus": "Брасетка",
+      "Tm": "El Sumka"
+    },
+    {
+      "id": 304,
+      "Tr": "Omuz Çantası",
+      "Rus": "Сумка Через Плечо",
+      "Tm": "Egin Sumka"
+    },
+    {
+      "id": 303,
+      "Tr": "Oto Koltuğu",
+      "Rus": "Автомобильное Сиденье",
+      "Tm": "Awtoulag Oturgyjy"
+    },
+    {
+      "id": 302,
+      "Tr": "Yürüteç",
+      "Rus": "Ходулька",
+      "Tm": "Walker"
+    },
+    {
+      "id": 301,
+      "Tr": "Bebek Salıncağı & Hoppala",
+      "Rus": "Десткая Качелька",
+      "Tm": "Çaga Sallançak"
+    },
+    {
+      "id": 299,
+      "Tr": "Mama Sandalyesi",
+      "Rus": "Стульчики Для Еды",
+      "Tm": "Çaga Naharlamak Üçin Oturgyç"
+    },
+    {
+      "id": 298,
+      "Tr": "Park Yatak & Oyun Parkı",
+      "Rus": "Спальная И Игровая Кроватка Для Детей",
+      "Tm": "Oýun Halysy"
+    },
+    {
+      "id": 297,
+      "Tr": "Güvenlik",
+      "Rus": "Безопасность",
+      "Tm": "Goraýjy"
+    },
+    {
+      "id": 296,
+      "Tr": "Bebek Bakım Çantası",
+      "Rus": "Сумка Для Ухода За Ребенком",
+      "Tm": "Çaga İdeg Sumkasy"
+    },
+    {
+      "id": 295,
+      "Tr": "String",
+      "Rus": "String",
+      "Tm": "Içki Eşik"
+    },
+    {
+      "id": 294,
+      "Tr": "Termal İçlik",
+      "Rus": "Термобелье",
+      "Tm": "Termal İçlik"
+    },
+    {
+      "id": 293,
+      "Tr": "Korse",
+      "Rus": "Корсет",
+      "Tm": "Korse"
+    },
+    {
+      "id": 292,
+      "Tr": "Slip",
+      "Rus": "Ночнушка И Жеснкая Майка",
+      "Tm": "Içki Eşik"
+    },
+    {
+      "id": 291,
+      "Tr": "Atlet",
+      "Rus": "Майка",
+      "Tm": "Maýka"
+    },
+    {
+      "id": 290,
+      "Tr": "Boxer",
+      "Rus": "Боксеры",
+      "Tm": "Boxer"
+    },
+    {
+      "id": 289,
+      "Tr": "Pijama",
+      "Rus": "Пижама",
+      "Tm": "Pižama"
+    },
+    {
+      "id": 288,
+      "Tr": "Fanila",
+      "Rus": "Fanila",
+      "Tm": "Fanila"
+    },
+    {
+      "id": 287,
+      "Tr": "Fantezi Giyim",
+      "Rus": "Белье 18+",
+      "Tm": "Içki Eşik"
+    },
+    {
+      "id": 286,
+      "Tr": "Yağmurluk",
+      "Rus": "Дождевик",
+      "Tm": "Möwsümlik Kurtga"
+    },
+    {
+      "id": 285,
+      "Tr": "Takım Elbise",
+      "Rus": "Кастюм Брюк",
+      "Tm": "Kostýum Balak"
+    },
+    {
+      "id": 284,
+      "Tr": "Mont",
+      "Rus": "Куртка",
+      "Tm": "Kurtka"
+    },
+    {
+      "id": 283,
+      "Tr": "Kaban",
+      "Rus": "Пальто",
+      "Tm": "Palto"
+    },
+    {
+      "id": 282,
+      "Tr": "Polo Yaka T-Shirt",
+      "Rus": "Батник",
+      "Tm": "Polo Ýaka Batnik"
+    },
+    {
+      "id": 281,
+      "Tr": "Çorap",
+      "Rus": "Носки",
+      "Tm": "Jorap"
+    },
+    {
+      "id": 280,
+      "Tr": "Yelek",
+      "Rus": "Безрукавка",
+      "Tm": "Ýeňsiz"
+    },
+    {
+      "id": 279,
+      "Tr": "Ceket",
+      "Rus": "Жакет",
+      "Tm": "Kostýum"
+    },
+    {
+      "id": 278,
+      "Tr": "Tayt",
+      "Rus": "Ласины",
+      "Tm": "Taýt"
+    },
+    {
+      "id": 277,
+      "Tr": "Hırka",
+      "Rus": "Джемпер",
+      "Tm": "Switer"
+    },
+    {
+      "id": 276,
+      "Tr": "Kazak",
+      "Rus": "Водолазка",
+      "Tm": "Žempir"
+    },
+    {
+      "id": 275,
+      "Tr": "Pantolon",
+      "Rus": "Штаны",
+      "Tm": "Jalbar"
+    },
+    {
+      "id": 274,
+      "Tr": "Sweatshirt",
+      "Rus": "Швитшоты",
+      "Tm": "Switer"
+    },
+    {
+      "id": 273,
+      "Tr": "Gömlek",
+      "Rus": "Рубашка",
+      "Tm": "Köýnek"
+    },
+    {
+      "id": 272,
+      "Tr": "Jeans",
+      "Rus": "Джинсы",
+      "Tm": "Jeans"
+    },
+    {
+      "id": 271,
+      "Tr": "Kostüm",
+      "Rus": "Костюм",
+      "Tm": "Penjek"
+    },
+    {
+      "id": 270,
+      "Tr": "İç Giyim",
+      "Rus": "Белье",
+      "Tm": "Içki Eşik"
+    },
+    {
+      "id": 269,
+      "Tr": "Tulum & Salopet",
+      "Rus": "Тулум И Салопет",
+      "Tm": "Tulum"
+    },
+    {
+      "id": 268,
+      "Tr": "Şort",
+      "Rus": "Шорты",
+      "Tm": "Şortik"
+    },
+    {
+      "id": 267,
+      "Tr": "Slip",
+      "Rus": "Ночнушка И Женская Майка",
+      "Tm": "Içki Eşik"
+    },
+    {
+      "id": 266,
+      "Tr": "Korse",
+      "Rus": "Корсет",
+      "Tm": "Korse"
+    },
+    {
+      "id": 265,
+      "Tr": "Büstiyer",
+      "Rus": "Бюстгалтер",
+      "Tm": "Içki Eşik"
+    },
+    {
+      "id": 264,
+      "Tr": "Atlet & Body",
+      "Rus": "Майка И Боди",
+      "Tm": "Maýka"
+    },
+    {
+      "id": 263,
+      "Tr": "Gecelik",
+      "Rus": "Ночнушка",
+      "Tm": "Giýjelik"
+    },
+    {
+      "id": 262,
+      "Tr": "İç Çamaşır Takımları",
+      "Rus": "Комплект Белья",
+      "Tm": "Içki Esik Komplektleri"
+    },
+    {
+      "id": 261,
+      "Tr": "Külot",
+      "Rus": "Трусы Женские",
+      "Tm": "Içki Eşik"
+    },
+    {
+      "id": 260,
+      "Tr": "Sütyen",
+      "Rus": "Бюстгальтеры",
+      "Tm": "Içki Eşik"
+    },
+    {
+      "id": 259,
+      "Tr": "Kapri & Bermuda",
+      "Rus": "Шорты И Бермуда",
+      "Tm": "Şortik & Bermuda"
+    },
+    {
+      "id": 258,
+      "Tr": "T-Shirt",
+      "Rus": "Футболка",
+      "Tm": "Futbolka"
+    },
+    {
+      "id": 257,
+      "Tr": "Alt Üst Takım",
+      "Rus": "Комплект",
+      "Tm": "Komplekt Eşik"
+    },
+    {
+      "id": 256,
+      "Tr": "Banyo Aksesuarları",
+      "Rus": "Приборы Для Ванны",
+      "Tm": "Banýa Aksesuarlary"
+    },
+    {
+      "id": 255,
+      "Tr": "Yağmurluk",
+      "Rus": "Дождевик",
+      "Tm": "Möwsümlik Kurtga"
+    },
+    {
+      "id": 254,
+      "Tr": "Body",
+      "Rus": "Боди",
+      "Tm": "Bodi"
+    },
+    {
+      "id": 253,
+      "Tr": "Mont",
+      "Rus": "Куртка",
+      "Tm": "Kurtga"
+    },
+    {
+      "id": 252,
+      "Tr": "Kaban",
+      "Rus": "Пальто",
+      "Tm": "Palto"
+    },
+    {
+      "id": 251,
+      "Tr": "Polo Yaka T-Shirt",
+      "Rus": "Батник",
+      "Tm": "Polo Ýaka Batnik"
+    },
+    {
+      "id": 250,
+      "Tr": "Plaj Giyim",
+      "Rus": "Плашь",
+      "Tm": "Deňiz Kenary Üçin Eşikler"
+    },
+    {
+      "id": 249,
+      "Tr": "Çorap",
+      "Rus": "Носки",
+      "Tm": "Jorap"
+    },
+    {
+      "id": 248,
+      "Tr": "Yelek",
+      "Rus": "Безрукавка",
+      "Tm": "Ýeňsiz"
+    },
+    {
+      "id": 247,
+      "Tr": "Ceket",
+      "Rus": "Жакет",
+      "Tm": "Penjek"
+    },
+    {
+      "id": 246,
+      "Tr": "Tayt",
+      "Rus": "Ласины",
+      "Tm": "Tayt"
+    },
+    {
+      "id": 245,
+      "Tr": "Hırka",
+      "Rus": "Джемпер",
+      "Tm": "Switer"
+    },
+    {
+      "id": 244,
+      "Tr": "Kazak",
+      "Rus": "Водолазка",
+      "Tm": "Žempir"
+    },
+    {
+      "id": 243,
+      "Tr": "Pantolon",
+      "Rus": "Штаны",
+      "Tm": "Jalbar"
+    },
+    {
+      "id": 242,
+      "Tr": "Sweatshirt",
+      "Rus": "Свитшот",
+      "Tm": "Switer"
+    },
+    {
+      "id": 241,
+      "Tr": "Gömlek",
+      "Rus": "Рубашка",
+      "Tm": "Köýnek"
+    },
+    {
+      "id": 240,
+      "Tr": "Jeans",
+      "Rus": "Джинсы",
+      "Tm": "Jeans"
+    },
+    {
+      "id": 239,
+      "Tr": "Etek",
+      "Rus": "Юбка",
+      "Tm": "Ýubka"
+    },
+    {
+      "id": 238,
+      "Tr": "Büstiyer",
+      "Rus": "Бюстгалтер",
+      "Tm": "Büstiyer"
+    },
+    {
+      "id": 237,
+      "Tr": "Tunik",
+      "Rus": "Туник",
+      "Tm": "Tunik"
+    },
+    {
+      "id": 236,
+      "Tr": "Bluz",
+      "Rus": "Блуз",
+      "Tm": "Bluz"
+    },
+    {
+      "id": 235,
+      "Tr": "Kostüm",
+      "Rus": "Костюм",
+      "Tm": "Geýim"
+    },
+    {
+      "id": 234,
+      "Tr": "Elbise",
+      "Rus": "Вечерное Платье",
+      "Tm": "Köýnek"
+    },
+    {
+      "id": 233,
+      "Tr": "İç Giyim",
+      "Rus": "Белье",
+      "Tm": "Içki Eşik"
+    },
+    {
+      "id": 232,
+      "Tr": "Salopet",
+      "Rus": "Салопет",
+      "Tm": "Salopet"
+    },
+    {
+      "id": 231,
+      "Tr": "Tulum",
+      "Rus": "Тулум",
+      "Tm": "Tulum"
+    },
+    {
+      "id": 230,
+      "Tr": "Şort",
+      "Rus": "Шорты",
+      "Tm": "Şortik"
+    },
+    {
+      "id": 229,
+      "Tr": "Kapri & Bermuda",
+      "Rus": "Шорты И Бермуда",
+      "Tm": "Şortik & Bermuda"
+    },
+    {
+      "id": 228,
+      "Tr": "T-Shirt",
+      "Rus": "Футболка",
+      "Tm": "Futbolka"
+    },
+    {
+      "id": 227,
+      "Tr": "Alt Üst Takım",
+      "Rus": "Комплект",
+      "Tm": "Komplekt Eşik"
+    },
+    {
+      "id": 226,
+      "Tr": "Islak Mendil",
+      "Rus": "Влажный Салфетки",
+      "Tm": "Çygly Süpürgiç"
+    },
+    {
+      "id": 225,
+      "Tr": "Bebek Bezi",
+      "Rus": "Подгузники",
+      "Tm": "Çaga Arlygy"
+    },
+    {
+      "id": 224,
+      "Tr": "Bebek Patiği",
+      "Rus": "Детские Пинетки",
+      "Tm": "Çaga Aýakgaby"
+    },
+    {
+      "id": 223,
+      "Tr": "Şort",
+      "Rus": "Шорты",
+      "Tm": "Şortik"
+    },
+    {
+      "id": 222,
+      "Tr": "Saç Aksesuarları",
+      "Rus": "Аксессуары Для Волос",
+      "Tm": "Saç Üçin Aksesuar"
+    },
+    {
+      "id": 221,
+      "Tr": "Kravat & Papyon",
+      "Rus": "Галстук И Бабочки",
+      "Tm": "Galstuk We Baboçka"
+    },
+    {
+      "id": 220,
+      "Tr": "Elbise",
+      "Rus": "Вечерное Платье",
+      "Tm": "Köýnek"
+    },
+    {
+      "id": 219,
+      "Tr": "Kol Düğmesi",
+      "Rus": "Запонки",
+      "Tm": "Kol Dügmesi"
+    },
+    {
+      "id": 218,
+      "Tr": "Gözlük Aksesuarları",
+      "Rus": "Цепочка Для Глаз",
+      "Tm": "Äýnek Aksesuar"
+    },
+    {
+      "id": 217,
+      "Tr": "Şemsiye",
+      "Rus": "Зонты",
+      "Tm": "Saýawan"
+    },
+    {
+      "id": 216,
+      "Tr": "Saat Kordonu",
+      "Rus": "Ремешек",
+      "Tm": "Sagat Kemeri"
+    },
+    {
+      "id": 215,
+      "Tr": "Şal",
+      "Rus": "Платки",
+      "Tm": "Ýalyk"
+    },
+    {
+      "id": 214,
+      "Tr": "Eldiven",
+      "Rus": "Перчатки",
+      "Tm": "Ellik"
+    },
+    {
+      "id": 213,
+      "Tr": "Bere",
+      "Rus": "Шапка",
+      "Tm": "Şapka"
+    },
+    {
+      "id": 212,
+      "Tr": "Şemsiye",
+      "Rus": "Зонты",
+      "Tm": "Saýawan"
+    },
+    {
+      "id": 211,
+      "Tr": "Kemer & Pantolon Askısı",
+      "Rus": "Ремни И Подтяжки",
+      "Tm": "Kemer & Jalbar Aksesuar"
+    },
+    {
+      "id": 210,
+      "Tr": "T-Shirt",
+      "Rus": "Футболка",
+      "Tm": "Futbolka"
+    },
+    {
+      "id": 209,
+      "Tr": "Eldiven",
+      "Rus": "Перчатик",
+      "Tm": "Ellik"
+    },
+    {
+      "id": 208,
+      "Tr": "Body",
+      "Rus": "Боди",
+      "Tm": "Bodi"
+    },
+    {
+      "id": 207,
+      "Tr": "Salopet",
+      "Rus": "Салопет",
+      "Tm": "Salopet"
+    },
+    {
+      "id": 206,
+      "Tr": "Tulum",
+      "Rus": "Тулум",
+      "Tm": "Tulum"
+    },
+    {
+      "id": 205,
+      "Tr": "Yenidoğan Kıyafetleri",
+      "Rus": "Комплект Десткой Одежды",
+      "Tm": "Täze Dogan Çaga Eşikleri"
+    },
+    {
+      "id": 204,
+      "Tr": "Hastane Çıkışı",
+      "Rus": "Комплект Десткой Одежды",
+      "Tm": "Çaga Komlekt Eşikleri"
+    },
+    {
+      "id": 203,
+      "Tr": "Ayakkabı",
+      "Rus": "Обувь",
+      "Tm": "Aýakgap"
+    },
+    {
+      "id": 202,
+      "Tr": "Bere",
+      "Rus": "Шапка",
+      "Tm": "Şapka"
+    },
+    {
+      "id": 201,
+      "Tr": "Bebek Takımları",
+      "Rus": "Детские Кастюмчики",
+      "Tm": "Çaga Eşik Komplektleri"
+    },
+    {
+      "id": 200,
+      "Tr": "Kemer",
+      "Rus": "Ремень",
+      "Tm": "Kemer"
+    },
+    {
+      "id": 199,
+      "Tr": "Kartlık",
+      "Rus": "Кардхолдер",
+      "Tm": "Kartlyk"
+    },
+    {
+      "id": 198,
+      "Tr": "Toka",
+      "Rus": "Заколка",
+      "Tm": "Saça Dakylýan"
+    },
+    {
+      "id": 197,
+      "Tr": "Güneş Gözlüğü",
+      "Rus": "Солнце Защитные Очки",
+      "Tm": "Günden Goraýjy Äýnek"
+    },
+    {
+      "id": 196,
+      "Tr": "Taç Ve Saç Bandı",
+      "Rus": "Обадки И Банданы",
+      "Tm": "Abadok We Saça Dakylýan"
+    },
+    {
+      "id": 195,
+      "Tr": "Mücevher",
+      "Rus": "Бриллианты",
+      "Tm": "Gymmat Bahaly Daşlar"
+    },
+    {
+      "id": 194,
+      "Tr": "Güneş Gözlüğü",
+      "Rus": "Солнце Защитные Очки",
+      "Tm": "Günden Goraýjy Äýnek"
+    },
+    {
+      "id": 193,
+      "Tr": "Cüzdan",
+      "Rus": "Кашелёк",
+      "Tm": "Gapjyk"
+    },
+    {
+      "id": 192,
+      "Tr": "Cüzdan",
+      "Rus": "Кашелёк",
+      "Tm": "Gapjyk"
+    },
+    {
+      "id": 191,
+      "Tr": "Şapka",
+      "Rus": "Шапка",
+      "Tm": "Şapka"
+    },
+    {
+      "id": 190,
+      "Tr": "Takı",
+      "Rus": "Драгоценности",
+      "Tm": "Şaý-Sepler"
+    },
+    {
+      "id": 189,
+      "Tr": "Saat",
+      "Rus": "Часы",
+      "Tm": "Sagat"
+    },
+    {
+      "id": 188,
+      "Tr": "Çanta",
+      "Rus": "Сумка",
+      "Tm": "Sumka"
+    },
+    {
+      "id": 187,
+      "Tr": "Şapka",
+      "Rus": "Шапка",
+      "Tm": "Şapka"
+    },
+    {
+      "id": 186,
+      "Tr": "Takı",
+      "Rus": "Драгоценности",
+      "Tm": "Şaý Sep"
+    },
+    {
+      "id": 185,
+      "Tr": "Saat",
+      "Rus": "Часы",
+      "Tm": "Sagat"
+    },
+    {
+      "id": 184,
+      "Tr": "Çanta",
+      "Rus": "Сумка",
+      "Tm": "Sumka"
+    },
+    {
+      "id": 183,
+      "Tr": "Saat&Gözlük&Aksesuar",
+      "Rus": "Часы Очки И Прочее Аксессуары",
+      "Tm": "Sagat & Äýnek & Aksesuarlary"
+    },
+    {
+      "id": 182,
+      "Tr": "Bot & Çizme",
+      "Rus": "Боты И Сапоги",
+      "Tm": "Ädik & Bot"
+    },
+    {
+      "id": 181,
+      "Tr": "Terlik",
+      "Rus": "Шлёпки",
+      "Tm": "Aýakgap"
+    },
+    {
+      "id": 180,
+      "Tr": "Sandalet",
+      "Rus": "Сандали",
+      "Tm": "Basanoşka"
+    },
+    {
+      "id": 179,
+      "Tr": "Deniz Ayakkabısı",
+      "Rus": "Сланцы",
+      "Tm": "Deňiz Aýakgaby"
+    },
+    {
+      "id": 178,
+      "Tr": "Spor Ayakkabı",
+      "Rus": "Спортивная Обувь",
+      "Tm": "Sport Aýakgaby"
+    },
+    {
+      "id": 177,
+      "Tr": "Günlük Ayakkabı",
+      "Rus": "Повседневная Обувь",
+      "Tm": "Günlik Aýakgap"
+    },
+    {
+      "id": 176,
+      "Tr": "Sneaker",
+      "Rus": "Красовки",
+      "Tm": "Krasowka"
+    },
+    {
+      "id": 175,
+      "Tr": "Smokin",
+      "Rus": "Смокинг",
+      "Tm": "Smokin"
+    },
+    {
+      "id": 174,
+      "Tr": "Tulum & Salopet",
+      "Rus": "Тулум И Салопет",
+      "Tm": "Tulum & Salopet"
+    },
+    {
+      "id": 173,
+      "Tr": "Tayt",
+      "Rus": "Ласины",
+      "Tm": "Tayt"
+    },
+    {
+      "id": 172,
+      "Tr": "Eşofman",
+      "Rus": "Спортивка",
+      "Tm": "Sportiwka"
+    },
+    {
+      "id": 171,
+      "Tr": "Eşofman Takımı",
+      "Rus": "Спортивный Комплект",
+      "Tm": "Sportiwka"
+    },
+    {
+      "id": 170,
+      "Tr": "Polar",
+      "Rus": "Ветровка",
+      "Tm": "Wetrowka"
+    },
+    {
+      "id": 169,
+      "Tr": "Takım Elbise",
+      "Rus": "Кастюм Брюк",
+      "Tm": "Kostýum Balak"
+    },
+    {
+      "id": 168,
+      "Tr": "Kazak & Hırka",
+      "Rus": "Джемпер И Водолазки",
+      "Tm": "Žempir We Kazak"
+    },
+    {
+      "id": 167,
+      "Tr": "Yağmurluk & Rüzgarlık",
+      "Rus": "Дождевики И Легкие Куртки",
+      "Tm": "Möwsümlik Kurtga"
+    },
+    {
+      "id": 166,
+      "Tr": "Çorap",
+      "Rus": "Носки",
+      "Tm": "Jorap"
+    },
+    {
+      "id": 165,
+      "Tr": "Kaban & Mont",
+      "Rus": "Куртки И Пальто",
+      "Tm": "Palto & Kurtga"
+    },
+    {
+      "id": 164,
+      "Tr": "Sweatshirt",
+      "Rus": "Свитшот",
+      "Tm": "Switer"
+    },
+    {
+      "id": 163,
+      "Tr": "Yelek",
+      "Rus": "Безрукавка",
+      "Tm": "Ýeňsiz"
+    },
+    {
+      "id": 162,
+      "Tr": "Ceket",
+      "Rus": "Жакет",
+      "Tm": "Penjek"
+    },
+    {
+      "id": 161,
+      "Tr": "Boxer",
+      "Rus": "Боксеры",
+      "Tm": "Boxer"
+    },
+    {
+      "id": 160,
+      "Tr": "Jeans",
+      "Rus": "Джинсы",
+      "Tm": "Jeans"
+    },
+    {
+      "id": 159,
+      "Tr": "Şort",
+      "Rus": "Шорты",
+      "Tm": "Şortik"
+    },
+    {
+      "id": 158,
+      "Tr": "Kapri & Bermuda",
+      "Rus": "Шорты И Бермуда",
+      "Tm": "Şortik & Bermuda"
+    },
+    {
+      "id": 157,
+      "Tr": "Ev Terliği",
+      "Rus": "Тапочки",
+      "Tm": "Tapoçka"
+    },
+    {
+      "id": 156,
+      "Tr": "Pantolon",
+      "Rus": "Штаны",
+      "Tm": "Jalbar"
+    },
+    {
+      "id": 155,
+      "Tr": "Çizme",
+      "Rus": "Ботинки",
+      "Tm": "Ädik"
+    },
+    {
+      "id": 154,
+      "Tr": "Gömlek",
+      "Rus": "Рубашка",
+      "Tm": "Köýnek"
+    },
+    {
+      "id": 153,
+      "Tr": "Polo Yaka Tişört",
+      "Rus": "Батник",
+      "Tm": "Polo Ýaka Batnik"
+    },
+    {
+      "id": 152,
+      "Tr": "Tişört",
+      "Rus": "Футболка",
+      "Tm": "Futbolka"
+    },
+    {
+      "id": 151,
+      "Tr": "Bot",
+      "Rus": "Сапоги",
+      "Tm": "Botinka"
+    },
+    {
+      "id": 150,
+      "Tr": "Spor Ayakkabı",
+      "Rus": "Спортивная Обувь",
+      "Tm": "Sport Ayakgaby"
+    },
+    {
+      "id": 149,
+      "Tr": "Terlik",
+      "Rus": "Шлёпки",
+      "Tm": "Aýakgap"
+    },
+    {
+      "id": 148,
+      "Tr": "Babet",
+      "Rus": "Мокасины",
+      "Tm": "Günlik Aýakgap"
+    },
+    {
+      "id": 147,
+      "Tr": "Sandalet",
+      "Rus": "Сандали",
+      "Tm": "Basanoşka"
+    },
+    {
+      "id": 146,
+      "Tr": "Günlük Ayakkabı",
+      "Rus": "Туфли",
+      "Tm": "Günlik Aýakgap"
+    },
+    {
+      "id": 145,
+      "Tr": "Sneaker",
+      "Rus": "Красовки",
+      "Tm": "Krasowka"
+    },
+    {
+      "id": 144,
+      "Tr": "Topuklu Ayakkabı",
+      "Rus": "Женские Туфли",
+      "Tm": "Ökjeli Aýakgap"
+    },
+    {
+      "id": 143,
+      "Tr": "Erkek",
+      "Rus": "Мужчина",
+      "Tm": "Erkek"
+    },
+    {
+      "id": 142,
+      "Tr": "Takı & Mücevher",
+      "Rus": "Бриллианты И Драгоценности",
+      "Tm": "Şaý-Sepler"
+    },
+    {
+      "id": 141,
+      "Tr": "Elektronik Aksesuarlar",
+      "Rus": "Электроника",
+      "Tm": "Elektonika Aksesuarlary"
+    },
+    {
+      "id": 140,
+      "Tr": "Lüks & Designer",
+      "Rus": "Люкс Дизайн",
+      "Tm": "Lüks & Designer"
+    },
+    {
+      "id": 139,
+      "Tr": "Çocuk Çantası",
+      "Rus": "Детская Сумка",
+      "Tm": "Çaga Sumka"
+    },
+    {
+      "id": 138,
+      "Tr": "Çocuk Ayakkabı",
+      "Rus": "Детская Обувь",
+      "Tm": "Çaga Aýakgap"
+    },
+    {
+      "id": 137,
+      "Tr": "Erkek Çanta",
+      "Rus": "Мужской Сумка",
+      "Tm": "Erkek Sumka"
+    },
+    {
+      "id": 136,
+      "Tr": "Kadın Çantası",
+      "Rus": "Женский Сумка",
+      "Tm": "Zenan Sumka"
+    },
+    {
+      "id": 135,
+      "Tr": "Erkek Ayakkabı",
+      "Rus": "Мужская Обувь",
+      "Tm": "Erkek Aýakgap"
+    },
+    {
+      "id": 134,
+      "Tr": "Kadın Ayakkabı",
+      "Rus": "Женская Обувь",
+      "Tm": "Zenan Aýakgap"
+    },
+    {
+      "id": 133,
+      "Tr": "Diğer Kategoriler",
+      "Rus": "Прочие Категории",
+      "Tm": "Beýleki Kategoriýalar"
+    },
+    {
+      "id": 132,
+      "Tr": "Veri Depolama",
+      "Rus": "Информационный Центр",
+      "Tm": "Maglumatlary Saklamak"
+    },
+    {
+      "id": 131,
+      "Tr": "Kişisel Bakım",
+      "Rus": "Личные Уход",
+      "Tm": "Şahsy İdeg"
+    },
+    {
+      "id": 130,
+      "Tr": "Tv & Görüntü & Ses",
+      "Rus": "Телевизоры И Колонки",
+      "Tm": "Telewizor & Ekran & Ses Sistemasy"
+    },
+    {
+      "id": 129,
+      "Tr": "Çocuk Aksesuar",
+      "Rus": "Десткие Аксессуары",
+      "Tm": "Çaga Aksesuar"
+    },
+    {
+      "id": 128,
+      "Tr": "Telefon",
+      "Rus": "Телефон",
+      "Tm": "Telefon"
+    },
+    {
+      "id": 127,
+      "Tr": "Giyilebilir Teknoloji",
+      "Rus": "Гаджеты",
+      "Tm": "Geýip Bolýan Tehnologiýa Eşikleri"
+    },
+    {
+      "id": 126,
+      "Tr": "Beyaz Eşya",
+      "Rus": "Бытавая Техника",
+      "Tm": "Öý Enjamlary"
+    },
+    {
+      "id": 125,
+      "Tr": "Kadın",
+      "Rus": "Женщина",
+      "Tm": "Zenan"
+    },
+    {
+      "id": 124,
+      "Tr": "Oyun Konsolları",
+      "Rus": "Игровые Консоли",
+      "Tm": "Oýun Konsollary"
+    },
+    {
+      "id": 123,
+      "Tr": "Bilgisayar Tablet",
+      "Rus": "Компютер Планшеты",
+      "Tm": "Kompýuter & Planşet"
+    },
+    {
+      "id": 122,
+      "Tr": "Genel Bakım",
+      "Rus": "Уход",
+      "Tm": "Şahsy Gözellik"
+    },
+    {
+      "id": 121,
+      "Tr": "Epilasyon & Tıraş",
+      "Rus": "Эпиляторы И Бритвы",
+      "Tm": "Epilýator & Stanok"
+    },
+    {
+      "id": 120,
+      "Tr": "Saç Bakımı",
+      "Rus": "Уход За Волосами",
+      "Tm": "Saç İdegi"
+    },
+    {
+      "id": 119,
+      "Tr": "Cilt Bakım",
+      "Rus": "Средства Для Кожи",
+      "Tm": "Deri Üçin İdegi"
+    },
+    {
+      "id": 118,
+      "Tr": "Parfüm Ve Deodorant",
+      "Rus": "Духи И Дезодоранты",
+      "Tm": "Atyr We Deodrant"
+    },
+    {
+      "id": 117,
+      "Tr": "Makyaj",
+      "Rus": "Макиаж",
+      "Tm": "Makiýaž"
+    },
+    {
+      "id": 116,
+      "Tr": "Mobilya",
+      "Rus": "Мебель",
+      "Tm": "Mebel"
+    },
+    {
+      "id": 115,
+      "Tr": "Elektrikli Ev Aletleri",
+      "Rus": "Электроника",
+      "Tm": "Elektrikli Hojalyk Enjamlary"
+    },
+    {
+      "id": 114,
+      "Tr": "Ev Dekorasyonu",
+      "Rus": "Домашний Декор",
+      "Tm": "Öý Bezegi"
+    },
+    {
+      "id": 113,
+      "Tr": "Banyo",
+      "Rus": "Ванна",
+      "Tm": "Banýa"
+    },
+    {
+      "id": 112,
+      "Tr": "Sofra & Mutfak",
+      "Rus": "Кухонные Приборы",
+      "Tm": "Saçak We Aşhana"
+    },
+    {
+      "id": 111,
+      "Tr": "Ev Tekstili",
+      "Rus": "Домашний Интерьер",
+      "Tm": "Öý Tekistili"
+    },
+    {
+      "id": 110,
+      "Tr": "Pişirme",
+      "Rus": "Готовка",
+      "Tm": "Nahar Bişirmek Üçin Enjamlar"
+    },
+    {
+      "id": 109,
+      "Tr": "Taşıma & Güvenlik",
+      "Rus": "Машина И Безопасность",
+      "Tm": "Ulag We Howpsuzlyk"
+    },
+    {
+      "id": 108,
+      "Tr": "Saklama",
+      "Rus": "Ремень Безопасности",
+      "Tm": "Saklamak"
+    },
+    {
+      "id": 107,
+      "Tr": "Bebek Arabası",
+      "Rus": "Детская Машина",
+      "Tm": "Kolýaska"
+    },
+    {
+      "id": 106,
+      "Tr": "Erkek Çocuk",
+      "Rus": "Мальчик",
+      "Tm": "Erkek Çaga"
+    },
+    {
+      "id": 105,
+      "Tr": "Kız Çocuk",
+      "Rus": "Девочка",
+      "Tm": "Gyz Çaga"
+    },
+    {
+      "id": 104,
+      "Tr": "İç Giyim",
+      "Rus": "Белье",
+      "Tm": "Içki Eşik"
+    },
+    {
+      "id": 103,
+      "Tr": "Kazak & Hırka",
+      "Rus": "Водолазка И Джемпер",
+      "Tm": "Žempir"
+    },
+    {
+      "id": 102,
+      "Tr": "İç Giyim",
+      "Rus": "Белье",
+      "Tm": "Içki Eşik"
+    },
+    {
+      "id": 101,
+      "Tr": "Çanta",
+      "Rus": "Сумка",
+      "Tm": "Sumka"
+    },
+    {
+      "id": 100,
+      "Tr": "Kozmetik & Kişisel Bakım",
+      "Rus": "Красота И Косметика",
+      "Tm": "Kosmetika & Gözellik"
+    },
+    {
+      "id": 99,
+      "Tr": "Saat & Aksesuar",
+      "Rus": "Часы И Аксессуары",
+      "Tm": "Sagat & Aksesuarlary"
+    },
+    {
+      "id": 98,
+      "Tr": "Kozmetik",
+      "Rus": "Косметика",
+      "Tm": "Kosmetika"
+    },
+    {
+      "id": 97,
+      "Tr": "Küçük Ev Aletleri",
+      "Rus": "Мелкая Бытавая Техника",
+      "Tm": "Kiçi Öý Enjamlary"
+    },
+    {
+      "id": 96,
+      "Tr": "Tişört",
+      "Rus": "Футболка",
+      "Tm": "Futbolka"
+    },
+    {
+      "id": 95,
+      "Tr": "Sweatshirt",
+      "Rus": "Стившот",
+      "Tm": "Switer"
+    },
+    {
+      "id": 94,
+      "Tr": "Elektronik",
+      "Rus": "Электроника",
+      "Tm": "Elektronika"
+    },
+    {
+      "id": 93,
+      "Tr": "Kozmetik & Kişisel Bakım",
+      "Rus": "Красота И Косметика",
+      "Tm": "Kosmetika & Gözellik"
+    },
+    {
+      "id": 92,
+      "Tr": "Pijama",
+      "Rus": "Пижама",
+      "Tm": "Pižama"
+    },
+    {
+      "id": 91,
+      "Tr": "Ev & Mobilya",
+      "Rus": "Мебель",
+      "Tm": "Öý & Mebel"
+    },
+    {
+      "id": 90,
+      "Tr": "Çanta",
+      "Rus": "Сумка",
+      "Tm": "Sumka"
+    },
+    {
+      "id": 89,
+      "Tr": "Mont",
+      "Rus": "Куртка",
+      "Tm": "Kurtga"
+    },
+    {
+      "id": 88,
+      "Tr": "Saat & Gözlük & Aksesuar",
+      "Rus": "Часы Очки И Прочее Аксессуары",
+      "Tm": "Sagat & Äýnek & Aksesuarlary"
+    },
+    {
+      "id": 87,
+      "Tr": "Çocuk",
+      "Rus": "Ребёнок",
+      "Tm": "Çaga"
+    },
+    {
+      "id": 86,
+      "Tr": "Kadın",
+      "Rus": "Женшина",
+      "Tm": "Zenan"
+    },
+    {
+      "id": 85,
+      "Tr": "Erkek",
+      "Rus": "Мужчина",
+      "Tm": "Erkek"
+    },
+    {
+      "id": 7,
+      "Tr": "Bebek",
+      "Rus": "Дети",
+      "Tm": "Bäbek"
+    },
+    {
+      "id": 6,
+      "Tr": "Giyim",
+      "Rus": "Одежда",
+      "Tm": "Eşik"
+    },
+    {
+      "id": 5,
+      "Tr": "Ayakkabı & Çanta",
+      "Rus": "Туфли И Сумки",
+      "Tm": "Aýakgap & Sumka"
+    },
+    {
+      "id": 4,
+      "Tr": "Ayakkabı",
+      "Rus": "Обувь",
+      "Tm": "Aýakgap"
+    },
+    {
+      "id": 3,
+      "Tr": "Ayakkabı",
+      "Rus": "Туфли",
+      "Tm": "Aýakgap"
+    },
+    {
+      "id": 2,
+      "Tr": "Giyim",
+      "Rus": "Одежда",
+      "Tm": "Egin - Eşik"
+    },
+    {
+      "id": 446,
+      "Tr": "Parfüm",
+      "Rus": "Парфюм",
+      "Tm": "Atyr"
+    },
+    {
+      "id": 445,
+      "Tr": "Makyaj Paleti",
+      "Rus": "Палитра Для Макияжа",
+      "Tm": "Makýaž Palet"
+    },
+    {
+      "id": 444,
+      "Tr": "Tırnak",
+      "Rus": "Ноготочки",
+      "Tm": "Dyrnak"
+    },
+    {
+      "id": 443,
+      "Tr": "Fondöten",
+      "Rus": "Тональный Крем",
+      "Tm": "Tonalnyý"
+    },
+    {
+      "id": 442,
+      "Tr": "Aseton",
+      "Rus": "Ацетон",
+      "Tm": "Lak Aýyryjy Aseton"
+    },
+    {
+      "id": 441,
+      "Tr": "Oje",
+      "Rus": "Лак Для Ноктей",
+      "Tm": "Lak"
+    },
+    {
+      "id": 440,
+      "Tr": "Makyaj Seti",
+      "Rus": "Набор Для Макиажа",
+      "Tm": "Makýaž Nabory"
+    },
+    {
+      "id": 439,
+      "Tr": "Dudak Makyajı",
+      "Rus": "Губная Помада",
+      "Tm": "Dodak Makýažy"
+    },
+    {
+      "id": 438,
+      "Tr": "Ten Makyajı",
+      "Rus": "Макиаж Для Лица",
+      "Tm": "Ýüz Makýažy"
+    },
+    {
+      "id": 437,
+      "Tr": "Göz Makyajı",
+      "Rus": "Макиаж Для Глаз",
+      "Tm": "Göz Makýažy"
+    },
+    {
+      "id": 496,
+      "Tr": "Akıllı Ev Sistemleri",
+      "Rus": "Умный Дом",
+      "Tm": "Akylly Öý Ulgamlary"
+    },
+    {
+      "id": 495,
+      "Tr": "Ses Kayıt Cihazı",
+      "Rus": "Диктафон",
+      "Tm": "Diktofon"
+    },
+    {
+      "id": 494,
+      "Tr": "Oyuncu Donanımları",
+      "Rus": "Игровые Девайсы Или Прочее Гаджеты",
+      "Tm": "Pleýer Enjamlary"
+    },
+    {
+      "id": 493,
+      "Tr": "Kablo & Adaptör",
+      "Rus": "Кабель",
+      "Tm": "Kabel & Adapter"
+    },
+    {
+      "id": 492,
+      "Tr": "Çanta & Kılıflar",
+      "Rus": "Чехлы",
+      "Tm": "Sumka & Daşlar"
+    },
+    {
+      "id": 491,
+      "Tr": "Yazıcı & Tarayıcı",
+      "Rus": "Принтер И Сканер",
+      "Tm": "Printer & Skaner"
+    },
+    {
+      "id": 490,
+      "Tr": "Ağ & Modem",
+      "Rus": "Модем И Роутеры",
+      "Tm": "Tor & Modem"
+    },
+    {
+      "id": 489,
+      "Tr": "Duş Jeli & Kremi",
+      "Rus": "Гели И Крема Для Душа",
+      "Tm": "Duş Geli & Kremi"
+    },
+    {
+      "id": 488,
+      "Tr": "Hijyenik Ped",
+      "Rus": "Прокладки",
+      "Tm": "Prokladkalar"
+    },
+    {
+      "id": 487,
+      "Tr": "Cinsel Sağlık",
+      "Rus": "Интимный Уход",
+      "Tm": "Jynsy Saglyk"
+    },
+    {
+      "id": 486,
+      "Tr": "Kaş Makası",
+      "Rus": "Ножницы Для Бровей",
+      "Tm": "Gaş Gaýçy"
+    },
+    {
+      "id": 485,
+      "Tr": "Cımbız",
+      "Rus": "Пинцет",
+      "Tm": "Pinset"
+    },
+    {
+      "id": 484,
+      "Tr": "Islak Tıraş",
+      "Rus": "Щеточка Для Бритья",
+      "Tm": "Çygly Sakgal Syrmak"
+    },
+    {
+      "id": 483,
+      "Tr": "Tıraş Köpüğü",
+      "Rus": "Пена Для Бритья",
+      "Tm": "Sakgal Üçin Köpük"
+    },
+    {
+      "id": 482,
+      "Tr": "Epilatör",
+      "Rus": "Эпилятор",
+      "Tm": "Epilýator"
+    },
+    {
+      "id": 481,
+      "Tr": "Tıraş Bıçağı",
+      "Rus": "Бритва",
+      "Tm": "Päki"
+    },
+    {
+      "id": 480,
+      "Tr": "Ağda & Tüy Dökücü",
+      "Rus": "Воск И Наклейки Для Волос",
+      "Tm": "Epilýasiýa & Tüý Döküji"
+    },
+    {
+      "id": 479,
+      "Tr": "Saç Vitamini",
+      "Rus": "Витамин Для Волос",
+      "Tm": "Saç İýmitlendiriji"
+    },
+    {
+      "id": 478,
+      "Tr": "Saç Toniği",
+      "Rus": "Тоник Для Волос",
+      "Tm": "Saçyň Reňki"
+    },
+    {
+      "id": 477,
+      "Tr": "Kuru Şampuan",
+      "Rus": "Сухой Шампунь",
+      "Tm": "Gury Şampun"
+    },
+    {
+      "id": 476,
+      "Tr": "Saç Kesim Makası",
+      "Rus": "Ножницы Для Волоса",
+      "Tm": "Saç Kesilýän Gaýjy"
+    },
+    {
+      "id": 475,
+      "Tr": "Saç Açıcı Sprey",
+      "Rus": "Кондиционеры Для Волос",
+      "Tm": "Saç Ýumşadyjy Spreý"
+    },
+    {
+      "id": 474,
+      "Tr": "Boya Açıcı",
+      "Rus": "Осветлитель Для Волос",
+      "Tm": "Reňk Açýan Boýag"
+    },
+    {
+      "id": 473,
+      "Tr": "Saç Şekillendirici",
+      "Rus": "Набор Для Укладки Волос",
+      "Tm": "Saç Şekillendiriji"
+    },
+    {
+      "id": 472,
+      "Tr": "Saç Boyası",
+      "Rus": "Краска Для Волос",
+      "Tm": "Saç Boýagy"
+    },
+    {
+      "id": 471,
+      "Tr": "Saç Fırçası & Tarak",
+      "Rus": "Расчёска",
+      "Tm": "Saç Çotgasy & Darak"
+    },
+    {
+      "id": 470,
+      "Tr": "Saç Kremi",
+      "Rus": "Крем Для Волос",
+      "Tm": "Saç Kremi"
+    },
+    {
+      "id": 469,
+      "Tr": "Saç Bakım Seti",
+      "Rus": "Набор За Уходом Волос",
+      "Tm": "Saç İdeg Nabory"
+    },
+    {
+      "id": 468,
+      "Tr": "Saç Serum & Yağı",
+      "Rus": "Масла Для Волос",
+      "Tm": "Saç Serumu & Ýagy"
+    },
+    {
+      "id": 467,
+      "Tr": "Şampuan",
+      "Rus": "Шампунь",
+      "Tm": "Şampun"
+    },
+    {
+      "id": 466,
+      "Tr": "Saç Maskesi",
+      "Rus": "Маска Для Волос",
+      "Tm": "Saç Maskasy"
+    },
+    {
+      "id": 465,
+      "Tr": "Peeling",
+      "Rus": "Пиилинг",
+      "Tm": "Peeling"
+    },
+    {
+      "id": 464,
+      "Tr": "Maske",
+      "Rus": "Маска",
+      "Tm": "Maska"
+    },
+    {
+      "id": 463,
+      "Tr": "Cilt Serumu",
+      "Rus": "Серум Для Лица",
+      "Tm": "Deri Serumu"
+    },
+    {
+      "id": 462,
+      "Tr": "Yüz Temizleme",
+      "Rus": "Щеточки И Прочее Для Чистки Лица",
+      "Tm": "Ýüz Arassaçylygy"
+    },
+    {
+      "id": 461,
+      "Tr": "Bitkisel Bakım Yağı",
+      "Rus": "Масла Для Ухода За Кожей",
+      "Tm": "Ösümlik İdeg Ýagy"
+    },
+    {
+      "id": 460,
+      "Tr": "Diğer Cilt Bakım Ürünleri",
+      "Rus": "Прочее Средства За Уходом Кожи",
+      "Tm": "Beýleki Deri İdegleri"
+    },
+    {
+      "id": 459,
+      "Tr": "Göz Bakımı",
+      "Rus": "Уход За Глаз",
+      "Tm": "Göz İdegi"
+    },
+    {
+      "id": 458,
+      "Tr": "Güneş Kremi",
+      "Rus": "Солнце Защитный Крем",
+      "Tm": "Güne Garşy Goraýjy Krem"
+    },
+    {
+      "id": 457,
+      "Tr": "El & Ayak Bakımı",
+      "Rus": "Уход За Рук И Ног",
+      "Tm": "El & Aýak İdegi"
+    },
+    {
+      "id": 456,
+      "Tr": "Cilt Bakım Yağları",
+      "Rus": "Масла Для Ухода За Кожей Лица",
+      "Tm": "Deri İdegi Üçin Ýaglar"
+    },
+    {
+      "id": 455,
+      "Tr": "Yüz Bakım",
+      "Rus": "Уход За Кожей Лица",
+      "Tm": "Ýüz İdegi"
+    },
+    {
+      "id": 454,
+      "Tr": "Banyo & Duş Ürünleri",
+      "Rus": "Средства Для Душовой И Ванны",
+      "Tm": "Banýa & Duş Önümleri"
+    },
+    {
+      "id": 453,
+      "Tr": "Vücut Bakım",
+      "Rus": "Уход За Телом",
+      "Tm": "Beden İdegi Üçin Serişdeler"
+    },
+    {
+      "id": 452,
+      "Tr": "Cilt Bakım Seti",
+      "Rus": "Набор Для Ухода Кожей Для Лица",
+      "Tm": "Deri İdeg Serişdeleri"
+    },
+    {
+      "id": 451,
+      "Tr": "Parfüm Esansı",
+      "Rus": "Парфюмерная Эссенция",
+      "Tm": "Atyr Müşki"
+    },
+    {
+      "id": 450,
+      "Tr": "Vücut Spreyi",
+      "Rus": "Спрей Для Тело",
+      "Tm": "Beden Spreýi"
+    },
+    {
+      "id": 449,
+      "Tr": "Roll-On",
+      "Rus": "Ролл-Он",
+      "Tm": "Roll-On"
+    },
+    {
+      "id": 448,
+      "Tr": "Deodorant",
+      "Rus": "Дезодоранты",
+      "Tm": "Dezodorant"
+    },
+    {
+      "id": 447,
+      "Tr": "Parfüm Seti",
+      "Rus": "Набор Парфюмерии",
+      "Tm": "Atyr Nabory"
+    },
+    {
+      "id": 546,
+      "Tr": "Saç Kurutma Makinesi",
+      "Rus": "Фен Для Волос",
+      "Tm": "Saç Guradyjy Aparat"
+    },
+    {
+      "id": 545,
+      "Tr": "Saç Maşası",
+      "Rus": "Набор Укладки За Волосами",
+      "Tm": "Saç Şekillendiriji"
+    },
+    {
+      "id": 544,
+      "Tr": "Ipl Lazer Epilasyon Aletleri",
+      "Rus": "Лазерный Депилятор Волос",
+      "Tm": "Ipl Lazerli Epilasiýa Gurallary"
+    },
+    {
+      "id": 543,
+      "Tr": "Saç Düzleştirici",
+      "Rus": "Утюжок Для Волос",
+      "Tm": "Saç Ütükleri"
+    },
+    {
+      "id": 542,
+      "Tr": "Tıraş Makinesi",
+      "Rus": "Машинка Для Бритья",
+      "Tm": "Saç & Sakgal Maşynlary"
+    },
+    {
+      "id": 541,
+      "Tr": "Kulaklık",
+      "Rus": "Наушники",
+      "Tm": "Nauşnik"
+    },
+    {
+      "id": 540,
+      "Tr": "Projeksiyon Aksesuarları",
+      "Rus": "Аксессуары Для Проектора",
+      "Tm": "Projektor Aksesuarlary"
+    },
+    {
+      "id": 539,
+      "Tr": "Güvenlik Sistemleri",
+      "Rus": "Охранная Система",
+      "Tm": "Howpsuzlyk Ulgamlary"
+    },
+    {
+      "id": 538,
+      "Tr": "Portatif Sistemler",
+      "Rus": "Прототивная Система",
+      "Tm": "Göçme Ulgamlar"
+    },
+    {
+      "id": 537,
+      "Tr": "Uzaktan Kumandalar",
+      "Rus": "Пульт И Радиоуправление",
+      "Tm": "Uzakdan Dolandyryşlar Enjamlary"
+    },
+    {
+      "id": 536,
+      "Tr": "Tv Askı Aparatları",
+      "Rus": "Настенное Крепление Телевизора",
+      "Tm": "Telewizor Asylýan Aparat"
+    },
+    {
+      "id": 535,
+      "Tr": "Tv Aksesuarları",
+      "Rus": "Аксессуары Для Телевизора",
+      "Tm": "Telewizor Aksesuarlary"
+    },
+    {
+      "id": 534,
+      "Tr": "Mikrofon",
+      "Rus": "Микрофон",
+      "Tm": "Mikrofon"
+    },
+    {
+      "id": 533,
+      "Tr": "Ev Sinema Sistemi",
+      "Rus": "Домашний Кинотеатр",
+      "Tm": "Öý Teatr Ulgamy"
+    },
+    {
+      "id": 532,
+      "Tr": "Müzik Sistemleri",
+      "Rus": "Музыкальная Система",
+      "Tm": "Aýdym-Saz Ulgamlary"
+    },
+    {
+      "id": 531,
+      "Tr": "Soundbar",
+      "Rus": "Колонки",
+      "Tm": "Kolonka"
+    },
+    {
+      "id": 530,
+      "Tr": "Projeksiyon Cihazı",
+      "Rus": "Проектор",
+      "Tm": "Projektor"
+    },
+    {
+      "id": 529,
+      "Tr": "Uydu Alıcı",
+      "Rus": "Карточные Тюнеры",
+      "Tm": "Anten Sazlaýjylary"
+    },
+    {
+      "id": 528,
+      "Tr": "Televizyon",
+      "Rus": "Телевизоры И Колонки",
+      "Tm": "Telewizor"
+    },
+    {
+      "id": 527,
+      "Tr": "Media Player",
+      "Rus": "Музыкальный Проигровыватель",
+      "Tm": "Media Player"
+    },
+    {
+      "id": 526,
+      "Tr": "Cep Telefonu Aksesuarları",
+      "Rus": "Аксессуары Для Телефона",
+      "Tm": "Telefon Aksesuarlary"
+    },
+    {
+      "id": 525,
+      "Tr": "Yedek Parçalar",
+      "Rus": "Запчасти И Прочее",
+      "Tm": "Ätiýaçlyk Şaýlary"
+    },
+    {
+      "id": 524,
+      "Tr": "Powerbank",
+      "Rus": "Powerbank",
+      "Tm": "Powerbank"
+    },
+    {
+      "id": 523,
+      "Tr": "Piller & Şarj Cihazları",
+      "Rus": "Акумлятор Для Батарейок",
+      "Tm": "Batareý We Zarýadnikler"
+    },
+    {
+      "id": 522,
+      "Tr": "Kapak & Kılıf",
+      "Rus": "Чехлы Для Телефона",
+      "Tm": "Telefon Daşlary"
+    },
+    {
+      "id": 521,
+      "Tr": "Akıllı Saat Kordon",
+      "Rus": "Ремешки Для Умных Часов",
+      "Tm": "Akylly Sagat Guşaklary"
+    },
+    {
+      "id": 520,
+      "Tr": "Akıllı Bileklik Kordon",
+      "Rus": "Ремешки Для Умных Часов",
+      "Tm": "Akylly Bileklik Guşaklary"
+    },
+    {
+      "id": 519,
+      "Tr": "Sanal Gerçeklik Gözlükleri",
+      "Rus": "Очки Vr",
+      "Tm": "Vr Äýnek"
+    },
+    {
+      "id": 518,
+      "Tr": "Akıllı Bileklikler",
+      "Rus": "Умные Браслеты",
+      "Tm": "Akylly Bilezik"
+    },
+    {
+      "id": 517,
+      "Tr": "Akıllı Saat",
+      "Rus": "Умные Часы",
+      "Tm": "Akylly Sagat"
+    },
+    {
+      "id": 516,
+      "Tr": "Klima",
+      "Rus": "Кондиционер",
+      "Tm": "Kondisioner"
+    },
+    {
+      "id": 515,
+      "Tr": "Hava Temizleyici",
+      "Rus": "Фильт Для Воздуха",
+      "Tm": "Howa Arassalayjy"
+    },
+    {
+      "id": 514,
+      "Tr": "Aspiratör",
+      "Rus": "Вытяжка",
+      "Tm": "Aspiratör"
+    },
+    {
+      "id": 513,
+      "Tr": "Davlumbazlar",
+      "Rus": "Капюшоны",
+      "Tm": "Başlyklar"
+    },
+    {
+      "id": 512,
+      "Tr": "Hava Nemlendiricisi",
+      "Rus": "Увлажнитель Воздуха",
+      "Tm": "Howa Çyglandyryjy"
+    },
+    {
+      "id": 511,
+      "Tr": "Beyaz Eşya Yedek Parça",
+      "Rus": "Запчасти По Бытовому",
+      "Tm": "Hojalyk Elektronikasy Üçin Ätiýaçlyk Şaýlary"
+    },
+    {
+      "id": 510,
+      "Tr": "Kurutma Makinesi",
+      "Rus": "Сушилка",
+      "Tm": "Guradyjy Masyn"
+    },
+    {
+      "id": 509,
+      "Tr": "Su Sebili",
+      "Rus": "Кулер",
+      "Tm": "Suw Paýlaýjy"
+    },
+    {
+      "id": 508,
+      "Tr": "Derin Dondurucu",
+      "Rus": "Морозильник",
+      "Tm": "Sowadyjy - Doňduryjy"
+    },
+    {
+      "id": 507,
+      "Tr": "Mini & Midi Fırın",
+      "Rus": "Духовка",
+      "Tm": "Mini Duhowka"
+    },
+    {
+      "id": 506,
+      "Tr": "Fırın",
+      "Rus": "Духовка",
+      "Tm": "Duhowka"
+    },
+    {
+      "id": 505,
+      "Tr": "Mikrodalga Fırın",
+      "Rus": "Микроволновка",
+      "Tm": "Mikrowolnowka"
+    },
+    {
+      "id": 504,
+      "Tr": "Ocak",
+      "Rus": "Газовая Плита",
+      "Tm": "Gaz Peç"
+    },
+    {
+      "id": 503,
+      "Tr": "Ankastre",
+      "Rus": "Кухонный Гарнитур",
+      "Tm": "Aşhana Üçin Howa Sorujy"
+    },
+    {
+      "id": 502,
+      "Tr": "Bulaşık Makinesi",
+      "Rus": "Посудамоечная Машина",
+      "Tm": "Gap-Gaç Ýuwýan Maşyn"
+    },
+    {
+      "id": 501,
+      "Tr": "Buzdolabı",
+      "Rus": "Холодильник",
+      "Tm": "Sowadyjy"
+    },
+    {
+      "id": 500,
+      "Tr": "Çamaşır Makinesi",
+      "Rus": "Стиральная Машина",
+      "Tm": "Kir Ýuwujy Maşyn"
+    },
+    {
+      "id": 499,
+      "Tr": "Monitör",
+      "Rus": "Монитор",
+      "Tm": "Ekran"
+    },
+    {
+      "id": 498,
+      "Tr": "Klavye",
+      "Rus": "Клавиатура",
+      "Tm": "Klawatura"
+    },
+    {
+      "id": 497,
+      "Tr": "Mouse",
+      "Rus": "Мышка",
+      "Tm": "Syçan"
+    }
+  ]
