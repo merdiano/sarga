@@ -27,8 +27,10 @@ class CategoryTranslationsSeeder extends Seeder
                 ->update(array('name'=>$translation['Tm'],'meta_title'=>$translation['Tm']));
             DB::table('category_translations')
                 ->where('category_id', $translation['id'])
-                ->where('locale', 'tm')
+                ->where('locale', 'ru')
                 ->update(array('name'=>$translation['Rus'],'meta_title'=>$translation['Rus']));
         }
+
+        DB::commit();
     }
 }
