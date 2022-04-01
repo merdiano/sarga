@@ -24,11 +24,11 @@ class CategoryTranslationsSeeder extends Seeder
             DB::table('category_translations')
                 ->where('category_id', $translation['id'])
                 ->where('locale', 'tm')
-                ->update(array('name'=>$translation['Tm'],$translation['Tm']));
+                ->update(array('name'=>$translation['Tm'],'meta_title'=>$translation['Tm']));
             DB::table('category_translations')
                 ->where('category_id', $translation['id'])
                 ->where('locale', 'tm')
-                ->update(array('name'=>$translation['Rus'],$translation['Rus']));
+                ->update(array('name'=>$translation['Rus'],'meta_title'=>$translation['Rus']));
         }
     }
 }
