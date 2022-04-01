@@ -61,7 +61,7 @@ class Product extends JsonResource
              */
 //            'specifications' => app('Webkul\Product\Helpers\View')->getAdditionalData($product),
             /* product's extra information */
-//            $this->merge($this->allProductExtraInfo()),
+            $this->merge($this->allProductExtraInfo()),
 
             /* special price cases */
             $this->merge($this->specialPriceInfo()),
@@ -137,20 +137,20 @@ class Product extends JsonResource
 
         return [
             /* grouped product */
-            $this->mergeWhen(
-                $productTypeInstance instanceof \Webkul\Product\Type\Grouped,
-                $product->type == 'grouped'
-                    ? $this->getGroupedProductInfo($product)
-                    : null
-            ),
-
-            /* bundle product */
-            $this->mergeWhen(
-                $productTypeInstance instanceof \Webkul\Product\Type\Bundle,
-                $product->type == 'bundle'
-                    ? $this->getBundleProductInfo($product)
-                    : null
-            ),
+//            $this->mergeWhen(
+//                $productTypeInstance instanceof \Webkul\Product\Type\Grouped,
+//                $product->type == 'grouped'
+//                    ? $this->getGroupedProductInfo($product)
+//                    : null
+//            ),
+//
+//            /* bundle product */
+//            $this->mergeWhen(
+//                $productTypeInstance instanceof \Webkul\Product\Type\Bundle,
+//                $product->type == 'bundle'
+//                    ? $this->getBundleProductInfo($product)
+//                    : null
+//            ),
 
             /* configurable product */
             $this->mergeWhen(
