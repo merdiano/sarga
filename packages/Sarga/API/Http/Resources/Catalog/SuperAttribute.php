@@ -17,7 +17,7 @@ class SuperAttribute  extends JsonResource
         return [
             'id'          => $this->id,
             'code'        => $this->code,
-            'name'        => $this->name,
+            'name'        => $this->name ?? $this->admin_name,
         ];
     }
 }
