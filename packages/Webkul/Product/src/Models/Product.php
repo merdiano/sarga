@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Sarga\Brand\Models\BrandProxy;
 use Webkul\Attribute\Models\AttributeFamilyProxy;
 use Webkul\Attribute\Models\AttributeProxy;
 use Webkul\Attribute\Repositories\AttributeRepository;
@@ -37,7 +38,15 @@ class Product extends Model implements ProductContract
         'parent_id',
         'brand_id'
     ];
-
+    /**
+     * Get the product attribute family that owns the product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(BrandProxy::modelClass());
+    }
     /**
      * The attributes that should be cast.
      *

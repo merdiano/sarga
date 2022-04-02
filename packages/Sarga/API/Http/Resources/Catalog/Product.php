@@ -52,6 +52,7 @@ class Product extends JsonResource
             'shop_title'             => $this->shop_title,
             'new'                    => $this->new,
             'featured'               => $this->featured,
+            'brand'                  => $product->brand->name ?? '',
 //            'show_quantity_changer'  => $this->when(
 //                $product->type !== 'grouped',
 //                $product->getTypeInstance()->showQuantityBox()
