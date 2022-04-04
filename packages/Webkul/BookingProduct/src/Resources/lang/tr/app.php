@@ -82,6 +82,7 @@ return [
 
     'shop' => [
         'products' => [
+            'booking-information' => 'Rezervasyon bilgileri',
             'location' => 'Konum',
             'contact' => 'İletişim',
             'email' => 'Email',

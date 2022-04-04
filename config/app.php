@@ -282,12 +282,15 @@ return [
         Webkul\Marketing\Providers\MarketingServiceProvider::class,
         Webkul\Notification\Providers\NotificationServiceProvider::class,
         Webkul\Marketplace\Providers\MarketplaceServiceProvider::class,
+        Webkul\Sitemap\Providers\SitemapServiceProvider::class,
 
         Sarga\Shop\Providers\ShopServiceProvider::class,
         Sarga\API\Providers\APIServiceProvider::class,
         Sarga\Admin\Providers\AdminServiceProvider::class,
         Sarga\Brand\Providers\BrandServiceProvider::class,
         Sarga\Payment\Providers\PaymentServiceProvider::class,
+
+
     ],
 
     /*

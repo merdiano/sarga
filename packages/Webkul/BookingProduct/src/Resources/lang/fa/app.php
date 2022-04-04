@@ -82,6 +82,7 @@ return [
 
     'shop' => [
         'products' => [
+            'booking-information' => 'اطلاعات مربوط به رزرو',
             'location' => 'مکان',
             'contact' => 'مخاطب',
             'email' => 'پست الکترونیک',

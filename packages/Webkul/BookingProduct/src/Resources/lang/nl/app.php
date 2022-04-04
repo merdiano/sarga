@@ -82,6 +82,7 @@ return [
 
     'shop' => [
         'products' => [
+            'booking-information' => 'Boekingsinformatie',
             'location' => 'Plaats',
             'contact' => 'Contact',
             'email' => 'Email',
