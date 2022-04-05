@@ -68,7 +68,7 @@ class IntegrationController extends Controller
 
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }else{
-            Log::info('creat product fails fails');
+
             return response()->json(['success'=>false],400);
         }
 
