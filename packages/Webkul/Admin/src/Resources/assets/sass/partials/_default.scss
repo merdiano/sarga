@@ -341,10 +341,15 @@ body {
                         font-weight: 200;
                         display: inline-block;
                         color: $black;
+                        width: 115px;
+                        word-break: break-all;
+                        vertical-align: middle;
                     }
 
                     .arrow-icon {
                         display: inline-block;
+                        position: absolute;
+                        right: 0;
                     }
                 }
 
@@ -360,6 +365,10 @@ body {
                         a {
                             padding-left: 56px;
                             font-size: 14px;
+
+                            .menu-label {
+                                width: auto;
+                            }
                         }
                     }
                 }
