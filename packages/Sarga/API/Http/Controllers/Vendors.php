@@ -16,11 +16,9 @@ use Webkul\Product\Repositories\ProductFlatRepository;
 class Vendors extends Controller
 {
 
-    public function __construct(VendorRepository $sellerRepository,
-                                CategoryRepository $categoryRepository)
+    public function __construct(protected VendorRepository $vendorRepository,
+                                protected CategoryRepository $categoryRepository)
     {
-        $this->vendorRepository = $sellerRepository;
-        $this->categoryRepository = $categoryRepository;
     }
 
     public function index()

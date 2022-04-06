@@ -9,7 +9,6 @@ class Channels extends Controller
 
     public function __construct(protected ChannelRepository $channelRepository)
     {
-
     }
 
     public function index()

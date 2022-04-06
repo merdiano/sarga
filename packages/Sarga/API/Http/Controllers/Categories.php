@@ -11,16 +11,9 @@ use Sarga\Shop\Repositories\CategoryRepository;
 
 class Categories extends Controller
 {
-    /**
-     * CategoryRepository object
-     *
-     * @var \Sarga\Shop\Repositories\CategoryRepository
-     */
-    protected $categoryRepository;
 
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(protected CategoryRepository $categoryRepository)
     {
-        $this->categoryRepository = $categoryRepository;
     }
     public function index()
     {
