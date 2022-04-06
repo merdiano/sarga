@@ -110,7 +110,8 @@
             "Sarga\\API\\": "packages/Sarga/API",
             "Sarga\\Admin\\": "packages/Sarga/Admin/src",
             "Sarga\\Brand\\": "packages/Sarga/Brand/src",
-            "Sarga\\Payment\\": "packages/Sarga/Payment"
+            "Sarga\\Payment\\": "packages/Sarga/Payment",
+            "Webkul\\suggestion\\": "packages/Webkul/suggestion/src"
         }
     },
     "autoload-dev": {

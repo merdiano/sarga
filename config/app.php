@@ -289,7 +289,7 @@ return [
         Sarga\Admin\Providers\AdminServiceProvider::class,
         Sarga\Brand\Providers\BrandServiceProvider::class,
         Sarga\Payment\Providers\PaymentServiceProvider::class,
-
+        Webkul\suggestion\Providers\suggestionServiceProvider::class,
 
     ],
 
