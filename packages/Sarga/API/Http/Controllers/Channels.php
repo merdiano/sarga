@@ -6,11 +6,9 @@ use Sarga\Shop\Repositories\ChannelRepository;
 
 class Channels extends Controller
 {
-    protected $channelRepository;
 
-    public function __construct(ChannelRepository $channelRepository)
+    public function __construct(protected ChannelRepository $channelRepository)
     {
-        $this->channelRepository = $channelRepository;
 
     }
 

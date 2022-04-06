@@ -17,23 +17,13 @@ class Orders extends OrderController
      */
     protected $_config;
 
-    /**
-     * OrderRepository object
-     *
-     * @var \Webkul\Sales\Repositories\OrderRepository
-     */
-    protected $orderRepository;
 
-    public function __construct(OrderRepository $orderRepository,
-                                OrderItemRepository $itemRepository)
+    public function __construct(protected OrderRepository $orderRepository,
+                                protected OrderItemRepository $itemRepository)
     {
         $this->middleware('admin');
 
         $this->_config = request('_config');
-
-        $this->orderRepository = $orderRepository;
-
-        $this->orderItemRepository = $itemRepository;
     }
 
     /**
