@@ -18,12 +18,15 @@ class Orders extends OrderController
     protected $_config;
 
 
-    public function __construct(protected OrderRepository $orderRepository,
-                                protected OrderItemRepository $itemRepository)
+    public function __construct(OrderRepository $orderRepository,
+                                OrderItemRepository $itemRepository)
     {
         $this->middleware('admin');
 
         $this->_config = request('_config');
+
+        $this->orderRepository = $orderRepository;
+        $this->orderItemRepository = $itemRepository;
     }
 
     /**
