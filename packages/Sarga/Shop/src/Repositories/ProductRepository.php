@@ -409,7 +409,7 @@ class ProductRepository extends WProductRepository
         }
         catch(\Exception $ex){
             DB::rollBack();
-            Log::error($ex);
+//            Log::error($ex);
             return false;
         }
 
