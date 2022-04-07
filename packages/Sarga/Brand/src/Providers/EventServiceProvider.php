@@ -15,9 +15,9 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-//        Event::listen('bagisto.admin.catalog.product.edit_form_accordian.additional_views.before', function($viewRenderEventManager){
-//            $viewRenderEventManager->addTemplate('brand::admin.catalog.products.fields.brand');
-//
-//        });
+        Event::listen('bagisto.admin.catalog.product.edit_form_accordian.additional_views.before', function($viewRenderEventManager){
+            $viewRenderEventManager->addTemplate('brand::admin.catalog.products.fields.brand');
+
+        });
     }
 }

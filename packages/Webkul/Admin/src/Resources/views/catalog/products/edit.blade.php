@@ -10,7 +10,7 @@
             .content-container .content .page-header .page-title{
                 width: 100%;
             }
-            
+
             .content-container .content .page-header .page-title .control-group {
                 margin-top: 20px!important;
                 width: 100%!important;
@@ -21,7 +21,7 @@
                 margin-top: 10px!important;
                 float: left;
             }
-       }        
+       }
     </style>
 @endpush
 
@@ -102,6 +102,9 @@
 
                                     <?php
                                         if ($attribute->code == 'guest_checkout' && ! core()->getConfigData('catalog.products.guest-checkout.allow-guest-checkout')) {
+                                            continue;
+                                        }
+                                        if($attribute->code=='brand'){
                                             continue;
                                         }
 
