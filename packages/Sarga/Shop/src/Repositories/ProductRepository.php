@@ -2,6 +2,7 @@
 
 namespace Sarga\Shop\Repositories;
 
+use Carbon\Carbon;
 use Illuminate\Container\Container as App;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
@@ -265,6 +266,8 @@ class ProductRepository extends WProductRepository
         return $results;
     }
     public function create($data){
+        $time_start = microtime(true);
+
         $product['sku'] = $data['sku'];
 //        return array_map(fn($value): int => $value * 2, range(1, 5));
 
@@ -398,6 +401,10 @@ class ProductRepository extends WProductRepository
             Event::dispatch('catalog.product.create.after', $parentProduct);
 
             DB::commit();
+            $time_end = microtime(true);
+            $execution_time = ($time_end - $time_start);
+            $count = $parentProduct->variants->count()+1;
+            Log::info('insert time for '.$count.' products : '.$execution_time);
             return $parentProduct;
         }
         catch(\Exception $ex){
