@@ -308,7 +308,7 @@
                                                         </td>
 
                                                         <td>
-                                                            <a href="{{ url('https://www.trendyol.com'.strip_tags($item->product->short_description)) }}">{{ $item->name }}</a>
+                                                            <a href="{{ $item->product->source ?? '#'}}">{{ $item->name }}</a>
 
                                                             @if (isset($item->additional['attributes']))
                                                                 <div class="item-options">

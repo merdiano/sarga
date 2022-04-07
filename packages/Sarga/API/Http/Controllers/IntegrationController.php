@@ -42,7 +42,7 @@ class IntegrationController extends Controller
             $data = json_decode(request()->getContent(),true);
         }
         catch (\Exception $e){
-            Log::error($e);
+            Log::error($e->getMessage());
             return response()->json(['errors'=>$e->getMessage()],400);
         }
 
