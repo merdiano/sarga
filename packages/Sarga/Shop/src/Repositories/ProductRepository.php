@@ -299,9 +299,10 @@ class ProductRepository extends WProductRepository
             }
             //create product
             $parentProduct = $this->getModel()->create($product);
-            $this->assignAttributes($parentProduct, [
+            $originalPrice = Arr::get($data, 'price.discountedPrice.value');
+            $discountedPrice = Arr::get($data, 'price.discountedPrice.value');
+            $main_attributes = [
                 'sku' => $parentProduct->sku,
-                'price' => Arr::get($data, 'price.discountedPrice.value'),
                 'name' => $data['name'],
                 'weight' => $data['weight'] ?? 0.45,
                 'source' => $data['url_key'],
@@ -310,7 +311,17 @@ class ProductRepository extends WProductRepository
                 'url_key' => $parentProduct->sku,
 //                'short_description' => $data['url_key'],
                 'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
-            ]);
+            ];
+
+            if($originalPrice > $discountedPrice){
+                $main_attributes['price'] = $originalPrice;
+                $main_attributes['special_price'] = $discountedPrice;
+            }
+            else{
+                $main_attributes['price'] = $discountedPrice;
+            }
+
+            $this->assignAttributes($parentProduct, $main_attributes);
 
             if (!empty($data['images'])) {
                 $this->assignImages($parentProduct, $data['images']);
