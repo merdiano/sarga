@@ -567,12 +567,12 @@ class ProductRepository extends WProductRepository
         return $sellerProduct;
     }
 
-    private function assignBrand($product, $brand){
+    private function assignBrand($product, $brand_name){
         $brand = $this->brandRepository->firstOrCreate([
-            'name' => $brand
+            'name' => $brand_name
         ]);
 
-        $brand->products()->associate($product);
+        $brand->products()->attach($product);
         $brand->save();
     }
 
