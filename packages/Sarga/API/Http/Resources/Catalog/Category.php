@@ -35,6 +35,7 @@ class Category extends JsonResource
 //                : json_decode($this->resource->additional, true),
             $this->mergeWhen($this->showChildren(), [
                 'children' => Category::collection($this->children),
+                'product_limit' => $this->product_limit,
             ])
         ];
     }
