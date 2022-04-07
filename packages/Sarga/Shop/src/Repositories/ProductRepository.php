@@ -289,9 +289,14 @@ class ProductRepository extends WProductRepository
             } else
                 $product['attribute_family_id'] = $product['type'] == 'configurable' ? 2 : 1;
 
-//            if(!empty($data['brand']) && $brand = $this->brandRepository->findOneByField('name' , $data['brand'])){
-//                $product['brand_id'] = $brand->id;
-//            }
+            if(!empty($data['brand']) &&
+                $brand = $this->brandRepository->firstOrCreate([
+                    'name' => $data['brand'],
+                    'code' => Str::slug($data['brand']),
+                ]))
+            {
+                $product['brand_id'] = $brand->id;
+            }
             //create product
             $parentProduct = $this->getModel()->create($product);
             $this->assignAttributes($parentProduct, [
@@ -319,10 +324,6 @@ class ProductRepository extends WProductRepository
                 $this->createSellerProduct($parentProduct, $seller->id);
             }
 
-            if(!empty($data['brand'])){
-                $this->assignBrand($parentProduct,$data['brand']);
-            }
-
             if ($product['type'] == 'configurable') {
                 $variant = null;
                 //create variants color
@@ -337,11 +338,6 @@ class ProductRepository extends WProductRepository
                                 $variant = $this->createVariant($parentProduct, $colorVariant['product_number'] . $sizeVariant['size']);
 
                                 $this->assignImages($variant, $colorVariant['images']);
-
-                                if(!empty($colorVariant['brand'])){
-                                    $this->assignBrand($variant,$colorVariant['brand']);
-                                }
-
                                 $this->assignAttributes($variant, [
                                     'sku' => $variant->sku,
                                     'color' => $this->getAttributeOptionId('color', $colorVariant['color']),
@@ -359,9 +355,6 @@ class ProductRepository extends WProductRepository
                         } else {
                             $variant = $this->createVariant($parentProduct, $colorVariant['product_number']);
                             $this->assignImages($variant, $colorVariant['images']);
-                            if(!empty($colorVariant['brand'])){
-                                $this->assignBrand($variant,$colorVariant['brand']);
-                            }
                             $this->assignAttributes($variant, [
                                 'sku' => $variant->sku,
                                 'color' => $this->getAttributeOptionId('color', $colorVariant['color']),
@@ -568,16 +561,16 @@ class ProductRepository extends WProductRepository
         return $sellerProduct;
     }
 
-    private function assignBrand($product, $brand_name){
-        $brand = $this->brandRepository->firstOrCreate([
-            'name' => $brand_name,
-            'code' => Str::slug($brand_name),
-        ]);
-        $product->brand()->associate($brand);
-//        $product->save();
-//        $brand->products()->attach($product);
-//        $brand->save();
-    }
+//    private function assignBrand($product, $brand_name){
+//        $brand = $this->brandRepository->firstOrCreate([
+//            'name' => $brand_name,
+//            'code' => Str::slug($brand_name),
+//        ]);
+//        $product->brand()->associate($brand);
+////        $product->save();
+////        $brand->products()->attach($product);
+////        $brand->save();
+//    }
 
     private function assignImages($product,$images){
         foreach($images as $image){
@@ -649,6 +642,7 @@ class ProductRepository extends WProductRepository
             'type'                => 'simple',
             'attribute_family_id' => $product->attribute_family_id,
             'sku'                 => $sku,
+            'brand_id'            => $product->brand_id
         ]);
 
     }
