@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Sarga\Brand\Repositories\BrandRepository;
 use Webkul\Attribute\Repositories\AttributeGroupRepository;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
@@ -31,7 +32,7 @@ class ProductRepository extends WProductRepository
     protected $vendorProductRepository;
     protected $brandRepository;
 
-    protected $fillableTypes = ['sku', 'name', 'url_key', 'short_description', 'description', 'price', 'weight', 'status'];
+    protected $fillableTypes = ['sku', 'name', 'url_key', 'short_description', 'description', 'price', 'weight', 'status','source'];
 
     public function __construct(AttributeRepository $attributeRepository,
                                 App $app,
@@ -273,7 +274,7 @@ class ProductRepository extends WProductRepository
 
         $product['type'] = (!empty($data['color_variants'])  || !empty($data['size_variants'])) ? 'configurable':'simple';
 
-        $attributes = Arr::only($data,['brand','cinsiyet']);
+        $attributes = Arr::only($data,['source','cinsiyet']);
 
         try {
             DB::beginTransaction();
@@ -288,9 +289,9 @@ class ProductRepository extends WProductRepository
             } else
                 $product['attribute_family_id'] = $product['type'] == 'configurable' ? 2 : 1;
 
-            if(!empty($data['brand']) && $brand = $this->brandRepository->findOneByField('name' , $data['brand'])){
-                $product['brand_id'] = $brand->id;
-            }
+//            if(!empty($data['brand']) && $brand = $this->brandRepository->findOneByField('name' , $data['brand'])){
+//                $product['brand_id'] = $brand->id;
+//            }
             //create product
             $parentProduct = $this->getModel()->create($product);
             $this->assignAttributes($parentProduct, [
@@ -393,7 +394,7 @@ class ProductRepository extends WProductRepository
                             'new' => 1,
                             'visible_individually' => 1,
                             'url_key' => $variant->sku,
-                            'short_description' => $data['url_key'],
+                            'source' => $data['url_key'],
                             'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
                         ];
                         if (!empty($data['color'])) {
@@ -569,10 +570,11 @@ class ProductRepository extends WProductRepository
 
     private function assignBrand($product, $brand_name){
         $brand = $this->brandRepository->firstOrCreate([
-            'name' => $brand_name
+            'name' => $brand_name,
+            'code' => Str::slug($brand_name),
         ]);
         $product->brand()->associate($brand);
-        $product->save();
+//        $product->save();
 //        $brand->products()->attach($product);
 //        $brand->save();
     }

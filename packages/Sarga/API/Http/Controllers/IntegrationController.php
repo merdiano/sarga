@@ -53,7 +53,8 @@ class IntegrationController extends Controller
             'name' => 'required',
             'url_key'=> 'required',
             'price' => 'required',
-            'vendor' => 'required'
+            'vendor' => 'required',
+            'weight' => 'required'
         ]);
 
         if ($validation->fails()) {
