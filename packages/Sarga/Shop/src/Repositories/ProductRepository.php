@@ -297,11 +297,12 @@ class ProductRepository extends WProductRepository
                 'sku' => $parentProduct->sku,
                 'price' => Arr::get($data, 'price.discountedPrice.value'),
                 'name' => $data['name'],
-                'weight' => 0,
+                'weight' => $data['weight'],
+                'source' => $data['url_key'],
                 'status' => 1,
                 'visible_individually' => 1,
                 'url_key' => $parentProduct->sku,
-                'short_description' => $data['url_key'],
+//                'short_description' => $data['url_key'],
                 'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
             ]);
 
@@ -315,6 +316,10 @@ class ProductRepository extends WProductRepository
 
             if($data['vendor'] && $seller = $this->vendorRepository->findOneByField('shop_title',$data['vendor'])){
                 $this->createSellerProduct($parentProduct, $seller->id);
+            }
+
+            if(!empty($data['brand'])){
+                $this->assignBrand($parentProduct,$data['brand']);
             }
 
             if ($product['type'] == 'configurable') {
@@ -332,6 +337,10 @@ class ProductRepository extends WProductRepository
 
                                 $this->assignImages($variant, $colorVariant['images']);
 
+                                if(!empty($colorVariant['brand'])){
+                                    $this->assignBrand($variant,$colorVariant['brand']);
+                                }
+
                                 $this->assignAttributes($variant, [
                                     'sku' => $variant->sku,
                                     'color' => $this->getAttributeOptionId('color', $colorVariant['color']),
@@ -342,13 +351,16 @@ class ProductRepository extends WProductRepository
                                     'status' => 1,
                                     'visible_individually' => 1,
                                     'url_key' => $variant->sku,
-                                    'short_description' => $colorVariant['url_key'],
+                                    'source' => $colorVariant['url_key'],
                                     'description' => $description
                                 ]);
                             }
                         } else {
                             $variant = $this->createVariant($parentProduct, $colorVariant['product_number']);
                             $this->assignImages($variant, $colorVariant['images']);
+                            if(!empty($colorVariant['brand'])){
+                                $this->assignBrand($variant,$colorVariant['brand']);
+                            }
                             $this->assignAttributes($variant, [
                                 'sku' => $variant->sku,
                                 'color' => $this->getAttributeOptionId('color', $colorVariant['color']),
@@ -358,7 +370,7 @@ class ProductRepository extends WProductRepository
                                 'status' => 1,
                                 'visible_individually' => 1,
                                 'url_key' => $variant->sku,
-                                'short_description' => $colorVariant['url_key'],
+                                'source' => $colorVariant['url_key'],
                                 'description' => $description
                             ]);
                         }
@@ -401,10 +413,10 @@ class ProductRepository extends WProductRepository
             Event::dispatch('catalog.product.create.after', $parentProduct);
 
             DB::commit();
-            $time_end = microtime(true);
-            $execution_time = ($time_end - $time_start);
-            $count = $parentProduct->variants->count()+1;
-            Log::info('insert time for '.$count.' products : '.$execution_time);
+//            $time_end = microtime(true);
+//            $execution_time = ($time_end - $time_start);
+//            $count = $parentProduct->variants->count()+1;
+//            Log::info('insert time for '.$count.' products : '.$execution_time);
             return $parentProduct;
         }
         catch(\Exception $ex){
@@ -554,6 +566,16 @@ class ProductRepository extends WProductRepository
 
         return $sellerProduct;
     }
+
+    private function assignBrand($product, $brand){
+        $brand = $this->brandRepository->firstOrCreate([
+            'name' => $brand
+        ]);
+
+        $brand->products()->associate($product);
+        $brand->save();
+    }
+
     private function assignImages($product,$images){
         foreach($images as $image){
             $this->imageRepository->create([
