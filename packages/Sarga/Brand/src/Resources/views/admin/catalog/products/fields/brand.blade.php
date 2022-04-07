@@ -1,4 +1,4 @@
-@php $brands = app(Sarga\Brand\Repositories\BrandRepository::class)->actives(); @endphp
+@php $brands = app(Sarga\Brand\Repositories\BrandRepository::class)->all(); @endphp
 <div class="control-group" :class="[errors.has('brand_id') ? 'has-error' : '']">
     <label for="brand_id" class="required">{{ __('brand::app.brand') }}</label>
     <select class="control" v-validate="'required'" id="brand_id" name="brand_id" data-vv-as="&quot;{{ __('brand::app.brand') }}&quot;">
