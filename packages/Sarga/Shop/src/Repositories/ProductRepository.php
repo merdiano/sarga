@@ -571,9 +571,10 @@ class ProductRepository extends WProductRepository
         $brand = $this->brandRepository->firstOrCreate([
             'name' => $brand_name
         ]);
-
-        $brand->products()->attach($product);
-        $brand->save();
+        $product->brand()->associate($brand);
+        $product->save();
+//        $brand->products()->attach($product);
+//        $brand->save();
     }
 
     private function assignImages($product,$images){
