@@ -29,7 +29,11 @@ class Categories extends Controller
     }
 
     public function filters($id){
-        $category = $this->categoryRepository->with(['filterableAttributes','brands','children'])->find($id);
+        $category = $this->categoryRepository->with(['filterableAttributes','children',
+            'brands' => function ($q){
+                $q->where('status',1);
+            } ])
+            ->find($id);
 
         if($category)
             return response([

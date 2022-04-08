@@ -90,7 +90,8 @@ class BrandRepository extends Repository
         $limit = request()->get('limit') ?? 10;
         $page = request()->get('page') ?? 1;
 
-        return $query->orderBy('position', 'ASC')
+        return $query->where('status',1)
+            ->orderBy('position', 'ASC')
             ->skip(($page-1) * $limit)
             ->take($limit)
             ->get();
