@@ -270,7 +270,7 @@ class ProductRepository extends WProductRepository
     public function create($data){
         $time_start = microtime(true);
 
-        $product['sku'] = $data['sku'];
+        $product['sku'] = 'G-'.$data['product_group_id'];
 //        return array_map(fn($value): int => $value * 2, range(1, 5));
 
         $product['type'] = (!empty($data['color_variants'])  || !empty($data['size_variants'])) ? 'configurable':'simple';
@@ -300,10 +300,11 @@ class ProductRepository extends WProductRepository
             }
             //create product
             $parentProduct = $this->getModel()->create($product);
-            $originalPrice = Arr::get($data, 'price.discountedPrice.value');
+            $originalPrice = Arr::get($data, 'price.originalPrice.value');
             $discountedPrice = Arr::get($data, 'price.discountedPrice.value');
             $main_attributes = [
                 'sku' => $parentProduct->sku,
+                'product_number' => $data['product_number'],
                 'name' => $data['name'],
                 'weight' => $data['weight'] ?? 0.45,
                 'source' => $data['url_key'],
@@ -347,7 +348,7 @@ class ProductRepository extends WProductRepository
                         $description = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $colorVariant['descriptions']));
                         if (!empty($colorVariant['size_variants'])) {
                             foreach ($colorVariant['size_variants'] as $sizeVariant) {
-                                if($variant = $this->createVariant($parentProduct, $colorVariant['product_number'] . $sizeVariant['size']))
+                                if($variant = $this->createVariant($parentProduct, "{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}"))
                                 {
                                     $this->assignImages($variant, $colorVariant['images']);
                                     $this->assignAttributes($variant, [

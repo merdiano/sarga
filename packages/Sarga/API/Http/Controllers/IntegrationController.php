@@ -63,7 +63,7 @@ class IntegrationController extends Controller
             return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 
-        if($product = $this->productRepository->findOneByField('sku',$data['sku'])){
+        if($product = $this->productRepository->findOneByField('product_number',$data['product_number'])){//product_group_id
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }
         elseif($product = $this->productRepository->create($data)){

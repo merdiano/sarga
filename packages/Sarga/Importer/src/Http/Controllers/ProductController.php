@@ -47,7 +47,7 @@ class ProductController extends Controller
             return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 
-        if($product = $this->productRepository->findOneByField('sku',$data['sku']))
+        if($product = $this->productRepository->findOneByField('sku',$data['product_group_id']))//product_group_id
         {
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }
