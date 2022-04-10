@@ -389,26 +389,27 @@ class ProductRepository extends WProductRepository
                     $attribute = $this->attributeRepository->findOneByField('code', 'size');
                     $parentProduct->super_attributes()->attach($attribute->id);
                     foreach ($data['size_variants'] as $sizeVariant) {
-                        $variant = $this->createVariant($parentProduct, $data['product_number'] . $sizeVariant['size']);
-                        $this->assignImages($variant, $data['images']);
-                        $attributes = [
-                            'sku' => $variant->sku,
-                            'size' => $this->getAttributeOptionId('size', $sizeVariant['size']),
-                            'name' => $data['name'],
-                            'price' => $sizeVariant['price'],
-                            'weight' => $data['weight'] ?? 0.45,
-                            'status' => 1,
-                            'featured'=> 0,
-                            'new' => 1,
-                            'visible_individually' => 1,
-                            'url_key' => $variant->sku,
-                            'source' => $data['url_key'],
-                            'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
-                        ];
-                        if (!empty($data['color'])) {
-                            $attributes['color'] = $this->getAttributeOptionId('color', $data['color']);
+                        if($variant = $this->createVariant($parentProduct, $data['product_number'] . $sizeVariant['size'])){
+                            $this->assignImages($variant, $data['images']);
+                            $attributes = [
+                                'sku' => $variant->sku,
+                                'size' => $this->getAttributeOptionId('size', $sizeVariant['size']),
+                                'name' => $data['name'],
+                                'price' => $sizeVariant['price'],
+                                'weight' => $data['weight'] ?? 0.45,
+                                'status' => 1,
+                                'featured'=> 0,
+                                'new' => 1,
+                                'visible_individually' => 1,
+                                'url_key' => $variant->sku,
+                                'source' => $data['url_key'],
+                                'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
+                            ];
+                            if (!empty($data['color'])) {
+                                $attributes['color'] = $this->getAttributeOptionId('color', $data['color']);
+                            }
+                            $this->assignAttributes($variant, $attributes);
                         }
-                        $this->assignAttributes($variant, $attributes);
                     }
                 }
                 if($variant){
