@@ -76,4 +76,18 @@ class IntegrationController extends Controller
 
     }
 
+    public function update(){
+        try {
+            $data = json_decode(request()->getContent(),true);
+        }
+        catch (\Exception $e){
+            Log::error($e->getMessage());
+            return response()->json(['errors'=>$e->getMessage()],400);
+        }
+
+        if(! $product = $this->productRepository->findOneByField('sku',$data['sku'])){
+            return response()->json(['success'=> false,'message' => 'product not found'],400);
+        }
+    }
+
 }

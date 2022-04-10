@@ -266,6 +266,7 @@ class ProductRepository extends WProductRepository
 
         return $results;
     }
+
     public function create($data){
         $time_start = microtime(true);
 
@@ -346,25 +347,28 @@ class ProductRepository extends WProductRepository
                         $description = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $colorVariant['descriptions']));
                         if (!empty($colorVariant['size_variants'])) {
                             foreach ($colorVariant['size_variants'] as $sizeVariant) {
-                                $variant = $this->createVariant($parentProduct, $colorVariant['product_number'] . $sizeVariant['size']);
+                                if($variant = $this->createVariant($parentProduct, $colorVariant['product_number'] . $sizeVariant['size']))
+                                {
+                                    $this->assignImages($variant, $colorVariant['images']);
+                                    $this->assignAttributes($variant, [
+                                        'sku' => $variant->sku,
+                                        'color' => $this->getAttributeOptionId('color', $colorVariant['color']),
+                                        'name' => $colorVariant['name'],
+                                        'size' => $this->getAttributeOptionId('size', $sizeVariant['size']),
+                                        'price' => $sizeVariant['price'],
+                                        'weight' => $colorVariant['weight'] ?? 0.45,
+                                        'status' => 1,
+                                        'visible_individually' => 1,
+                                        'url_key' => $variant->sku,
+                                        'source' => $colorVariant['url_key'],
+                                        'description' => $description
+                                    ]);
+                                }
 
-                                $this->assignImages($variant, $colorVariant['images']);
-                                $this->assignAttributes($variant, [
-                                    'sku' => $variant->sku,
-                                    'color' => $this->getAttributeOptionId('color', $colorVariant['color']),
-                                    'name' => $colorVariant['name'],
-                                    'size' => $this->getAttributeOptionId('size', $sizeVariant['size']),
-                                    'price' => $sizeVariant['price'],
-                                    'weight' => $colorVariant['weight'] ?? 0.45,
-                                    'status' => 1,
-                                    'visible_individually' => 1,
-                                    'url_key' => $variant->sku,
-                                    'source' => $colorVariant['url_key'],
-                                    'description' => $description
-                                ]);
                             }
-                        } else {
-                            $variant = $this->createVariant($parentProduct, $colorVariant['product_number']);
+                        }
+                        elseif($variant = $this->createVariant($parentProduct, $colorVariant['product_number']))
+                        {
                             $this->assignImages($variant, $colorVariant['images']);
                             $this->assignAttributes($variant, [
                                 'sku' => $variant->sku,
@@ -648,13 +652,19 @@ class ProductRepository extends WProductRepository
     }
 
     private function createVariant($product, $sku){
-        return $this->getModel()->create([
-            'parent_id'           => $product->id,
-            'type'                => 'simple',
-            'attribute_family_id' => $product->attribute_family_id,
-            'sku'                 => $sku,
-            'brand_id'            => $product->brand_id
-        ]);
+        try{
+            return $this->getModel()->create([
+                'parent_id'           => $product->id,
+                'type'                => 'simple',
+                'attribute_family_id' => $product->attribute_family_id,
+                'sku'                 => $sku,
+                'brand_id'            => $product->brand_id
+            ]);
+        }
+        catch(\Exception $ex){
+            return false;
+        }
+
 
     }
 
