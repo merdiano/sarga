@@ -267,7 +267,7 @@ class ProductRepository extends WProductRepository
         return $results;
     }
 
-    public function create($data){
+    public function createProduct($data){
         $time_start = microtime(true);
 
         $product['sku'] = $data['product_group_id'];
@@ -440,6 +440,9 @@ class ProductRepository extends WProductRepository
 
     }
 
+    public function updateProduct($product,$data){
+
+    }
     /**
      * Returns the all products of the seller
      *
@@ -600,6 +603,7 @@ class ProductRepository extends WProductRepository
             ]);
         }
     }
+
     private function assignAttributes($product, $attributes){
         foreach($attributes as $code => $value){
             $attribute = $this->attributeRepository->findOneByField('code', $code);

@@ -14,10 +14,7 @@ class IntegrationController extends Controller
 {
 
     public function __construct(protected ProductRepository $productRepository,
-                                protected SellerRepository $sellerRepository)
-    {
-
-    }
+                                protected SellerRepository $sellerRepository){}
 
     public function store(){
         if(!request()->has('product')){
@@ -65,7 +62,7 @@ class IntegrationController extends Controller
         {//product_group_id
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }
-        elseif($product = $this->productRepository->create($data)){
+        elseif($product = $this->productRepository->createProduct($data)){
 
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }else{
@@ -86,6 +83,10 @@ class IntegrationController extends Controller
 
         if(! $product = $this->productRepository->findOneByField('sku',$data['sku'])){
             return response()->json(['success'=> false,'message' => 'product not found'],400);
+        }
+
+        if($this->productRepository->updateProduct($product,$data)){
+            return response()->json(['success'=>true,'product_id' => $product->id]);
         }
     }
 
