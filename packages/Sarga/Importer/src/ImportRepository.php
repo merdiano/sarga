@@ -135,53 +135,26 @@ class ImportRepository extends \Webkul\Core\Eloquent\Repository
         foreach($attributes as $code => $value){
             $attribute = $this->attributeRepository->findOneByField('code', $code);
 
-            if ($attribute->value_per_channel) {
-                if ($attribute->value_per_locale) {
-                    foreach (core()->getAllChannels() as $channel) {
-                        foreach (core()->getAllLocales() as $locale) {
-                            $this->attributeValueRepository->create([
-                                'product_id'   => $product->id,
-                                'attribute_id' => $attribute->id,
-                                'channel'      => $channel->code,
-                                'locale'       => $locale->code,
-                                'value'        => $value,
-                            ]);
-                        }
-                    }
-                } else {
-                    foreach (core()->getAllChannels() as $channel) {
-                        $this->attributeValueRepository->create([
-                            'product_id'   => $product->id,
-                            'attribute_id' => $attribute->id,
-                            'channel'      => $channel->code,
-                            'value'        => $value,
-                        ]);
-                    }
-                }
-            } else {
-                if ($attribute->value_per_locale) {
-                    foreach (core()->getAllLocales() as $locale) {
-                        $this->attributeValueRepository->create([
-                            'product_id'   => $product->id,
-                            'attribute_id' => $attribute->id,
-                            'locale'       => $locale->code,
-                            'value'        => $value,
-                        ]);
-                    }
-                } else {
-                    try {
-                        $attr = [
-                            'product_id'   => $product->id,
-                            'attribute_id' => $attribute->id,
-                            'value'        => $value,
-                        ];
-                        $this->attributeValueRepository->create($attr);
-                    }catch (\Exception $e) {
-                        Log::error($e->getMessage());
-                    }
+            $attr = [
+                'product_id'   => $product->id,
+                'attribute_id' => $attribute->id,
+                'value'        => $value
+            ];
 
-                }
+            if($attribute->value_per_channel){
+                $attr['channel'] = config('app.channel');
             }
+
+            if ($attribute->value_per_locale){
+                foreach (core()->getAllLocales() as $locale){
+                    $attr['locale'] = $locale->code;
+                    $this->attributeValueRepository->create($attr);
+                }
+
+            }else{
+                $this->attributeValueRepository->create($attr);
+            }
+
         }
     }
 }

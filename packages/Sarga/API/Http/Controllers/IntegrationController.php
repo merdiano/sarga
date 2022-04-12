@@ -12,13 +12,11 @@ use Webkul\Marketplace\Repositories\SellerRepository;
 
 class IntegrationController extends Controller
 {
-    protected $productRepository;
-    protected $sellerRepository;
 
-    public function __construct(ProductRepository $productRepository, SellerRepository $sellerRepository)
+    public function __construct(protected ProductRepository $productRepository,
+                                protected SellerRepository $sellerRepository)
     {
-        $this->sellerRepository = $sellerRepository;
-        $this->productRepository = $productRepository;
+
     }
 
     public function store(){
@@ -63,7 +61,8 @@ class IntegrationController extends Controller
             return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
         }
 
-        if($product = $this->productRepository->findOneByField('product_number',$data['product_number'])){//product_group_id
+        if($product = $this->productRepository->findOneByField('sku',$data['product_group_id']))
+        {//product_group_id
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }
         elseif($product = $this->productRepository->create($data)){

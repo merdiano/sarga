@@ -270,7 +270,7 @@ class ProductRepository extends WProductRepository
     public function create($data){
         $time_start = microtime(true);
 
-        $product['sku'] = 'G-'.$data['product_group_id'];
+        $product['sku'] = $data['product_group_id'];
 //        return array_map(fn($value): int => $value * 2, range(1, 5));
 
         $product['type'] = (!empty($data['color_variants'])  || !empty($data['size_variants'])) ? 'configurable':'simple';
@@ -348,7 +348,9 @@ class ProductRepository extends WProductRepository
                         $description = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $colorVariant['descriptions']));
                         if (!empty($colorVariant['size_variants'])) {
                             foreach ($colorVariant['size_variants'] as $sizeVariant) {
-                                if($variant = $this->createVariant($parentProduct, "{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}"))
+                                $variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}");
+
+                                if($variant)
                                 {
                                     $this->assignImages($variant, $colorVariant['images']);
                                     $this->assignAttributes($variant, [
@@ -368,7 +370,7 @@ class ProductRepository extends WProductRepository
 
                             }
                         }
-                        elseif($variant = $this->createVariant($parentProduct, $colorVariant['product_number']))
+                        elseif($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$colorVariant['product_number']}"))
                         {
                             $this->assignImages($variant, $colorVariant['images']);
                             $this->assignAttributes($variant, [
@@ -390,7 +392,7 @@ class ProductRepository extends WProductRepository
                     $attribute = $this->attributeRepository->findOneByField('code', 'size');
                     $parentProduct->super_attributes()->attach($attribute->id);
                     foreach ($data['size_variants'] as $sizeVariant) {
-                        if($variant = $this->createVariant($parentProduct, $data['product_number'] . $sizeVariant['size'])){
+                        if($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}")){
                             $this->assignImages($variant, $data['images']);
                             $attributes = [
                                 'sku' => $variant->sku,
@@ -598,58 +600,30 @@ class ProductRepository extends WProductRepository
             ]);
         }
     }
-    private function assignAttributes($product, $attributes,$check_option_values = false){
+    private function assignAttributes($product, $attributes){
         foreach($attributes as $code => $value){
             $attribute = $this->attributeRepository->findOneByField('code', $code);
 
-            if ($attribute->value_per_channel) {
-                if ($attribute->value_per_locale) {
-                    foreach (core()->getAllChannels() as $channel) {
-                        foreach (core()->getAllLocales() as $locale) {
-                            $this->attributeValueRepository->create([
-                                'product_id'   => $product->id,
-                                'attribute_id' => $attribute->id,
-                                'channel'      => $channel->code,
-                                'locale'       => $locale->code,
-                                'value'        => $value,
-                            ]);
-                        }
-                    }
-                } else {
-                    foreach (core()->getAllChannels() as $channel) {
-                        $this->attributeValueRepository->create([
-                            'product_id'   => $product->id,
-                            'attribute_id' => $attribute->id,
-                            'channel'      => $channel->code,
-                            'value'        => $value,
-                        ]);
-                    }
-                }
-            } else {
-                if ($attribute->value_per_locale) {
-                    foreach (core()->getAllLocales() as $locale) {
-                        $this->attributeValueRepository->create([
-                            'product_id'   => $product->id,
-                            'attribute_id' => $attribute->id,
-                            'locale'       => $locale->code,
-                            'value'        => $value,
-                        ]);
-                    }
-                } else {
-                    try {
-                        $attr = [
-                            'product_id'   => $product->id,
-                            'attribute_id' => $attribute->id,
-                            'value'        => $value,
-                        ];
-                        $this->attributeValueRepository->create($attr);
-                    }catch (\Exception $e) {
-                        Log::error($e);
-                        Log::info($attr);
-                    }
+            $attr = [
+                'product_id'   => $product->id,
+                'attribute_id' => $attribute->id,
+                'value'        => $value
+            ];
 
-                }
+            if($attribute->value_per_channel){
+                $attr['channel'] = config('app.channel');
             }
+
+            if ($attribute->value_per_locale){
+                foreach (core()->getAllLocales() as $locale){
+                    $attr['locale'] = $locale->code;
+                    $this->attributeValueRepository->create($attr);
+                }
+
+            }else{
+                $this->attributeValueRepository->create($attr);
+            }
+
         }
     }
 
