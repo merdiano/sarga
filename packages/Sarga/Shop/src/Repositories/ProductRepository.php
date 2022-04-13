@@ -327,9 +327,8 @@ class ProductRepository extends WProductRepository
 //                'short_description' => $data['url_key'],
                 'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
             ];
-            $main_attributes[] = $this->calculatePrice($data['price']);
 
-            $this->assignAttributes($parentProduct, $main_attributes);
+            $this->assignAttributes($parentProduct, array_merge($main_attributes, $this->calculatePrice($data['price'])));
 
             if (!empty($data['images'])) {
                 $this->assignImages($parentProduct, $data['images']);
@@ -374,7 +373,7 @@ class ProductRepository extends WProductRepository
                                         'description' => $description
                                     ];
                                     $attributes[] = $this->calculatePrice($sizeVariant['price']);
-                                    $this->assignAttributes($variant, $attributes);
+                                    $this->assignAttributes($variant, array_merge($attributes,$this->calculatePrice($sizeVariant['price'])));
                                 }
 
                             }
@@ -395,8 +394,8 @@ class ProductRepository extends WProductRepository
                                 'source' => $colorVariant['url_key'],
                                 'description' => $description
                             ];
-                            $attributes[] = $this->calculatePrice($colorVariant['price']);
-                            $this->assignAttributes($variant, $attributes);
+
+                            $this->assignAttributes($variant, array_merge($attributes,$this->calculatePrice($colorVariant['price'])));
                         }
                     }
                 }
@@ -423,13 +422,11 @@ class ProductRepository extends WProductRepository
                                 'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
                             ];
 
-                            $attributes[] =$this->calculatePrice($sizeVariant['pice']);
-
                             if (!empty($data['color'])) {
                                 $attributes['color'] = $this->getAttributeOptionId('color', $data['color']);
                             }
 
-                            $this->assignAttributes($variant, $attributes);
+                            $this->assignAttributes($variant, array_merge($attributes,$this->calculatePrice($sizeVariant['pice'])));
                         }
                     }
                 }
