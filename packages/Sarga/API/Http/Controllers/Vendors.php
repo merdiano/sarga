@@ -21,6 +21,16 @@ class Vendors extends Controller
     {
     }
 
+    public function sources(){
+        $vendors = $this->vendorRepository->select('marketplace_sellers.id','url','logo','banner','shop_title','brand_attribute_id')
+            ->where('is_approved',true)
+            ->with(['categories:seller_id,type,categories'])
+//            ->leftJoin('seller_categories','marketplace_sellers.id','=','seller_categories.seller_id')
+            ->get();
+
+        return $vendors;
+    }
+
     public function index()
     {
         $vendors = $this->vendorRepository->select('marketplace_sellers.id','url','logo','banner','shop_title','brand_attribute_id')
