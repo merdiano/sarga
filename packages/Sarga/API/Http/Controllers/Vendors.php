@@ -28,7 +28,17 @@ class Vendors extends Controller
 //            ->leftJoin('seller_categories','marketplace_sellers.id','=','seller_categories.seller_id')
             ->get();
 
-        return $vendors;
+        $mainCats = $vendors->first()->categories->first();
+        $cat_ids = json_decode($mainCats->categories,true);
+        $categories = $this->categoryRepository->whereIn('id',$cat_ids)
+            ->select('id','image','position','parent_id','display_mode','category_icon_path')
+            ->where('status',1)
+            ->with(['children'=> function($q){
+                $q->orderBy('position','asc');
+            }])
+            ->orderBy('position','asc')
+            ->get();
+        return $categories;
     }
 
     public function index()
