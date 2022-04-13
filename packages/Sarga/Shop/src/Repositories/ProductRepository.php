@@ -363,7 +363,7 @@ class ProductRepository extends WProductRepository
                                         'product_number' => "{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}",
                                         'color' => $this->getAttributeOptionId('color', $colorVariant['color']),
                                         'name' => $colorVariant['name'],
-                                        'size' => $this->getAttributeOptionId('size', $sizeVariant['size']),
+                                        'size' => $this->getAttributeOptionId('size', $sizeVariant['attributeValue']),
 //                                        'price' => $sizeVariant['price'],
                                         'weight' => $colorVariant['weight'] ?? 0.45,
                                         'status' => 1,
@@ -408,7 +408,7 @@ class ProductRepository extends WProductRepository
 
                             $attributes = [
                                 'sku' => $variant->sku,
-                                'size' => $this->getAttributeOptionId('size', $sizeVariant['size']),
+                                'size' => $this->getAttributeOptionId('size', $sizeVariant['attributeValue']),
                                 'product_id' => "{$data['product_number']}-{$sizeVariant['itemNumber']}",
                                 'name' => $data['name'],
 //                                'price' => $sizeVariant['price'],
