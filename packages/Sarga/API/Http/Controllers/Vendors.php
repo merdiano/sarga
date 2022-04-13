@@ -4,6 +4,7 @@ namespace Sarga\API\Http\Controllers;
 
 use Sarga\API\Http\Resources\Catalog\Brand;
 use Sarga\API\Http\Resources\Catalog\Product as ProductResource;
+use Sarga\API\Http\Resources\Core\Source;
 use Sarga\API\Http\Resources\Core\Vendor;
 use Sarga\Shop\Repositories\ProductRepository;
 use Sarga\Brand\Repositories\BrandRepository;
@@ -28,17 +29,28 @@ class Vendors extends Controller
 //            ->leftJoin('seller_categories','marketplace_sellers.id','=','seller_categories.seller_id')
             ->get();
 
-        $mainCats = $vendors->first()->categories->first();
-        $cat_ids = json_decode($mainCats->categories,true);
-        $categories = $this->categoryRepository->whereIn('id',$cat_ids)
-            ->select('id','image','position','parent_id','display_mode','category_icon_path')
-            ->where('status',1)
-            ->with(['children'=> function($q){
-                $q->orderBy('position','asc');
-            }])
-            ->orderBy('position','asc')
-            ->get();
-        return $categories;
+        foreach ($vendors as $vendor){
+            if($vendor->categories && $mainCats = $vendor->categories->first()){
+                $cat_ids = json_decode($mainCats->categories,true);
+//                $vendor->test = Category::collection($this->categoryRepository->getVisibleCategoryTree($cat_ids[0]));
+                $vendor->main_categories = $this->categoryRepository->whereIn('id',$cat_ids)
+                    ->select('id','image','position','parent_id','display_mode','category_icon_path')
+                    ->where('status',1)
+                    ->with(['children'=> function($q){
+                        $q->orderBy('position','asc');
+                    }])
+                    ->orderBy('position','asc')
+                    ->get();
+//                if($vendor->main_categories->count()){
+//                    foreach($vendor->main_categories as $category){
+//                        $category->filters = app(ProductFlatRepository::class)->getProductsRelatedFilterableAttributes($category);
+//                    }
+//                }
+
+            }
+        }
+//        return $vendors;
+        return Source::collection($vendors);
     }
 
     public function index()
