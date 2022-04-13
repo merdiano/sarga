@@ -624,7 +624,8 @@ class ProductRepository extends WProductRepository
 
     private function assignAttributes($product, $attributes){
         foreach($attributes as $code => $value){
-            $attribute = $this->attributeRepository->findOneByField('code', $code);
+            if(! $attribute = $this->attributeRepository->findOneByField('code', $code))
+                continue;
 
             $attr = [
                 'product_id'   => $product->id,
