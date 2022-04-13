@@ -355,6 +355,7 @@ class ProductRepository extends WProductRepository
                                     $this->assignImages($variant, $colorVariant['images']);
                                     $this->assignAttributes($variant, [
                                         'sku' => $variant->sku,
+                                        'product_number' => "{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}",
                                         'color' => $this->getAttributeOptionId('color', $colorVariant['color']),
                                         'name' => $colorVariant['name'],
                                         'size' => $this->getAttributeOptionId('size', $sizeVariant['size']),
@@ -375,6 +376,7 @@ class ProductRepository extends WProductRepository
                             $this->assignImages($variant, $colorVariant['images']);
                             $this->assignAttributes($variant, [
                                 'sku' => $variant->sku,
+                                'product_number' => $colorVariant['product_number'],
                                 'color' => $this->getAttributeOptionId('color', $colorVariant['color']),
                                 'name' => $colorVariant['name'],
                                 'price' => Arr::get($colorVariant, 'price.discountedPrice.value'),
@@ -397,6 +399,7 @@ class ProductRepository extends WProductRepository
                             $attributes = [
                                 'sku' => $variant->sku,
                                 'size' => $this->getAttributeOptionId('size', $sizeVariant['size']),
+                                'product_id' => "{$data['product_number']}-{$sizeVariant['itemNumber']}",
                                 'name' => $data['name'],
                                 'price' => $sizeVariant['price'],
                                 'weight' => $data['weight'] ?? 0.45,
@@ -441,7 +444,22 @@ class ProductRepository extends WProductRepository
     }
 
     public function updateProduct($product,$data){
+        $time_start = microtime(true);
 
+        try{
+            DB::beginTransaction();
+            if($product->type === 'simple'){
+                $originalPrice = Arr::get($data, 'price.originalPrice.value');
+                $discountedPrice = Arr::get($data, 'price.discountedPrice.value');
+                $product->getTypeInstance()->update($data,$product->id);
+            }
+            DB::commit();
+        }
+        catch(\Exception $ex){
+            DB::rollBack();
+            Log::error($ex->getMessage());
+            return false;
+        }
     }
     /**
      * Returns the all products of the seller
