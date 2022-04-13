@@ -27,3 +27,6 @@ package-lock.json
 yarn.lock
 yarn-error.log
 /packages/Webkul/suggestion/node_modules/
+/resources/lang/vendor/admin/
+/resources/lang/vendor/shop/
+/resources/lang/vendor/velocity/
