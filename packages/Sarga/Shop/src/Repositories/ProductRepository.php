@@ -267,6 +267,20 @@ class ProductRepository extends WProductRepository
         return $results;
     }
 
+    private function calculatePrice($price){
+        $originalPrice = Arr::get($price, 'originalPrice.value');
+        $discountedPrice = Arr::get($price, 'discountedPrice.value');
+        $price_attributes = [];
+        if($originalPrice > $discountedPrice){
+            $price_attributes['price'] = $originalPrice;
+            $price_attributes['special_price'] = $discountedPrice;
+        }
+        else{
+            $price_attributes['price'] = $discountedPrice;
+        }
+
+        return $price_attributes;
+    }
     public function createProduct($data){
         $time_start = microtime(true);
 
@@ -300,8 +314,7 @@ class ProductRepository extends WProductRepository
             }
             //create product
             $parentProduct = $this->getModel()->create($product);
-            $originalPrice = Arr::get($data, 'price.originalPrice.value');
-            $discountedPrice = Arr::get($data, 'price.discountedPrice.value');
+
             $main_attributes = [
                 'sku' => $parentProduct->sku,
                 'product_number' => $data['product_number'],
@@ -314,14 +327,7 @@ class ProductRepository extends WProductRepository
 //                'short_description' => $data['url_key'],
                 'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
             ];
-
-            if($originalPrice > $discountedPrice){
-                $main_attributes['price'] = $originalPrice;
-                $main_attributes['special_price'] = $discountedPrice;
-            }
-            else{
-                $main_attributes['price'] = $discountedPrice;
-            }
+            $main_attributes[] = $this->calculatePrice($data['price']);
 
             $this->assignAttributes($parentProduct, $main_attributes);
 
@@ -353,20 +359,22 @@ class ProductRepository extends WProductRepository
                                 if($variant)
                                 {
                                     $this->assignImages($variant, $colorVariant['images']);
-                                    $this->assignAttributes($variant, [
+                                    $attributes = [
                                         'sku' => $variant->sku,
                                         'product_number' => "{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}",
                                         'color' => $this->getAttributeOptionId('color', $colorVariant['color']),
                                         'name' => $colorVariant['name'],
                                         'size' => $this->getAttributeOptionId('size', $sizeVariant['size']),
-                                        'price' => $sizeVariant['price'],
+//                                        'price' => $sizeVariant['price'],
                                         'weight' => $colorVariant['weight'] ?? 0.45,
                                         'status' => 1,
                                         'visible_individually' => 1,
                                         'url_key' => $variant->sku,
                                         'source' => $colorVariant['url_key'],
                                         'description' => $description
-                                    ]);
+                                    ];
+                                    $attributes[] = $this->calculatePrice($sizeVariant['price']);
+                                    $this->assignAttributes($variant, $attributes);
                                 }
 
                             }
@@ -374,19 +382,21 @@ class ProductRepository extends WProductRepository
                         elseif($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$colorVariant['product_number']}"))
                         {
                             $this->assignImages($variant, $colorVariant['images']);
-                            $this->assignAttributes($variant, [
+                            $attributes = [
                                 'sku' => $variant->sku,
                                 'product_number' => $colorVariant['product_number'],
                                 'color' => $this->getAttributeOptionId('color', $colorVariant['color']),
                                 'name' => $colorVariant['name'],
-                                'price' => Arr::get($colorVariant, 'price.discountedPrice.value'),
+//                                'price' => Arr::get($colorVariant, 'price.discountedPrice.value'),
                                 'weight' => $colorVariant['weight'] ?? 0.45,
                                 'status' => 1,
                                 'visible_individually' => 1,
                                 'url_key' => $variant->sku,
                                 'source' => $colorVariant['url_key'],
                                 'description' => $description
-                            ]);
+                            ];
+                            $attributes[] = $this->calculatePrice($colorVariant['price']);
+                            $this->assignAttributes($variant, $attributes);
                         }
                     }
                 }
@@ -396,12 +406,13 @@ class ProductRepository extends WProductRepository
                     foreach ($data['size_variants'] as $sizeVariant) {
                         if($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}")){
                             $this->assignImages($variant, $data['images']);
+
                             $attributes = [
                                 'sku' => $variant->sku,
                                 'size' => $this->getAttributeOptionId('size', $sizeVariant['size']),
                                 'product_id' => "{$data['product_number']}-{$sizeVariant['itemNumber']}",
                                 'name' => $data['name'],
-                                'price' => $sizeVariant['price'],
+//                                'price' => $sizeVariant['price'],
                                 'weight' => $data['weight'] ?? 0.45,
                                 'status' => 1,
                                 'featured'=> 0,
@@ -411,9 +422,13 @@ class ProductRepository extends WProductRepository
                                 'source' => $data['url_key'],
                                 'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
                             ];
+
+                            $attributes[] =$this->calculatePrice($sizeVariant['pice']);
+
                             if (!empty($data['color'])) {
                                 $attributes['color'] = $this->getAttributeOptionId('color', $data['color']);
                             }
+
                             $this->assignAttributes($variant, $attributes);
                         }
                     }
@@ -449,16 +464,65 @@ class ProductRepository extends WProductRepository
         try{
             DB::beginTransaction();
             if($product->type === 'simple'){
-                $originalPrice = Arr::get($data, 'price.originalPrice.value');
-                $discountedPrice = Arr::get($data, 'price.discountedPrice.value');
-                $product->getTypeInstance()->update($data,$product->id);
+
+                $this->updateAttribute($product->id,$data);
+
             }
+            elseif($product->type === 'configurable'){
+                if (!empty($data['color_variants'])) {
+                    foreach ($data['color_variants'] as $colorVariant) {
+                        if (!empty($colorVariant['size_variants']))
+                            foreach ($colorVariant['size_variants'] as $sizeVariant) {
+                                if($variant = $this->findOneByField('sku', "{$data['product_group_id']}-{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}"))
+                                    $this->updateAttribute($variant->id,$sizeVariant);
+                            }
+                        elseif($variant = $this->findOneByField('sku', "{$data['product_group_id']}-{$colorVariant['product_number']}"))
+                        {
+                            $this->updateAttribute($variant->id,$colorVariant);
+                        }
+                    }
+
+                }
+
+                if (!empty($data['size_variants'])){
+                    foreach ($data['size_variants'] as $sizeVariant) {
+                        if($variant = $this->findOneByField('sku', "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}"))
+                        {
+                            $this->updateAttribute($variant->id,$data);
+                        }
+                    }
+                }
+            }
+
             DB::commit();
         }
         catch(\Exception $ex){
             DB::rollBack();
             Log::error($ex->getMessage());
             return false;
+        }
+    }
+
+    private function updateAttribute($product_id,$data,){
+        if(!$data['isSellable']){
+            //$attribute = $this->attributeRepository->findOneByField('code', 'status'); status id = 8
+            $this->attributeValueRepository->updateOrCreate(['product_id','attribute_id','value'],
+                [$product_id,8,0]);
+        }else{
+            $originalPrice = Arr::get($data, 'price.originalPrice.value');
+            $discountedPrice = Arr::get($data, 'price.discountedPrice.value');
+
+            if($discountedPrice >= $originalPrice){
+                $this->attributeValueRepository->updateOrCreate(['product_id','attribute_id','value'],
+                    [$product_id,11,$discountedPrice]);// price id 11
+                $this->attributeValueRepository->updateOrCreate(['product_id','attribute_id','value'],
+                    [$product_id,13,null]);//special price id 13
+            }else{
+                $this->attributeValueRepository->updateOrCreate(['product_id','attribute_id','value'],
+                    [$product_id,11,$originalPrice]);// price id 11
+                $this->attributeValueRepository->updateOrCreate(['product_id','attribute_id','value'],
+                    [$product_id,13,$discountedPrice]);//special price id 13
+            }
         }
     }
     /**
@@ -625,7 +689,10 @@ class ProductRepository extends WProductRepository
     private function assignAttributes($product, $attributes){
         foreach($attributes as $code => $value){
             if(! $attribute = $this->attributeRepository->findOneByField('code', $code))
+            {
+                Log::info('Attribute not found:'.$code);
                 continue;
+            }
 
             $attr = [
                 'product_id'   => $product->id,
