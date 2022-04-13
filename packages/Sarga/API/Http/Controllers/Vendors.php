@@ -28,12 +28,19 @@ class Vendors extends Controller
             ->with(['categories:seller_id,type,categories'])
 //            ->leftJoin('seller_categories','marketplace_sellers.id','=','seller_categories.seller_id')
             ->get();
+//return $vendors;
 
-        foreach ($vendors as $vendor){
-            if($vendor->categories && $mainCats = $vendor->categories->first()){
+        if(! $vendors){
+            return response()->json(['error' => 'not found'],404);
+        }
+
+//        return $vendors->first()->categories()->first();
+//        return  json_decode($cats->categories,true);
+        $categorizedVendors = $vendors->map(function ($item, $key){
+            if($item->categories && $mainCats = $item->categories()->first()){
                 $cat_ids = json_decode($mainCats->categories,true);
 //                $vendor->test = Category::collection($this->categoryRepository->getVisibleCategoryTree($cat_ids[0]));
-                $vendor->main_categories = $this->categoryRepository->whereIn('id',$cat_ids)
+                $item->main_categories = $this->categoryRepository->whereIn('id',$cat_ids)
                     ->select('id','image','position','parent_id','display_mode','category_icon_path')
                     ->where('status',1)
                     ->with(['children'=> function($q){
@@ -41,16 +48,13 @@ class Vendors extends Controller
                     }])
                     ->orderBy('position','asc')
                     ->get();
-//                if($vendor->main_categories->count()){
-//                    foreach($vendor->main_categories as $category){
-//                        $category->filters = app(ProductFlatRepository::class)->getProductsRelatedFilterableAttributes($category);
-//                    }
-//                }
 
             }
-        }
-//        return $vendors;
-        return Source::collection($vendors);
+            return $item;
+        });
+
+
+        return Source::collection($categorizedVendors);
     }
 
     public function index()
@@ -62,7 +66,7 @@ class Vendors extends Controller
             ->get();
 
         foreach ($vendors as $vendor){
-            if($vendor->categories && $mainCats = $vendor->categories->first()){
+            if($vendor->categories && $mainCats = $vendor->categories()->first()){
                 $cat_ids = json_decode($mainCats->categories,true);
 //                $vendor->test = Category::collection($this->categoryRepository->getVisibleCategoryTree($cat_ids[0]));
                 $vendor->main_categories = $this->categoryRepository->whereIn('id',$cat_ids)
