@@ -704,14 +704,20 @@ class ProductRepository extends WProductRepository
                 $attr['channel'] = config('app.channel');
             }
 
-            if ($attribute->value_per_locale){
-                foreach (core()->getAllLocales() as $locale){
-                    $attr['locale'] = $locale->code;
+            try {
+                if ($attribute->value_per_locale){
+                    foreach (core()->getAllLocales() as $locale){
+                        $attr['locale'] = $locale->code;
+                        $this->attributeValueRepository->create($attr);
+                    }
+
+                }else{
                     $this->attributeValueRepository->create($attr);
                 }
-
-            }else{
-                $this->attributeValueRepository->create($attr);
+            }
+            catch(\Exception $ex){
+                Log::info($attr);
+                Log::info($attribute);
             }
 
         }
