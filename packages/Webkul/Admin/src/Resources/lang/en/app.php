@@ -288,6 +288,9 @@ return [
             'confirm-password' => 'Confirm Password',
             'back-link-title'  => 'Back to Sign In',
             'submit-btn-title' => 'Send Password Reset Email',
+            'passwords'        => [
+                'throttled'        => 'Warning: You have requested password reset recently, please check your email.',
+            ]
         ],
 
         'reset-password' => [
@@ -688,6 +691,8 @@ return [
             'name'                 => 'Name',
             'groups'               => 'Groups',
             'add-group-title'      => 'Add Group',
+            'edit-group-title'     => 'Edit Group',
+            'update-group-title'   => 'Update Group',
             'position'             => 'Position',
             'attribute-code'       => 'Code',
             'type'                 => 'Type',

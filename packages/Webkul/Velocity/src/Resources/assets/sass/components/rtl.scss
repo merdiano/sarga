@@ -197,6 +197,12 @@ body {
                     right: 20px;
                 }
             }
+
+            .currency-icon {
+                ~ .select-icon-container {
+                    right: 7px;
+                }
+            }
         }
 
         .category-list-container {
@@ -299,6 +305,10 @@ body {
                 }
             }
 
+            .account-action {
+                float: left !important;
+            }
+            
             .sidebar {
                 border-left: 1px solid $border-general;
 

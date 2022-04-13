@@ -286,6 +286,9 @@ return [
             'confirm-password' => 'تأكيد كلمة المرور',
             'back-link-title'  => 'العودة للتوقيع',
             'submit-btn-title' => 'بريد إلكتروني كلمة مرور إعادة تعيين وصلة',
+            'passwords'        => [
+                'throttled'        => 'تحذير: لقد طلبت إعادة تعيين كلمة المرور مؤخرًا ، يرجى التحقق من بريدك الإلكتروني.',
+            ]
         ],
 
         'reset-password' => [
@@ -685,6 +688,8 @@ return [
             'name'                 => 'اسم',
             'groups'               => 'المجموعات',
             'add-group-title'      => 'أضف المجموعة',
+            'edit-group-title'     => 'Edit Group',
+            'update-group-title'   => 'Update Group',
             'position'             => 'موضع',
             'attribute-code'       => 'الشفرة',
             'type'                 => 'النوع',

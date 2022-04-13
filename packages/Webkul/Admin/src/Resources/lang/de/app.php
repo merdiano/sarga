@@ -286,6 +286,9 @@ return [
             'confirm-password' => 'Passwort bestätigen',
             'back-link-title'  => 'Zurück zur Anmeldung',
             'submit-btn-title' => 'E-Mail zum Zurücksetzen des Passworts senden',
+            'passwords'        => [
+                'throttled'        => 'Warnung: Sie haben das Zurücksetzen des Passworts kürzlich angefordert, bitte überprüfen Sie Ihre E-Mails.',
+            ]
         ],
         'reset-password'  =>
         [
@@ -676,6 +679,8 @@ return [
             'name'                 => 'Name',
             'groups'               => 'Gruppen',
             'add-group-title'      => 'Gruppe hinzufügen',
+            'edit-group-title'     => 'Edit Group',
+            'update-group-title'   => 'Update Group',
             'position'             => 'Position',
             'attribute-code'       => 'Code',
             'type'                 => 'Typ',
