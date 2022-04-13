@@ -426,7 +426,7 @@ class ProductRepository extends WProductRepository
                                 $attributes['color'] = $this->getAttributeOptionId('color', $data['color']);
                             }
 
-                            $this->assignAttributes($variant, array_merge($attributes,$this->calculatePrice($sizeVariant['pice'])));
+                            $this->assignAttributes($variant, array_merge($attributes,$this->calculatePrice($sizeVariant['price'])));
                         }
                     }
                 }
