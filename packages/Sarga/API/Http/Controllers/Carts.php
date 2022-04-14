@@ -4,6 +4,7 @@ namespace Sarga\API\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Checkout\CartResource;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Checkout\Repositories\CartItemRepository;
@@ -38,6 +39,7 @@ class Carts extends CartController
     {
         $customer = $request->user();
 
+        Log::info($request);
         try {
             Event::dispatch('checkout.cart.item.add.before', $productId);
 
