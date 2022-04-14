@@ -339,7 +339,7 @@ class ProductRepository extends WProductRepository
                 $parentProduct->categories()->attach($data['categories']);
             }
 
-            if($data['vendor'] && $seller = $this->vendorRepository->findOneByField('shop_title',$data['vendor'])){
+            if($data['vendor'] && $seller = $this->vendorRepository->findOneByField('url',$data['vendor'])){
                 $this->createSellerProduct($parentProduct, $seller->id);
             }
 
