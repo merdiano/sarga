@@ -39,7 +39,7 @@ class Carts extends CartController
     {
         $customer = $request->user();
 
-        Log::info($request);
+
         try {
             Event::dispatch('checkout.cart.item.add.before', $productId);
 
@@ -83,6 +83,7 @@ class Carts extends CartController
             'qty' => 'required|array',
         ]);
 
+        Log::info($request);
         foreach ($request->qty as $qty) {
             if ($qty <= 0) {
                 return response([
