@@ -340,12 +340,7 @@ class ProductRepository extends WProductRepository
                 $parentProduct->categories()->attach($data['categories']);
             }
 
-            if($data['vendor'] && $seller = $this->vendorRepository->findOneByField('url',$data['vendor'])){
-//                Log::info('vendor : '.$data['vendor']);
-                $this->createSellerProduct($parentProduct, $seller->id);
-            }else{
-                Log::info('no_create_Seller: '.$data['vendor']);
-            }
+
 
 
             if ($product['type'] == 'configurable') {
@@ -454,6 +449,13 @@ class ProductRepository extends WProductRepository
 //        $this->assignCustomAttributes($parentProduct,$attributes);
 
             Event::dispatch('catalog.product.create.after', $parentProduct);
+
+            if($data['vendor'] && $seller = $this->vendorRepository->findOneByField('url',$data['vendor'])){
+//                Log::info('vendor : '.$data['vendor']);
+                $this->createSellerProduct($parentProduct, $seller->id);
+            }else{
+                Log::info('no_create_Seller: '.$data['vendor']);
+            }
 
             DB::commit();
 

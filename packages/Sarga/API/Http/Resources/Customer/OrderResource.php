@@ -90,7 +90,7 @@ class OrderResource extends JsonResource
         $data = array();
         foreach($items as $item){
             $seller = $this->sellerProductRepository->getSellerByProductId($item->product_id);
-            $data[$seller->shop_title ?? 'outlet'][] = OrderItemResource::make($item);
+            $data[$seller->shop_title ?? 'trendyol'][] = OrderItemResource::make($item);
         }
         return $data;
     }
