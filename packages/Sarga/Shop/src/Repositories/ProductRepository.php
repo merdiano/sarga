@@ -341,7 +341,7 @@ class ProductRepository extends WProductRepository
             }
 
             if($data['vendor'] && $seller = $this->vendorRepository->findOneByField('url',$data['vendor'])){
-                Log::info('vendor : '.$data['vendor']);
+//                Log::info('vendor : '.$data['vendor']);
                 $this->createSellerProduct($parentProduct, $seller->id);
             }else{
                 Log::info('no_create_Seller: '.$data['vendor']);

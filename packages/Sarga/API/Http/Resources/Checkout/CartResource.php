@@ -3,6 +3,7 @@
 namespace Sarga\API\Http\Resources\Checkout;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Customer\AddressResource;
 use Webkul\Marketplace\Repositories\ProductRepository;
 use Webkul\Tax\Helpers\Tax;
@@ -73,6 +74,7 @@ class CartResource extends JsonResource
         $data = array();
         foreach($items as $item){
             $seller = $this->sellerProductRepository->getSellerByProductId($item->product_id);
+            Log::info($seller);
             $data[$seller->shop_title ?? 'default'][] = CartItemResource::make($item);
         }
         return $data;
