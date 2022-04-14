@@ -83,7 +83,7 @@ class Carts extends CartController
             'qty' => 'required|array',
         ]);
 
-        Log::info($request);
+//        Log::info($request);
         foreach ($request->qty as $qty) {
             if ($qty <= 0) {
                 return response([

@@ -63,6 +63,7 @@ Route::group(['prefix' => 'api'], function () {
             Route::post('register', [Customers::class, 'register']);
             Route::post('login', [Customers::class, 'login']);
             Route::group(['middleware' => ['auth:sanctum', 'sanctum.customer']], function () {
+                Route::get('profile',[Customers::class, 'get']);
                 Route::put('profile', [Customers::class, 'update']);
                 /**
                  * Customer address routes.
