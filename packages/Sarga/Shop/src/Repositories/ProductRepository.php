@@ -316,6 +316,7 @@ class ProductRepository extends WProductRepository
             $parentProduct = $this->getModel()->create($product);
 
             $desc = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']));
+
             $main_attributes = [
                 'sku' => $parentProduct->sku,
                 'product_number' => $data['product_number'],
@@ -329,7 +330,7 @@ class ProductRepository extends WProductRepository
                 'description' => $desc
             ];
 
-            $this->assignAttributes($parentProduct, array_merge($main_attributes, $this->calculatePrice($data['price'])));
+
 
             if (!empty($data['images'])) {
                 $this->assignImages($parentProduct, $data['images']);
@@ -344,6 +345,7 @@ class ProductRepository extends WProductRepository
             }
 
             if ($product['type'] == 'configurable') {
+
                 $variant = null;
                 //create variants color
                 if (!empty($data['color_variants'])) {
@@ -439,17 +441,18 @@ class ProductRepository extends WProductRepository
                     $parentProduct->getTypeInstance()->setDefaultVariantId($variant->id);
                 }
             }
+            else{
+                $main_attributes = array_merge($main_attributes, $this->calculatePrice($data['price']));
+            }
 
+            $this->assignAttributes($parentProduct, $main_attributes);
             // assign attributes
 //        $this->assignCustomAttributes($parentProduct,$attributes);
 
             Event::dispatch('catalog.product.create.after', $parentProduct);
 
             DB::commit();
-//            $time_end = microtime(true);
-//            $execution_time = ($time_end - $time_start);
-//            $count = $parentProduct->variants->count()+1;
-//            Log::info('insert time for '.$count.' products : '.$execution_time);
+
             return $parentProduct;
         }
         catch(\Exception $ex){
