@@ -508,28 +508,18 @@ class ProductRepository extends WProductRepository
     private function updateAttribute($product_id,$data,){
         if(!$data['isSellable']){
             //$attribute = $this->attributeRepository->findOneByField('code', 'status'); status id = 8
-            $this->attributeValueRepository->updateOrCreate(['product_id'=>$product_id,'attribute_id'=>8],['value'=>0]);
+            $this->attributeValueRepository->updateOrCreate([$product_id,8,0],['product_id','attribute_id','value']);
         }else{
             $originalPrice = Arr::get($data, 'price.originalPrice.value');
             $discountedPrice = Arr::get($data, 'price.discountedPrice.value');
 
             if($discountedPrice >= $originalPrice){
-                $this->attributeValueRepository->updateOrCreate([
-                    'product_id'=>$product_id,
-                    'attribute_id'=>11],// price id 11
-                    ['value'=>$discountedPrice],
-                    );
-                $this->attributeValueRepository->updateOrCreate([
-                    ['product_id'=>$product_id,
-                    'attribute_id'=>13],//special price id 13
-                    ['value'=>null]
-                ]);
+                $this->attributeValueRepository->updateOrCreate([$product_id,11,$discountedPrice],
+                    ['product_id','attribute_id','value']);// price id 11
+                $this->attributeValueRepository->updateOrCreate([$product_id,13,null],['product_id','attribute_id','value']);//special price id 13
             }else{
-                $this->attributeValueRepository->updateOrCreate(['product_id'=>$product_id,'attribute_id'=>11],// price id 11
-                    ['value'=>$originalPrice],
-                    );
-                $this->attributeValueRepository->updateOrCreate(['product_id'=>$product_id,'attribute_id'=>13],//special price id 13
-                    ['value'=>$discountedPrice]);
+                $this->attributeValueRepository->updateOrCreate([$product_id,11,$originalPrice],['product_id','attribute_id','value']);// price id 11
+                $this->attributeValueRepository->updateOrCreate([$product_id,13,$discountedPrice],['product_id','attribute_id','value']);//special price id 13
             }
         }
     }
