@@ -315,6 +315,7 @@ class ProductRepository extends WProductRepository
             //create product
             $parentProduct = $this->getModel()->create($product);
 
+            $desc = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']));
             $main_attributes = [
                 'sku' => $parentProduct->sku,
                 'product_number' => $data['product_number'],
@@ -324,8 +325,8 @@ class ProductRepository extends WProductRepository
                 'status' => 1,
                 'visible_individually' => 1,
                 'url_key' => $parentProduct->sku,
-//                'short_description' => $data['url_key'],
-                'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
+                'short_description' => $desc,
+                'description' => $desc
             ];
 
             $this->assignAttributes($parentProduct, array_merge($main_attributes, $this->calculatePrice($data['price'])));
@@ -370,7 +371,8 @@ class ProductRepository extends WProductRepository
                                         'visible_individually' => 1,
                                         'url_key' => $variant->sku,
                                         'source' => $colorVariant['url_key'],
-                                        'description' => $description
+                                        'description' => $description,
+                                        'short_description' => $description
                                     ];
                                     $attributes[] = $this->calculatePrice($sizeVariant['price']);
                                     $this->assignAttributes($variant, array_merge($attributes,$this->calculatePrice($sizeVariant['price'])));
@@ -392,7 +394,8 @@ class ProductRepository extends WProductRepository
                                 'visible_individually' => 1,
                                 'url_key' => $variant->sku,
                                 'source' => $colorVariant['url_key'],
-                                'description' => $description
+                                'description' => $description,
+                                'short_description' => $description
                             ];
 
                             $this->assignAttributes($variant, array_merge($attributes,$this->calculatePrice($colorVariant['price'])));
@@ -406,6 +409,7 @@ class ProductRepository extends WProductRepository
                         if($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}")){
                             $this->assignImages($variant, $data['images']);
 
+                            $desc = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']));
                             $attributes = [
                                 'sku' => $variant->sku,
                                 'size' => $this->getAttributeOptionId('size', $sizeVariant['attributeValue']),
@@ -419,7 +423,8 @@ class ProductRepository extends WProductRepository
                                 'visible_individually' => 1,
                                 'url_key' => $variant->sku,
                                 'source' => $data['url_key'],
-                                'description' => implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']))
+                                'description' => $desc,
+                                'short_description' => $desc
                             ];
 
                             if (!empty($data['color'])) {

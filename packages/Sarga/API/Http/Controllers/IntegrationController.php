@@ -35,6 +35,9 @@ class IntegrationController extends Controller
 
         try {
             $data = json_decode(request()->getContent(),true);
+            if(!$data){
+                return response()->json(['message'=>'data not found'],405);
+            }
         }
         catch (\Exception $e){
             Log::error($e->getMessage());
