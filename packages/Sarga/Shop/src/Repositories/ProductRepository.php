@@ -341,8 +341,12 @@ class ProductRepository extends WProductRepository
             }
 
             if($data['vendor'] && $seller = $this->vendorRepository->findOneByField('url',$data['vendor'])){
+                Log::info('vendor : '.$data['vendor']);
                 $this->createSellerProduct($parentProduct, $seller->id);
+            }else{
+                Log::info('no_create_Seller: '.$data['vendor']);
             }
+
 
             if ($product['type'] == 'configurable') {
 
@@ -659,7 +663,7 @@ class ProductRepository extends WProductRepository
                 'is_owner' => 1,
                 'marketplace_seller_id' => $seller_id,
                 'is_approved' => 1,
-                'condition'             => 'new',
+                'condition' => 'new',
             ]);
         }
 
