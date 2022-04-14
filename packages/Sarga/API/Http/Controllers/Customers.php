@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Webkul\API\Http\Resources\Customer\Customer as CustomerResource;
+use Sarga\API\Http\Resources\Customer\CustomerResource;
 use Webkul\Customer\Repositories\CustomerAddressRepository;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Webkul\Customer\Repositories\CustomerRepository;
@@ -14,6 +14,20 @@ use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\AuthController;
 
 class Customers extends AuthController
 {
+    /**
+     * Get details for current logged in customer.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function get(Request $request)
+    {
+        $customer = $request->user();
+
+        return response([
+            'data' => new CustomerResource($customer),
+        ]);
+    }
     /**
      * Controller instance.
      *
@@ -116,7 +130,7 @@ class Customers extends AuthController
         $customer->tokens()->delete();
 
         return response([
-            'data'    => new \Webkul\RestApi\Http\Resources\V1\Shop\Customer\CustomerResource($customer),
+            'data'    => CustomerResource::make($customer),
             'message' => 'Logged in successfully.',
             'token'   => $customer->createToken($request->device_name, ['role:customer'])->plainTextToken,
         ]);
