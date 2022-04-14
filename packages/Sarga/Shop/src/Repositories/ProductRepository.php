@@ -467,7 +467,7 @@ class ProductRepository extends WProductRepository
             DB::beginTransaction();
             if($product->type === 'simple'){
 
-                $this->updateAttribute($product->id,$data);
+                $this->updateAttribute($product,$data);
 
             }
             elseif($product->type === 'configurable'){
@@ -480,7 +480,7 @@ class ProductRepository extends WProductRepository
                             }
                         elseif($variant = $this->findOneByField('sku', "{$data['product_group_id']}-{$colorVariant['product_number']}"))
                         {
-                            $this->updateAttribute($variant->id,$colorVariant);
+                            $this->updateAttribute($variant,$colorVariant);
                         }
                     }
 
@@ -490,12 +490,12 @@ class ProductRepository extends WProductRepository
                     foreach ($data['size_variants'] as $sizeVariant) {
                         if($variant = $this->findOneByField('sku', "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}"))
                         {
-                            $this->updateAttribute($variant->id,$data);
+                            $this->updateAttribute($variant,$data);
                         }
                     }
                 }
             }
-
+            Event::dispatch('catalog.product.update.after', $product);
             DB::commit();
             return true;
         }
@@ -506,20 +506,22 @@ class ProductRepository extends WProductRepository
         }
     }
 
-    private function updateAttribute($product_id,$data,){
+    private function updateAttribute($product,$data){
+//        $flat = $product->
         if(!$data['isSellable']){
             //$attribute = $this->attributeRepository->findOneByField('code', 'status'); status id = 8
-            $this->attributeValueRepository->updateOrCreate(['product_id'=>$product_id,'attribute_id'=>8],['boolean_value'=>0]);
+            $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>0]);
+
         }else{
             $originalPrice = Arr::get($data, 'price.originalPrice.value');
             $discountedPrice = Arr::get($data, 'price.discountedPrice.value');
 
             if($discountedPrice >= $originalPrice){
-                $this->attributeValueRepository->updateOrCreate(['product_id'=>$product_id,'attribute_id'=>11],['float_value'=>$discountedPrice]);// price id 11
-                $this->attributeValueRepository->updateOrCreate(['product_id'=>$product_id,'attribute_id'=>13],['float_value'=>null]);//special price id 13
+                $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>11],['float_value'=>$discountedPrice]);// price id 11
+                $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>13],['float_value'=>null]);//special price id 13
             }else{
-                $this->attributeValueRepository->updateOrCreate(['product_id'=>$product_id,'attribute_id'=>11],['float_value'=>$originalPrice]);// price id 11
-                $this->attributeValueRepository->updateOrCreate(['product_id'=>$product_id,'attribute_id'=>13],['float_value'=>$discountedPrice]);//special price id 13
+                $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>11],['float_value'=>$originalPrice]);// price id 11
+                $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>13],['float_value'=>$discountedPrice]);//special price id 13
             }
         }
     }
