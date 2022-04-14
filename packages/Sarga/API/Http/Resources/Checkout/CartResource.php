@@ -74,7 +74,6 @@ class CartResource extends JsonResource
         $data = array();
         foreach($items as $item){
             $seller = $this->sellerProductRepository->getSellerByProductId($item->product_id);
-            Log::info($seller);
             $data[$seller->shop_title ?? 'trendyol'][] = CartItemResource::make($item);
         }
         return $data;

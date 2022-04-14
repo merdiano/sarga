@@ -445,18 +445,12 @@ class ProductRepository extends WProductRepository
             }
 
             $this->assignAttributes($parentProduct, $main_attributes);
-            // assign attributes
-//        $this->assignCustomAttributes($parentProduct,$attributes);
-
-            Event::dispatch('catalog.product.create.after', $parentProduct);
 
             if($data['vendor'] && $seller = $this->vendorRepository->findOneByField('url',$data['vendor'])){
-//                Log::info('vendor : '.$data['vendor']);
                 $this->createSellerProduct($parentProduct, $seller->id);
-            }else{
-                Log::info('no_create_Seller: '.$data['vendor']);
             }
 
+            Event::dispatch('catalog.product.create.after', $parentProduct);
             DB::commit();
 
             return $parentProduct;
