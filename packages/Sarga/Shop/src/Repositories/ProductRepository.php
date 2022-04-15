@@ -143,7 +143,7 @@ class ProductRepository extends WProductRepository
                 $sortOptions = $this->getDefaultSortByOption();
                 $orderDirection = ! empty($sortOptions) ? $sortOptions[1] : 'asc';
             }
-
+            DB::connection()->enableQueryLog();
             if (isset($params['sort'])) {
                 $this->checkSortAttributeAndGenerateQuery($qb, $params['sort'], $orderDirection);
             } else {
@@ -152,6 +152,8 @@ class ProductRepository extends WProductRepository
                     $this->checkSortAttributeAndGenerateQuery($qb, $sortOptions[0], $orderDirection);
                 }
             }
+
+            Log::info(DB::getQueryLog());
 
             if ($priceFilter = request('price')) {
                 $priceRange = explode(',', $priceFilter);
