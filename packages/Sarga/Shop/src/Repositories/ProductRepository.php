@@ -336,6 +336,7 @@ class ProductRepository extends WProductRepository
 
             # sort direction
             $orderDirection = 'asc';
+            Log::info($params);
             if (isset($params['order']) && in_array($params['order'], ['desc', 'asc'])) {
                 $orderDirection = $params['order'];
             } else {
