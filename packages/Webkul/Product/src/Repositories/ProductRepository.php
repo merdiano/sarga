@@ -647,7 +647,7 @@ class ProductRepository extends Repository
 
         if ($attribute) {
             if ($attribute->code === 'price') {
-                $query->orderBy('product_flat.min_price', $direction);
+                $query->orderBy('variants.min_price', $direction);
             } else {
                 $query->orderBy($attribute->code, $direction);
             }
