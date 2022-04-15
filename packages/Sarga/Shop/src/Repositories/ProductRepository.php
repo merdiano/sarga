@@ -345,11 +345,11 @@ class ProductRepository extends WProductRepository
             }
 
             if (isset($params['sort'])) {
-                $this->checkSortAttributeAndGenerateQuery($qb, $params['sort'], $orderDirection);
+                $qb = $this->checkSortAttributeAndGenerateQuery($qb, $params['sort'], $orderDirection);
             } else {
                 $sortOptions = $this->getDefaultSortByOption();
                 if (! empty($sortOptions)) {
-                    $this->checkSortAttributeAndGenerateQuery($qb, $sortOptions[0], $orderDirection);
+                    $qb = $this->checkSortAttributeAndGenerateQuery($qb, $sortOptions[0], $orderDirection);
                 }
             }
 
