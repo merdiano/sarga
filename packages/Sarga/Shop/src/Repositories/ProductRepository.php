@@ -64,7 +64,6 @@ class ProductRepository extends WProductRepository
     public function getAll($categoryId = null)
     {
         $params = request()->input();
-        Log::info($params);
 
         if (core()->getConfigData('catalog.products.storefront.products_per_page')) {
             $pages = explode(',', core()->getConfigData('catalog.products.storefront.products_per_page'));

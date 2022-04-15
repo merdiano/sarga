@@ -9,6 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Webkul\Attribute\Models\Attribute;
@@ -656,6 +657,7 @@ class ProductRepository extends Repository
             $query->orderBy('product_flat.created_at', $direction);
         }
 
+        Log::info($query);
         return $query;
     }
 
