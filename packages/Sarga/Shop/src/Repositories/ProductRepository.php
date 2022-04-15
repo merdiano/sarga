@@ -343,7 +343,7 @@ class ProductRepository extends WProductRepository
 
                 $orderDirection = ! empty($sortOptions) ? $sortOptions[1] : 'asc';
             }
-            DB::connection()->enableQueryLog();
+
             if (isset($params['sort'])) {
                 $qb = $this->checkSortAttributeAndGenerateQuery($qb, $params['sort'], $orderDirection);
             } else {
@@ -352,7 +352,7 @@ class ProductRepository extends WProductRepository
                     $qb = $this->checkSortAttributeAndGenerateQuery($qb, $sortOptions[0], $orderDirection);
                 }
             }
-            Log::info(DB::getQueryLog());
+
             if ($priceFilter = request('price')) {
                 $priceRange = explode(',', $priceFilter);
 
@@ -394,7 +394,7 @@ class ProductRepository extends WProductRepository
                         });
                 }
             }
-            Log::info(DB::getQueryLog());
+
             $attributeFilters = $this->attributeRepository
                 ->getProductDefaultAttributes(array_keys(
                     request()->except(['price'])
@@ -439,8 +439,10 @@ class ProductRepository extends WProductRepository
                 $qb->groupBy('variants.id');
                 $qb->havingRaw('COUNT(*) = ' . count($attributeFilters));
             }
-            Log::info(DB::getQueryLog());
+
+            Log::info($qb->toSql());
             return $qb->groupBy('product_flat.id');
+
         });
 
         # apply scope query so we can fetch the raw sql and perform a count
