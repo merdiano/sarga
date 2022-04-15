@@ -9,6 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Webkul\Attribute\Models\Attribute;
@@ -648,6 +649,7 @@ class ProductRepository extends Repository
         if ($attribute) {
             if ($attribute->code === 'price') {
                 $query->orderBy('min_price', $direction);
+                Log::info('sort price');
             } else {
                 $query->orderBy($attribute->code, $direction);
             }
