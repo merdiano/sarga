@@ -156,6 +156,7 @@ class Checkout extends CheckoutController
         return response([
             'data'    => [
                 'order' => new OrderResource($order),
+                'status' => $status
             ],
             'message' => 'Order saved successfully.',
         ]);
