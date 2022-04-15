@@ -3,7 +3,6 @@
 namespace Webkul\Product\Type;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Webkul\Checkout\Models\CartItem as CartItemModel;
 use Webkul\Product\Datatypes\CartItemValidationResult;
@@ -483,7 +482,6 @@ class Configurable extends AbstractType
             return 0;
         }
 
-        Log::info($minPrices);
         return min($minPrices);
     }
 

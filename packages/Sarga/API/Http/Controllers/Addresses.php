@@ -93,7 +93,9 @@ class Addresses extends AddressController
     public function updateRecipient(RecipientRequest $request, int $id)
     {
         //todo use recipient address repository
-        if(\DB::table('addresses')->where('id',$id)->update($request->all())){
+        if(\DB::table('addresses')->where('id',$id)
+            ->where('customer_id',$request->user()->id)
+            ->update($request->all())){
             return response([
                 'message' => 'Your recipient has been updated successfully.',
             ]);
@@ -102,6 +104,30 @@ class Addresses extends AddressController
         return response([
             'error' => 'not found'
         ]);
+
+    }
+
+    /**
+     * Delete customer address.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, int $id)
+    {
+        if(\DB::table('addresses')->where('id',$id)
+            ->where('customer_id',$request->user()->id)
+            ->delete()){
+            return response([
+                'message' => 'Item removed successfully.',
+            ]);
+        }
+
+        return response([
+            'error' => 'not found'
+        ]);
+
 
     }
 }
