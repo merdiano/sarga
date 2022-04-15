@@ -336,7 +336,6 @@ class ProductRepository extends WProductRepository
 
             # sort direction
             $orderDirection = 'asc';
-            Log::info($params);
             if (isset($params['order']) && in_array($params['order'], ['desc', 'asc'])) {
                 $orderDirection = $params['order'];
             } else {
@@ -344,7 +343,7 @@ class ProductRepository extends WProductRepository
 
                 $orderDirection = ! empty($sortOptions) ? $sortOptions[1] : 'asc';
             }
-
+            DB::connection()->enableQueryLog();
             if (isset($params['sort'])) {
                 $qb = $this->checkSortAttributeAndGenerateQuery($qb, $params['sort'], $orderDirection);
             } else {
@@ -353,7 +352,7 @@ class ProductRepository extends WProductRepository
                     $qb = $this->checkSortAttributeAndGenerateQuery($qb, $sortOptions[0], $orderDirection);
                 }
             }
-
+            Log::info(DB::getQueryLog());
             if ($priceFilter = request('price')) {
                 $priceRange = explode(',', $priceFilter);
 
@@ -395,7 +394,7 @@ class ProductRepository extends WProductRepository
                         });
                 }
             }
-
+            Log::info(DB::getQueryLog());
             $attributeFilters = $this->attributeRepository
                 ->getProductDefaultAttributes(array_keys(
                     request()->except(['price'])
@@ -440,7 +439,7 @@ class ProductRepository extends WProductRepository
                 $qb->groupBy('variants.id');
                 $qb->havingRaw('COUNT(*) = ' . count($attributeFilters));
             }
-
+            Log::info(DB::getQueryLog());
             return $qb->groupBy('product_flat.id');
         });
 
