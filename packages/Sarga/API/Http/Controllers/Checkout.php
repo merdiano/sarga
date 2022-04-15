@@ -127,6 +127,18 @@ class Checkout extends CheckoutController
 
         Cart::collectTotals();
 
+        $minimumOrderAmount = (float) core()->getConfigData('sales.orderSettings.minimum-order.minimum_order_amount') ?? 0;
+
+        if(! $status = Cart::checkMinimumOrder()){
+            return response([
+                'data'    => [
+                    'cart'   => new CartResource(Cart::getCart()),
+                    'status' => $status,
+                ],
+                'message' =>  __('rest-api::app.checkout.minimum-order-message', ['amount' => core()->currency($minimumOrderAmount)]),
+            ]);
+        }
+
         $this->validateOrder();
 
         $cart = Cart::getCart();

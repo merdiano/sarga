@@ -10,11 +10,9 @@ use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\OrderController;
 
 class Orders extends OrderController
 {
-    public function __construct(OrderRepository $orderRepository, OrderItemRepository $orderItemRepository)
+    public function __construct(protected OrderRepository $orderRepository,
+                                protected OrderItemRepository $orderItemRepository)
     {
-        $this->orderRepository = $orderRepository;
-
-        $this->orderItemRepository = $orderItemRepository;
     }
 
     /**
