@@ -466,7 +466,24 @@ class ProductRepository extends WProductRepository
         }
 
     }
+    /**
+     * Variant join.
+     *
+     * @param  mixed  $query
+     * @return void
+     */
+    private function variantJoin($query)
+    {
+        static $alreadyJoined = false;
 
+        if (! $alreadyJoined) {
+            $alreadyJoined = true;
+
+            $query
+                ->join('product_flat as variants', 'product_flat.id', '=', DB::raw('COALESCE(' . DB::getTablePrefix() . 'variants.parent_id, ' . DB::getTablePrefix() . 'variants.id)'))
+                ->leftJoin('product_attribute_values', 'product_attribute_values.product_id', '=', 'variants.product_id');
+        }
+    }
     public function updateProduct($product,$data){
         $time_start = microtime(true);
 
