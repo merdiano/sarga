@@ -125,11 +125,11 @@ class Products extends ProductController
 
         $queries = explode(' ', $key);
 
-        $brands = $brandRepository->getModel()::search(implode(' OR ', $queries))
-            ->where('status',1)
-            ->orderBy('name','asc')
-            ->take(10)
-            ->get();
+//        $brands = $brandRepository->getModel()::search(implode(' OR ', $queries))
+//            ->where('status',1)
+//            ->orderBy('name','asc')
+//            ->take(10)
+//            ->get();
 
 //        $products = $this->productRepository->searchProductByAttribute($key);
 
@@ -145,7 +145,7 @@ class Products extends ProductController
             ->take(10)
             ->get();
 
-        return $products->merge($brands);
+        return $products;
 
         if($products->count() >0){
 
