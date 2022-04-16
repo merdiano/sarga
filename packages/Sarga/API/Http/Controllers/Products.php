@@ -2,6 +2,7 @@
 
 namespace Sarga\API\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Catalog\ProductVariant;
 use Sarga\API\Http\Resources\Catalog\SuperAttribute;
@@ -133,7 +134,7 @@ class Products extends ProductController
 
         if($products->count() >0){
 
-            return collect($products->items());
+            return Arr::sort(($products->items()));
         }
 
     }
