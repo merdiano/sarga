@@ -63,7 +63,6 @@ class Pickup extends AbstractShipping
     }
 
     public function estimatedDelivery(){
-        return Carbon::today()->addDays($this->getConfigData('delivery_day_min'))->toDateString().' / '.
-            Carbon::today()->addDays($this->getConfigData('delivery_day_max'))->toDateString();
+        return Carbon::today()->addDays($this->getConfigData('delivery_day_max'))->format('d.m.Y');
     }
 }
