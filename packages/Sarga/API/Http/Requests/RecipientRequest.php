@@ -16,8 +16,8 @@ class RecipientRequest extends CustomerAddressRequest
     public function rules()
     {
         return [
-            'first_name'   => ['required', new AlphaNumericSpace],
-            'last_name'    => ['required', new AlphaNumericSpace],
+            'first_name'   => ['required'],
+            'last_name'    => ['required'],
             'phone'        => ['required', new PhoneNumber],
         ];
     }

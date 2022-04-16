@@ -5,6 +5,7 @@ namespace Sarga\API\Http\Controllers;
 use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Catalog\ProductVariant;
 use Sarga\API\Http\Resources\Catalog\SuperAttribute;
+use Sarga\Brand\Repositories\BrandRepository;
 use Sarga\Shop\Repositories\ProductRepository;
 use Webkul\API\Http\Controllers\Shop\ProductController;
 use Sarga\API\Http\Resources\Catalog\Product as ProductResource;
@@ -110,6 +111,33 @@ class Products extends ProductController
         }
 
         return response()->json(['message' => 'not found'],404);
+    }
+
+    public function search(BrandRepository $brandRepository){
+
+        $key = request('search');
+
+        if(!strlen($key)>= 3){
+            return response()->json(['message' => '3 karakterden kuchuk','status'=>false]);
+        }
+
+        $brands = $brandRepository->select('id','name')
+            ->where('status',1)
+            ->where('name','like','%' . urldecode($key) . '%')
+            ->orderBy('name','asc')
+            ->limit(10)
+            ->get();
+
+        $products = $this->productRepository->getAll()->only('id','name');
+
+        return $products;
+
+        if($brands->count() >0){
+            foreach($brands as $brand) {
+
+            }
+        }
+
     }
 
 }

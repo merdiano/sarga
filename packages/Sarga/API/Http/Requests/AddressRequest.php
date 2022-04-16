@@ -16,7 +16,7 @@ class AddressRequest extends CustomerAddressRequest
     public function rules()
     {
         return [
-            'note' => [new AlphaNumericSpace,'max:191'],
+            'note' => ['max:191'],
             'address1'      => ['required', 'array'],
 //            'state'        => ['required', new AlphaNumericSpace],
             'city'         => ['required'],
