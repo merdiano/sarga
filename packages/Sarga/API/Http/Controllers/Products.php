@@ -139,14 +139,13 @@ class Products extends ProductController
 
         $locale = core()->getRequestedLocaleCode();
         $products = app(ProductFlatRepository::class)->getModel()::search(implode(' OR ', $queries))
-            ->select('product_id','name')
             ->where('status', 1)
             ->where('visible_individually', 1)
             ->where('channel', $channel)
             ->where('locale', $locale)
             ->orderBy('product_id', 'desc')
             ->limit(10)
-            ->get();
+            ->get('product_id','name');
 
         return $products->merge($brands);
 
