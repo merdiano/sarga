@@ -3,6 +3,7 @@
 namespace Sarga\Admin\Shipment;
 
 
+use Carbon\Carbon;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Checkout\Models\CartShippingRate;
 use Webkul\Shipping\Carriers\AbstractShipping;
@@ -59,5 +60,10 @@ class Pickup extends AbstractShipping
         }
 
         return $cartShippingRate;
+    }
+
+    public function estimatedDelivery(){
+        return Carbon::today()->addDays($this->getConfigData('delivery_day_min'))->toDateString().' / '.
+            Carbon::today()->addDays($this->getConfigData('delivery_day_max'))->toDateString();
     }
 }

@@ -135,9 +135,9 @@ class Shipping
                 'description'  => $object->getDescription(),
                 'formatted_price'   => core()->currency($object->getConfigData('weight_price')),
                 'price'   => core()->convertPrice($object->getConfigData('weight_price')),
-                'outlet_delivery'    => (double)$object->getConfigData('outlet_delivery'),
-                'delivery_day_min'   => (double)$object->getConfigData('delivery_day_min'),
-                'delivery_day_max'   => (double)$object->getConfigData('delivery_day_max'),
+                'outlet_delivery'    => (int)$object->getConfigData('outlet_delivery'),
+                'delivery_day_min'   => (int)$object->getConfigData('delivery_day_min'),
+                'delivery_day_max'   => (int)$object->getConfigData('delivery_day_max'),
             ];
         }
 

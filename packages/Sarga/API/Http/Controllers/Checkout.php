@@ -3,6 +3,7 @@
 namespace Sarga\API\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Sarga\API\Http\Resources\Checkout\CartResource;
 use Sarga\API\Http\Resources\Checkout\PickupAddress;
@@ -149,7 +150,15 @@ class Checkout extends CheckoutController
             ]);
         }
 
-        $order = $orderRepository->create(Cart::prepareDataForOrder());
+        $data = Cart::prepareDataForOrder();
+
+        $methodClass = Config::get('carriers.'.$cart->selected_shipping_rate->carrier.'.class');
+
+        $methodObject = new $methodClass;
+
+        $data['shipping_description'] = $methodObject->estimatedDelivery();
+
+        $order = $orderRepository->create($data);
 
         Cart::deActivateCart();
 
