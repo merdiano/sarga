@@ -133,7 +133,7 @@ class Products extends ProductController
 
         if($products->count() >0){
 
-            return $products->items()->only('id');
+            return collect($products->items())->only('id');
         }
 
     }
