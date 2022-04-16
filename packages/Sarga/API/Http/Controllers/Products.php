@@ -113,7 +113,7 @@ class Products extends ProductController
         return response()->json(['message' => 'not found'],404);
     }
 
-    public function search(BrandRepository $brandRepository){
+    public function suggestions(BrandRepository $brandRepository){
 
         $key = request('search');
 
@@ -128,9 +128,9 @@ class Products extends ProductController
             ->limit(10)
             ->get();
 
-        $products = $this->productRepository->getAll()->only('id','name');
+//        $products = $this->productRepository->getAll()->only('id','name');
 
-        return $products;
+        return $brands;
 
         if($brands->count() >0){
             foreach($brands as $brand) {
