@@ -126,12 +126,11 @@ class Products extends ProductController
         $queries = explode(' ', $key);
 
         $brands = $brandRepository->getModel()::search(implode(' OR ', $queries))
-            ->select('id','name')
             ->where('status',1)
             ->where('name','like','%' . urldecode($key) . '%')
             ->orderBy('name','asc')
             ->limit(10)
-            ->get();
+            ->get('id','name');
 
 //        $products = $this->productRepository->searchProductByAttribute($key);
 
