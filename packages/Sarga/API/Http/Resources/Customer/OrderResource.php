@@ -4,6 +4,7 @@ namespace Sarga\API\Http\Resources\Customer;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use Illuminate\Support\Facades\Config;
 use Webkul\Marketplace\Repositories\ProductRepository;
 use Webkul\RestApi\Http\Resources\V1\Admin\Sale\InvoiceResource;
 use Webkul\RestApi\Http\Resources\V1\Admin\Sale\OrderAddressResource;
@@ -33,6 +34,7 @@ class OrderResource extends JsonResource
             'shipping_title'                     => $this->shipping_title,
             'payment_title'                      => core()->getConfigData('sales.paymentmethods.' . $this->payment->method . '.title'),
             'shipping_description'               => $this->shipping_description,
+            'shipping_date'                      => $this->deliveryDate() ?? " ",
             'coupon_code'                        => $this->coupon_code,
             'is_gift'                            => $this->is_gift,
             'total_item_count'                   => (int) $this->total_item_count,
@@ -93,5 +95,16 @@ class OrderResource extends JsonResource
             $data[$seller->shop_title ?? 'outlet'][] = OrderItemResource::make($item);
         }
         return $data;
+    }
+
+    private function deliveryDate(){
+        $method = explode("_", $this->shipping_method);
+
+        $methodClass = Config::get('carriers.'.$method[0].'.class');
+
+        $methodObject = new $methodClass;
+
+        return $methodObject->estimatedDelivery();
+
     }
 }

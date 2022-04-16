@@ -150,15 +150,7 @@ class Checkout extends CheckoutController
             ]);
         }
 
-        $data = Cart::prepareDataForOrder();
-
-        $methodClass = Config::get('carriers.'.$cart->selected_shipping_rate->carrier.'.class');
-
-        $methodObject = new $methodClass;
-
-        $data['shipping_description'] = $methodObject->estimatedDelivery();
-
-        $order = $orderRepository->create($data);
+        $order = $orderRepository->create(Cart::prepareDataForOrder());
 
         Cart::deActivateCart();
 
