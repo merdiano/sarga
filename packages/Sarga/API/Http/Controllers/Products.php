@@ -143,7 +143,7 @@ class Products extends ProductController
             ->where('locale', $locale)
             ->orderBy('product_id', 'desc')
             ->take(10)
-            ->get();
+            ->get('name');
 
         return $products;
 
