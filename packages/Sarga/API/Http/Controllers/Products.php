@@ -115,37 +115,40 @@ class Products extends ProductController
         return response()->json(['message' => 'not found'],404);
     }
 
-    public function suggestions(){
+    public function suggestions(BrandRepository $brandRepository){
 
         $key = request('search');
-
 
         if(!strlen($key)>= 3){
             return response()->json(['message' => '3 karakterden kuchuk','status'=>false]);
         }
 
-//        $brands = $brandRepository->select('id','name')
-//            ->where('status',1)
-//            ->where('name','like','%' . urldecode($key) . '%')
-//            ->orderBy('name','asc')
-//            ->limit(10)
-//            ->get();
-
-        $products = $this->productRepository->searchProductByAttribute($key);
         $queries = explode(' ', $key);
+
+        $brands = $brandRepository->getModel()::search(implode(' OR ', $queries))
+            ->select('id','name')
+            ->where('status',1)
+            ->where('name','like','%' . urldecode($key) . '%')
+            ->orderBy('name','asc')
+            ->limit(10)
+            ->get();
+
+//        $products = $this->productRepository->searchProductByAttribute($key);
+
         $channel = core()->getRequestedChannelCode();
 
         $locale = core()->getRequestedLocaleCode();
-        $results = app(ProductFlatRepository::class)->getModel()::search(implode(' OR ', $queries))
-            ->select('product_id','sku','name','product_number','url_key',)
+        $products = app(ProductFlatRepository::class)->getModel()::search(implode(' OR ', $queries))
+            ->select('product_id','name')
             ->where('status', 1)
             ->where('visible_individually', 1)
             ->where('channel', $channel)
             ->where('locale', $locale)
             ->orderBy('product_id', 'desc')
-            ->limit(10);
+            ->limit(10)
+            ->get();
 
-        return $products;
+        return $products->merge($brands);
 
         if($products->count() >0){
 
