@@ -129,9 +129,9 @@ class Products extends ProductController
             ->limit(10)
             ->get();
 
-        $products = $this->productRepository->getAll()->data->only('id','name');
+        $products = $this->productRepository->getAll()->items;
 
-        return $products;
+        return $products->only('id','name');
 
         if($brands->count() >0){
             foreach($brands as $brand) {
