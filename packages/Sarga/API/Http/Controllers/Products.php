@@ -129,14 +129,11 @@ class Products extends ProductController
             ->limit(10)
             ->get();
 
-        $products = $this->productRepository->getAll()->items;
+        $products = $this->productRepository->getAll();
 
-        return $products->only('id','name');
+        if($products->count() >0){
 
-        if($brands->count() >0){
-            foreach($brands as $brand) {
-
-            }
+            return $products->items();
         }
 
     }
