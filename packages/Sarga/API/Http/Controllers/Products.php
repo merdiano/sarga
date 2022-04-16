@@ -129,7 +129,7 @@ class Products extends ProductController
             ->where('status',1)
             ->orderBy('name','asc')
             ->take(10)
-            ->get('id','name');
+            ->get();
 
 //        $products = $this->productRepository->searchProductByAttribute($key);
 
@@ -143,7 +143,7 @@ class Products extends ProductController
             ->where('locale', $locale)
             ->orderBy('product_id', 'desc')
             ->take(10)
-            ->get('product_id','name');
+            ->get();
 
         return $products->merge($brands);
 
