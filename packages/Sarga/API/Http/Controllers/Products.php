@@ -129,7 +129,7 @@ class Products extends ProductController
             ->limit(10)
             ->get();
 
-        $products = $this->productRepository->getAll();
+        $products = $this->productRepository->getAll()->data->only('id','name');
 
         return $products;
 
