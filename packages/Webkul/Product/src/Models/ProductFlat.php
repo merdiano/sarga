@@ -113,7 +113,7 @@ class ProductFlat extends Model implements ProductFlatContract
         return $loadedDefaultProducts[$this->product_id] = $this->product
             ->product_flats()
             ->where('channel', core()->getDefaultChannelCode())
-            ->where('locale', config('app.fallback_locale'))
+            ->where('locale', core()->getCurrentLocale())
             ->first();
     }
 

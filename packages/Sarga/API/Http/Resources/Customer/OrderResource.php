@@ -28,8 +28,6 @@ class OrderResource extends JsonResource
             'id'                                 => $this->id,
             'status'                             => $this->status,
             'status_label'                       => $this->status_label,
-            'customer_first_name'                => $this->customer_first_name,
-            'customer_last_name'                 => $this->customer_last_name,
             'shipping_method'                    => $this->shipping_method,
             'shipping_title'                     => $this->shipping_title,
             'payment_title'                      => core()->getConfigData('sales.paymentmethods.' . $this->payment->method . '.title'),
