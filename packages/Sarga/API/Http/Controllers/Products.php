@@ -129,7 +129,7 @@ class Products extends ProductController
             ->where('status',1)
             ->where('name','like','%' . urldecode($key) . '%')
             ->orderBy('name','asc')
-            ->limit(10)
+            ->take(10)
             ->get('id','name');
 
 //        $products = $this->productRepository->searchProductByAttribute($key);
@@ -143,7 +143,7 @@ class Products extends ProductController
             ->where('channel', $channel)
             ->where('locale', $locale)
             ->orderBy('product_id', 'desc')
-            ->limit(10)
+            ->take(10)
             ->get('product_id','name');
 
         return $products->merge($brands);
