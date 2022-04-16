@@ -127,7 +127,6 @@ class Products extends ProductController
 
         $brands = $brandRepository->getModel()::search(implode(' OR ', $queries))
             ->where('status',1)
-            ->where('name','like','%' . urldecode($key) . '%')
             ->orderBy('name','asc')
             ->take(10)
             ->get('id','name');
