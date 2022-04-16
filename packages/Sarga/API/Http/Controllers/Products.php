@@ -114,7 +114,7 @@ class Products extends ProductController
         return response()->json(['message' => 'not found'],404);
     }
 
-    public function suggestions(BrandRepository $brandRepository){
+    public function suggestions(){
 
         $key = request('search');
 
@@ -123,12 +123,12 @@ class Products extends ProductController
             return response()->json(['message' => '3 karakterden kuchuk','status'=>false]);
         }
 
-        $brands = $brandRepository->select('id','name')
-            ->where('status',1)
-            ->where('name','like','%' . urldecode($key) . '%')
-            ->orderBy('name','asc')
-            ->limit(10)
-            ->get();
+//        $brands = $brandRepository->select('id','name')
+//            ->where('status',1)
+//            ->where('name','like','%' . urldecode($key) . '%')
+//            ->orderBy('name','asc')
+//            ->limit(10)
+//            ->get();
 
         $products = $this->productRepository->searchProductByAttribute($key);
 
