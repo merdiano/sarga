@@ -117,7 +117,6 @@ class Products extends ProductController
 
         $key = request('search');
 
-        return $key;
 
         if(!strlen($key)>= 3){
             return response()->json(['message' => '3 karakterden kuchuk','status'=>false]);
