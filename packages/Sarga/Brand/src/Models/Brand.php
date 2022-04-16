@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Scout\Searchable;
 use Sarga\Brand\Contracts\Brand as BrandContract;
 use Webkul\Category\Models\CategoryProxy;
 use Webkul\Marketplace\Models\SellerProxy;
@@ -11,13 +12,30 @@ use Webkul\Product\Models\ProductProxy;
 
 class Brand extends Model implements BrandContract
 {
+    use Searchable;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'brands';
+
     protected $fillable = [
         'position',
         'status',
         'code',
         'name'
     ];
-
+    /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'brands_index';
+    }
     /**
      * Get image url for the category image.
      */

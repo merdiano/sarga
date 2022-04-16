@@ -11,6 +11,7 @@ use Sarga\Shop\Repositories\ProductRepository;
 use Webkul\API\Http\Controllers\Shop\ProductController;
 use Sarga\API\Http\Resources\Catalog\Product as ProductResource;
 use Sarga\Shop\Repositories\AttributeOptionRepository;
+use Webkul\Product\Repositories\ProductFlatRepository;
 
 
 class Products extends ProductController
@@ -131,6 +132,18 @@ class Products extends ProductController
 //            ->get();
 
         $products = $this->productRepository->searchProductByAttribute($key);
+        $queries = explode(' ', $key);
+        $channel = core()->getRequestedChannelCode();
+
+        $locale = core()->getRequestedLocaleCode();
+        $results = app(ProductFlatRepository::class)->getModel()::search(implode(' OR ', $queries))
+            ->select('product_id','sku','name','product_number','url_key',)
+            ->where('status', 1)
+            ->where('visible_individually', 1)
+            ->where('channel', $channel)
+            ->where('locale', $locale)
+            ->orderBy('product_id', 'desc')
+            ->limit(10);
 
         return $products;
 
