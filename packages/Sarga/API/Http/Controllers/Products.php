@@ -157,7 +157,7 @@ class Products extends ProductController
 
         if($products->count()){
             $products->map(function ($item,$key) {
-                $item['type'] = 'product';
+                $item['suggestion_type'] = 'product';
                 return $item;
             });
 
