@@ -136,7 +136,7 @@ class Products extends ProductController
             ->get();
 
         if($brands->count()){
-            $brands->flatMap(fn ($val) => $val['type']='brand');
+            $brands->flatMap(fn ($val) => $val['suggestion_type']='brand');
         }
 
 //        $products = $this->productRepository->searchProductByAttribute($key);
@@ -163,9 +163,8 @@ class Products extends ProductController
 
         }
 
-//        return $products->merge($brands);
+        return $products->merge($brands);
 
-        return [$products,$brands];
     }
 
 }
