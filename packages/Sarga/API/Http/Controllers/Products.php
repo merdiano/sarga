@@ -146,7 +146,7 @@ class Products extends ProductController
             ->where('channel', $channel)
             ->where('locale', $locale)
             ->take(10)
-            ->query(fn ($query) => $query->select('id','name',DB::raw('"product" as type' ))->orderBy('name'))
+            ->query(fn ($query) => $query->select('id','name',DB::raw('"product" as "type"' ))->orderBy('name'))
             ->get();;
 
         return $products;
