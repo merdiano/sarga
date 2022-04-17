@@ -144,9 +144,9 @@ class Products extends ProductController
             ->where('visible_individually', 1)
             ->where('channel', $channel)
             ->where('locale', $locale)
-            ->orderBy('product_id', 'desc')
             ->take(10)
-            ->get('name');
+            ->query(fn ($query) => $query->select('id','name')->orderBy('name'))
+            ->get();;
 
         return $products;
 
