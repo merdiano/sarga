@@ -163,7 +163,7 @@ class Products extends ProductController
 
         }
 
-        return $products->merge($brands);
+        return $products->merge($brands)->sortBy('name');
 
     }
 
