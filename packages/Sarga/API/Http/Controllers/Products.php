@@ -156,7 +156,11 @@ class Products extends ProductController
             ->get();
 
         if($products->count()){
-            $products->map(fn ($item,$key) => $item['type'] = 'product');
+            $products->map(function ($item,$key) {
+                $item['type'] = 'product';
+                return $item;
+            });
+
         }
 
 //        return $products->merge($brands);
