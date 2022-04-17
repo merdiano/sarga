@@ -533,6 +533,10 @@ class ProductRepository extends WProductRepository
                 'favoritesCount' => $data['favoriteCount'],
             ];
 
+            if(isset($data['favoriteCount'])){
+                $main_attributes['favoritesCount'] = $data['favoriteCount'];
+            }
+
             if (!empty($data['images'])) {
                 $this->assignImages($parentProduct, $data['images']);
             }
@@ -572,8 +576,10 @@ class ProductRepository extends WProductRepository
                                         'source' => $colorVariant['url_key'],
                                         'description' => $description,
                                         'short_description' => $description,
-                                        'favoritesCount' => $colorVariant['favoriteCount'],
                                     ];
+                                    if(isset($colorVariant['favoriteCount'])){
+                                        $attributes['favoritesCount'] = $colorVariant['favoriteCount'];
+                                    }
                                     $attributes[] = $this->calculatePrice($sizeVariant['price']);
                                     $this->assignAttributes($variant, array_merge($attributes,$this->calculatePrice($sizeVariant['price'])));
                                 }
@@ -595,9 +601,11 @@ class ProductRepository extends WProductRepository
                                 'source' => $colorVariant['url_key'],
                                 'description' => $description,
                                 'short_description' => $description,
-                                'favoritesCount' => $colorVariant['favoriteCount'],
-                            ];
 
+                            ];
+                            if(isset($colorVariant['favoriteCount'])){
+                                $attributes['favoritesCount'] = $colorVariant['favoriteCount'];
+                            }
                             $this->assignAttributes($variant, array_merge($attributes,$this->calculatePrice($colorVariant['price'])));
                         }
                     }
@@ -623,10 +631,11 @@ class ProductRepository extends WProductRepository
                                 'url_key' => $variant->sku,
                                 'source' => $data['url_key'],
                                 'description' => $desc,
-                                'short_description' => $desc,
-                                'favoritesCount' => $data['favoriteCount'],
+                                'short_description' => $desc
                             ];
-
+                            if(isset($data['favoriteCount'])){
+                                $attributes['favoritesCount'] = $data['favoriteCount'];
+                            }
                             if (!empty($data['color'])) {
                                 $attributes['color'] = $this->getAttributeOptionId('color', $data['color']);
                             }
