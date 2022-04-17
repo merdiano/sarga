@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Catalog\ProductVariant;
+use Sarga\API\Http\Resources\Catalog\Suggestion;
 use Sarga\API\Http\Resources\Catalog\SuperAttribute;
 use Sarga\Brand\Repositories\BrandRepository;
 use Sarga\Shop\Repositories\ProductRepository;
@@ -163,7 +164,7 @@ class Products extends ProductController
 
         }
 
-        return $products->merge($brands)->sortBy('name');
+        return Suggestion::collection($products->merge($brands)->sortBy('name'));
 
     }
 
