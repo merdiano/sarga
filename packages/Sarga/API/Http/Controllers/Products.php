@@ -126,7 +126,7 @@ class Products extends ProductController
         $queries = explode(' ', $key);
 
         $brands = $brandRepository->getModel()::search($key)
-            ->where('status',1)
+//            ->where('status',1)
 //            ->orderBy('name','asc')
             ->take(10)
             ->get();
