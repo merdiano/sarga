@@ -133,7 +133,7 @@ class Products extends ProductController
 //            ->orderBy('name','asc')
             ->take(10)
             ->get();
-//        return $brands;
+
 
 //        $products = $this->productRepository->searchProductByAttribute($key);
 
@@ -149,7 +149,7 @@ class Products extends ProductController
             ->query(fn ($query) => $query->select('id','name',DB::raw("'product' as 'type'" ))->orderBy('name'))
             ->get();;
 
-        return $products;
+        return [$products,$brands];
 
         if($products->count() >0){
 
