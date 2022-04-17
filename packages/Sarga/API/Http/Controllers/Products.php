@@ -168,4 +168,8 @@ class Products extends ProductController
 
     }
 
+    public function search(){
+        return ProductResource::collection($this->productRepository->searchProductByAttribute(request('key')));
+    }
+
 }
