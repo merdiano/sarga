@@ -159,13 +159,9 @@ class Products extends ProductController
             $products->flatMap(fn ($val) => $val['type']='product');
         }
 
-        return $products->merge($brands);
+//        return $products->merge($brands);
 
-        if($products->count() >0){
-
-            return Arr::sort(($products->items()));
-        }
-
+        return [$products,$brands];
     }
 
 }
