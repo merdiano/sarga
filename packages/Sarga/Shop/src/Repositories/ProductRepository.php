@@ -529,10 +529,9 @@ class ProductRepository extends WProductRepository
                 'visible_individually' => 1,
                 'url_key' => $parentProduct->sku,
                 'short_description' => $desc,
-                'description' => $desc
+                'description' => $desc,
+                'favoritesCount' => $data['favoriteCount'],
             ];
-
-
 
             if (!empty($data['images'])) {
                 $this->assignImages($parentProduct, $data['images']);
@@ -541,9 +540,6 @@ class ProductRepository extends WProductRepository
             if(!empty($data['categories'])){
                 $parentProduct->categories()->attach($data['categories']);
             }
-
-
-
 
             if ($product['type'] == 'configurable') {
 
@@ -575,12 +571,12 @@ class ProductRepository extends WProductRepository
                                         'url_key' => $variant->sku,
                                         'source' => $colorVariant['url_key'],
                                         'description' => $description,
-                                        'short_description' => $description
+                                        'short_description' => $description,
+                                        'favoritesCount' => $colorVariant['favoriteCount'],
                                     ];
                                     $attributes[] = $this->calculatePrice($sizeVariant['price']);
                                     $this->assignAttributes($variant, array_merge($attributes,$this->calculatePrice($sizeVariant['price'])));
                                 }
-
                             }
                         }
                         elseif($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$colorVariant['product_number']}"))
@@ -598,7 +594,8 @@ class ProductRepository extends WProductRepository
                                 'url_key' => $variant->sku,
                                 'source' => $colorVariant['url_key'],
                                 'description' => $description,
-                                'short_description' => $description
+                                'short_description' => $description,
+                                'favoritesCount' => $colorVariant['favoriteCount'],
                             ];
 
                             $this->assignAttributes($variant, array_merge($attributes,$this->calculatePrice($colorVariant['price'])));
@@ -611,7 +608,6 @@ class ProductRepository extends WProductRepository
                     foreach ($data['size_variants'] as $sizeVariant) {
                         if($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}")){
                             $this->assignImages($variant, $data['images']);
-
                             $desc = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']));
                             $attributes = [
                                 'sku' => $variant->sku,
@@ -627,7 +623,8 @@ class ProductRepository extends WProductRepository
                                 'url_key' => $variant->sku,
                                 'source' => $data['url_key'],
                                 'description' => $desc,
-                                'short_description' => $desc
+                                'short_description' => $desc,
+                                'favoritesCount' => $data['favoriteCount'],
                             ];
 
                             if (!empty($data['color'])) {
