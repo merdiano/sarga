@@ -135,6 +135,9 @@ class Products extends ProductController
             ->query(fn ($query) => $query->select('id','name')->orderBy('name'))
             ->get();
 
+        if($brands->count()){
+            $brands->flatMap(fn ($val) => $val['type']='brand');
+        }
 
 //        $products = $this->productRepository->searchProductByAttribute($key);
 
