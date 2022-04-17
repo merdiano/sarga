@@ -115,6 +115,8 @@ class Products extends ProductController
         return response()->json(['message' => 'not found'],404);
     }
 
+
+
     public function suggestions(BrandRepository $brandRepository){
 
         $key = request('search');
@@ -130,7 +132,7 @@ class Products extends ProductController
 //            ->orderBy('name','asc')
             ->take(10)
             ->get();
-        return $brands;
+//        return $brands;
 
 //        $products = $this->productRepository->searchProductByAttribute($key);
 

@@ -45,6 +45,12 @@ class Brand extends Model implements BrandContract
             'type' => 'brand'
         ];
     }
+
+    public function shouldBeSearchable()
+    {
+        return $this->status;
+    }
+
     /**
      * Get image url for the category image.
      */
