@@ -155,9 +155,9 @@ class Products extends ProductController
                 ->orderBy('name'))
             ->get();
 
-        if($products->count()){
-            $products->flatMap(fn ($val) => $val['type']='product');
-        }
+//        if($products->count()){
+//            $products->flatMap(fn ($val) => $val['type']='product');
+//        }
 
 //        return $products->merge($brands);
 
