@@ -36,6 +36,15 @@ class Brand extends Model implements BrandContract
     {
         return 'brands_index';
     }
+
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'type' => 'brand'
+        ];
+    }
     /**
      * Get image url for the category image.
      */
