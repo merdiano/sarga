@@ -132,6 +132,7 @@ class Products extends ProductController
 //            ->where('status',1)
 //            ->orderBy('name','asc')
             ->take(10)
+            ->query(fn ($query) => $query->select('id','name')->orderBy('name'))
             ->get();
 
 
@@ -147,9 +148,9 @@ class Products extends ProductController
             ->where('locale', $locale)
             ->take(10)
             ->query(fn ($query) => $query->select('id','name')
-                ->addSelect(DB::raw("\'product\' as type" ))
+//                ->addSelect(DB::raw("\'product\' as type" ))
                 ->orderBy('name'))
-            ->get();;
+            ->get();
 
         return [$products,$brands];
 
