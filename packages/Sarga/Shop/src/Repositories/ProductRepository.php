@@ -529,8 +529,7 @@ class ProductRepository extends WProductRepository
                 'visible_individually' => 1,
                 'url_key' => $parentProduct->sku,
                 'short_description' => $desc,
-                'description' => $desc,
-                'favoritesCount' => $data['favoriteCount'],
+                'description' => $desc
             ];
 
             if(isset($data['favoriteCount'])){
