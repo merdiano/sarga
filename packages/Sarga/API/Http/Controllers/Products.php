@@ -3,6 +3,7 @@
 namespace Sarga\API\Http\Controllers;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Catalog\ProductVariant;
 use Sarga\API\Http\Resources\Catalog\SuperAttribute;
@@ -145,7 +146,7 @@ class Products extends ProductController
             ->where('channel', $channel)
             ->where('locale', $locale)
             ->take(10)
-            ->query(fn ($query) => $query->select('id','name')->orderBy('name'))
+            ->query(fn ($query) => $query->select('id','name',DB::raw('"product" as type' ))->orderBy('name'))
             ->get();;
 
         return $products;
