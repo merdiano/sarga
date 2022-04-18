@@ -37,8 +37,8 @@ class Categories extends Controller
 
         if($category)
             return response([
-                'subcategories' =>$category->children,
-                'attributes' =>Attribute::collection($category->filterableAttributes),
+                'subcategories' => Category::collection($category->children),
+                'attributes' => Attribute::collection($category->filterableAttributes),
                 'brands' => Brand::collection($category->brands),
                 ]);
         else{
