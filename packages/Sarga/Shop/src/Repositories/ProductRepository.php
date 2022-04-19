@@ -143,7 +143,7 @@ class ProductRepository extends WProductRepository
                 $sortOptions = $this->getDefaultSortByOption();
                 $orderDirection = ! empty($sortOptions) ? $sortOptions[1] : 'asc';
             }
-            DB::connection()->enableQueryLog();
+
             if (isset($params['sort'])) {
                 $this->checkSortAttributeAndGenerateQuery($qb, $params['sort'], $orderDirection);
             } else {
@@ -152,8 +152,6 @@ class ProductRepository extends WProductRepository
                     $this->checkSortAttributeAndGenerateQuery($qb, $sortOptions[0], $orderDirection);
                 }
             }
-
-            Log::info(DB::getQueryLog());
 
             if ($priceFilter = request('price')) {
                 $priceRange = explode(',', $priceFilter);
@@ -440,7 +438,6 @@ class ProductRepository extends WProductRepository
                 $qb->havingRaw('COUNT(*) = ' . count($attributeFilters));
             }
 
-            Log::info($qb->toSql());
             return $qb->groupBy('product_flat.id');
 
         });
@@ -617,7 +614,7 @@ class ProductRepository extends WProductRepository
                             $attributes = [
                                 'sku' => $variant->sku,
                                 'size' => $this->getAttributeOptionId('size', $sizeVariant['attributeValue']),
-                                'product_id' => "{$data['product_number']}-{$sizeVariant['itemNumber']}",
+                                'product_number' => "{$data['product_number']}-{$sizeVariant['itemNumber']}",
                                 'name' => $data['name'],
 //                                'price' => $sizeVariant['price'],
                                 'weight' => $data['weight'] ?? 0.45,
@@ -914,7 +911,6 @@ class ProductRepository extends WProductRepository
         foreach($attributes as $code => $value){
             if(! $attribute = $this->attributeRepository->findOneByField('code', $code))
             {
-                Log::info('Attribute not found:'.$code);
                 continue;
             }
 
@@ -940,8 +936,7 @@ class ProductRepository extends WProductRepository
                 }
             }
             catch(\Exception $ex){
-                Log::info($attr);
-                Log::info($attribute);
+                Log::info($ex->getMessage());
             }
 
         }
