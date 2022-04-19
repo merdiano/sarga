@@ -172,4 +172,8 @@ class Products extends ProductController
         return ProductResource::collection($this->productRepository->searchProductByAttribute(request('key')));
     }
 
+    public function discountedProducts(){
+        return ProductResource::collection($this->productRepository->getDiscounted());
+    }
+
 }
