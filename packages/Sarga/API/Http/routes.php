@@ -51,7 +51,7 @@ Route::group(['prefix' => 'api'], function () {
 
         //Product routes
         Route::get('products', [Products::class, 'index']);
-        Route::get('products/discounted', [Products::class, 'discountedProducts']);
+        Route::get('products-discounted', [Products::class, 'discountedProducts']);
         Route::get('products-search', [Products::class, 'searchProducts']);
         Route::get('suggestions', [Products::class, 'suggestions']);
         Route::get('products/{id}', [Products::class, 'get']);
