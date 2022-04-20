@@ -198,7 +198,8 @@ class ProductRepository extends Repository
             }
 
             if($params['brand']){
-                $qb->whereIn('product_flat.brand_id',explode(',',$params['brand']));
+                $qb->leftJoin('products', 'products.id','=','product_flat.product_id')
+                    ->whereIn('products.brand_id',explode(',',$params['brand']));
             }
 
             if (! core()->getConfigData('catalog.products.homepage.out_of_stock_items')) {
