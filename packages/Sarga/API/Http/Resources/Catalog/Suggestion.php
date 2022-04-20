@@ -15,7 +15,7 @@ class Suggestion extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id'          => $this->id,
+            'id'          => $this->product_id ?? $this->id,
             'type'        => $this->suggestion_type,
             'name'        => $this->name,
         ];
