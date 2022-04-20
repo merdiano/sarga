@@ -478,8 +478,8 @@ class ProductRepository extends WProductRepository
                 ->where('product_flat.status', 1)
                 ->where('product_flat.visible_individually', 1)
                 ->whereNotNull('product_flat.special_price')
-                ->where('products.type','simple')
                 ->leftJoin('products', 'products.id', '=', 'product_flat.product_id')
+                ->where('products.type','simple')
                 ->where('product_flat.special_price','>',0)
                 ->where('product_flat.channel', $channel)
                 ->where('product_flat.locale', $locale);
