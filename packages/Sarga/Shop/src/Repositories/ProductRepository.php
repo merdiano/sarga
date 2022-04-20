@@ -494,7 +494,7 @@ class ProductRepository extends WProductRepository
 
     public function getPopularProducts($categoryId = null)
     {
-        $count = core()->getConfigData('catalog.products.homepage.no_of_new_product_homepage');
+
 
         $results = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($categoryId) {
             $channel = core()->getRequestedChannelCode();
@@ -513,7 +513,7 @@ class ProductRepository extends WProductRepository
                     ->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
             return $query->orderBy('product_flat.favoritesCount','desc');
-        })->paginate($count ? $count : 4);
+        })->paginate(10);
 
         return $results;
     }
