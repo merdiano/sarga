@@ -468,7 +468,6 @@ class ProductRepository extends WProductRepository
     }
 
     public function getDiscountedProducts($categoryId = null){
-        $count = core()->getConfigData('catalog.products.homepage.no_of_new_product_homepage');
 
         $results = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($categoryId) {
             $channel = core()->getRequestedChannelCode();
@@ -479,6 +478,8 @@ class ProductRepository extends WProductRepository
                 ->where('product_flat.status', 1)
                 ->where('product_flat.visible_individually', 1)
                 ->whereNotNull('product_flat.special_price')
+                ->where('products.type','simple')
+                ->leftJoin('products', 'products.id', '=', 'product_flat.product_id')
                 ->where('product_flat.special_price','>',0)
                 ->where('product_flat.channel', $channel)
                 ->where('product_flat.locale', $locale);
@@ -488,14 +489,13 @@ class ProductRepository extends WProductRepository
                     ->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
             return $query->inRandomOrder();
-        })->paginate($count ? $count : 4);
+        })->paginate(10);
 
         return $results;
     }
 
     public function getPopularProducts($categoryId = null)
     {
-
 
         $results = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($categoryId) {
             $channel = core()->getRequestedChannelCode();
