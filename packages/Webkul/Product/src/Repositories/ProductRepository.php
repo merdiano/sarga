@@ -197,8 +197,8 @@ class ProductRepository extends Repository
                 $qb->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
 
-            if($params['brand']){
-                $qb->leftJoin('products', 'products.id','=','product_flat.product_id')
+            if(isset($params['brand'])){
+                $qb->innerJoin('product_categories', 'product_categories.id','=','product_flat.product_id')
                     ->whereIn('products.brand_id',explode(',',$params['brand']));
             }
 
