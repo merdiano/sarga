@@ -34,7 +34,7 @@ class Products extends ProductController
      */
     public function index()
     {
-        return ProductResource::collection($this->productRepository->getAll(request()->input('category_id')));
+        return ProductResource::collection($this->productRepository->getAll(request()->input('category')));
     }
 
 
@@ -173,11 +173,11 @@ class Products extends ProductController
     }
 
     public function discountedProducts(){
-        return ProductResource::collection($this->productRepository->getDiscountedProducts(request()->input('category_id')));
+        return ProductResource::collection($this->productRepository->getDiscountedProducts(request()->input('category')));
     }
 
     public function popularProducts(){
-        return ProductResource::collection($this->productRepository->getPopularProducts(request()->input('category_id')));
+        return ProductResource::collection($this->productRepository->getPopularProducts(request()->input('category')));
     }
 
 }
