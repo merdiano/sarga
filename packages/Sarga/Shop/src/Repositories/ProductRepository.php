@@ -959,7 +959,78 @@ class ProductRepository extends WProductRepository
             ]);
         }
     }
+    /**
+     * Search product by attribute.
+     *
+     * @param  string  $term
+     * @return \Illuminate\Support\Collection
+     */
+    public function searchProductByAttribute($term)
+    {
+        $channel = core()->getRequestedChannelCode();
 
+        $locale = core()->getRequestedLocaleCode();
+
+        if (config('scout.driver') == 'algolia') {
+            $results = app(ProductFlatRepository::class)->getModel()::search('query', function ($searchDriver, string $query, array $options) use ($term, $channel, $locale) {
+                $queries = explode('_', $term);
+
+                $options['similarQuery'] = array_map('trim', $queries);
+
+                $searchDriver->setSettings([
+                    'attributesForFaceting' => [
+                        'searchable(locale)',
+                        'searchable(channel)',
+                    ],
+                ]);
+
+                $options['facetFilters'] = ['locale:' . $locale, 'channel:' . $channel];
+
+                return $searchDriver->search($query, $options);
+            })
+                ->where('status', 1)
+                ->where('visible_individually', 1)
+                ->orderBy('product_id', 'desc')
+                ->paginate(request()->input('limit')??10);
+        } else if (config('scout.driver') == 'elastic') {
+            $queries = explode('_', $term);
+
+            $results = app(ProductFlatRepository::class)->getModel()::search(implode(' OR ', $queries))
+                ->where('status', 1)
+                ->where('visible_individually', 1)
+                ->where('channel', $channel)
+                ->where('locale', $locale)
+                ->orderBy('product_id', 'desc')
+                ->paginate(request()->input('limit')??10);
+        } else {
+            $results = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($term, $channel, $locale) {
+
+                $query = $query->distinct()
+                    ->addSelect('product_flat.*')
+                    ->where('product_flat.channel', $channel)
+                    ->where('product_flat.locale', $locale)
+                    ->whereNotNull('product_flat.url_key');
+
+                if (! core()->getConfigData('catalog.products.homepage.out_of_stock_items')) {
+                    $query = $this->checkOutOfStockItem($query);
+                }
+
+                return $query->where('product_flat.status', 1)
+                    ->where('product_flat.visible_individually', 1)
+                    ->where(function ($subQuery) use ($term) {
+                        $queries = explode('_', $term);
+
+                        foreach (array_map('trim', $queries) as $value) {
+                            $subQuery->orWhere('product_flat.name', 'like', '%' . urldecode($value) . '%')
+                                ->orWhere('product_flat.short_description', 'like', '%' . urldecode($value) . '%');
+                        }
+                    })
+                    ->orderBy('product_id', 'desc');
+            })->paginate(request()->input('limit')??10);
+        }
+
+        return $results;
+    }
     private function assignAttributes($product, $attributes){
         foreach($attributes as $code => $value){
             if(! $attribute = $this->attributeRepository->findOneByField('code', $code))

@@ -197,11 +197,6 @@ class ProductRepository extends Repository
                 $qb->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
 
-            if(isset($params['brand'])){
-                $qb->innerJoin('product_categories', 'product_categories.id','=','product_flat.product_id')
-                    ->whereIn('products.brand_id',explode(',',$params['brand']));
-            }
-
             if (! core()->getConfigData('catalog.products.homepage.out_of_stock_items')) {
                 $qb = $this->checkOutOfStockItem($qb);
             }
@@ -225,7 +220,6 @@ class ProductRepository extends Repository
             if (isset($params['url_key'])) {
                 $qb->where('product_flat.url_key', 'like', '%' . urldecode($params['url_key']) . '%');
             }
-
 
             # sort direction
             $orderDirection = 'asc';
@@ -473,7 +467,7 @@ class ProductRepository extends Repository
                 ->where('status', 1)
                 ->where('visible_individually', 1)
                 ->orderBy('product_id', 'desc')
-                ->paginate(request()->input('limit')??10);
+                ->paginate(16);
         } else if (config('scout.driver') == 'elastic') {
             $queries = explode('_', $term);
 
@@ -483,7 +477,7 @@ class ProductRepository extends Repository
                 ->where('channel', $channel)
                 ->where('locale', $locale)
                 ->orderBy('product_id', 'desc')
-                ->paginate(request()->input('limit')??10);
+                ->paginate(16);
         } else {
             $results = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($term, $channel, $locale) {
 
@@ -508,7 +502,7 @@ class ProductRepository extends Repository
                         }
                     })
                     ->orderBy('product_id', 'desc');
-            })->paginate(request()->input('limit')??10);
+            })->paginate(16);
         }
 
         return $results;
