@@ -197,6 +197,10 @@ class ProductRepository extends Repository
                 $qb->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
 
+            if($params['brand']){
+                $qb->whereIn('product_flat.brand_id',explode(',',$params['brand']));
+            }
+
             if (! core()->getConfigData('catalog.products.homepage.out_of_stock_items')) {
                 $qb = $this->checkOutOfStockItem($qb);
             }
@@ -220,6 +224,7 @@ class ProductRepository extends Repository
             if (isset($params['url_key'])) {
                 $qb->where('product_flat.url_key', 'like', '%' . urldecode($params['url_key']) . '%');
             }
+
 
             # sort direction
             $orderDirection = 'asc';
