@@ -467,7 +467,7 @@ class ProductRepository extends Repository
                 ->where('status', 1)
                 ->where('visible_individually', 1)
                 ->orderBy('product_id', 'desc')
-                ->paginate(16);
+                ->paginate(request()->input('limit')??10);
         } else if (config('scout.driver') == 'elastic') {
             $queries = explode('_', $term);
 
@@ -477,7 +477,7 @@ class ProductRepository extends Repository
                 ->where('channel', $channel)
                 ->where('locale', $locale)
                 ->orderBy('product_id', 'desc')
-                ->paginate(16);
+                ->paginate(request()->input('limit')??10);
         } else {
             $results = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($term, $channel, $locale) {
 
@@ -502,7 +502,7 @@ class ProductRepository extends Repository
                         }
                     })
                     ->orderBy('product_id', 'desc');
-            })->paginate(16);
+            })->paginate(request()->input('limit')??10);
         }
 
         return $results;
