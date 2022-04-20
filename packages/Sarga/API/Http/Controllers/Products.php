@@ -2,7 +2,6 @@
 
 namespace Sarga\API\Http\Controllers;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Catalog\ProductVariant;
@@ -151,7 +150,7 @@ class Products extends ProductController
             ->where('channel', $channel)
             ->where('locale', $locale)
             ->take(10)
-            ->query(fn ($query) => $query->select('id','name')
+            ->query(fn ($query) => $query->select(DB::raw('product_id as id'),'name')
 //                ->addSelect(DB::raw("\'product\' as type" ))
                 ->orderBy('name'))
             ->get();
@@ -168,12 +167,17 @@ class Products extends ProductController
 
     }
 
+
     public function searchProducts(){
         return ProductResource::collection($this->productRepository->searchProductByAttribute(request('key')));
     }
 
     public function discountedProducts(){
-        return ProductResource::collection($this->productRepository->getDiscounted());
+        return ProductResource::collection($this->productRepository->getDiscountedProducts(request()->input('category_id')));
+    }
+
+    public function popularProducts(){
+        return ProductResource::collection($this->productRepository->getPopularProducts(request()->input('category_id')));
     }
 
 }
