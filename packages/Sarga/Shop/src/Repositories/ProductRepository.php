@@ -304,8 +304,8 @@ class ProductRepository extends WProductRepository
                 $qb->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
 
-            if(isset($params['brend'])) {
-                $qb->whereIn('product_flat.brand_id', explode(',', $params['brend']));
+            if(isset($params['brand'])) {
+                $qb->whereIn('product_flat.brand_id', explode(',', $params['brand']));
             }
 
             if (! core()->getConfigData('catalog.products.homepage.out_of_stock_items')) {
