@@ -473,7 +473,7 @@ class ProductRepository extends WProductRepository
             $channel = core()->getRequestedChannelCode();
             $locale = core()->getRequestedLocaleCode();
 
-            $query->distinct()
+            $query
                 ->whereNotNull('product_flat.special_price')
                 ->where('product_flat.special_price','>',0)
 //                ->where('product_flat.min_price','>','product_flat.max_price')
