@@ -211,6 +211,7 @@ class Product extends JsonResource
     private function getConfigurableProductInfo($product)
     {
         $special_variant = $this->variants()->whereNotNull('special_price')->orderBy('special_price')->first();
+        Log::info($special_variant);
         return [
 //            'variants' => ProductVariant::collection($product->variants)
             'variants_count' => $this->variants->count(),
