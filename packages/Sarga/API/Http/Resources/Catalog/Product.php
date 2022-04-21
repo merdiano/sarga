@@ -215,8 +215,9 @@ class Product extends JsonResource
             'color_count' => $this->variants->groupBy('color')->count(),
         ];
 
-//        Log::info($this->variants);
-        if( $special_variant = $this->variants()->where('min_price','<','max_price')->orderBy('min_price')->first()){
+        $special_variant = $this->variants->sortBy('min_price')->first();
+
+        if($special_variant  && $special_variant->min_price < $special_variant->max_price){
             $data = array_merge($data, [
                 'special_price' => core()->convertPrice($special_variant->min_price),
                 'formatted_special_price' => core()->currency($special_variant->min_price),
