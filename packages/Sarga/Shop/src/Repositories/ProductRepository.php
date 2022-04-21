@@ -368,8 +368,8 @@ class ProductRepository extends WProductRepository
                     }
 
                     $this->variantJoin($qb);
-                    if($priceRange[0]===0){
-                        $priceRange[0]=0.1;
+                    if($priceRange[0]<1){
+                        $priceRange[0]=1;
                     }
                     $qb
                         ->leftJoin('catalog_rule_product_prices', 'catalog_rule_product_prices.product_id', '=', 'variants.product_id')
