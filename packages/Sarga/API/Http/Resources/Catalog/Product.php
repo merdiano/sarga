@@ -216,7 +216,7 @@ class Product extends JsonResource
 //            'variants' => ProductVariant::collection($product->variants)
             'variants_count' => $this->variants->count(),
             'color_count' => $this->variants->groupBy('color')->count(),
-            $this->when(!empty($special_variant), [
+            $this->when(empty($special_variant), [
                 'special_price' => $special_variant->special_price,
                 'formatted_special_price' => core()->currency($special_variant->special_price),
                 'regular_price'          => $special_variant->price,
