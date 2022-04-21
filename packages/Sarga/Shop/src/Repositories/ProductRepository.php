@@ -477,7 +477,7 @@ class ProductRepository extends WProductRepository
                 ->addSelect('product_flat.*')
                 ->where('product_flat.status', 1)
                 ->where('product_flat.visible_individually', 1)
-                ->whereNotNull('product_flat.min_price','<','product_flat.max_price')
+                ->where('product_flat.min_price','<','product_flat.max_price')
                 ->where('product_flat.channel', $channel)
                 ->where('product_flat.locale', $locale);
 
