@@ -569,6 +569,9 @@ class ProductRepository extends WProductRepository
                     'code' => $code]);
 
                 $product['brand_id'] = $brand->id;
+                if(!empty($data['categories'])) {
+                    $brand->categories()->attach($data['categories']);
+                }
             }
             //create product
             $parentProduct = $this->getModel()->create($product);

@@ -72,7 +72,7 @@ class Brand extends Model implements BrandContract
     }
 
     /**
-     * The products that belong to the category.
+     * The products that belong to the brand.
      */
     public function products(): HasMany
     {
