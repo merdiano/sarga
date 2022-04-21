@@ -169,6 +169,7 @@ class Products extends ProductController
 
 
     public function searchProducts(){
+        return $this->productRepository->searchProductByAttribute(request('key'));
         return ProductResource::collection($this->productRepository->searchProductByAttribute(request('key')));
     }
 
