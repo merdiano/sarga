@@ -132,7 +132,7 @@ class Products extends ProductController
 //            ->where('status',1)
 //            ->orderBy('name','asc')
             ->take(10)
-            ->query(fn ($query) => $query->select('id','name')->where('status',1)->orderBy('name'))
+            ->query(fn ($query) => $query->select('id','name')->orderBy('name'))
             ->get();
 
         if($brands->count()){
