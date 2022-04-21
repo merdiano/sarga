@@ -27,6 +27,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::group(['middleware' => ['locale', 'currency']], function () {
         //Channel routes
         Route::get('channels',[Channels::class, 'index']);
+        Route::get('sliders',[\Sarga\API\Http\Controllers\Banners::class,'allResources']);
 
         //Vendors
         Route::get('vendors',[Vendors::class,'index'])->name('api.vendors');

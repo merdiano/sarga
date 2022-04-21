@@ -512,7 +512,7 @@ class ProductRepository extends WProductRepository
                     ->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
             return $query->orderBy('product_flat.favoritesCount','desc');
-        })->paginate(10);
+        })->paginate(request()->input('limit')??10);
 
         return $results;
     }
@@ -779,7 +779,6 @@ class ProductRepository extends WProductRepository
             return false;
         }
     }
-
     private function updateAttribute($product,$data){
 //        $flat = $product->
         if(!$data['isSellable']){
@@ -910,7 +909,6 @@ class ProductRepository extends WProductRepository
 
         return $results;
     }
-
     public function createSellerProduct($product, $seller_id){
         Event::dispatch('marketplace.catalog.product.create.before');
 
