@@ -215,6 +215,7 @@ class Product extends JsonResource
             'color_count' => $this->variants->groupBy('color')->count(),
         ];
 
+        Log::info($this->variants);
         if( $special_variant = $this->variants->whereNotNull('special_price')->sortBy('special_price')->first()){
             $data = array_merge($data, [
                 'special_price' => $special_variant->special_price,
