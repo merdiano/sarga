@@ -216,7 +216,7 @@ class Product extends JsonResource
         ];
 
 //        Log::info($this->variants);
-        if( $special_variant = $this->variants->where('min_price','<','max_price')->sortBy('min_price')->first()){
+        if( $special_variant = $this->variants()->where('min_price','<','max_price')->orderBy('min_price')->first()){
             $data = array_merge($data, [
                 'special_price' => core()->convertPrice($special_variant->min_price),
                 'formatted_special_price' => core()->currency($special_variant->min_price),
