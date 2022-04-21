@@ -426,7 +426,6 @@ class ProductRepository extends WProductRepository
         });
 
         # apply scope query so we can fetch the raw sql and perform a count
-        $repository->applyScope();
         # sort direction
         $orderDirection = 'asc';
         if (isset($params['order']) && in_array($params['order'], ['desc', 'asc'])) {
@@ -445,6 +444,9 @@ class ProductRepository extends WProductRepository
                 $repository = $this->checkSortAttributeAndGenerateQuery($repository, $sortOptions[0], $orderDirection);
             }
         }
+
+        $repository->applyScope();
+
 
         $countQuery = "select count(*) as aggregate from ({$repository->model->toSql()}) c";
         $count = collect(DB::select($countQuery, $repository->model->getBindings()))->pluck('aggregate')->first();
