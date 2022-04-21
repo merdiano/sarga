@@ -473,11 +473,11 @@ class ProductRepository extends WProductRepository
             $channel = core()->getRequestedChannelCode();
             $locale = core()->getRequestedLocaleCode();
 
-            $query
+            $query->distinct()
+                ->addSelect('product_flat.*')
                 ->whereNotNull('product_flat.special_price')
                 ->where('product_flat.special_price','>',0)
 //                ->where('product_flat.min_price','>','product_flat.max_price')
-                ->addSelect('product_flat.*')
                 ->where('product_flat.status', 1)
                 ->where('product_flat.visible_individually', 1)
                 ->where('product_flat.channel', $channel)
@@ -487,7 +487,7 @@ class ProductRepository extends WProductRepository
                 $query->leftJoin('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
                     ->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
-            return $query->inRandomOrder();
+            return $query->inRandomOrder()->groupBy('product_flat.id');
         })->paginate(10);
 
         return $results;
