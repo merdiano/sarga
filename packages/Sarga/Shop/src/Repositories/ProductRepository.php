@@ -332,7 +332,24 @@ class ProductRepository extends WProductRepository
                 $qb->where('product_flat.url_key', 'like', '%' . urldecode($params['url_key']) . '%');
             }
 
+            # sort direction
+            $orderDirection = 'asc';
+            if (isset($params['order']) && in_array($params['order'], ['desc', 'asc'])) {
+                $orderDirection = $params['order'];
+            } else {
+                $sortOptions = $this->getDefaultSortByOption();
 
+                $orderDirection = ! empty($sortOptions) ? $sortOptions[1] : 'asc';
+            }
+
+            if (isset($params['sort'])) {
+                $repository = $this->checkSortAttributeAndGenerateQuery($repository, $params['sort'], $orderDirection);
+            } else {
+                $sortOptions = $this->getDefaultSortByOption();
+                if (! empty($sortOptions)) {
+                    $repository = $this->checkSortAttributeAndGenerateQuery($repository, $sortOptions[0], $orderDirection);
+                }
+            }
 
             if ($priceFilter = request('price')) {
                 $priceRange = explode(',', $priceFilter);
@@ -351,7 +368,9 @@ class ProductRepository extends WProductRepository
                     }
 
                     $this->variantJoin($qb);
-
+                    if($priceRange[0]===0){
+                        $priceRange[0]=0.1;
+                    }
                     $qb
                         ->leftJoin('catalog_rule_product_prices', 'catalog_rule_product_prices.product_id', '=', 'variants.product_id')
                         ->leftJoin('product_customer_group_prices', 'product_customer_group_prices.product_id', '=', 'variants.product_id')
@@ -426,24 +445,7 @@ class ProductRepository extends WProductRepository
         });
 
         # apply scope query so we can fetch the raw sql and perform a count
-        # sort direction
-        $orderDirection = 'asc';
-        if (isset($params['order']) && in_array($params['order'], ['desc', 'asc'])) {
-            $orderDirection = $params['order'];
-        } else {
-            $sortOptions = $this->getDefaultSortByOption();
 
-            $orderDirection = ! empty($sortOptions) ? $sortOptions[1] : 'asc';
-        }
-
-        if (isset($params['sort'])) {
-            $repository = $this->checkSortAttributeAndGenerateQuery($repository, $params['sort'], $orderDirection);
-        } else {
-            $sortOptions = $this->getDefaultSortByOption();
-            if (! empty($sortOptions)) {
-                $repository = $this->checkSortAttributeAndGenerateQuery($repository, $sortOptions[0], $orderDirection);
-            }
-        }
 
         $repository->applyScope();
 
