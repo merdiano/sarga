@@ -332,24 +332,7 @@ class ProductRepository extends WProductRepository
                 $qb->where('product_flat.url_key', 'like', '%' . urldecode($params['url_key']) . '%');
             }
 
-            # sort direction
-            $orderDirection = 'asc';
-            if (isset($params['order']) && in_array($params['order'], ['desc', 'asc'])) {
-                $orderDirection = $params['order'];
-            } else {
-                $sortOptions = $this->getDefaultSortByOption();
 
-                $orderDirection = ! empty($sortOptions) ? $sortOptions[1] : 'asc';
-            }
-
-            if (isset($params['sort'])) {
-                $qb = $this->checkSortAttributeAndGenerateQuery($qb, $params['sort'], $orderDirection);
-            } else {
-                $sortOptions = $this->getDefaultSortByOption();
-                if (! empty($sortOptions)) {
-                    $qb = $this->checkSortAttributeAndGenerateQuery($qb, $sortOptions[0], $orderDirection);
-                }
-            }
 
             if ($priceFilter = request('price')) {
                 $priceRange = explode(',', $priceFilter);
@@ -444,6 +427,25 @@ class ProductRepository extends WProductRepository
 
         # apply scope query so we can fetch the raw sql and perform a count
         $repository->applyScope();
+        # sort direction
+        $orderDirection = 'asc';
+        if (isset($params['order']) && in_array($params['order'], ['desc', 'asc'])) {
+            $orderDirection = $params['order'];
+        } else {
+            $sortOptions = $this->getDefaultSortByOption();
+
+            $orderDirection = ! empty($sortOptions) ? $sortOptions[1] : 'asc';
+        }
+
+        if (isset($params['sort'])) {
+            $repository = $this->checkSortAttributeAndGenerateQuery($repository, $params['sort'], $orderDirection);
+        } else {
+            $sortOptions = $this->getDefaultSortByOption();
+            if (! empty($sortOptions)) {
+                $repository = $this->checkSortAttributeAndGenerateQuery($repository, $sortOptions[0], $orderDirection);
+            }
+        }
+
         $countQuery = "select count(*) as aggregate from ({$repository->model->toSql()}) c";
         $count = collect(DB::select($countQuery, $repository->model->getBindings()))->pluck('aggregate')->first();
 
