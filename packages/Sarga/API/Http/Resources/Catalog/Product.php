@@ -215,7 +215,7 @@ class Product extends JsonResource
             'color_count' => $this->variants->groupBy('color')->count(),
         ];
 
-        if( $special_variant = $this->variants->whereNotNull('special_price')->orderBy('special_price')->first()){
+        if( $special_variant = $this->variants->whereNotNull('special_price')->sortBy('special_price')->first()){
             $data = array_merge($data, [
                 'special_price' => $special_variant->special_price,
                 'formatted_special_price' => core()->currency($special_variant->special_price),
