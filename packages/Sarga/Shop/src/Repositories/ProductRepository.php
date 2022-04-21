@@ -487,7 +487,7 @@ class ProductRepository extends WProductRepository
                 $query->leftJoin('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
                     ->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
-            return $query->groupBy('product_flat.id');
+            return $query->inRandomOrder();
         })->paginate(10);
 
         return $results;
