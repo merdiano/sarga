@@ -525,7 +525,7 @@ abstract class AbstractType
     public function getSpecialPrice($qty = null)
     {
         if($this->haveSpecialPrice($qty)){
-            if($this->type == 'configurable' &&
+            if($this->product->type == 'configurable' &&
                 $variant = $this->product->variants()
                     ->whereNotNull('special_price')
                     ->orderBy('special_price','asc')
@@ -557,7 +557,7 @@ abstract class AbstractType
             && $customerGroupPrice == $this->product->price
         ) {
 
-            return $this->type == 'configurable' && $this->product->variants()->whereNotNull('special_price')->count();
+            return $this->product->type == 'configurable' && $this->product->variants()->whereNotNull('special_price')->count();
         }
 
         $haveSpecialPrice = false;
