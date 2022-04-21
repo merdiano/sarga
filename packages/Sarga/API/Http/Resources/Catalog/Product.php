@@ -215,7 +215,7 @@ class Product extends JsonResource
 //            'variants' => ProductVariant::collection($product->variants)
             'variants_count' => $this->variants->count(),
             'color_count' => $this->variants->groupBy('color')->count(),
-            $this->mergeWhen($special_variant != null,[
+            $this->when($special_variant != null,[
                 'special_price' => $special_variant->special_price,
                 'formatted_special_price' => core()->currency($special_variant->special_price),
                 'regular_price'          => $special_variant->price,
