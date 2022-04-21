@@ -469,10 +469,7 @@ class ProductRepository extends WProductRepository
 
     public function getDiscountedProducts($categoryId = null){
 
-        $results = app(ProductFlatRepository::class)
-            ->whereNotNull('product_flat.special_price')
-            ->where('product_flat.special_price','>',0)
-            ->scopeQuery(function ($query) use ($categoryId) {
+        $results = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($categoryId) {
             $channel = core()->getRequestedChannelCode();
             $locale = core()->getRequestedLocaleCode();
 
@@ -491,7 +488,8 @@ class ProductRepository extends WProductRepository
                     ->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
             return $query->inRandomOrder();
-        })->paginate(10);
+        })            ->whereNotNull('product_flat.special_price')
+            ->where('product_flat.special_price','>',0)->paginate(10);
 
         return $results;
     }
