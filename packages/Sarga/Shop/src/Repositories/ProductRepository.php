@@ -475,6 +475,7 @@ class ProductRepository extends WProductRepository
 
             $query->distinct()
                 ->whereNotNull('product_flat.special_price')
+                ->where('product_flat.special_price','>',0)
 //                ->where('product_flat.min_price','>','product_flat.max_price')
                 ->addSelect('product_flat.*')
                 ->where('product_flat.status', 1)
