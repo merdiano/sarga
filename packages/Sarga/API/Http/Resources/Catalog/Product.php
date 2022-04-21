@@ -210,20 +210,20 @@ class Product extends JsonResource
      */
     private function getConfigurableProductInfo($product)
     {
-
-        $special_variant = $this->variants()->whereNotNull('special_price')->orderBy('special_price')->first();
-
-        return [
-//            'variants' => ProductVariant::collection($product->variants)
+        $data =  [
             'variants_count' => $this->variants->count(),
             'color_count' => $this->variants->groupBy('color')->count(),
-            $this->when(false, [
+        ];
+
+        if( $special_variant = $this->variants()->whereNotNull('special_price')->orderBy('special_price')->first()){
+            $data = array_merge($data, [
                 'special_price' => $special_variant->special_price,
                 'formatted_special_price' => core()->currency($special_variant->special_price),
                 'regular_price'          => $special_variant->price,
                 'formatted_regular_price' => core()->currency($special_variant->price),
-            ])
-        ];
+            ]);
+        }
+        return $data;
     }
 
     private function isWishlisted($product):bool
