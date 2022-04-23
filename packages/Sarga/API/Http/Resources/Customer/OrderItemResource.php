@@ -30,28 +30,28 @@ class OrderItemResource extends JsonResource
             'qty_shipped'                       => (int) $this->qty_shipped,
             'qty_refunded'                      => (int) $this->qty_refunded,
             'price'                             => (double) $this->price,
-            'formatted_price'                   => core()->formatPrice($this->base_price, $this->order->order_currency_code),
+            'formatted_price'                   => core()->formatPrice($this->price, $this->order->order_currency_code),
             'total'                             => (double) $this->total,
-            'formatted_total'                   => core()->formatPrice($this->base_total, $this->order->order_currency_code),
+            'formatted_total'                   => core()->formatPrice($this->total, $this->order->order_currency_code),
 
             'total_invoiced'                    => (double) $this->total_invoiced,
-            'formatted_total_invoiced'          => core()->formatPrice($this->base_total_invoiced, $this->order->order_currency_code),
+            'formatted_total_invoiced'          => core()->formatPrice($this->total_invoiced, $this->order->order_currency_code),
 
             'amount_refunded'                   => (double) $this->amount_refunded,
-            'formatted_amount_refunded'         => core()->formatPrice($this->base_amount_refunded, $this->order->order_currency_code),
+            'formatted_amount_refunded'         => core()->formatPrice($this->amount_refunded, $this->order->order_currency_code),
 
             'discount_percent'                  => (double) $this->discount_percent,
             'discount_amount'                   => (double) $this->discount_amount,
-            'formatted_discount_amount'         => core()->formatPrice($this->base_discount_amount, $this->order->order_currency_code),
+            'formatted_discount_amount'         => core()->formatPrice($this->discount_amount, $this->order->order_currency_code),
 
             'discount_invoiced'                 => (double) $this->discount_invoiced,
-            'formatted_discount_invoiced'       => core()->formatPrice($this->base_discount_invoiced, $this->order->order_currency_code),
+            'formatted_discount_invoiced'       => core()->formatPrice($this->discount_invoiced, $this->order->order_currency_code),
 
             'discount_refunded'                 => (double) $this->discount_refunded,
-            'formatted_discount_refunded'       => core()->formatPrice($this->base_discount_refunded, $this->order->order_currency_code),
+            'formatted_discount_refunded'       => core()->formatPrice($this->discount_refunded, $this->order->order_currency_code),
 
             'grant_total'                       => $this->total + $this->tax_amount,
-            'formatted_grant_total'             => core()->formatPrice($this->base_total + $this->base_tax_amount, $this->order->order_currency_code),
+            'formatted_grant_total'             => core()->formatPrice($this->total + $this->tax_amount, $this->order->order_currency_code),
             'downloadable_links'                => $this->downloadable_link_purchased,
             'additional'                        => is_array($this->resource->additional)
                 ? $this->resource->additional
