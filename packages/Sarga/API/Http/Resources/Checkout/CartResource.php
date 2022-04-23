@@ -40,7 +40,7 @@ class CartResource extends JsonResource
             'tax_total'                          => (double) $this->tax_total,
             'formatted_tax_total'                => core()->formatPrice($this->base_tax_total, $this->cart_currency_code),
             'discount'                           => (double) $this->discount_amount,
-            'formatted_discount'                 => core()->formatPrice($this->base_discount_amount, $this->cart_currency_code),
+            'formatted_discount'                 => core()->formatPrice(abs((double)$this->base_discount_amount), $this->cart_currency_code),
             'checkout_method'                    => $this->checkout_method,
             'vendors'                            => $this->groupByVendors($this->items),
             'payment'                            => new CartPaymentResource($this->payment),
