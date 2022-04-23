@@ -115,7 +115,7 @@ Route::group(['prefix' => 'api'], function () {
                 /**
                  * Customer sale routes.
                  */
-                Route::get('orders', [Orders::class, 'allResources']);
+                Route::get('my-orders', [Orders::class, 'allResources']);
                 Route::get('orders/{id}', [Orders::class, 'getResource']);
                 Route::post('orders/{id}/cancel', [Orders::class, 'cancel']);
                 Route::post('orders/{id}/cancel/{item_id}', [Orders::class, 'cancelItem']);
