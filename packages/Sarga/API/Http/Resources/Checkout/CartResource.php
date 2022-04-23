@@ -33,7 +33,7 @@ class CartResource extends JsonResource
             'items_count'                        => (int) $this->items_count,
             'items_qty'                          => (int) $this->items_qty,
             'grand_total'                        => (double) $this->grand_total,
-            'formatted_grand_total'              => core()->formatPrice($this->base_grand_total),
+            'formatted_grand_total'              => core()->formatPrice($this->base_grand_total,$this->cart_currency_code),
             'sub_total'                          => (double) $this->sub_total,
             'formatted_sub_total'                => core()->formatPrice($this->base_sub_total, $this->cart_currency_code),
             'tax_total'                          => (double) $this->tax_total,
