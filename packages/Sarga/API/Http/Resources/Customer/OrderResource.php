@@ -59,7 +59,7 @@ class OrderResource extends JsonResource
 //            'formatted_sub_total_refunded'        => core()->formatPrice($this->sub_total_refunded, $this->order_currency_code),
             'discount_percent'                   => (double) $this->discount_percent,
             'discount_amount'                    => (double) $this->discount_amount,
-            'formatted_discount_amount'           => core()->formatPrice($this->discount_amount, $this->order_currency_code),
+            'formatted_discount_amount'           => core()->formatPrice(abs((double)$this->discount_amount), $this->order_currency_code),
 
             'discount_invoiced'                  => (double)$this->discount_invoiced,
             'formatted_discount_invoiced'         => core()->formatPrice($this->discount_invoiced, $this->order_currency_code),
