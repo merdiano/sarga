@@ -22,4 +22,14 @@ return[
         'order-status-success'         => 'Tamamlandy',
 
     ],
+    'cart'=>[
+        'item'=>[
+            'success' => 'Successfully added to cart',
+            'success-remove' => 'Successfully removed from cart',
+        ],
+        'quantity' =>[
+            'illegal'=>'Quantity not available',
+            'success' => 'Successfully updated quantity'
+        ]
+    ]
 ];

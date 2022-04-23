@@ -69,4 +69,20 @@ return [
         'customer-not-notified'        => ':date | Customer <b>Not Notified</b>',
         'transactions'                 => 'Transactions',
     ],
+    'cart'=>[
+        'item'=>[
+            'success' => 'Successfully added to cart',
+            'success-remove' => 'Successfully removed from cart',
+            'success-remove-all' => 'Successfully removed all items from cart',
+        ],
+        'quantity' =>[
+            'illegal'=>'Quantity not available',
+            'success' => 'Successfully updated quantity'
+        ]
+    ],
+    'wishlist'=>[
+        'success-remove' => 'Successfully removed from wishlist',
+        'success-add' => 'Successfully added to wishlist',
+
+    ]
 ];

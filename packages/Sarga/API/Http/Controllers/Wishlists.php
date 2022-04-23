@@ -48,7 +48,7 @@ class Wishlists extends WishlistController
 
             return response([
                 'data'    => null,
-                'message' => 'Item removed from wishlist successfully.',
+                'message' => __('sarga-api::app.wishlist.success-remove'),
             ]);
         }
 
@@ -60,7 +60,7 @@ class Wishlists extends WishlistController
 
         return response([
             'data'    => new WishListResource($wishlistItem),
-            'message' => __('rest-api::app.common-response.success.add', ['name' => 'Wishlist']),
+            'message' => __('sarga-api::app.wishlist.success-add'),
         ]);
     }
 

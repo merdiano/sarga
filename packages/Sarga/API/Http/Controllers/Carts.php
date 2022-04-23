@@ -61,7 +61,7 @@ class Carts extends CartController
 
             return response([
                 'data' => $cart ? new CartResource($cart) : null,
-                'message' => __('rest-api::app.checkout.cart.item.success'),
+                'message' => __('sarga-api::app.cart.item.success'),
             ]);
         } catch (Exception $e) {
             return response([
@@ -87,7 +87,7 @@ class Carts extends CartController
         foreach ($request->qty as $qty) {
             if ($qty <= 0) {
                 return response([
-                    'message' => __('rest-api::app.checkout.cart.quantity.illegal'),
+                    'message' => __('sarga-api::app.cart.quantity.illegal'),
                 ], 400);
             }
         }
@@ -108,7 +108,7 @@ class Carts extends CartController
 
         return response([
             'data' => $cart ? new CartResource($cart) : null,
-            'message' => __('rest-api::app.checkout.cart.quantity.success'),
+            'message' => __('sarga-api::app.cart.quantity.success'),
         ]);
     }
 
@@ -132,7 +132,7 @@ class Carts extends CartController
 
         return response([
             'data' => $cart ? new CartResource($cart) : null,
-            'message' => __('rest-api::app.checkout.cart.item.success'),
+            'message' => __('sarga-api::app.cart.item.success-remove'),
         ]);
     }
 
@@ -153,7 +153,7 @@ class Carts extends CartController
 
         return response([
             'data' => $cart ? new CartResource($cart) : null,
-            'message' => __('rest-api::app.checkout.cart.item.success-remove'),
+            'message' => __('sarga-api::app.cart.item.success-remove-all'),
         ]);
     }
 

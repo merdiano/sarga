@@ -22,4 +22,19 @@ return [
         'order-status-success'         => 'Tamamlandy',
 
     ],
+    'cart'=>[
+        'item'=>[
+            'success' => 'Sebede goşuldy',
+            'success-remove' => 'Sebetden aýryldy',
+            'success-remove-all' => 'Ählisi sebetden aýryldy'
+        ],
+        'quantity' =>[
+            'illegal'=>'Mukdar elýeterli däl',
+            'success' => 'Mukdar üýtgedildi'
+        ]
+    ],
+    'wishlist'=>[
+        'success-remove' => 'Halanlarymdan aýryldy',
+        'success-add' => 'Halanlaryma goşuldy',
+    ]
 ];
