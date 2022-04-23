@@ -1,0 +1,25 @@
+<?php
+return [
+    'orders' => [
+        'title'                        => 'Orders',
+        'view-title'                   => 'Order #:order_id',
+        'cancel-btn-title'             => 'Cancel',
+        'shipment-btn-title'           => 'Ship',
+        'invoice-btn-title'            => 'Invoice',
+        'info'                         => 'Information',
+        'invoices'                     => 'Invoices',
+        'shipments'                    => 'Shipments',
+        'order-and-account'            => 'Order and Account',
+        'order-info'                   => 'Order Information',
+        'order-date'                   => 'Order Date',
+        'order-status'                 => 'Order Status',
+        'order-status-canceled'        => 'Отменено',
+        'order-status-closed'          => 'Закрыто',
+        'order-status-fraud'           => 'Мошенничество',
+        'order-status-pending'         => 'В ожидании',
+        'order-status-pending-payment' => 'В ожидании платежа',
+        'order-status-processing'      => 'В процессе',
+        'order-status-success'         => 'Завершено',
+
+    ],
+];
