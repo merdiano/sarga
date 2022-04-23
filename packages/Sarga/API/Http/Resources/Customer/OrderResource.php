@@ -27,7 +27,7 @@ class OrderResource extends JsonResource
         return [
             'id'                                 => $this->id,
             'status'                             => $this->status,
-            'status_label'                       => trans('admin::app.sales.order-status-'.$this->status),
+            'status_label'                       => trans('sarga-api::app.orders.order-status-'.$this->status),
             'shipping_method'                    => $this->shipping_method,
             'shipping_title'                     => $this->shipping_title,
             'payment_title'                      => core()->getConfigData('sales.paymentmethods.' . $this->payment->method . '.title'),

@@ -16,6 +16,7 @@ class APIServiceProvider extends ServiceProvider
         include __DIR__ . '/../Http/helpers.php';
 
         $this->loadRoutesFrom(__DIR__.'/../Http/routes.php');
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'sarga-api');
 
         $router->aliasMiddleware('scrap', Scrap::class);
     }
