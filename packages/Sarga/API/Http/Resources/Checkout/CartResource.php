@@ -27,7 +27,8 @@ class CartResource extends JsonResource
         return [
             'id'                                 => $this->id,
             'shipping_method'                    => $this->shipping_method,
-            'shipping_rate'                      => new CartShippingRateResource($this->selected_shipping_rate),
+            'shipping_price'                     => $this->selected_shipping_rate->price ?? 0,
+            'formatted_shipping_price'           => core()->formatPrice($this->selected_shipping_rate->base_price ?? 0, $this->cart_currency_code),
             'coupon_code'                        => $this->coupon_code,
             'is_gift'                            => $this->is_gift,
             'items_count'                        => (int) $this->items_count,
