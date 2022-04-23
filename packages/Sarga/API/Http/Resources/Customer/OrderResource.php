@@ -41,10 +41,10 @@ class OrderResource extends JsonResource
             'channel_currency_code'              => $this->channel_currency_code,
             'order_currency_code'                => $this->order_currency_code,
             'grand_total'                        => (double) $this->grand_total,
-            'formatted_grand_total'              => core()->formatPrice($this->base_grand_total, $this->order_currency_code),
+            'formatted_grand_total'              => core()->formatPrice($this->grand_total, $this->order_currency_code),
             'total_weight'                       => $this->items->sum('total_weight'),
             'grand_total_invoiced'               => (double) $this->grand_total_invoiced,
-            'formatted_grand_total_invoiced'      => core()->formatPrice($this->base_grand_total_invoiced, $this->order_currency_code),
+            'formatted_grand_total_invoiced'      => core()->formatPrice($this->grand_total_invoiced, $this->order_currency_code),
 
             'grand_total_refunded'               => (double) $this->grand_total_refunded,
             'formatted_grand_total_refunded'      => core()->formatPrice($this->base_grand_total_refunded, $this->order_currency_code),
