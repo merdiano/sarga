@@ -47,34 +47,34 @@ class OrderResource extends JsonResource
             'formatted_grand_total_invoiced'      => core()->formatPrice($this->grand_total_invoiced, $this->order_currency_code),
 
             'grand_total_refunded'               => (double) $this->grand_total_refunded,
-            'formatted_grand_total_refunded'      => core()->formatPrice($this->base_grand_total_refunded, $this->order_currency_code),
+            'formatted_grand_total_refunded'      => core()->formatPrice($this->grand_total_refunded, $this->order_currency_code),
 
             'sub_total'                          => (double) $this->sub_total,
-            'formatted_sub_total'                 => core()->formatPrice($this->base_sub_total, $this->order_currency_code),
+            'formatted_sub_total'                 => core()->formatPrice($this->sub_total, $this->order_currency_code),
 
             'sub_total_invoiced'                 => (double) $this->sub_total_invoiced,
-            'formatted_sub_total_invoiced'        => core()->formatPrice($this->base_sub_total_invoiced, $this->order_currency_code),
+            'formatted_sub_total_invoiced'        => core()->formatPrice($this->sub_total_invoiced, $this->order_currency_code),
 
             'sub_total_refunded'                 => (double) $this->sub_total_refunded,
 //            'formatted_sub_total_refunded'        => core()->formatPrice($this->sub_total_refunded, $this->order_currency_code),
             'discount_percent'                   => (double) $this->discount_percent,
             'discount_amount'                    => (double) $this->discount_amount,
-            'formatted_discount_amount'           => core()->formatPrice($this->base_discount_amount, $this->order_currency_code),
+            'formatted_discount_amount'           => core()->formatPrice($this->discount_amount, $this->order_currency_code),
 
             'discount_invoiced'                  => (double)$this->discount_invoiced,
-            'formatted_discount_invoiced'         => core()->formatPrice($this->base_discount_invoiced, $this->order_currency_code),
+            'formatted_discount_invoiced'         => core()->formatPrice($this->discount_invoiced, $this->order_currency_code),
 
             'discount_refunded'                  => (double) $this->discount_refunded,
-            'formatted_discount_refunded'         => core()->formatPrice($this->base_discount_refunded, $this->order_currency_code),
+            'formatted_discount_refunded'         => core()->formatPrice($this->discount_refunded, $this->order_currency_code),
 
             'shipping_amount'                    => (double) $this->shipping_amount,
-            'formatted_shipping_amount'           => core()->formatPrice($this->base_shipping_amount, $this->order_currency_code),
+            'formatted_shipping_amount'           => core()->formatPrice($this->shipping_amount, $this->order_currency_code),
 
             'shipping_invoiced'                  => $this->shipping_invoiced,
-            'formatted_shipping_invoiced'         => core()->formatPrice($this->base_shipping_invoiced, $this->order_currency_code),
+            'formatted_shipping_invoiced'         => core()->formatPrice($this->shipping_invoiced, $this->order_currency_code),
 
             'shipping_refunded'                  => $this->shipping_refunded,
-            'formatted_shipping_refunded'         => core()->formatPrice($this->base_shipping_refunded, $this->order_currency_code),
+            'formatted_shipping_refunded'         => core()->formatPrice($this->shipping_refunded, $this->order_currency_code),
 
             'shipping_address'                   => new OrderAddressResource($this->shipping_address),
             'billing_address'                    => new OrderAddressResource($this->billing_address),
