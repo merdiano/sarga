@@ -57,32 +57,32 @@ class OrderResource extends JsonResource
 
             'sub_total_refunded'                 => (double) $this->sub_total_refunded,
 //            'formatted_sub_total_refunded'        => core()->formatPrice($this->sub_total_refunded, $this->order_currency_code),
-            'discount_percent'                   => (double) $this->discount_percent,
-            'discount_amount'                    => (double) $this->discount_amount,
-            'formatted_discount_amount'           => core()->formatPrice($this->base_discount_amount, $this->order_currency_code),
-
-            'discount_invoiced'                  => (double)$this->discount_invoiced,
-            'formatted_discount_invoiced'         => core()->formatPrice($this->base_discount_invoiced, $this->order_currency_code),
-
-            'discount_refunded'                  => (double) $this->discount_refunded,
-            'formatted_discount_refunded'         => core()->formatPrice($this->base_discount_refunded, $this->order_currency_code),
-
-            'shipping_amount'                    => (double) $this->shipping_amount,
-            'formatted_shipping_amount'           => core()->formatPrice($this->base_shipping_amount, $this->order_currency_code),
-
-            'shipping_invoiced'                  => $this->shipping_invoiced,
-            'formatted_shipping_invoiced'         => core()->formatPrice($this->base_shipping_invoiced, $this->order_currency_code),
-
-            'shipping_refunded'                  => $this->shipping_refunded,
-            'formatted_shipping_refunded'         => core()->formatPrice($this->base_shipping_refunded, $this->order_currency_code),
-
-            'shipping_address'                   => new OrderAddressResource($this->shipping_address),
-            'billing_address'                    => new OrderAddressResource($this->billing_address),
-            'vendors'                            => $this->groupByVendors($this->items),
-            'invoices'                           => InvoiceResource::collection($this->invoices),
-            'shipments'                          => ShipmentResource::collection($this->shipments),
-            'updated_at'                         => $this->updated_at,
-            'created_at'                         => $this->created_at,
+//            'discount_percent'                   => (double) $this->discount_percent,
+//            'discount_amount'                    => (double) $this->discount_amount,
+//            'formatted_discount_amount'           => core()->formatPrice($this->base_discount_amount, $this->order_currency_code),
+//
+//            'discount_invoiced'                  => (double)$this->discount_invoiced,
+//            'formatted_discount_invoiced'         => core()->formatPrice($this->base_discount_invoiced, $this->order_currency_code),
+//
+//            'discount_refunded'                  => (double) $this->discount_refunded,
+//            'formatted_discount_refunded'         => core()->formatPrice($this->base_discount_refunded, $this->order_currency_code),
+//
+//            'shipping_amount'                    => (double) $this->shipping_amount,
+//            'formatted_shipping_amount'           => core()->formatPrice($this->base_shipping_amount, $this->order_currency_code),
+//
+//            'shipping_invoiced'                  => $this->shipping_invoiced,
+//            'formatted_shipping_invoiced'         => core()->formatPrice($this->base_shipping_invoiced, $this->order_currency_code),
+//
+//            'shipping_refunded'                  => $this->shipping_refunded,
+//            'formatted_shipping_refunded'         => core()->formatPrice($this->base_shipping_refunded, $this->order_currency_code),
+//
+//            'shipping_address'                   => new OrderAddressResource($this->shipping_address),
+//            'billing_address'                    => new OrderAddressResource($this->billing_address),
+//            'vendors'                            => $this->groupByVendors($this->items),
+//            'invoices'                           => InvoiceResource::collection($this->invoices),
+//            'shipments'                          => ShipmentResource::collection($this->shipments),
+//            'updated_at'                         => $this->updated_at,
+//            'created_at'                         => $this->created_at,
         ];
     }
 
