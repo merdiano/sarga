@@ -38,8 +38,8 @@ class Orders extends OrderController
 
             return response(['data'=>[
                 'order' => new OrderResource($order)],
-                'success'=>true,
-                'message'=>trans('admin::app.response.cancel-success', ['name' => 'Order Item'])
+                'success' => true,
+                'message' => trans('admin::app.response.cancel-success', ['name' => 'Order Item'])
             ]);
         }
         else
