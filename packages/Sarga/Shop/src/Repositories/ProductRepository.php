@@ -641,7 +641,7 @@ class ProductRepository extends WProductRepository
                                         'favoritesCount' => $colorVariant['favorite_count']
                                     ];
 
-                                    $attributes[] = $this->calculatePrice($sizeVariant['price']);
+//                                    $attributes[] = $this->calculatePrice($sizeVariant['price']);
                                     $this->assignAttributes($variant, array_merge($attributes,$this->calculatePrice($sizeVariant['price'])));
                                 }
                             }
@@ -723,7 +723,7 @@ class ProductRepository extends WProductRepository
         }
         catch(\Exception $ex){
             DB::rollBack();
-            Log::error($ex);
+            Log::error($ex->getMessage());
             return false;
         }
 
