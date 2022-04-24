@@ -79,7 +79,7 @@ class BrandRepository extends Repository
     }
 
     public function findAllBySeller($seller_id){
-        $query = $this->leftJoin('seller_brands as sb','sb.brand_id','=','brands.id')
+        $query = $this->distinct()->leftJoin('seller_brands as sb','sb.brand_id','=','brands.id')
             ->where('sb.seller_id',$seller_id);
 
         if(request()->has('category_id')){
@@ -94,6 +94,7 @@ class BrandRepository extends Repository
             ->orderBy('position', 'ASC')
             ->skip(($page-1) * $limit)
             ->take($limit)
+            ->groupBy('brands.id')
             ->get();
     }
 }
