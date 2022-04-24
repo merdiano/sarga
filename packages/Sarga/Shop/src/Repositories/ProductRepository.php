@@ -573,7 +573,7 @@ class ProductRepository extends WProductRepository
                 $product['brand_id'] = $brand->id;
                 if(!empty($data['categories'])) {
                     $existing_ids = $brand->categories()->whereIn('id', $data['categories'])->pluck('id');
-                    $brand->categories()->attach(array_diff($data['categories'],$existing_ids));
+                    $brand->categories()->attach(array_diff($data['categories'],$existing_ids->toArray()));
                 }
             }
             //create product
