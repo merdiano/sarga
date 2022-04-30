@@ -595,7 +595,6 @@ class ProductRepository extends WProductRepository
                 'favoritesCount' => $data['favorite_count']
             ];
 
-            Log::info($data);
             if (!empty($data['images'])) {
                 $this->assignImages($parentProduct, $data['images']);
             }
