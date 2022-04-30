@@ -595,10 +595,7 @@ class ProductRepository extends WProductRepository
                 'favoritesCount' => $data['favorite_count']
             ];
 
-            if(isset($data['favorite_count'])){
-                $main_attributes['favoritesCount'] = $data['favorite_count'];
-            }
-
+            Log::info($data);
             if (!empty($data['images'])) {
                 $this->assignImages($parentProduct, $data['images']);
             }
