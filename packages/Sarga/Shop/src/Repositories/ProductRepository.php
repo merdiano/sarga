@@ -32,7 +32,7 @@ class ProductRepository extends WProductRepository
     protected $vendorProductRepository;
     protected $brandRepository;
 
-    protected $fillableTypes = ['sku', 'name', 'url_key', 'short_description', 'description', 'price', 'weight', 'status','source'];
+    protected $fillableTypes = ['sku', 'name', 'url_key', 'short_description', 'description', 'price', 'weight', 'status','source','favoritesCount'];
 
     public function __construct(AttributeRepository $attributeRepository,
                                 App $app,
