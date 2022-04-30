@@ -1045,6 +1045,7 @@ class ProductRepository extends WProductRepository
         foreach($attributes as $code => $value){
             if(! $attribute = $this->attributeRepository->findOneByField('code', $code))
             {
+                Log::info($code);
                 continue;
             }
 
@@ -1070,7 +1071,7 @@ class ProductRepository extends WProductRepository
                 }
             }
             catch(\Exception $ex){
-                Log::info($attr);
+//                Log::info($attr);
                 Log::error($ex->getMessage());
             }
 
