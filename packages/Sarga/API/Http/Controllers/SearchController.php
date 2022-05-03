@@ -55,10 +55,9 @@ class SearchController extends Controller
 
     private function searchCategories(){
         $key = request('search');
-        $categories = CategoryTranslationProxy::modelClass()::where('name', 'like', '%'.$key.'%')
-            ->distinct()
-            ->select('category_id as id','name','description')
-            ->groupBy('category_id')
+        $categories = CategoryTranslationProxy::modelClass()::select('category_id as id','name','description')
+            ->where('locale', core()->getRequestedLocaleCode())
+            ->where('name', 'like', '%'.$key.'%')
             ->take(10)
             ->orderBy('name')
             ->get();
