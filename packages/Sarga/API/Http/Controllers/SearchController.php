@@ -75,7 +75,7 @@ class SearchController extends Controller
         $channel = core()->getRequestedChannelCode();
 
         $locale = core()->getRequestedLocaleCode();
-        $products = $this->productRepository->getModel()::search(implode(' OR ', $key))
+        $products = $this->productFlatRepository->getModel()::search(implode(' OR ', $key))
             ->where('status', 1)
             ->where('visible_individually', 1)
             ->where('channel', $channel)
