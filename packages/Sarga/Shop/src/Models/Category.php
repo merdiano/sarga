@@ -4,11 +4,13 @@ namespace Sarga\Shop\Models;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Scout\Searchable;
 use Sarga\Brand\Models\BrandProxy;
 use Webkul\Category\Database\Factories\CategoryFactory;
 use Webkul\Category\Models\Category as WCategory;
 class Category extends WCategory
 {
+    use Searchable;
     /**
      * Fillables.
      *
@@ -39,6 +41,24 @@ class Category extends WCategory
      * @var array
      */
     protected $appends = ['image_url', 'category_icon_url'];
+    public function searchableAs()
+    {
+        return 'category_index';
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'type' => 'category'
+        ];
+    }
+
+    public function shouldBeSearchable()
+    {
+        return $this->status;
+    }
 
     /**
      * Create a new factory instance for the model.

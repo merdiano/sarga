@@ -55,7 +55,7 @@ Route::group(['prefix' => 'api'], function () {
         Route::get('products-discounted', [Products::class, 'discountedProducts']);
         Route::get('products-popular', [Products::class, 'popularProducts']);
         Route::get('products-search', [Products::class, 'searchProducts']);
-        Route::get('suggestions', [Products::class, 'suggestions']);
+        Route::get('suggestions', [\Sarga\API\Http\Controllers\SearchController::class, 'index']);
         Route::get('products/{id}', [Products::class, 'get']);
         Route::get('products/{id}/variants', [Products::class, 'variants']);
 

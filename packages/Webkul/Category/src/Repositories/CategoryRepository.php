@@ -72,7 +72,6 @@ class CategoryRepository extends Repository
 
         Event::dispatch('catalog.category.update.before', $id);
 
-        Log::info($data);
         $data = $this->setSameAttributeValueToAllLocale($data, 'slug');
 
         $category->update($data);
