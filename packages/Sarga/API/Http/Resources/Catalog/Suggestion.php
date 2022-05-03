@@ -18,7 +18,8 @@ class Suggestion extends JsonResource
             'id'          => $this->product_id ?? $this->id,
             'type'        => $this->suggestion_type,
             'name'        => $this->name,
-            'description' => $this->description,
+            $this->mergeWhen($this->suggestion_type =='category',['description' => $this->description])
+
         ];
     }
 }
