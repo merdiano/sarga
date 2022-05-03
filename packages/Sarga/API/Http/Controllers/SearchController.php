@@ -57,7 +57,7 @@ class SearchController extends Controller
         $key = request('search');
         $categories = CategoryTranslationProxy::modelClass()::where('name', 'like', '%'.$key.'%')
             ->distinct()
-            ->select('category_id as id','name')
+            ->select('category_id as id','name','description')
             ->groupBy('category_id')
             ->take(10)
             ->orderBy('name')
