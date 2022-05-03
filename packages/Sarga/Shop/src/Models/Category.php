@@ -10,7 +10,6 @@ use Webkul\Category\Database\Factories\CategoryFactory;
 use Webkul\Category\Models\Category as WCategory;
 class Category extends WCategory
 {
-    use Searchable;
     /**
      * Fillables.
      *
@@ -24,7 +23,7 @@ class Category extends WCategory
         'additional',
         'trendyol_url',
         'lcw_url',
-        'default_weight',//todo remove when implemented in scraper
+        'default_weight',
         'product_limit'
     ];
 
@@ -41,24 +40,6 @@ class Category extends WCategory
      * @var array
      */
     protected $appends = ['image_url', 'category_icon_url'];
-    public function searchableAs()
-    {
-        return 'category_index';
-    }
-
-    public function toSearchableArray()
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'type' => 'category'
-        ];
-    }
-
-    public function shouldBeSearchable()
-    {
-        return $this->status;
-    }
 
     /**
      * Create a new factory instance for the model.
