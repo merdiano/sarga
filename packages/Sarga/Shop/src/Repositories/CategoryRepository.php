@@ -2,7 +2,9 @@
 
 namespace Sarga\Shop\Repositories;
 
+use Illuminate\Support\Facades\DB;
 use Sarga\Shop\Models\Category;
+use Webkul\Category\Models\CategoryTranslationProxy;
 use Webkul\Category\Repositories\CategoryRepository as WCategoryRepository;
 
 class CategoryRepository extends WCategoryRepository
@@ -42,6 +44,14 @@ class CategoryRepository extends WCategoryRepository
             ->whereNotNull('parent_id')
             ->where('status',1)
             ->where('display_mode','description_only')
+            ->get();
+    }
+
+    public function findByName($name, $limit = 10 ){
+        return CategoryTranslationProxy::modelClass()::where('name', 'like', '%'.$name.'%')
+            ->distinct()
+            ->limit($limit)
+            ->groupBy('category_id')
             ->get();
     }
 }

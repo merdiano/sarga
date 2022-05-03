@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Sarga\API\Http\Resources\Catalog\Suggestion;
 use Sarga\Brand\Repositories\BrandRepository;
 use Sarga\Shop\Repositories\CategoryRepository;
+use Webkul\Category\Models\CategoryTranslationProxy;
 use Webkul\Product\Repositories\ProductFlatRepository;
 
 class SearchController extends Controller
@@ -52,10 +53,14 @@ class SearchController extends Controller
         return $brands;
     }
 
-    private function searchCategories($key){
-        $categories = $this->CategoryRepository->getModel()::search(implode(' OR ', $key))
+    private function searchCategories(){
+        $key = request('search');
+        $categories = CategoryTranslationProxy::modelClass()::where('name', 'like', '%'.$key.'%')
+            ->distinct()
+            ->select('category_id as id','name')
+            ->groupBy('category_id')
             ->take(10)
-            ->query(fn ($query) => $query->select('id','name')->orderBy('name'))
+            ->orderBy('name')
             ->get();
 
         if($categories->count()){
