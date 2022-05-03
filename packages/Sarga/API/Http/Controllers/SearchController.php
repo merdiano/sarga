@@ -80,7 +80,7 @@ class SearchController extends Controller
             ->where('channel', $channel)
             ->where('locale', $locale)
             ->take(10)
-            ->query(fn ($query) => $query->select('id','name','product_id')
+            ->query(fn ($query) => $query->select('id','name','product_id','description')
 //                ->addSelect(DB::raw("\'product\' as type" ))
                 ->orderBy('name'))
             ->get();
