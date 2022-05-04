@@ -52,7 +52,7 @@ class Brands extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceController
                 $query = $query->where('name','like', '%'.$key.'%');
             }
 
-            if($category = $request->input('search')){
+            if($category = $request->input('category')){
                 $query = $query->rightJoin('category_brands','brands.id','=','category_brands.brand_id')
                     ->where('category_brands.category_id',$category);
             }
