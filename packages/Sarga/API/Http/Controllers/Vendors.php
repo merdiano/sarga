@@ -21,7 +21,7 @@ class Vendors extends V1Controller
     }
 
     public function sources(){
-        $vendors = $this->vendorRepository->select('marketplace_sellers.id','url','logo','banner','shop_title','brand_attribute_id')
+        $vendors = $this->vendorRepository->select('marketplace_sellers.id','url','shop_title')
             ->where('is_approved',true)
             ->with(['categories:seller_id,type,categories'])
 //            ->leftJoin('seller_categories','marketplace_sellers.id','=','seller_categories.seller_id')

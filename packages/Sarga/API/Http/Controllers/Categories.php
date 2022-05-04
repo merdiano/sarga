@@ -11,7 +11,7 @@ use Webkul\RestApi\Http\Controllers\V1\Shop\Catalog\CategoryController;
 
 class Categories extends CategoryController
 {
-//    protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale'];
+    protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale'];
     /**
      * Repository class name.
      *

@@ -18,11 +18,9 @@ class Source extends \Illuminate\Http\Resources\Json\JsonResource
             'id'         => $this->id,
             'shop_title' => $this->shop_title,
             'logo'       => $this->logo_url,
-            'banner'     => $this->banner_url,
             $this->mergeWhen(!empty($this->main_categories) && $this->main_categories->count(),[
                 'categories' => VendorCategory::collection($this->main_categories)
             ])
-
         ];
     }
 }
