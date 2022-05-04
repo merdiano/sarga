@@ -36,8 +36,7 @@ Route::group(['prefix' => 'api'], function () {
         Route::get('vendor/brands/{vendor_id}',[Vendors::class,'brands'])->name('api.vendor.brands');
 
         //category routes
-        Route::get('descendant-categories', [Categories::class, 'index'])->name('api.descendant-categories');
-        Route::get('category-details/{id}', [Categories::class, 'details']);
+        Route::get('descendant-categories', [Categories::class, 'descendantCategories'])->name('api.descendant-categories');
         Route::get('categories', [ResourceController::class, 'index'])->defaults('_config', [
             'repository' => CategoryRepository::class,
             'resource' => Category::class,

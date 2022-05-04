@@ -2,42 +2,43 @@
 
 namespace Sarga\API\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Sarga\API\Http\Resources\Catalog\Attribute;
 use Sarga\API\Http\Resources\Catalog\Brand;
-use Sarga\API\Http\Resources\Catalog\Category;
+use Sarga\API\Http\Resources\Catalog\Category as CategoryResource;
 use Sarga\Shop\Repositories\CategoryRepository;
+use Webkul\RestApi\Http\Controllers\V1\Shop\Catalog\CategoryController;
 
 
-class Categories extends Controller
+class Categories extends CategoryController
 {
-
-    public function __construct(protected CategoryRepository $categoryRepository)
+//    protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale'];
+    /**
+     * Repository class name.
+     *
+     * @return string
+     */
+    public function repository()
     {
+        return CategoryRepository::class;
     }
-    public function index()
+    /**
+     * Resource class name.
+     *
+     * @return string
+     */
+    public function resource()
     {
-        return Category::collection(
-            $this->categoryRepository->getVisibleCategoryTree(request()->input('parent_id'))
-        );
-    }
-
-    public function details($id){
-        $children = $this->categoryRepository->findWhere(['parent_id' => $id, 'status'=>1])
-            ->orderBy('position', 'ASC');
-
+        return CategoryResource::class;
     }
 
     public function filters($id){
-        $category = $this->categoryRepository->with(['filterableAttributes','children',
-            'brands' => function ($q){
-                $q->where('status',1);
+        $category = $this->categoryRepository->with(['filterableAttributes','brands' => function ($q){
+                $q->take(20);
             } ])
             ->find($id);
 
         if($category)
             return response([
-                'subcategories' => Category::collection($category->children),
                 'attributes' => Attribute::collection($category->filterableAttributes),
                 'brands' => Brand::collection($category->brands),
                 ]);

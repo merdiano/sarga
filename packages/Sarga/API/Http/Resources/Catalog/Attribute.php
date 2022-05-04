@@ -18,7 +18,7 @@ class Attribute extends JsonResource
             'id'          => $this->id,
             'code'        => $this->code,
             'name'        => $this->name ?? $this->admin_name,
-            'options'     => AttributeOption::collection($this->options),
+            'options'     => AttributeOption::collection($this->options()->take(20)->get()),
         ];
     }
 

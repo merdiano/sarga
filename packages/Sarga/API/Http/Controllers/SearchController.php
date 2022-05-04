@@ -2,14 +2,14 @@
 
 namespace Sarga\API\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Sarga\API\Http\Resources\Catalog\Suggestion;
 use Sarga\Brand\Repositories\BrandRepository;
 use Sarga\Shop\Repositories\CategoryRepository;
 use Webkul\Category\Models\CategoryTranslationProxy;
 use Webkul\Product\Repositories\ProductFlatRepository;
+use Webkul\RestApi\Http\Controllers\V1\V1Controller;
 
-class SearchController extends Controller
+class SearchController extends V1Controller
 {
     public function __construct(protected BrandRepository $brandRepository,
                                 protected ProductFlatRepository $productFlatRepository,

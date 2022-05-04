@@ -10,11 +10,9 @@ use Sarga\Shop\Repositories\ProductRepository;
 use Sarga\Brand\Repositories\BrandRepository;
 use Sarga\Shop\Repositories\CategoryRepository;
 use Sarga\Shop\Repositories\VendorRepository;
-use Webkul\API\Http\Controllers\Shop\Controller;
-use Webkul\Marketplace\Repositories\SellerRepository;
-use Webkul\Product\Repositories\ProductFlatRepository;
+use Webkul\RestApi\Http\Controllers\V1\V1Controller;
 
-class Vendors extends Controller
+class Vendors extends V1Controller
 {
 
     public function __construct(protected VendorRepository $vendorRepository,

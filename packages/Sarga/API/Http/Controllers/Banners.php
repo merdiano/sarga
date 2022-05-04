@@ -4,9 +4,11 @@ namespace Sarga\API\Http\Controllers;
 
 use Sarga\API\Http\Resources\Core\Slider;
 use Webkul\Core\Repositories\SliderRepository;
+use Webkul\RestApi\Http\Controllers\V1\Shop\ResourceController;
 
-class Banners extends \Webkul\RestApi\Http\Controllers\V1\Shop\Core\CoreController
+class Banners extends ResourceController
 {
+    protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale'];
     /**
      * Resource class name.
      *
