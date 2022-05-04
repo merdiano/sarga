@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Sarga\API\Http\Controllers\Addresses;
 use Sarga\API\Http\Controllers\AttributeOptions;
+use Sarga\API\Http\Controllers\Brands;
 use Sarga\API\Http\Controllers\Carts;
 use Sarga\API\Http\Controllers\Checkout;
 use Sarga\API\Http\Controllers\Customers;
@@ -41,6 +42,7 @@ Route::group(['prefix' => 'api'], function () {
         Route::get('categories', [Categories::class, 'allResources'])->name('api.categories');
         Route::get('categories/{id}/filters',[Categories::class,'filters']);
         Route::get('attribute-options', [AttributeOptions::class, 'allResources']);
+        Route::get('brands', [Brands::class, 'allResources']);
 
         //attributes by code
         Route::get('attribute-options', [ResourceController::class, 'index'])->defaults('_config', [

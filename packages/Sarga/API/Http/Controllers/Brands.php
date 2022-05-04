@@ -3,30 +3,12 @@
 namespace Sarga\API\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Sarga\API\Http\Resources\Catalog\AttributeOption;
-use Sarga\Shop\Repositories\AttributeOptionRepository;
+use Sarga\API\Http\Resources\Catalog\Brand;
+use Sarga\Brand\Repositories\BrandRepository;
 
-class AttributeOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceController
+class Brands extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceController
 {
-    protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale','search'];
-    /**
-     * Repository class name.
-     *
-     * @return string
-     */
-    public function repository()
-    {
-        return AttributeOptionRepository::class;
-    }
-    /**
-     * Resource class name.
-     *
-     * @return string
-     */
-    public function resource()
-    {
-        return AttributeOption::class;
-    }
+    protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale','search','category'];
 
     /**
      * Is resource authorized.
@@ -38,6 +20,26 @@ class AttributeOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\Resource
         return false;
     }
 
+    /**
+     * Repository class name.
+     *
+     * @return string
+     */
+    public function repository()
+    {
+        return BrandRepository::class;
+    }
+
+    /**
+     * Resource class name.
+     *
+     * @return string
+     */
+    public function resource()
+    {
+        return Brand::class;
+    }
+
     public function allResources(Request $request)
     {
         $query = $this->getRepositoryInstance()->scopeQuery(function ($query) use ($request) {
@@ -47,8 +49,12 @@ class AttributeOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\Resource
             }
 
             if($key = $request->input('search')){
-                $query = $query->where('admin_name','like', '%'.$key.'%');
-                //todo search in translations
+                $query = $query->where('name','like', '%'.$key.'%');
+            }
+
+            if($category = $request->input('search')){
+                $query = $query->rightJoin('category_brands','brands.id','=','category_brands.brand_id')
+                    ->where('category_brands.category_id',$category);
             }
 
             if ($sort = $request->input('sort')) {
