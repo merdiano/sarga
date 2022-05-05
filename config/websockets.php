@@ -36,6 +36,13 @@ return [
     ],
 
     /*
+     *      listen [::]:443 ssl ipv6only=on; # managed by Certbot
+            listen 443 ssl; # managed by Certbot
+            ssl_certificate /etc/letsencrypt/live/sarga.com.tm/fullchain.pem; # managed by Certbot
+            ssl_certificate_key /etc/letsencrypt/live/sarga.com.tm/privkey.pem; # managed by Certbot
+            include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+            ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
      * This class is responsible for finding the apps. The default provider
      * will use the apps defined in this config file.
      *
