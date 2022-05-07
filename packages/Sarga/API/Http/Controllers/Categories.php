@@ -33,7 +33,7 @@ class Categories extends CategoryController
 
     public function filters($id){
         $category = $this->getRepositoryInstance()->with(['filterableAttributes','brands' => function ($q){
-                $q->take(20)->orderBy('id', 'asc');
+                $q->take(20)->orderBy('position', 'desc')->orderBy('name', 'asc');
             } ])
             ->find($id);
 

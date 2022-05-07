@@ -37,8 +37,8 @@ return [
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'encrypted' => true,
-                'host' => env('PUSHER_HOST', 'sarga.com.tm'),
-                'port' => env('PUSHER_PORT', 443),
+                'host' => env('PUSHER_HOST', '127.0.0.1'),
+                'port' => env('PUSHER_PORT', 4433),
                 'schema' => 'https',
                 'useTLS' => true,
                 'curl_options' => [
