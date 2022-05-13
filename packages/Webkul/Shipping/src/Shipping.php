@@ -152,8 +152,20 @@ class Shipping
      */
     public function isMethodCodeExists($shippingMethodCode)
     {
-        $activeShippingMethods = collect($this->getShippingMethods());
+        $shippingMethods = $this->collectRates()['shippingMethods'] ?? [];
 
-        return $activeShippingMethods->contains('method', $shippingMethodCode);
+        if (empty($shippingMethods) || ! $shippingMethods) {
+            return false;
+        }
+
+        foreach ($shippingMethods as $shippingMethod) {
+            foreach ($shippingMethod['rates'] as $rate) {
+                if ($rate->method === $shippingMethodCode) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
