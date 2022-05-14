@@ -114,17 +114,17 @@ class ProductRepository extends WProductRepository
                 $qb->where('product_flat.visible_individually', 1);
             }
 
-            if (isset($params['search'])) {
-                $qb->where('product_flat.name', 'like', '%' . urldecode($params['search']) . '%');
-            }
-
-            if (isset($params['name'])) {
-                $qb->where('product_flat.name', 'like', '%' . urldecode($params['name']) . '%');
-            }
-
-            if (isset($params['url_key'])) {
-                $qb->where('product_flat.url_key', 'like', '%' . urldecode($params['url_key']) . '%');
-            }
+//            if (isset($params['search'])) {
+//                $qb->where('product_flat.name', 'like', '%' . urldecode($params['search']) . '%');
+//            }
+//
+//            if (isset($params['name'])) {
+//                $qb->where('product_flat.name', 'like', '%' . urldecode($params['name']) . '%');
+//            }
+//
+//            if (isset($params['url_key'])) {
+//                $qb->where('product_flat.url_key', 'like', '%' . urldecode($params['url_key']) . '%');
+//            }
 
             # sort direction
             $orderDirection = 'asc';
@@ -322,7 +322,11 @@ class ProductRepository extends WProductRepository
     private function calculatePrice($price){
         $originalPrice = Arr::get($price, 'originalPrice.value');
         $discountedPrice = Arr::get($price, 'discountedPrice.value');
-        $price_attributes = [];
+
+        $price_attributes = [
+//            'min_price'=>$discountedPrice,'max_price'=>$originalPrice
+        ];
+
         if($originalPrice > $discountedPrice){
             $price_attributes['price'] = $originalPrice;
             $price_attributes['special_price'] = $discountedPrice;
@@ -333,6 +337,7 @@ class ProductRepository extends WProductRepository
 
         return $price_attributes;
     }
+
     public function createProduct($data){
         $time_start = microtime(true);
 
@@ -408,6 +413,7 @@ class ProductRepository extends WProductRepository
                     foreach ($data['color_variants'] as $colorVariant) {
                         $description = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $colorVariant['descriptions']));
                         if (!empty($colorVariant['size_variants'])) {
+                            $first = reset( $colorVariant['size_variants'] );
                             foreach ($colorVariant['size_variants'] as $sizeVariant) {
                                 $variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}");
 
@@ -423,7 +429,7 @@ class ProductRepository extends WProductRepository
 //                                        'price' => $sizeVariant['price'],
                                         'weight' => $colorVariant['weight'] ?? 0.45,
                                         'status' => 1,
-                                        'visible_individually' => 1,
+                                        'visible_individually' => $first == $sizeVariant,
                                         'url_key' => $variant->sku,
                                         'source' => $colorVariant['url_key'],
                                         'description' => $description,
@@ -475,8 +481,8 @@ class ProductRepository extends WProductRepository
                                 'weight' => $data['weight'] ?? 0.45,
                                 'status' => 1,
                                 'featured'=> 0,
-                                'new' => 1,
-                                'visible_individually' => 1,
+                                'new' => 0,
+                                'visible_individually' => 0,
                                 'url_key' => $variant->sku,
                                 'source' => $data['url_key'],
                                 'description' => $desc,
