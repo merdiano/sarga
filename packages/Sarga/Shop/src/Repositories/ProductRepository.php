@@ -953,7 +953,7 @@ class ProductRepository extends WProductRepository
         $option = $this->optionRepository->findOneWhere(['attribute_id'=>$attribute_id,'admin_name'=>$value]);
 
         if(! $option){
-            $option =$this->optionRepository->create(['attribute_id'=>$attribute_id,'admin_name'=>$value]);
+            $option =$this->optionRepository->create(['attribute_id'=>$attribute_id,'admin_name'=>$value,'sort_order'=>1000]);
             $this->optionTranslationRepository->create(['attribute_option_id'=>$option->id,'label'=>$value,'locale'=>'tm']);
         }
 
