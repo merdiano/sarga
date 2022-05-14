@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Sarga\Brand\Repositories\BrandRepository;
 use Webkul\Attribute\Repositories\AttributeGroupRepository;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
+use Webkul\Attribute\Repositories\AttributeOptionTranslationRepository;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Product\Models\ProductAttributeValueProxy;
@@ -43,10 +44,14 @@ class ProductRepository extends WProductRepository
                                 VendorProductRepository $vendorProductRepository,
                                 VendorRepository $vendorRepository,
                                 BrandRepository $brandRepository,
-                                AttributeOptionRepository $optionRepository)
+                                AttributeOptionRepository $optionRepository,
+                                AttributeOptionTranslationRepository $optionTranslationRepository
+
+    )
     {
         $this->attributeGroupRepo = $attributeGroupRepo;
         $this->optionRepository = $optionRepository;
+        $this->optionTranslationRepository = $optionTranslationRepository;
         $this->attributeValueRepository = $productAttributeValueRepository;
         $this->productFlatRepository = $productFlatRepository;
         $this->imageRepository = $productImageRepository;
@@ -841,7 +846,6 @@ class ProductRepository extends WProductRepository
         foreach($attributes as $code => $value){
             if(! $attribute = $this->attributeRepository->findOneByField('code', $code))
             {
-                Log::info($code);
                 continue;
             }
 
@@ -930,11 +934,12 @@ class ProductRepository extends WProductRepository
 
             foreach($new_options as $new_option){
                 $order++;
-                $this->optionRepository->create([
+                $option = $this->optionRepository->create([
                     'admin_name' => $new_option,
                     'sort_order' => $order,
                     'attribute_id' =>  $attribute->id
                 ]);
+                $this->optionTranslationRepository->create(['attribute_option_id'=>$option->id,'label'=> $new_option,'locale'=>'tm']);
             }
             $options = array_merge($options,$new_options);
         }
@@ -949,6 +954,7 @@ class ProductRepository extends WProductRepository
 
         if(! $option){
             $option =$this->optionRepository->create(['attribute_id'=>$attribute_id,'admin_name'=>$value]);
+            $this->optionTranslationRepository->create(['attribute_option_id'=>$option->id,'label'=>$value,'locale'=>'tm']);
         }
 
         return $option->id;
