@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Sarga\API\Http\Controllers\Addresses;
-use Sarga\API\Http\Controllers\AttributeOptions;
+use Sarga\API\Http\Controllers\FilterOptions;
 use Sarga\API\Http\Controllers\Brands;
 use Sarga\API\Http\Controllers\Carts;
 use Sarga\API\Http\Controllers\Checkout;
@@ -41,14 +41,14 @@ Route::group(['prefix' => 'api'], function () {
         Route::get('descendant-categories', [Categories::class, 'descendantCategories'])->name('api.descendant-categories');
         Route::get('categories', [Categories::class, 'allResources'])->name('api.categories');
         Route::get('categories/{id}/filters',[Categories::class,'filters']);
-        Route::get('attribute-options', [AttributeOptions::class, 'allResources']);
+        Route::get('filter-options', [FilterOptions::class, 'allResources']);
         Route::get('brands', [Brands::class, 'allResources']);
 
         //attributes by code
-        Route::get('attribute-options', [ResourceController::class, 'index'])->defaults('_config', [
-            'repository' => AttributeOptionRepository::class,
-            'resource' => AttributeOption::class,
-        ]);
+//        Route::get('attribute-options', [ResourceController::class, 'index'])->defaults('_config', [
+//            'repository' => AttributeOptionRepository::class,
+//            'resource' => AttributeOption::class,
+//        ]);
 
         //Product routes
         Route::get('products', [Products::class, 'index']);

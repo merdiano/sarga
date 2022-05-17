@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Sarga\API\Http\Resources\Catalog\AttributeOption;
 use Sarga\Shop\Repositories\AttributeOptionRepository;
 
-class AttributeOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceController
+class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceController
 {
     protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale','search','category'];
     /**
