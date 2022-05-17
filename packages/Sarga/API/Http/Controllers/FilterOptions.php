@@ -42,7 +42,7 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
     {
         $query = $this->getRepositoryInstance()->scopeQuery(function ($query) use ($request) {
 
-            $query->where('attribute_id',$request->get('attribute_id'));
+            $query->where('attribute_id',23);
 //            foreach ($request->except($this->requestException) as $input => $value) {
 //                $query->whereIn($input, array_map('trim', explode(',', $value)));
 //            }
