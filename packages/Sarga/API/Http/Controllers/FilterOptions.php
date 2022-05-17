@@ -40,10 +40,8 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
 
     public function allResources(Request $request)
     {
-        $query = $this->getRepositoryInstance()->where('attribute_id',$request->get('attribute_id'))
-            ->scopeQuery(function ($query) use ($request) {
+        $query = $this->getRepositoryInstance()->scopeQuery(function ($query) use ($request) {
 
-            $query->where('attribute_id',23);
             foreach ($request->except($this->requestException) as $input => $value) {
                 $query->whereIn($input, array_map('trim', explode(',', $value)));
             }
@@ -65,7 +63,7 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
                     ->where('product_attribute_values.attribute_id','attribute_options.attribute_id')
                     ->where('product_categories.category_id',$category);
             }
-            return $query;
+            return $query->where('attribute_id',$request->get('attribute_id'));
         });
 
         if (is_null($request->input('pagination')) || $request->input('pagination')) {
