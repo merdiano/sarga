@@ -68,7 +68,7 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
         });
 
         if (is_null($request->input('pagination')) || $request->input('pagination')) {
-            $results = $query->paginate($request->input('limit') ?? 10);
+            $results = $query->where('attribute_id',23)->paginate($request->input('limit') ?? 10);
         } else {
             $results = $query->where('attribute_id',23)->get();
         }
