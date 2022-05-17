@@ -77,6 +77,6 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
     }
 
     public function index($attribute_id){
-        return  $this->getRepositoryInstance()->findWhere(['attribute_id'=>$attribute_id])->paginate(10);
+        return  $this->getRepositoryInstance()->findWhere(['attribute_id'=>$attribute_id]);
     }
 }
