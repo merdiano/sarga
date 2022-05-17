@@ -40,37 +40,38 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
 
     public function allResources(Request $request)
     {
-        $query = $this->getRepositoryInstance()->scopeQuery(function ($query) use ($request) {
+        $query = $this->getRepositoryInstance()->where('attribute_id',$request->get('attribute_id'))
+            ->scopeQuery(function ($query) use ($request) {
 
             $query->where('attribute_id',23);
-//            foreach ($request->except($this->requestException) as $input => $value) {
-//                $query->whereIn($input, array_map('trim', explode(',', $value)));
-//            }
+            foreach ($request->except($this->requestException) as $input => $value) {
+                $query->whereIn($input, array_map('trim', explode(',', $value)));
+            }
 
-//            if($key = $request->input('search')){
-//                $query->where('admin_name','like', '%'.$key.'%');
-//                //todo search in translations
-//            }
-//
-//            if ($sort = $request->input('sort')) {
-//                $query->orderBy($sort, $request->input('order') ?? 'desc');
-//            } else {
-//                $query->orderBy('id', 'desc');
-//            }
-//
-//            if($category = $request->input('category')){
-//                $query->join('product_attribute_values','product_attribute_values.integer_value','=','attribute_options.id')
-//                    ->join('product_categories','product_categories.product_id','=','product_attribute_values.product_id')
-//                    ->where('product_attribute_values.attribute_id','attribute_options.attribute_id')
-//                    ->where('product_categories.category_id',$category);
-//            }
+            if($key = $request->input('search')){
+                $query->where('admin_name','like', '%'.$key.'%');
+                //todo search in translations
+            }
+
+            if ($sort = $request->input('sort')) {
+                $query->orderBy($sort, $request->input('order') ?? 'desc');
+            } else {
+                $query->orderBy('id', 'desc');
+            }
+
+            if($category = $request->input('category')){
+                $query->join('product_attribute_values','product_attribute_values.integer_value','=','attribute_options.id')
+                    ->join('product_categories','product_categories.product_id','=','product_attribute_values.product_id')
+                    ->where('product_attribute_values.attribute_id','attribute_options.attribute_id')
+                    ->where('product_categories.category_id',$category);
+            }
             return $query;
         });
 
         if (is_null($request->input('pagination')) || $request->input('pagination')) {
-            $results = $query->where('attribute_id',23)->paginate($request->input('limit') ?? 10);
+            $results = $query->paginate($request->input('limit') ?? 10);
         } else {
-            $results = $query->where('attribute_id',23)->get();
+            $results = $query->get();
         }
 
         return $this->getResourceCollection($results);
