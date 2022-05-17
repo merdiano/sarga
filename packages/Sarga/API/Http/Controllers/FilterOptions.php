@@ -47,23 +47,23 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
 //                $query->whereIn($input, array_map('trim', explode(',', $value)));
 //            }
 
-            if($key = $request->input('search')){
-                $query->where('admin_name','like', '%'.$key.'%');
-                //todo search in translations
-            }
-
-            if ($sort = $request->input('sort')) {
-                $query->orderBy($sort, $request->input('order') ?? 'desc');
-            } else {
-                $query->orderBy('id', 'desc');
-            }
-
-            if($category = $request->input('category')){
-                $query->join('product_attribute_values','product_attribute_values.integer_value','=','attribute_options.id')
-                    ->join('product_categories','product_categories.product_id','=','product_attribute_values.product_id')
-                    ->where('product_attribute_values.attribute_id','attribute_options.attribute_id')
-                    ->where('product_categories.category_id',$category);
-            }
+//            if($key = $request->input('search')){
+//                $query->where('admin_name','like', '%'.$key.'%');
+//                //todo search in translations
+//            }
+//
+//            if ($sort = $request->input('sort')) {
+//                $query->orderBy($sort, $request->input('order') ?? 'desc');
+//            } else {
+//                $query->orderBy('id', 'desc');
+//            }
+//
+//            if($category = $request->input('category')){
+//                $query->join('product_attribute_values','product_attribute_values.integer_value','=','attribute_options.id')
+//                    ->join('product_categories','product_categories.product_id','=','product_attribute_values.product_id')
+//                    ->where('product_attribute_values.attribute_id','attribute_options.attribute_id')
+//                    ->where('product_categories.category_id',$category);
+//            }
             return $query;
         });
 
