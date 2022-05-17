@@ -42,6 +42,7 @@ Route::group(['prefix' => 'api'], function () {
         Route::get('categories', [Categories::class, 'allResources'])->name('api.categories');
         Route::get('categories/{id}/filters',[Categories::class,'filters']);
         Route::get('filter-options/{attribute_id}', [FilterOptions::class, 'index']);
+        Route::get('attribute-options', [FilterOptions::class, 'allResources']);
         Route::get('brands', [Brands::class, 'allResources']);
 
         //attributes by code
