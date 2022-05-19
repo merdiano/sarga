@@ -43,17 +43,10 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
     {
         $query = $this->getRepositoryInstance()->scopeQuery(function ($query) use ($request) {
 
-//            foreach ($request->except($this->requestException) as $input => $value) {
-//                $query->whereIn($input, array_map('trim', explode(',', $value)));
-//            }
+            return $query->where('attribute_options.attribute_id',$request->get('attribute_id'));
+        });
 
-            if ($sort = $request->input('sort')) {
-                $query->orderBy($sort, $request->input('order') ?? 'desc');
-            } else {
-                $query->orderBy('id', 'desc');
-            }
-
-            if($category = $request->input('category')){
+        if($request->has('category')){
 //                $query->join('product_attribute_values',function ($q){
 //                    $q->on('product_attribute_values.integer_value','=','attribute_options.id')
 //                        ->where('product_attribute_values.attribute_id',request()->get('attribute_id'))
@@ -64,23 +57,27 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
 //                        });
 //                });
 
-                $query->whereIn('id',function ($q) {
-                    $q->select('integer_value')
-                        ->from('product_attribute_values')
-                        ->whereNotNull('product_attribute_values.integer_value')
-                        ->join('product_categories',function ($q) {
-                            $q->on('product_categories.product_id','=','product_attribute_values.product_id')
-                                ->where('product_categories.category_id',request()->get('category'));
-                        });
-                });
-            }
-            return $query->where('attribute_options.attribute_id',$request->get('attribute_id'));
-        });
+            $query->whereIn('id',function ($q) {
+                $q->select('integer_value')
+                    ->from('product_attribute_values')
+                    ->whereNotNull('product_attribute_values.integer_value')
+                    ->join('product_categories',function ($q) {
+                        $q->on('product_categories.product_id','=','product_attribute_values.product_id')
+                            ->where('product_categories.category_id',request()->get('category'));
+                    });
+            });
+        }
 
-        Log::info($query->toSql());
+        //Log::info($query->toSql());
 
         if($key = $request->get('search')){
             $query->where('admin_name','LIKE', '%'.$key.'%');
+        }
+
+        if ($sort = $request->input('sort')) {
+            $query->orderBy($sort, $request->input('order') ?? 'desc');
+        } else {
+            $query->orderBy('id', 'desc');
         }
 
         if (is_null($request->input('pagination')) || $request->input('pagination')) {
