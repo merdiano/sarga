@@ -118,7 +118,13 @@ class ProductRepository extends WProductRepository
             if (is_null(request()->input('visible_individually'))) {
                 $qb->where('product_flat.visible_individually', 1);
             }
+            if(isset($params['color'])){
+                $qb->whereIn('product_flat.color', explode(',', $params['color']));
+            }
 
+            if(isset($params['size'])){
+                $qb->whereIn('product_flat.size', explode(',', $params['size']));
+            }
 //            if (isset($params['search'])) {
 //                $qb->where('product_flat.name', 'like', '%' . urldecode($params['search']) . '%');
 //            }
@@ -196,7 +202,11 @@ class ProductRepository extends WProductRepository
 
             $attributeFilters = $this->attributeRepository
                 ->getProductDefaultAttributes(array_keys(
-                    request()->except(['price'])
+                    request()->except([
+                        'price',
+                        'color',
+                        'size'
+                    ])
                 ));
 
             if (count($attributeFilters) > 0) {
