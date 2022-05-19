@@ -41,10 +41,7 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
 
     public function allResources(Request $request)
     {
-        $query = $this->getRepositoryInstance()->scopeQuery(function ($query) use ($request) {
-
-            return $query->where('attribute_options.attribute_id',$request->get('attribute_id'));
-        });
+        $query = $this->getRepositoryInstance()->where('attribute_options.attribute_id',$request->get('attribute_id'));
 
         if($request->has('category')){
 //                $query->join('product_attribute_values',function ($q){
@@ -58,13 +55,13 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
 //                });
 
             $query->whereIn('id',function ($q) {
-                $q->select('integer_value')
+                $q->distinct()->select('integer_value')
                     ->from('product_attribute_values')
                     ->whereNotNull('product_attribute_values.integer_value')
                     ->join('product_categories',function ($q) {
                         $q->on('product_categories.product_id','=','product_attribute_values.product_id')
                             ->where('product_categories.category_id',request()->get('category'));
-                    });
+                    })->groupBy('integer_value');
             });
         }
 
