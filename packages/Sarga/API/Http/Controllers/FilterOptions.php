@@ -42,13 +42,13 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
     {
         $query = $this->getRepositoryInstance()->scopeQuery(function ($query) use ($request) {
 
-            foreach ($request->except($this->requestException) as $input => $value) {
-                $query->whereIn($input, array_map('trim', explode(',', $value)));
-            }
+//            foreach ($request->except($this->requestException) as $input => $value) {
+//                $query->whereIn($input, array_map('trim', explode(',', $value)));
+//            }
 
             if($key = $request->get('search')){
-                $query->where('admin_name','like', '%'.$key.'%');
-                //todo search in translations
+                $query->where('admin_name','LIKE', '%'.$key.'%');
+
             }
 
             if ($sort = $request->input('sort')) {
