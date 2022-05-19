@@ -53,7 +53,7 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
             }
 
             if($category = $request->input('category')){
-                $query->lefttJoin('product_attribute_values',function ($q) use ($request){
+                $query->leftJoin('product_attribute_values',function ($q) use ($request){
                     $q->on('product_attribute_values.integer_value','=','attribute_options.id')
                         ->where('product_attribute_values.attribute_id',$request->get('attribute_id'));
                 })->rightJoin('product_categories',function ($q) use($category){
