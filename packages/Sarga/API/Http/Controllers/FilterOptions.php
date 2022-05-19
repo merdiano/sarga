@@ -61,7 +61,7 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
                         ->where('product_categories.category_id',$category);
                 });
             }
-            return $query->where('attribute_id',$request->get('attribute_id'));
+            return $query->where('attribute_options.attribute_id',$request->get('attribute_id'));
         });
 
         if($key = $request->get('search')){
