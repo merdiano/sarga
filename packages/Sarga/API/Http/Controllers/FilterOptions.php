@@ -53,10 +53,20 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
             }
 
             if($request->has('category')){
-                $query->join('product_attribute_values',function ($q){
-                    $q->on('product_attribute_values.integer_value','=','attribute_options.id')
-                        ->where('product_attribute_values.attribute_id',request()->get('attribute_id'))
-                        ->whereNotNull('integer_value')
+//                $query->join('product_attribute_values',function ($q){
+//                    $q->on('product_attribute_values.integer_value','=','attribute_options.id')
+//                        ->where('product_attribute_values.attribute_id',request()->get('attribute_id'))
+//                        ->whereNotNull('integer_value')
+//                        ->join('product_categories',function ($q) {
+//                            $q->on('product_categories.product_id','=','product_attribute_values.product_id')
+//                                ->where('product_categories.category_id',request()->get('category'));
+//                        });
+//                });
+
+                $query->whereIn('id',function ($q) {
+                    $q->select('integer_value')
+                        ->from('product_attribute_values')
+                        ->whereNotNull('product_attribute_values')
                         ->join('product_categories',function ($q) {
                             $q->on('product_categories.product_id','=','product_attribute_values.product_id')
                                 ->where('product_categories.category_id',request()->get('category'));
