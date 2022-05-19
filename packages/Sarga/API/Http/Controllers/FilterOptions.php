@@ -3,6 +3,7 @@
 namespace Sarga\API\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Catalog\AttributeOption;
 use Sarga\Shop\Repositories\AttributeOptionRepository;
 
@@ -75,6 +76,8 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
             }
             return $query->where('attribute_options.attribute_id',$request->get('attribute_id'));
         });
+
+        Log::info($query->model->toSql());
 
         if($key = $request->get('search')){
             $query->where('admin_name','LIKE', '%'.$key.'%');
