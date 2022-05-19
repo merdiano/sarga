@@ -46,7 +46,7 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
                 $query->whereIn($input, array_map('trim', explode(',', $value)));
             }
 
-            if($key = $request->input('search')){
+            if($key = $request->get('search')){
                 $query->where('admin_name','like', '%'.$key.'%');
                 //todo search in translations
             }
