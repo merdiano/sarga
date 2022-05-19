@@ -260,7 +260,7 @@ class ProductRepository extends WProductRepository
 
 
         $countQuery = "select count(*) as aggregate from ({$repository->model->toSql()}) c";
-        Log::info($repository->model->toSql());
+//        Log::info($repository->model->toSql());
         $count = collect(DB::select($countQuery, $repository->model->getBindings()))->pluck('aggregate')->first();
 
         if ($count > 0) {
@@ -429,7 +429,7 @@ class ProductRepository extends WProductRepository
                     foreach ($data['color_variants'] as $colorVariant) {
                         $description = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $colorVariant['descriptions']));
                         if (!empty($colorVariant['size_variants'])) {
-                            $first = reset( $colorVariant['size_variants'] );
+//                            $first = reset( $colorVariant['size_variants'] );
                             foreach ($colorVariant['size_variants'] as $sizeVariant) {
                                 $variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}");
 
@@ -445,7 +445,7 @@ class ProductRepository extends WProductRepository
 //                                        'price' => $sizeVariant['price'],
                                         'weight' => $colorVariant['weight'] ?? 0.45,
                                         'status' => 1,
-                                        'visible_individually' => $first == $sizeVariant,
+                                        'visible_individually' => 1,
                                         'url_key' => $variant->sku,
                                         'source' => $colorVariant['url_key'],
                                         'description' => $description,
@@ -498,7 +498,7 @@ class ProductRepository extends WProductRepository
                                 'status' => 1,
                                 'featured'=> 0,
                                 'new' => 0,
-                                'visible_individually' => 0,
+                                'visible_individually' => 1,
                                 'url_key' => $variant->sku,
                                 'source' => $data['url_key'],
                                 'description' => $desc,
