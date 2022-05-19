@@ -16,6 +16,7 @@ class CMSResource extends \Illuminate\Http\Resources\Json\JsonResource
             'content'      => $this->content,
             'page_title'   => $this->page_title,
             'html_content' => $this->html_content,
+            'url_key'      => $this->url_key,
         ];
     }
 }
