@@ -2,17 +2,13 @@
 
 namespace Sarga\API\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Catalog\ProductVariant;
-use Sarga\API\Http\Resources\Catalog\Suggestion;
 use Sarga\API\Http\Resources\Catalog\SuperAttribute;
-use Sarga\Brand\Repositories\BrandRepository;
 use Sarga\Shop\Repositories\ProductRepository;
 use Webkul\API\Http\Controllers\Shop\ProductController;
 use Sarga\API\Http\Resources\Catalog\Product as ProductResource;
 use Sarga\Shop\Repositories\AttributeOptionRepository;
-use Webkul\Product\Repositories\ProductFlatRepository;
+
 
 
 class Products extends ProductController

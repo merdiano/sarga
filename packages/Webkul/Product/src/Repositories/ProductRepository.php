@@ -9,7 +9,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Webkul\Attribute\Models\Attribute;
@@ -198,13 +197,6 @@ class ProductRepository extends Repository
                 $qb->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
 
-//            if(isset($params['color'])){
-//                $qb->whereIn('product_flat.color', explode(',', $params['color']));
-//            }
-//
-//            if(isset($params['size'])){
-//                $qb->whereIn('product_flat.size', explode(',', $params['size']));
-//            }
             if (! core()->getConfigData('catalog.products.homepage.out_of_stock_items')) {
                 $qb = $this->checkOutOfStockItem($qb);
             }
@@ -217,17 +209,17 @@ class ProductRepository extends Repository
                 $qb->where('product_flat.visible_individually', 1);
             }
 
-//            if (isset($params['search'])) {
-//                $qb->where('product_flat.name', 'like', '%' . urldecode($params['search']) . '%');
-//            }
-//
-//            if (isset($params['name'])) {
-//                $qb->where('product_flat.name', 'like', '%' . urldecode($params['name']) . '%');
-//            }
-//
-//            if (isset($params['url_key'])) {
-//                $qb->where('product_flat.url_key', 'like', '%' . urldecode($params['url_key']) . '%');
-//            }
+            if (isset($params['search'])) {
+                $qb->where('product_flat.name', 'like', '%' . urldecode($params['search']) . '%');
+            }
+
+            if (isset($params['name'])) {
+                $qb->where('product_flat.name', 'like', '%' . urldecode($params['name']) . '%');
+            }
+
+            if (isset($params['url_key'])) {
+                $qb->where('product_flat.url_key', 'like', '%' . urldecode($params['url_key']) . '%');
+            }
 
             # sort direction
             $orderDirection = 'asc';
@@ -292,11 +284,7 @@ class ProductRepository extends Repository
 
             $attributeFilters = $this->attributeRepository
                 ->getProductDefaultAttributes(array_keys(
-                    request()->except([
-                        'price',
-//                        'color',
-//                        'size'
-                    ])
+                    request()->except(['price'])
                 ));
 
             if (count($attributeFilters) > 0) {
@@ -345,7 +333,6 @@ class ProductRepository extends Repository
         # apply scope query so we can fetch the raw sql and perform a count
         $repository->applyScope();
         $countQuery = "select count(*) as aggregate from ({$repository->model->toSql()}) c";
-        Log::info($repository->model->toSql());
         $count = collect(DB::select($countQuery, $repository->model->getBindings()))->pluck('aggregate')->first();
 
         if ($count > 0) {
