@@ -77,6 +77,8 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
             return $query->where('attribute_options.attribute_id',$request->get('attribute_id'));
         });
 
+        $query->applyScope();
+
         Log::info($query->model->toSql());
 
         if($key = $request->get('search')){
