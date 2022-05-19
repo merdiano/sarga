@@ -46,11 +46,6 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
 //                $query->whereIn($input, array_map('trim', explode(',', $value)));
 //            }
 
-            if($key = $request->get('search')){
-                $query->where('admin_name','LIKE', '%'.$key.'%');
-
-            }
-
             if ($sort = $request->input('sort')) {
                 $query->orderBy($sort, $request->input('order') ?? 'desc');
             } else {
@@ -68,6 +63,10 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
             }
             return $query->where('attribute_id',$request->get('attribute_id'));
         });
+
+        if($key = $request->get('search')){
+            $query->where('admin_name','LIKE', '%'.$key.'%');
+        }
 
         if (is_null($request->input('pagination')) || $request->input('pagination')) {
             $results = $query->paginate($request->input('limit') ?? 10);
