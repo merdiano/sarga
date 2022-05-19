@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Sarga\API\Http\Controllers\Addresses;
+use Sarga\API\Http\Controllers\CMSController;
 use Sarga\API\Http\Controllers\FilterOptions;
 use Sarga\API\Http\Controllers\Brands;
 use Sarga\API\Http\Controllers\Carts;
@@ -30,7 +31,8 @@ Route::group(['prefix' => 'api'], function () {
         //Channel routes
         Route::get('channels',[Channels::class, 'index']);
         Route::get('sliders',[\Sarga\API\Http\Controllers\Banners::class,'allResources']);
-
+        Route::get('cms',[CMSController::class,'allResources']);
+        Route::get('cms/{id}', [CMSController::class, 'getResource']);
         //Vendors
         Route::get('vendors',[Vendors::class,'index'])->name('api.vendors');
         Route::get('sources',[Vendors::class,'sources'])->name('api.sources');

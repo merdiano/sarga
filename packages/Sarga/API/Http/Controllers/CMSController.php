@@ -8,7 +8,7 @@ use Webkul\RestApi\Http\Controllers\V1\Shop\ResourceController;
 
 class CMSController extends ResourceController
 {
-    protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale'];
+    protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale','currency'];
     /**
      * Resource class name.
      *
