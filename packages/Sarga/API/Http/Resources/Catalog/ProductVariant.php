@@ -34,14 +34,14 @@ class ProductVariant extends JsonResource
         return [
             'id'                => $this->id,
             'name'              => $product->name,
-            'url_key'           => $product->url_key,
+//            'url_key'           => $product->url_key,
             'price'             => core()->convertPrice($productTypeInstance->getMinimalPrice()),
             'formatted_price'   => core()->currency($productTypeInstance->getMinimalPrice()),
-            'short_description' => $product->short_description,
+//            'short_description' => $product->short_description,
             'description'       => $product->description,
             "option_value"      => $this->last_attribute_value(),
             /* product's checks */
-            'in_stock'          => $product->haveSufficientQuantity(1),
+//            'in_stock'          => $product->haveSufficientQuantity(1),
             'is_item_in_cart'   => \Cart::hasProduct($product),
             /* special price cases */
             $this->merge($this->specialPriceInfo()),
