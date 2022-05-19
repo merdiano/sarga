@@ -58,8 +58,8 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
                 $q->distinct()->select('integer_value')
                     ->from('product_attribute_values')
                     ->whereNotNull('product_attribute_values.integer_value')
-                    ->join('product_categories',function ($q) {
-                        $q->on('product_categories.product_id','=','product_attribute_values.product_id')
+                    ->whereIn('product_attribute_values.product_id',function ($q) {
+                        $q->select('product_categories.product_id')
                             ->where('product_categories.category_id',request()->get('category'));
                     })->groupBy('integer_value');
             });
