@@ -197,13 +197,13 @@ class ProductRepository extends Repository
                 $qb->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
 
-            if(isset($params['color'])){
-                $qb->whereIn('product_flat.color', explode(',', $params['color']));
-            }
-
-            if(isset($params['size'])){
-                $qb->whereIn('product_flat.size', explode(',', $params['size']));
-            }
+//            if(isset($params['color'])){
+//                $qb->whereIn('product_flat.color', explode(',', $params['color']));
+//            }
+//
+//            if(isset($params['size'])){
+//                $qb->whereIn('product_flat.size', explode(',', $params['size']));
+//            }
             if (! core()->getConfigData('catalog.products.homepage.out_of_stock_items')) {
                 $qb = $this->checkOutOfStockItem($qb);
             }
@@ -291,7 +291,11 @@ class ProductRepository extends Repository
 
             $attributeFilters = $this->attributeRepository
                 ->getProductDefaultAttributes(array_keys(
-                    request()->except(['price','color','size'])
+                    request()->except([
+                        'price',
+//                        'color',
+//                        'size'
+                    ])
                 ));
 
             if (count($attributeFilters) > 0) {
