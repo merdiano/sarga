@@ -52,7 +52,7 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
                 $query->orderBy('id', 'desc');
             }
 
-            if($request->has('category')){
+            if($category = $request->input('category')){
 //                $query->join('product_attribute_values',function ($q){
 //                    $q->on('product_attribute_values.integer_value','=','attribute_options.id')
 //                        ->where('product_attribute_values.attribute_id',request()->get('attribute_id'))
@@ -66,7 +66,7 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
                 $query->whereIn('id',function ($q) {
                     $q->select('integer_value')
                         ->from('product_attribute_values')
-                        ->whereNotNull('product_attribute_values')
+                        ->whereNotNull('product_attribute_values.integer_value')
                         ->join('product_categories',function ($q) {
                             $q->on('product_categories.product_id','=','product_attribute_values.product_id')
                                 ->where('product_categories.category_id',request()->get('category'));
