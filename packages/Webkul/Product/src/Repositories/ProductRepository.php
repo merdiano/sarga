@@ -9,6 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Webkul\Attribute\Models\Attribute;
@@ -344,6 +345,7 @@ class ProductRepository extends Repository
         # apply scope query so we can fetch the raw sql and perform a count
         $repository->applyScope();
         $countQuery = "select count(*) as aggregate from ({$repository->model->toSql()}) c";
+        Log::info($repository->model->toSql());
         $count = collect(DB::select($countQuery, $repository->model->getBindings()))->pluck('aggregate')->first();
 
         if ($count > 0) {
