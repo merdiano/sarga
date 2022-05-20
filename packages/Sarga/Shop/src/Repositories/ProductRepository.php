@@ -90,8 +90,8 @@ class ProductRepository extends WProductRepository
             $qb = $query->distinct()
                 ->select('product_flat.*')
                 ->where('product_flat.channel', $channel)
-                ->where('product_flat.locale', $locale)
-                ->whereNotNull('product_flat.url_key');
+                ->where('product_flat.locale', $locale);
+//                ->whereNotNull('product_flat.url_key');
 
             if ($categoryId) {
                 $qb->join('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
@@ -119,9 +119,9 @@ class ProductRepository extends WProductRepository
                 $qb->where('product_flat.visible_individually', 1);
             }
 
-            if(isset($params['color'])){
-                $qb->whereIn('product_flat.color', explode(',', $params['color']));
-            }
+//            if(isset($params['color'])){
+//                $qb->whereIn('product_flat.color', explode(',', $params['color']));
+//            }
 
             if(isset($params['size'])){
                 $qb->whereIn('product_flat.size', explode(',', $params['size']));
@@ -156,7 +156,8 @@ class ProductRepository extends WProductRepository
                     $qb = $this->checkSortAttributeAndGenerateQuery($qb, $sortOptions[0], $orderDirection);
                 }
             }
-
+//select distinct `product_flat`.* from `product_flat` inner join `product_categories` on `product_categories`.`product_id` = `product_flat`.`product_id` where `product_flat`.`locale` = 'tm' and `product_flat`.`url_key` is not null and `product_categories`.`category_id` in (6) and `product_flat`.`status` = 1 and `product_flat`.`visible_individually` = 1 and `product_flat`.`color` in (24435) group by `product_flat`.`id` order by `product_flat`.`created_at` desc
+//select distinct `product_flat`.id,`product_flat`.name, `product_flat`.color, `product_flat`.size, `product_flat`.locale, `product_flat`.product_id,`product_flat`.parent_id, `product_flat`.visible_individually,`product_flat`.url_key from `product_flat` left join `product_categories` on `product_categories`.`product_id` = `product_flat`.`product_id` where `product_flat`.`locale` = 'tm' and `product_flat`.`url_key` is not null and `product_categories`.`category_id` in (6) and `product_flat`.`status` = 1 and `product_flat`.`visible_individually` = 1 group by `product_flat`.`id` order by `product_flat`.`created_at` desc limit 10;
             if ($priceFilter = request('price')) {
                 $priceRange = explode(',', $priceFilter);
 
@@ -205,7 +206,7 @@ class ProductRepository extends WProductRepository
                 ->getProductDefaultAttributes(array_keys(
                     request()->except([
                         'price',
-                        'color',
+//                        'color',
                         'size'
                     ])
                 ));
