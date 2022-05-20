@@ -94,7 +94,7 @@ class ProductRepository extends WProductRepository
 //                ->whereNotNull('product_flat.url_key');
 
             if ($categoryId) {
-                $qb->join('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
+                $qb->leftJoin('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
                     ->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
 
@@ -158,6 +158,7 @@ class ProductRepository extends WProductRepository
             }
 //select distinct `product_flat`.* from `product_flat` inner join `product_categories` on `product_categories`.`product_id` = `product_flat`.`product_id` where `product_flat`.`locale` = 'tm' and `product_flat`.`url_key` is not null and `product_categories`.`category_id` in (6) and `product_flat`.`status` = 1 and `product_flat`.`visible_individually` = 1 and `product_flat`.`color` in (24435) group by `product_flat`.`id` order by `product_flat`.`created_at` desc
 //select distinct `product_flat`.id,`product_flat`.name, `product_flat`.color, `product_flat`.size, `product_flat`.locale, `product_flat`.product_id,`product_flat`.parent_id, `product_flat`.visible_individually,`product_flat`.url_key from `product_flat` left join `product_categories` on `product_categories`.`product_id` = `product_flat`.`product_id` where `product_flat`.`locale` = 'tm' and `product_flat`.`url_key` is not null and `product_categories`.`category_id` in (6) and `product_flat`.`status` = 1 and `product_flat`.`visible_individually` = 1 group by `product_flat`.`id` order by `product_flat`.`created_at` desc limit 10;
+//select distinct `product_flat`.id,`product_flat`.name, `product_flat`.color, `product_flat`.size, `product_flat`.locale, `product_flat`.product_id,`product_flat`.parent_id, `product_flat`.visible_individually,`product_flat`.url_key from `product_flat` left join `product_categories` on `product_categories`.`product_id` = `product_flat`.`product_id` inner join `product_flat` as `variants` on `product_flat`.`id` = COALESCE(variants.parent_id, variants.id) left join `product_attribute_values` on `product_attribute_values`.`product_id` = `variants`.`product_id` where `product_flat`.`locale` = 'tm' and `product_categories`.`category_id` in (6,7) and `product_flat`.`status` = 1 and `product_flat`.`visible_individually` = 1 and ((`product_attribute_values`.`attribute_id` = 23 and (find_in_set(24437, product_attribute_values.integer_value)))) group by `variants`.`id`, `product_flat`.`id` having COUNT(*) = 1 limit 100;
             if ($priceFilter = request('price')) {
                 $priceRange = explode(',', $priceFilter);
 
@@ -262,7 +263,7 @@ class ProductRepository extends WProductRepository
 
 
         $countQuery = "select count(*) as aggregate from ({$repository->model->toSql()}) c";
-        Log::info($repository->model->toSql());
+//        Log::info($repository->model->toSql());
         $count = collect(DB::select($countQuery, $repository->model->getBindings()))->pluck('aggregate')->first();
 
         if ($count > 0) {
@@ -434,7 +435,9 @@ class ProductRepository extends WProductRepository
 //                            $first = reset( $colorVariant['size_variants'] );
                             foreach ($colorVariant['size_variants'] as $sizeVariant) {
                                 $variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}");
-
+                                if(!empty($data['categories'])){
+                                    $variant->categories()->attach($data['categories']);
+                                }
                                 if($variant)
                                 {
                                     $this->assignImages($variant, $colorVariant['images']);
@@ -462,6 +465,9 @@ class ProductRepository extends WProductRepository
                         }
                         elseif($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$colorVariant['product_number']}"))
                         {
+                            if(!empty($data['categories'])){
+                                $variant->categories()->attach($data['categories']);
+                            }
                             $this->assignImages($variant, $colorVariant['images']);
                             $attributes = [
                                 'sku' => $variant->sku,
@@ -488,6 +494,9 @@ class ProductRepository extends WProductRepository
                     $parentProduct->super_attributes()->attach($attribute->id);
                     foreach ($data['size_variants'] as $sizeVariant) {
                         if($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}")){
+                            if(!empty($data['categories'])){
+                                $variant->categories()->attach($data['categories']);
+                            }
                             $this->assignImages($variant, $data['images']);
                             $desc = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']));
                             $attributes = [
