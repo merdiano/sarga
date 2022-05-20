@@ -89,13 +89,13 @@ class ProductRepository extends WProductRepository
 
             $qb = $query->distinct()
                 ->select('product_flat.*')
-                ->leftJoin('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
                 ->where('product_flat.channel', $channel)
                 ->where('product_flat.locale', $locale)
                 ->whereNotNull('product_flat.url_key');
 
             if ($categoryId) {
-                $qb->whereIn('product_categories.category_id', explode(',', $categoryId));
+                $qb->leftJoin('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
+                    ->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
 
             if(isset($params['brand'])) {
@@ -118,6 +118,7 @@ class ProductRepository extends WProductRepository
             if (is_null(request()->input('visible_individually'))) {
                 $qb->where('product_flat.visible_individually', 1);
             }
+
             if(isset($params['color'])){
                 $qb->whereIn('product_flat.color', explode(',', $params['color']));
             }
