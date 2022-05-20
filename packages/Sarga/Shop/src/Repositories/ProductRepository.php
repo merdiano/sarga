@@ -611,13 +611,13 @@ class ProductRepository extends WProductRepository
         catch(\Exception $ex){
             DB::rollBack();
             Log::error($ex->getMessage());
-            Log::info($data);
+//            Log::info($data);
             return false;
         }
     }
     private function updateAttribute($product,$data){
 //        $flat = $product->
-        if(!$data['isSellable']){
+        if(!$data['is_sellable']){
             //$attribute = $this->attributeRepository->findOneByField('code', 'status'); status id = 8
             $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>0]);
 
