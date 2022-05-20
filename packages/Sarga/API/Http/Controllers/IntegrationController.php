@@ -85,7 +85,7 @@ class IntegrationController extends Controller
         }
 
         if(! $product = $this->productRepository->findOneByField('sku',$data['product_group_id'])){
-            return response()->json(['success'=> false,'message' => 'product not found'],400);
+            return response()->json(['success'=> false,'message' => 'product not found'],404);
         }
 
         if($this->productRepository->updateProduct($product,$data)){
