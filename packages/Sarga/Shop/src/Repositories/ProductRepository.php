@@ -94,7 +94,7 @@ class ProductRepository extends WProductRepository
                 ->whereNotNull('product_flat.url_key');
 
             if ($categoryId) {
-                $qb->leftJoin('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
+                $qb->join('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
                     ->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
 
