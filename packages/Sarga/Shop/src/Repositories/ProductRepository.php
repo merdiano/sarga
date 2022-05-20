@@ -611,6 +611,7 @@ class ProductRepository extends WProductRepository
         catch(\Exception $ex){
             DB::rollBack();
             Log::error($ex->getMessage());
+            Log::info($data);
             return false;
         }
     }
