@@ -585,7 +585,7 @@ class ProductRepository extends WProductRepository
                         if (!empty($colorVariant['size_variants']))
                             foreach ($colorVariant['size_variants'] as $sizeVariant) {
                                 if($variant = $this->findOneByField('sku', "{$data['product_group_id']}-{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}"))
-                                    $this->updateAttribute($variant->id,$sizeVariant);
+                                    $this->updateAttribute($variant,$sizeVariant);
                             }
                         elseif($variant = $this->findOneByField('sku', "{$data['product_group_id']}-{$colorVariant['product_number']}"))
                         {
