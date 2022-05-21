@@ -114,18 +114,18 @@ class ProductRepository extends WProductRepository
             if (is_null(request()->input('status'))) {
                 $qb->where('product_flat.status', 1);
             }
-
-            if (is_null(request()->input('visible_individually'))) {
-                $qb->where('product_flat.visible_individually', 1);
-            }
+//
+//            if (is_null(request()->input('visible_individually'))) {
+//                $qb->where('product_flat.visible_individually', 1);
+//            }
 
 //            if(isset($params['color'])){
 //                $qb->whereIn('product_flat.color', explode(',', $params['color']));
 //            }
 
-            if(isset($params['size'])){
-                $qb->whereIn('product_flat.size', explode(',', $params['size']));
-            }
+//            if(isset($params['size'])){
+//                $qb->whereIn('product_flat.size', explode(',', $params['size']));
+//            }
 //            if (isset($params['search'])) {
 //                $qb->where('product_flat.name', 'like', '%' . urldecode($params['search']) . '%');
 //            }
@@ -208,7 +208,7 @@ class ProductRepository extends WProductRepository
                     request()->except([
                         'price',
 //                        'color',
-                        'size'
+//                        'size'
                     ])
                 ));
 
@@ -263,7 +263,7 @@ class ProductRepository extends WProductRepository
 
 
         $countQuery = "select count(*) as aggregate from ({$repository->model->toSql()}) c";
-        Log::info($repository->model->toSql());
+//        Log::info($repository->model->toSql());
         $count = collect(DB::select($countQuery, $repository->model->getBindings()))->pluck('aggregate')->first();
 
         if ($count > 0) {
