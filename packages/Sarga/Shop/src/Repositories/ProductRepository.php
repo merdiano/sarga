@@ -433,13 +433,14 @@ class ProductRepository extends WProductRepository
                         $description = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $colorVariant['descriptions']));
                         if (!empty($colorVariant['size_variants'])) {
 //                            $first = reset( $colorVariant['size_variants'] );
-                            foreach ($colorVariant['size_variants'] as $sizeVariant) {
-                                $variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}");
-                                if(!empty($data['categories'])){
-                                    $variant->categories()->attach($data['categories']);
-                                }
-                                if($variant)
+                            foreach ($colorVariant['size_variants'] as $sizeVariant)
+                            {
+                                if($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}"))
                                 {
+                                    if(!empty($data['categories'])){
+                                        $variant->categories()->attach($data['categories']);
+                                    }
+
                                     $this->assignImages($variant, $colorVariant['images']);
                                     $attributes = [
                                         'sku' => $variant->sku,
@@ -912,6 +913,7 @@ class ProductRepository extends WProductRepository
             ]);
         }
         catch(\Exception $ex){
+            Log::info($ex->getMessage());
             return false;
         }
 
