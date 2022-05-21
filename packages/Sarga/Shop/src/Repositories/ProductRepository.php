@@ -435,7 +435,8 @@ class ProductRepository extends WProductRepository
 //                            $first = reset( $colorVariant['size_variants'] );
                             foreach ($colorVariant['size_variants'] as $sizeVariant)
                             {
-                                if($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}"))
+                                $sizeNumber = $sizeVariant['itemNumber'] ?:$sizeVariant['attributeValue'];
+                                if($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$colorVariant['product_number']}-{$sizeNumber}"))
                                 {
                                     if(!empty($data['categories'])){
                                         $variant->categories()->attach($data['categories']);
