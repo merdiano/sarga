@@ -263,7 +263,7 @@ class ProductRepository extends WProductRepository
 
 
         $countQuery = "select count(*) as aggregate from ({$repository->model->toSql()}) c";
-//        Log::info($repository->model->toSql());
+        Log::info($repository->model->toSql());
         $count = collect(DB::select($countQuery, $repository->model->getBindings()))->pluck('aggregate')->first();
 
         if ($count > 0) {
