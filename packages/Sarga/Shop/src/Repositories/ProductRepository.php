@@ -248,7 +248,7 @@ class ProductRepository extends WProductRepository
 
                 # this is key! if a product has been filtered down to the same number of attributes that we filtered on,
                 # we know that it has matched all of the requested filters.
-                $qb->groupBy('variants.id','variants.color');
+                $qb->groupBy('variants.id','variants.size');
                 $qb->havingRaw('COUNT(*) = ' . count($attributeFilters));
             }
 
