@@ -128,13 +128,13 @@ class ProductFlat
      */
     public function afterProductCreatedUpdated($product)
     {
+        $this->createFlat($product);
+
         if (ProductType::hasVariants($product->type)) {
             foreach ($product->variants()->get() as $variant) {
                 $this->createFlat($variant, $product);
             }
         }
-
-        $this->createFlat($product);
     }
 
     /**
