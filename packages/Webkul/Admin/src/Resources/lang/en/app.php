@@ -525,6 +525,7 @@ return [
                 'invoice-missing'   => 'This invoice id does not exist',
                 'transaction-saved' => 'The transaction has been saved',
                 'already-paid'      => 'This invoice has already been paid',
+                'transaction-amount-exceeds' => 'The specified amount of this transaction exceeds the total amount of the invoice.',
             ],
         ],
     ],
@@ -1671,6 +1672,7 @@ return [
             'canceled'   => 'Order Canceled',
             'pending'    => 'Order Pending',
             'processing' => 'Order Processing',
+            'pending payment' => 'Pending Payment',
         ],
     ],
 ];
