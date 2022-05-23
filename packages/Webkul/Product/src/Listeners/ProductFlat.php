@@ -276,6 +276,7 @@ class ProductFlat
                             $parentProductFlat->min_price = $product->getTypeInstance()->getMinimalPrice();
 
                             $parentProductFlat->max_price = $product->getTypeInstance()->getMaximamPrice();
+                            $parentProductFlat->save();
                         }
                     }
 
