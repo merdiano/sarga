@@ -273,6 +273,9 @@ class ProductFlat
 
                         if ($parentProductFlat) {
                             $productFlat->parent_id = $parentProductFlat->id;
+                            $parentProductFlat->min_price = $product->getTypeInstance()->getMinimalPrice();
+
+                            $parentProductFlat->max_price = $product->getTypeInstance()->getMaximamPrice();
                         }
                     }
 
