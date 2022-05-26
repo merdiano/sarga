@@ -93,4 +93,8 @@ class IntegrationController extends Controller
         }
     }
 
+    public function updateOrderStatus(){
+        Log::info(request()->input());
+    }
+
 }

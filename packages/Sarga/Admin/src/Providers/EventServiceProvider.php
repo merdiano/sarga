@@ -16,6 +16,8 @@ class EventServiceProvider extends ServiceProvider
 {
 
     public function boot(){
+        Event::listen('customer.registration.after', [Sarga\Admin\Listeners\Customer::class,'register']);
+        Event::listen('checkout.order.save.after', 'Webkul\Marketplace\Listeners\Order@afterPlaceOrder');
 //        Event::listen('bagisto.admin.catalog.category.create_form_accordian.general.after', function($viewRenderEventManager) {
 //            $viewRenderEventManager->addTemplate('sarga_admin::catalog.categories.scrap.create');
 //        });
