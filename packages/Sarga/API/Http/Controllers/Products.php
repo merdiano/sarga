@@ -42,7 +42,16 @@ class Products extends ProductController
      */
     public function get($id)
     {
-        return  ($product = $this->productRepository->find($id))?
+        $sku = request()->has('sku');
+
+        if($sku){
+            $product = $this->productRepository->findOneByField('sku',$id);
+        }
+        else{
+            $product = $this->productRepository->find($id);
+        }
+
+        return  ($product)?
             new ProductResource($product) :
             response()->json(['error' => 'not found'],404);
     }
