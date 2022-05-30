@@ -54,7 +54,7 @@ class ProductVariant extends JsonResource
         if(is_countable($this->attributes)){
             return $this->attributes->map(function($item, $key){
                 return [
-                    'code' => $item->code,
+                    'code' => $item->id,
                     'value' => $this->{$item->code},
                     'name' => $item->name??$item->admin_name,
                     'label' => $item->options->where('id',$this->{$item->code})->first()->admin_name
@@ -63,7 +63,7 @@ class ProductVariant extends JsonResource
         }else{
             $item = $this->attributes;
             return [
-                'code' => $item->code,
+                'code' => $item->id,
                 'value' => $this->{$item->code},
                 'name' => $item->name??$item->admin_name,
                 'label' => $item->options->where('id',$this->{$item->code})->first()->admin_name
