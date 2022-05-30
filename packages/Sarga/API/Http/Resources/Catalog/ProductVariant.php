@@ -55,7 +55,7 @@ class ProductVariant extends JsonResource
             return $this->attributes->map(function($item, $key){
                 $option = $item->options()->where('id',$this->{$item->code})->first();
                 return [
-                    'code' => $item->id,
+                    'code' => (string)$item->id,
                     'value' => $this->{$item->code},
                     'name' => $item->name??$item->admin_name,
                     'label' => $option->admin_name,
@@ -65,7 +65,7 @@ class ProductVariant extends JsonResource
             $item = $this->attributes;
             $option = $item->options()->where('id',$this->{$item->code})->first();
             return [
-                'code' => $item->id,
+                'code' => (string)$item->id,
                 'value' => $this->{$item->code},
                 'name' => $item->name??$item->admin_name,
                 'label' => $option->admin_name,
