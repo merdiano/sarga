@@ -20,6 +20,7 @@ return [
         'order-status-pending-payment' => 'Tölege garaşylýar',
         'order-status-processing'      => 'Işlenilýär',
         'order-status-success'         => 'Tamamlandy',
+        'order-status-completed'         => 'Tamamlandy',
 
     ],
     'cart'=>[

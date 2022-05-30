@@ -20,6 +20,7 @@ return [
         'order-status-pending-payment' => 'В ожидании платежа',
         'order-status-processing'      => 'В процессе',
         'order-status-success'         => 'Завершено',
+        'order-status-completed'         => 'Завершено',
 
     ],
     'cart'=>[

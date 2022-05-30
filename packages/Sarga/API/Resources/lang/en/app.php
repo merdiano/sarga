@@ -20,6 +20,7 @@ return [
         'order-status-pending-payment' => 'Pending Payment',
         'order-status-processing'      => 'Processing',
         'order-status-success'         => 'Completed',
+        'order-status-completed'         => 'Completed',
         'channel'                      => 'Channel',
         'customer-name'                => 'Customer Name',
         'email'                        => 'Email',
