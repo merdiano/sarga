@@ -53,20 +53,22 @@ class ProductVariant extends JsonResource
     private function super_attributes(){
         if(is_countable($this->attributes)){
             return $this->attributes->map(function($item, $key){
+                $option = $item->options()->where('id',$this->{$item->code})->first();
                 return [
                     'code' => $item->id,
                     'value' => $this->{$item->code},
                     'name' => $item->name??$item->admin_name,
-                    'label' => $item->options->where('id',$this->{$item->code})->first()->admin_name
+                    'label' => $option->admin_name,
                 ];
             })->toArray();
         }else{
             $item = $this->attributes;
+            $option = $item->options()->where('id',$this->{$item->code})->first();
             return [
                 'code' => $item->id,
                 'value' => $this->{$item->code},
                 'name' => $item->name??$item->admin_name,
-                'label' => $item->options->where('id',$this->{$item->code})->first()->admin_name
+                'label' => $option->admin_name,
             ];
         }
 
