@@ -3,6 +3,7 @@
 namespace Sarga\API\Http\Resources\Customer;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Sarga\API\Http\Resources\Catalog\Product;
 use Sarga\API\Http\Resources\Checkout\CartItemProduct;
 
 class OrderItemResource extends JsonResource
@@ -56,7 +57,7 @@ class OrderItemResource extends JsonResource
 //            'additional'                        => is_array($this->resource->additional)
 //                ? $this->resource->additional
 //                : json_decode($this->resource->additional, true),
-            'child'                             => new self($this->child),
+            'main_product'                     => new Product($this->product),
 //            'children'                          => Self::collection($this->children),
         ];
     }
