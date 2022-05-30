@@ -20,7 +20,7 @@ class OrderItemResource extends JsonResource
             'sku'                               => $this->sku,
             'type'                              => $this->type,
             'name'                              => $this->name,
-            'product'                           => $this->when($this->product_id, new CartItemProduct($this->product)),
+            'product'                           => $this->when($this->product_id, new CartItemProduct($this->child->product ?? $this->product)),
             'coupon_code'                       => $this->coupon_code,
             'weight'                            => (double) $this->weight,
             'total_weight'                      => (double) $this->total_weight,
@@ -52,12 +52,12 @@ class OrderItemResource extends JsonResource
 
             'grant_total'                       => $this->total + $this->tax_amount,
             'formatted_grant_total'             => core()->formatPrice($this->total + $this->tax_amount, $this->order->order_currency_code),
-            'downloadable_links'                => $this->downloadable_link_purchased,
-            'additional'                        => is_array($this->resource->additional)
-                ? $this->resource->additional
-                : json_decode($this->resource->additional, true),
-            'child'                             => new self($this->child),
-            'children'                          => Self::collection($this->children),
+//            'downloadable_links'                => $this->downloadable_link_purchased,
+//            'additional'                        => is_array($this->resource->additional)
+//                ? $this->resource->additional
+//                : json_decode($this->resource->additional, true),
+//            'child'                             => new self($this->child),
+//            'children'                          => Self::collection($this->children),
         ];
     }
 }
