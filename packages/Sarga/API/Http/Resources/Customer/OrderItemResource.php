@@ -56,7 +56,7 @@ class OrderItemResource extends JsonResource
 //            'additional'                        => is_array($this->resource->additional)
 //                ? $this->resource->additional
 //                : json_decode($this->resource->additional, true),
-//            'child'                             => new self($this->child),
+            'child'                             => new self($this->child),
 //            'children'                          => Self::collection($this->children),
         ];
     }
