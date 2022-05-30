@@ -597,7 +597,6 @@ class Configurable extends AbstractType
      */
     public function prepareForCart($data)
     {
-        Log::info($data);
         if (! isset($data['selected_configurable_option']) || ! $data['selected_configurable_option']) {
             if ($this->getDefaultVariantId()) {
                 $data['selected_configurable_option'] = $this->getDefaultVariantId();
