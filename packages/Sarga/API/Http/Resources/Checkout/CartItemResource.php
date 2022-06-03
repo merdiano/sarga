@@ -31,7 +31,7 @@ class CartItemResource extends JsonResource
             'additional'                    => is_array($this->resource->additional)
                 ? $this->resource->additional
                 : json_decode($this->resource->additional, true),
-            'main_product'                  => $this->when($this->child, new Product($this->product)),
+            'main_product'                  => $this->when($this->product_id, new Product($this->product)),
             'product'                       => $this->when($this->product_id, new CartItemProduct($this->child->product ?? $this->product)),
         ];
     }

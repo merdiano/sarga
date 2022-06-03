@@ -77,7 +77,7 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
             $query->orderBy('id', 'desc');
         }
 
-        Log::info($query->toSql());
+//        Log::info($query->toSql());
         if (is_null($request->input('pagination')) || $request->input('pagination')) {
             $results = $query->paginate($request->input('limit') ?? 10);
         } else {

@@ -914,7 +914,7 @@ class ProductRepository extends WProductRepository
             ]);
         }
         catch(\Exception $ex){
-            Log::info($ex->getMessage());
+            Log::error($ex->getMessage());
             return false;
         }
 

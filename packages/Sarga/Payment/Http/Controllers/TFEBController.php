@@ -48,7 +48,7 @@ class TFEBController extends Controller
         // register order to payment gateway
         try{
             $result =  json_decode($this->teb->registerOrder(),true);
-            Log::info($result);
+//            Log::info($result);
             if($result['response']['operationResult'] == 'OPG-00100' && $orderId = $result['response']['orderId']){
 //                dd($result);
                 $this->teb->registerOrderId($orderId);
