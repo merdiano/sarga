@@ -96,7 +96,7 @@ class AttributeController extends Controller
     {
         $attribute = $this->attributeRepository->findOrFail($id);
 
-        return $attribute->options()->orderBy('id','asc')->paginate(500);
+        return $attribute->options()->orderBy('id','desc')->paginate(100);
     }
 
     /**
