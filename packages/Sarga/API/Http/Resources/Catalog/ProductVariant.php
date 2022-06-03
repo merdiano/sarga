@@ -43,6 +43,7 @@ class ProductVariant extends JsonResource
             /* product's checks */
 //            'in_stock'          => $product->haveSufficientQuantity(1),
             'is_item_in_cart'   => \Cart::hasProduct($product),
+            'brand'                  => $product->brand->name ?? '',
             /* special price cases */
             $this->merge($this->specialPriceInfo()),
             'images'            => ProductImage::collection($product->images),
