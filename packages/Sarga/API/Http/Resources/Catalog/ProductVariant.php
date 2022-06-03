@@ -98,7 +98,7 @@ class ProductVariant extends JsonResource
         $productTypeInstance = $product->getTypeInstance();
 
         return [
-            'special_price'          => $this->when(
+            'special_price'          => (double) $this->when(
                 $productTypeInstance->haveSpecialPrice(),
                 core()->convertPrice($productTypeInstance->getSpecialPrice())
             ),
@@ -106,7 +106,7 @@ class ProductVariant extends JsonResource
                 $productTypeInstance->haveSpecialPrice(),
                 core()->currency($productTypeInstance->getSpecialPrice())
             ),
-            'regular_price'          => $this->when(
+            'regular_price'          => (double) $this->when(
                 $productTypeInstance->haveSpecialPrice(),
                 data_get($productTypeInstance->getProductPrices(), 'regular_price.price')
             ),
