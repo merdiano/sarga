@@ -174,4 +174,32 @@ class Customers extends AuthController
             'data'    => new CustomerResource($updatedCustomer),
         ]);
     }
+
+    public function update_password(Request $request){
+        $validation = Validator::make($request->all(), [
+            'phone'      => 'required|digits:8',
+            'password'   => 'required|min:6',
+        ]);
+
+        if ($validation->fails()) {
+
+            return response()->json(['errors'=>$validation->getMessageBag()->all()],422);
+        }
+
+        $updatedCustomer = $this->customerRepository->getModel()
+            ->where('phone', $request->input('phone'))
+            ->update(['password'=>bcrypt($request->input('password'))]);
+
+        if($updatedCustomer){
+            return response()->json([
+                'message' => 'Password updated successfully.',
+                'success'    => true,
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Password update unsuccessfull',
+            'success'    => false,
+        ]);
+    }
 }
