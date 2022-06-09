@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('app-adds.txt',function(){
+Route::get('app-ads.txt',function(){
     return 'facebook.com, 333307141073441, RESELLER, c3e20eee3f780d68';
 });
