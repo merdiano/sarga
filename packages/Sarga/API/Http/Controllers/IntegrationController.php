@@ -63,7 +63,7 @@ class IntegrationController extends Controller
 
         if($product = $this->productRepository->findOneByField('sku',$data['product_group_id']))
         {//product_group_id
-            return response()->json(['success'=>true,'product_id' => $product->id]);
+            return $this->updateVariants($product);
         }
         elseif($product = $this->productRepository->createProduct($data)){
 
@@ -91,6 +91,10 @@ class IntegrationController extends Controller
         if($this->productRepository->updateProduct($product,$data)){
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }
+    }
+
+    private function updateVariants($product){
+
     }
 
     public function updateOrderStatus(){
