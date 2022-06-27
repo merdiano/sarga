@@ -56,7 +56,16 @@ class ProductFlat extends Model implements ProductFlatContract
     {
         return 'products_index';
     }
-
+    public function toSearchableArray():array
+    {
+        return [
+            'id'            => $this->id,
+            'sku'           => $this->sku,
+            'name'          => $this->name,
+            'meta_title'    => $this->meta_title,
+            'meta_keywords' => $this->meta_keywords,
+        ];
+    }
     /**
      * Get an attribute from the model.
      *
