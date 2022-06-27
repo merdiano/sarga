@@ -85,7 +85,7 @@ class ProductRepository extends WProductRepository
         $repository = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($params, $categoryId) {
             $channel = core()->getRequestedChannelCode();
 
-            $locale = core()->getRequestedLocaleCode();
+            $locale = 'tm';//core()->getRequestedLocaleCode();
 
             $qb = $query->distinct()
                 ->select('product_flat.*')
@@ -338,7 +338,7 @@ class ProductRepository extends WProductRepository
         return $results;
     }
 
-    private function calculatePrice($price){
+    public function calculatePrice($price){
         $originalPrice = Arr::get($price, 'originalPrice.value');
         $discountedPrice = Arr::get($price, 'discountedPrice.value');
 
@@ -617,7 +617,7 @@ class ProductRepository extends WProductRepository
             return false;
         }
     }
-    private function updateAttribute($product,$data){
+    public function updateAttribute($product,$data){
 //        $flat = $product->
         if(isset($data['is_sellable']) && !$data['is_sellable']){
             //$attribute = $this->attributeRepository->findOneByField('code', 'status'); status id = 8
@@ -786,7 +786,7 @@ class ProductRepository extends WProductRepository
 ////        $brand->save();
 //    }
 
-    private function assignImages($product,$images){
+    public function assignImages($product,$images){
         foreach($images as $image){
             $this->imageRepository->create([
                 'type' => 'cdn',
@@ -867,7 +867,7 @@ class ProductRepository extends WProductRepository
 
         return $results;
     }
-    private function assignAttributes($product, $attributes){
+    public function assignAttributes($product, $attributes){
         foreach($attributes as $code => $value){
             if(! $attribute = $this->attributeRepository->findOneByField('code', $code))
             {
@@ -903,7 +903,7 @@ class ProductRepository extends WProductRepository
         }
     }
 
-    private function createVariant($product, $sku){
+    public function createVariant($product, $sku){
         try{
             return $this->getModel()->create([
                 'parent_id'           => $product->id,
@@ -973,7 +973,7 @@ class ProductRepository extends WProductRepository
         return $options;
     }
 
-    private function getAttributeOptionId($attr,$value){
+    public function getAttributeOptionId($attr,$value){
         $attribute_id = $this->attributeRepository->getAttributeByCode($attr)->id;
 
         $option = $this->optionRepository->findOneWhere(['attribute_id'=>$attribute_id,'admin_name'=>$value]);
