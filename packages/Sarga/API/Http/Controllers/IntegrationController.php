@@ -68,6 +68,7 @@ class IntegrationController extends Controller
 
         if($product = $this->productRepository->findOneByField('sku',$data['product_group_id']))
         {//product_group_id
+            Log::info($data);
             $this->updateVariants($product,$data);
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }
