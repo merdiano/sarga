@@ -165,6 +165,7 @@ class IntegrationController extends Controller
                 }
                 if (!empty($data['size_variants'])){
                     foreach ($data['size_variants'] as $sizeVariant) {
+                        Log::info($sizeVariant);
                         $sku = "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}";
                         if($variant = $this->productRepository->findOneByField('sku', $sku)){
                             $this->updateAttribute($variant,$sizeVariant);
