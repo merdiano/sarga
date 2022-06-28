@@ -619,7 +619,7 @@ class ProductRepository extends WProductRepository
     }
     public function updateAttribute($product,$data){
 //        $flat = $product->
-        if(isset($data['is_sellable']) && !$data['is_sellable']){
+        if(isset($data['sellable']) && !$data['sellable']){
             //$attribute = $this->attributeRepository->findOneByField('code', 'status'); status id = 8
             $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>0]);
 
