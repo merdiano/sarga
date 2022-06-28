@@ -68,7 +68,7 @@ class IntegrationController extends Controller
 
         if($product = $this->productRepository->findOneByField('sku',$data['product_group_id']))
         {//product_group_id
-            Log::info($data);
+//            Log::info($data);
             $this->updateVariants($product,$data);
             return response()->json(['success'=>true,'product_id' => $product->id]);
         }
@@ -217,14 +217,15 @@ class IntegrationController extends Controller
     private function updateAttribute($product,$data){
 
         if(isset($data['sellable']) && $data['sellable']===false){
-            Log::info($data);
+
             //$attribute = $this->attributeRepository->findOneByField('code', 'status'); status id = 8
-            $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>1]);
+            $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>0]);
 
         }else{
+            Log::info($data);
             $originalPrice = Arr::get($data, 'price.originalPrice.value');
             $discountedPrice = Arr::get($data, 'price.discountedPrice.value');
-            $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>0]);
+            $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>1]);
             if($discountedPrice >= $originalPrice){
                 $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>11],['float_value'=>$discountedPrice]);// price id 11
                 $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>13],['float_value'=>null]);//special price id 13
