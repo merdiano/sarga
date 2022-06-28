@@ -214,7 +214,9 @@ class IntegrationController extends Controller
     }
 
     private function updateAttribute($product,$data){
+
         if(isset($data['is_sellable']) && !$data['is_sellable']){
+            Log::info($data);
             //$attribute = $this->attributeRepository->findOneByField('code', 'status'); status id = 8
             $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>0]);
 
