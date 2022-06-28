@@ -168,7 +168,7 @@ class IntegrationController extends Controller
                         $sku = "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}";
                         if($variant = $this->productRepository->findOneByField('sku', $sku)){
                             $this->updateAttribute($variant,$sizeVariant);
-
+                            Log::info($sizeVariant);
                         }else{
                             $variant = $this->productRepository->createVariant($product,$sku);
                             $this->productRepository->assignImages($variant,$data['images']);
@@ -220,9 +220,9 @@ class IntegrationController extends Controller
 
             //$attribute = $this->attributeRepository->findOneByField('code', 'status'); status id = 8
             $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>0]);
-            Log::info($data);
+
         }else{
-            Log::info($data);
+
             $originalPrice = Arr::get($data, 'price.originalPrice.value');
             $discountedPrice = Arr::get($data, 'price.discountedPrice.value');
             $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>1]);
