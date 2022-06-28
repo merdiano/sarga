@@ -163,12 +163,11 @@ class IntegrationController extends Controller
                     }
 
                 }
-                elseif (!empty($data['size_variants'])){
+                if (!empty($data['size_variants'])){
                     foreach ($data['size_variants'] as $sizeVariant) {
                         $sku = "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}";
                         if($variant = $this->productRepository->findOneByField('sku', $sku)){
                             $this->updateAttribute($variant,$sizeVariant);
-                            Log::info($sizeVariant);
                         }else{
                             $variant = $this->productRepository->createVariant($product,$sku);
                             $this->productRepository->assignImages($variant,$data['images']);
