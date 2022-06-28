@@ -74,7 +74,7 @@ class Products extends ProductController
             }]);
         }])->find($id);
 
-//        Log::info($product->variants->map->only(['status']));
+        Log::info($product->variants->map->only(['status']));
 
         if(!empty($product) && $product->super_attributes->isNotEmpty() && $product->variants->isNotEmpty())
         {
