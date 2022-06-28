@@ -219,12 +219,12 @@ class IntegrationController extends Controller
         if(isset($data['sellable']) && $data['sellable']===false){
             Log::info($data);
             //$attribute = $this->attributeRepository->findOneByField('code', 'status'); status id = 8
-            $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>0]);
+            $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>1]);
 
         }else{
             $originalPrice = Arr::get($data, 'price.originalPrice.value');
             $discountedPrice = Arr::get($data, 'price.discountedPrice.value');
-            $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>1]);
+            $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>0]);
             if($discountedPrice >= $originalPrice){
                 $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>11],['float_value'=>$discountedPrice]);// price id 11
                 $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>13],['float_value'=>null]);//special price id 13
