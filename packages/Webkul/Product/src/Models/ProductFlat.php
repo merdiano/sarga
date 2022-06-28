@@ -40,7 +40,8 @@ class ProductFlat extends Model implements ProductFlatContract
         'attribute_family_id',
         'meta_title',
         'meta_keywords',
-        'meta_description'
+        'meta_description',
+        'name'
     ];
 
     /**
