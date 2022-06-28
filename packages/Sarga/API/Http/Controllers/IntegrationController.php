@@ -203,8 +203,8 @@ class IntegrationController extends Controller
             }else if($product->type == 'simple'){
                 $this->updateAttribute($product,$data);
             }
-            Event::dispatch('catalog.product.update.after', $product);
             DB::commit();
+            Event::dispatch('catalog.product.update.after', $product);
         }
         catch(\Exception $ex){
             DB::rollBack();
@@ -220,7 +220,7 @@ class IntegrationController extends Controller
 
             //$attribute = $this->attributeRepository->findOneByField('code', 'status'); status id = 8
             $this->attributeValueRepository->updateOrCreate(['product_id'=>$product->id,'attribute_id'=>8],['boolean_value'=>0]);
-
+            Log::info($data);
         }else{
             Log::info($data);
             $originalPrice = Arr::get($data, 'price.originalPrice.value');
