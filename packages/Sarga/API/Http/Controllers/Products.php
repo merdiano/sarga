@@ -70,11 +70,11 @@ class Products extends ProductController
                 $qf->where('product_flat.channel', $channel)
                     ->where('product_flat.locale', $locale)
                     ->whereNotNull('product_flat.url_key')
-                    ->where('status',1);
+                    ->where('product_flat.status',1);
             }]);
         }])->find($id);
 
-        Log::info($product->variants->map->only(['status']));
+//        Log::info($product->variants->map->only(['status']));
 
         if(!empty($product) && $product->super_attributes->isNotEmpty() && $product->variants->isNotEmpty())
         {
