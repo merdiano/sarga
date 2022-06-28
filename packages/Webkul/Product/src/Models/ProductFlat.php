@@ -38,6 +38,9 @@ class ProductFlat extends Model implements ProductFlatContract
         'pivot',
         'parent_id',
         'attribute_family_id',
+        'meta_title',
+        'meta_keywords',
+        'meta_description'
     ];
 
     /**
@@ -87,10 +90,8 @@ class ProductFlat extends Model implements ProductFlatContract
             if ($attribute && ($attribute->value_per_channel || $attribute->value_per_locale)) {
                 $defaultProduct = $this->getDefaultProduct();
 
-                try {
-                    $this->attributes[$key] = $defaultProduct->attributes[$key];
-                }
-                catch(Exception $ex){}
+                $this->attributes[$key] = $defaultProduct->attributes[$key];
+
                 return $this->getAttributeValue($key);
             }
         }
