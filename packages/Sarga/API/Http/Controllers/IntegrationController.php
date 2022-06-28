@@ -112,7 +112,7 @@ class IntegrationController extends Controller
                                 $sku = "{$data['product_group_id']}-{$colorVariant['product_number']}-{$sizeVariant['itemNumber']}";
                                 if($variant = $this->productRepository->findOneByField('sku',$sku ))
                                     $this->updateAttribute($variant,$sizeVariant);
-                                else{
+                                elseif($sizeVariant['sellable']){
                                     $variant = $this->productRepository->createVariant($product,$sku);
                                     $this->productRepository->assignImages($variant,$colorVariant['images']);
                                     $attributes = [
@@ -138,7 +138,7 @@ class IntegrationController extends Controller
                         {
                             $this->updateAttribute($variant,$colorVariant);
                         }
-                        else{
+                        elseif($colorVariant['sellable']){
                             $variant = $this->productRepository->createVariant($product,"{$data['product_group_id']}-{$colorVariant['product_number']}");
                             $this->productRepository->assignImages($variant,$colorVariant['images']);
                             $desc = implode(array_map(fn($value): string => '<p>' . $value['description'] . '</p>', $data['descriptions']));
@@ -165,11 +165,10 @@ class IntegrationController extends Controller
                 }
                 if (!empty($data['size_variants'])){
                     foreach ($data['size_variants'] as $sizeVariant) {
-                        Log::info($sizeVariant);
                         $sku = "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}";
                         if($variant = $this->productRepository->findOneByField('sku', $sku)){
                             $this->updateAttribute($variant,$sizeVariant);
-                        }else{
+                        }elseif($sizeVariant['sellable']){
                             $variant = $this->productRepository->createVariant($product,$sku);
                             $this->productRepository->assignImages($variant,$data['images']);
 
@@ -196,7 +195,7 @@ class IntegrationController extends Controller
                                 $attributes['color'] = $this->productRepository->getAttributeOptionId('color', $data['color']);
                             }
 
-                            $this->assignAttributes($variant, array_merge($attributes,$this->productRepository->calculatePrice($sizeVariant['price'])));
+                            $this->productRepository->assignAttributes($variant, array_merge($attributes,$this->productRepository->calculatePrice($sizeVariant['price'])));
                         }
                     }
                 }
