@@ -2,6 +2,7 @@
 
 namespace Sarga\API\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Catalog\ProductVariant;
 use Sarga\API\Http\Resources\Catalog\SuperAttribute;
 use Sarga\Shop\Repositories\ProductRepository;
@@ -64,7 +65,7 @@ class Products extends ProductController
             {
                 $channel = core()->getRequestedChannelCode();
 
-                $locale = core()->getRequestedLocaleCode();
+                $locale = 'tm';//core()->getRequestedLocaleCode();
 
                 $qf->where('product_flat.channel', $channel)
                     ->where('product_flat.locale', $locale)
@@ -72,6 +73,8 @@ class Products extends ProductController
                     ->where('status',1);
             }]);
         }])->find($id);
+
+        Log::info($product);
 
         if(!empty($product) && $product->super_attributes->isNotEmpty() && $product->variants->isNotEmpty())
         {
