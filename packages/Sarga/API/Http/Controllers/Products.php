@@ -81,7 +81,7 @@ class Products extends ProductController
             $variants = $product->variants->where('status',1)->makeHidden(['type','created_at','updated_at','parent_id','attribute_family_id',
                 'additional','new','featured','visible_individually','guest_checkout','meta_title','meta_keywords',
                 'product_flats','attribute_family','short_description','sku','brand']);
-            Log::info($variants->map->only(['status']));
+//            Log::info($variants->map->only(['status']));
             $attribute = $product->super_attributes->first();
 
             $distinctVariants =  $variants->unique($attribute->code);
