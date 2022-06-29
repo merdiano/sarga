@@ -78,10 +78,10 @@ class Products extends ProductController
 
         if(!empty($product) && $product->super_attributes->isNotEmpty() && $product->variants->isNotEmpty())
         {
-            $variants = $product->variants->makeHidden(['type','created_at','updated_at','parent_id','attribute_family_id',
-                'additional','new','featured','visible_individually','status','guest_checkout','meta_title','meta_keywords',
+            $variants = $product->variants->where('status',1)->makeHidden(['type','created_at','updated_at','parent_id','attribute_family_id',
+                'additional','new','featured','visible_individually','guest_checkout','meta_title','meta_keywords',
                 'product_flats','attribute_family','short_description','sku','brand']);
-
+            Log::info($variants->map->only(['status']));
             $attribute = $product->super_attributes->first();
 
             $distinctVariants =  $variants->unique($attribute->code);
