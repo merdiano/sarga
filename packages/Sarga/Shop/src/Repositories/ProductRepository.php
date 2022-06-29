@@ -495,7 +495,7 @@ class ProductRepository extends WProductRepository
                     $attribute = $this->attributeRepository->findOneByField('code', 'size');
                     $parentProduct->super_attributes()->attach($attribute->id);
                     foreach ($data['size_variants'] as $sizeVariant) {
-                        if($variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}")){
+                        if($sizeVariant['sellable'] && $variant = $this->createVariant($parentProduct, "{$data['product_group_id']}-{$data['product_number']}-{$sizeVariant['itemNumber']}")){
                             if(!empty($data['categories'])){
                                 $variant->categories()->attach($data['categories']);
                             }
