@@ -51,10 +51,14 @@ class Orders extends OrderController
 
         $order = $orderItem->order;
 
+        if($order->shipping_amount>0){
+            $order = $this->orderRepository->calculateShipping($order,$orderItem);
+        }
+
         if($this->orderItemRepository->cancel($orderItem))
         {
             $this->orderRepository->updateOrderStatus($order);
-            $this->orderRepository->calculateTotals($order,$orderItem);
+            $this->orderRepository->calculateTotals($order);
             session()->flash('success', trans('admin::app.response.cancel-success', ['name' => 'Order Item']));
         }
         else

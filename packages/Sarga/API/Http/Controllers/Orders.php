@@ -32,10 +32,14 @@ class Orders extends OrderController
         $orderItem = $this->orderItemRepository->with('order')
             ->findOrFail($item_id);
 
+        if($order->shipping_amount>0){
+            $order = $this->orderRepository->calculateShipping($order,$orderItem);
+        }
+
         if($this->orderItemRepository->cancel($orderItem))
         {
-            $order = $this->orderRepository->calculateTotals($order,$orderItem);
             $order = $this->orderRepository->updateOrderStatus($order);
+            $order = $this->orderRepository->calculateTotals($order);
 
             return response(['data'=>[
                 'order' => new OrderResource($order)],
