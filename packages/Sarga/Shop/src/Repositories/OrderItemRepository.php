@@ -27,7 +27,7 @@ class OrderItemRepository extends WOrderItemRepo
             }
 
             if ($orderItem->qty_ordered) {
-//                $orderItem->total_weight -= $orderItem->weight * $orderItem->qty_to_cancel;
+                $orderItem->total_weight -= $orderItem->weight * $orderItem->qty_to_cancel;
                 $prosent_discount = ($orderItem->total* $orderItem->discount_percent)/100;
                 $base_prosent_discount = ($orderItem->base_total* $orderItem->discount_percent)/100;
                 $prosentsizDiscount = $orderItem->discount_amount - $prosent_discount;
@@ -43,6 +43,7 @@ class OrderItemRepository extends WOrderItemRepo
                 $orderItem->save();
 
                 if ($orderItem->parent && $orderItem->parent->qty_ordered) {
+                    $orderItem->parent->total_weight -= $orderItem->parent->weight * $orderItem->parent->qty_to_cancel;
                     $prosent_discount = ($orderItem->parent->total* $orderItem->parent->discount_percent)/100;
                     $base_prosent_discount = ($orderItem->parent->base_total* $orderItem->parent->discount_percent)/100;
                     $prosentsizDiscount = $orderItem->parent->discount_amount - $prosent_discount;
@@ -59,6 +60,7 @@ class OrderItemRepository extends WOrderItemRepo
                     $orderItem->parent->save();
                 }
             } else {
+                $orderItem->parent->total_weight -= $orderItem->parent->weight * $orderItem->parent->qty_to_cancel;
                 $prosent_discount = ($orderItem->parent->total* $orderItem->parent->discount_percent)/100;
                 $base_prosent_discount = ($orderItem->parent->base_total* $orderItem->parent->discount_percent)/100;
                 $prosentsizDiscount = $orderItem->parent->discount_amount - $prosent_discount;

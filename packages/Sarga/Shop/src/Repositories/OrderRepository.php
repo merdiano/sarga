@@ -67,14 +67,21 @@ class OrderRepository extends WOrderRepository
         $total_weight = $order->items->sum('total_weight');
 //        $order_item->total_weight = ($order_item->qty_ordered - $order_item->qty_canceled) * $order_item->weight;
 
-        $shipping_price = $order->shipping_amount/$total_weight;
-        $base_shipping_price = $order->base_shipping_amount/$total_weight;
+        if(($total_weight - $order_item->total_weight) >0 ){
+            $shipping_price = $order->shipping_amount/$total_weight;
+            $base_shipping_price = $order->base_shipping_amount/$total_weight;
 
-        $canceled_amount = $shipping_price * $order_item->qty_to_cancel * $order_item->weight;
-        $canceled_base_amount = $base_shipping_price * $order_item->qty_to_cancel * $order_item->weight;
+            $canceled_amount = $shipping_price * $order_item->qty_to_cancel * $order_item->weight;
+            $canceled_base_amount = $base_shipping_price * $order_item->qty_to_cancel * $order_item->weight;
 
-        $order->shipping_amount = $order->shipping_amount - $canceled_amount;
-        $order->base_shipping_amount = $order->base_shipping_amount - $canceled_base_amount;
+            $order->shipping_amount = $order->shipping_amount - $canceled_amount;
+            $order->base_shipping_amount = $order->base_shipping_amount - $canceled_base_amount;
+        }else
+        {
+            $order->shipping_amount = 0;
+            $order->base_shipping_amount = 0;
+        }
+
 
         return $order;
     }
