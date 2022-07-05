@@ -52,9 +52,11 @@ class OrderRepository extends WOrderRepository
         $order->sub_total = $order->items()->sum('total');
         $order->base_sub_total = $order->items()->sum('base_total');
 
-//        dd($order);
-        $order->grand_total = $order->shipping_amount + $order->sub_total - $order->items->sum('discount_amount') - $order->shipping_discount_amount;
-        $order->base_grand_total = $order->base_shipping_amount + $order->base_sub_total - $order->items->sum('base_discount_amount') - $order->base_shipping_discount_amount;
+        $order->discount_amount = $order->items()->sum('discount_amount');
+        $order->base_discount_amount = $order->items()->sum('discount_amount');
+
+        $order->grand_total = $order->shipping_amount + $order->sub_total - $order->discount - $order->shipping_discount_amount;
+        $order->base_grand_total = $order->base_shipping_amount + $order->base_sub_total -  $order->base_discount_amount - $order->base_shipping_discount_amount;
 
         $order->save();
 
