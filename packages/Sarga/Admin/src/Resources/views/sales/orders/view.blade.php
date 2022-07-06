@@ -129,7 +129,7 @@
 
                                             <div class="row">
                                                 <span class="title">
-                                                    Telefon:
+                                                    Telefon
                                                 </span>
 
                                                 <span class="value">
