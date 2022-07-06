@@ -34,7 +34,7 @@ class SearchController extends V1Controller
 
         $categories = $this->searchCategories($queries);
 
-        return Suggestion::collection($products->merge($brands)->merge($categories)->sortBy('name'));
+        return Suggestion::collection($categories->merge($brands)->merge($products));
 
     }
 
