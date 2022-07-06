@@ -129,11 +129,11 @@
 
                                             <div class="row">
                                                 <span class="title">
-                                                    {{ __('admin::app.sales.orders.email') }}
+                                                    Telefon:
                                                 </span>
 
                                                 <span class="value">
-                                                    {{ $order->customer_email }}
+                                                    {{ $order->customer->phone }}
                                                 </span>
                                             </div>
 
