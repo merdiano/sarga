@@ -304,7 +304,9 @@
 
                                                     <tr>
                                                         <td>
-                                                            <a href="{{route('admin.catalog.products.edit',['id'=>$item->product_id])}}">{{ $item->getTypeInstance()->getOrderedItem($item)->sku }}</a>
+                                                            <a href="{{route('admin.catalog.products.edit',['id'=>$item->product_id])}}">
+                                                                <img src="{{ $item->getTypeInstance()->getBaseImage($item)->sku }}" alt="suraty" height="40" width="40">
+                                                            </a>
                                                         </td>
 
                                                         <td>
