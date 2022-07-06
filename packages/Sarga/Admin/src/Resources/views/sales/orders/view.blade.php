@@ -285,7 +285,7 @@
                                         <table>
                                             <thead>
                                                 <tr>
-                                                    <th>{{ __('admin::app.sales.orders.SKU') }}</th>
+                                                    <th>Image</th>
                                                     <th>{{ __('admin::app.sales.orders.product-name') }}</th>
                                                     <th>{{ __('admin::app.sales.orders.price') }}</th>
                                                     <th>{{ __('admin::app.sales.orders.item-status') }}</th>
@@ -305,7 +305,8 @@
                                                     <tr>
                                                         <td>
                                                             <a href="{{route('admin.catalog.products.edit',['id'=>$item->product_id])}}">
-                                                                <img src="{{ $item->getTypeInstance()->getBaseImage($item)->sku }}" alt="suraty" height="40" width="40">
+                                                                <img src="{{ $item->product->images->first()->url ?? $item->getTypeInstance()->getBaseImage($item)['small_image_url'] }}"
+                                                                     alt="suraty" height="150" width="150">
                                                             </a>
                                                         </td>
 
