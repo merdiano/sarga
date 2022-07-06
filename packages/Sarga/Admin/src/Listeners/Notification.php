@@ -5,7 +5,7 @@ namespace Sarga\Admin\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Sarga\Admin\Events\OrderChangedEvent;
 
-class Notification implements ShouldQueue
+class Notification
 {
 
     public function orderItem(\Webkul\Sales\Models\Order $order){
