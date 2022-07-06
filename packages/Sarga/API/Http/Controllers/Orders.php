@@ -2,6 +2,7 @@
 
 namespace Sarga\API\Http\Controllers;
 
+use Illuminate\Support\Facades\Event;
 use Sarga\API\Http\Resources\Customer\OrderResource;
 use Sarga\Shop\Repositories\OrderItemRepository;
 use Sarga\Shop\Repositories\OrderRepository;
@@ -40,6 +41,8 @@ class Orders extends OrderController
         {
             $order = $this->orderRepository->updateOrderStatus($order);
             $order = $this->orderRepository->calculateTotals($order);
+
+            Event::dispatch('sales.order.update-status.item', $order);
 
             return response(['data'=>[
                 'order' => new OrderResource($order)],

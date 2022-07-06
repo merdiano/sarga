@@ -8,6 +8,7 @@
     $orderStatus = [
         'all' => trans('admin::app.notification.status.all'),
         'pending' => trans('admin::app.notification.status.pending'),
+        'item_cancelled' => trans('admin::app.notification.status.pending'),
         'canceled'=> trans('admin::app.notification.status.canceled'),
         'closed' => trans('admin::app.notification.status.closed'),
         'completed'=> trans('admin::app.notification.status.completed'),
@@ -16,6 +17,7 @@
 
     $orderStatusMessages = [
         'pending' => trans('admin::app.notification.order-status-messages.pending'),
+        'item_cancelled' => trans('admin::app.notification.order-status-messages.pending'),
         'canceled'=> trans('admin::app.notification.order-status-messages.canceled'),
         'closed' => trans('admin::app.notification.order-status-messages.closed'),
         'completed'=> trans('admin::app.notification.order-status-messages.completed'),
@@ -46,6 +48,14 @@
 
         .page-item .pagination-page-nav .active .page-link {
             color:#fff !important;
+        }
+        .notif li .item_cancelled {
+            background-color: darkgreen;
+        }
+        .item_cancelled {
+            background-image: url(../images/notification-checked.svg);
+            width: 30px;
+            height: 30px;
         }
     </style>
 @endpush
@@ -139,6 +149,10 @@
                         pending : {
                             icon: 'pending-icon',
                             message: 'Order Pending'
+                        },
+                        item_cancelled : {
+                            icon: 'pending-icon',
+                            message: 'Order Changed'
                         },
                         processing : {
                             icon: 'processing-icon',

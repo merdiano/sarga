@@ -1,6 +1,6 @@
 <?php
 
-namespace Sarga\Admin\src\Listeners;
+namespace Sarga\Admin\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Http;
