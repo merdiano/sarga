@@ -4,7 +4,6 @@ namespace Sarga\Admin\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Sarga\Admin\Events\OrderChangedEvent;
-use Webkul\Notification\Repositories\NotificationRepository;
 
 class Notification implements ShouldQueue
 {
@@ -15,6 +14,6 @@ class Notification implements ShouldQueue
             'id'     => $order->id,
             'status' => 'item_cancelled',
         ];
-        event(new OrderChangedEvent);
+        event(new OrderChangedEvent($orderArray));
     }
 }
