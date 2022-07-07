@@ -289,14 +289,22 @@
                                                 @php $product = $item->child->product ?? $item->product; @endphp
                                                     <tr>
                                                         <td>
+                                                            @if($product)
                                                             <a href="{{route('admin.catalog.products.edit',['id'=>$item->product_id])}}">
                                                                 <img src="{{ $product->images->first()->url ?? $product->getTypeInstance()->getBaseImage($item)['small_image_url'] }}"
                                                                      alt="suraty" height="150" width="150">
                                                             </a>
+                                                            @else
+                                                                {{$item->sku}}
+                                                            @endif
                                                         </td>
 
                                                         <td>
+                                                            @if($product)
                                                             <a href="{{ $product->source ?? '#'}}">{{ $item->name }}</a>
+                                                            @else
+                                                                {{ $item->name }}
+                                                            @endif
 
                                                             @if (isset($item->additional['attributes']))
                                                                 <div class="item-options">
