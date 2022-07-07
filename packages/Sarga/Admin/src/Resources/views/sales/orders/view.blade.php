@@ -12,18 +12,15 @@
 
             <div class="page-title">
                 <h1>
-                    {!! view_render_event('sales.order.title.before', ['order' => $order]) !!}
 
                     <i class="icon angle-left-icon back-link" onclick="window.location = '{{ route('admin.sales.orders.index') }}'"></i>
 
                     {{ __('admin::app.sales.orders.view-title', ['order_id' => $order->increment_id]) }}
 
-                    {!! view_render_event('sales.order.title.after', ['order' => $order]) !!}
                 </h1>
             </div>
 
             <div class="page-action">
-                {!! view_render_event('sales.order.page_action.before', ['order' => $order]) !!}
 
                 @if ($order->canCancel() && bouncer()->hasPermission('sales.orders.cancel'))
                     <a href="{{ route('admin.sales.orders.cancel', $order->id) }}" class="btn btn-lg btn-primary" v-alert:message="'{{ __('admin::app.sales.orders.cancel-confirm-msg') }}'">
@@ -49,14 +46,12 @@
                     </a>
                 @endif
 
-                {!! view_render_event('sales.order.page_action.after', ['order' => $order]) !!}
             </div>
         </div>
 
         <div class="page-content">
 
             <tabs>
-                {!! view_render_event('sales.order.tabs.before', ['order' => $order]) !!}
 
                 <tab name="{{ __('admin::app.sales.orders.info') }}" :selected="true">
                     <div class="sale-container">
@@ -81,7 +76,6 @@
                                                 </span>
                                             </div>
 
-                                            {!! view_render_event('sales.order.created_at.after', ['order' => $order]) !!}
 
                                             <div class="row">
                                                 <span class="title">
@@ -93,7 +87,6 @@
                                                 </span>
                                             </div>
 
-                                            {!! view_render_event('sales.order.status_label.after', ['order' => $order]) !!}
 
                                             <div class="row">
                                                 <span class="title">
@@ -105,7 +98,6 @@
                                                 </span>
                                             </div>
 
-                                            {!! view_render_event('sales.order.channel_name.after', ['order' => $order]) !!}
                                         </div>
                                     </div>
 
@@ -133,11 +125,9 @@
                                                 </span>
 
                                                 <span class="value">
-                                                    {{ $order->customer->phone }}
+                                                    {{ $order->customer->phone ?? '#'}}
                                                 </span>
                                             </div>
-
-                                            {!! view_render_event('sales.order.customer_email.after', ['order' => $order]) !!}
 
                                             @if (! is_null($order->customer) && ! is_null($order->customer->group))
                                                 <div class="row">
@@ -185,8 +175,6 @@
 
                                                 <div class="section-content">
                                                     @include ('admin::sales.address', ['address' => $order->shipping_address])
-
-                                                    {!! view_render_event('sales.order.shipping_address.after', ['order' => $order]) !!}
                                                 </div>
                                             </div>
                                         @endif
@@ -239,7 +227,6 @@
                                                 </div>
                                             @endif
 
-                                            {!! view_render_event('sales.order.payment-method.after', ['order' => $order]) !!}
                                         </div>
                                     </div>
 
@@ -269,8 +256,6 @@
                                                         {{ core()->formatPrice($order->shipping_amount,$order->order_currency_code) }}
                                                     </span>
                                                 </div>
-
-                                                {!! view_render_event('sales.order.shipping-method.after', ['order' => $order]) !!}
                                             </div>
                                         </div>
                                     @endif
@@ -301,17 +286,17 @@
                                             <tbody>
 
                                                 @foreach ($order->items as $item)
-
+                                                @php $product = $item->child->product ?? $item->product; @endphp
                                                     <tr>
                                                         <td>
                                                             <a href="{{route('admin.catalog.products.edit',['id'=>$item->product_id])}}">
-                                                                <img src="{{ $item->product->images->first()->url ?? $item->getTypeInstance()->getBaseImage($item)['small_image_url'] }}"
+                                                                <img src="{{ $product->images->first()->url ?? $product->getTypeInstance()->getBaseImage($item)['small_image_url'] }}"
                                                                      alt="suraty" height="150" width="150">
                                                             </a>
                                                         </td>
 
                                                         <td>
-                                                            <a href="{{ $item->product->source ?? '#'}}">{{ $item->name }}</a>
+                                                            <a href="{{ $product->source ?? '#'}}">{{ $item->name }}</a>
 
                                                             @if (isset($item->additional['attributes']))
                                                                 <div class="item-options">
@@ -644,7 +629,6 @@
 
                 </tab>
 
-                {!! view_render_event('sales.order.tabs.after', ['order' => $order]) !!}
             </tabs>
         </div>
 
