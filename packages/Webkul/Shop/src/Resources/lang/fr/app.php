@@ -537,10 +537,12 @@ return [
 
             'minimum-order-message'     => 'Le montant minimum de commande est de :amount',
             'suspended-account-message' => 'Your account has been suspended.',
+            'inactive-account-message' =>  'Your account has been inactive.',
             'check-shipping-address'    => 'Please check shipping address.',
             'check-billing-address'     => 'Please check billing address.',
             'specify-shipping-method'   => 'Please specify shipping method.',
             'specify-payment-method'    => 'Please specify payment method.',
+            'rule-applied'              => 'Cart rule applied',
         ],
 
         'onepage' => [

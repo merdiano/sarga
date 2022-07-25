@@ -35,7 +35,7 @@
                                 @php
                                     $productBaseImage = $item->product->getTypeInstance()->getBaseImage($item);
 
-                                    if (is_null ($item->product->url_key)) {
+                                    if (is_null($item->product->url_key)) {
                                         if (! is_null($item->product->parent)) {
                                             $url_key = $item->product->parent->url_key;
                                         }
@@ -106,7 +106,10 @@
 
                                                 @if ($showWishlist)
                                                     <span class="towishlist">
-                                                            @if ($item->parent_id != 'null' ||$item->parent_id != null)
+                                                            @if (
+                                                                $item->parent_id != 'null'
+                                                                || $item->parent_id != null
+                                                            )
                                                             <a
                                                                 href="javascript:void(0);"
                                                                 onclick="moveToWishlist('{{ __('shop::app.checkout.cart.cart-remove-action') }}', '{{ route('shop.movetowishlist', $item->id) }}')">
@@ -287,8 +290,9 @@
                 },
 
                 decreaseQty: function() {
-                    if (this.qty > this.minQuantity)
+                    if (this.qty > this.minQuantity) {
                         this.qty = parseInt(this.qty) - 1;
+                    }
                 },
 
                 increaseQty: function() {
@@ -300,6 +304,7 @@
         function removeLink(message) {
             if (! confirm(message)) {
                 event.preventDefault();
+
                 return;
             }
         }

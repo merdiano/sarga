@@ -77,7 +77,7 @@ class ProductRepository extends Repository
     {
         Event::dispatch('catalog.product.update.before', $id);
 
-        $product = $this->find($id);
+        $product = $this->findOrFail($id);
 
         $product = $product->getTypeInstance()->update($data, $id, $attribute);
 
@@ -223,7 +223,11 @@ class ProductRepository extends Repository
 
             # sort direction
             $orderDirection = 'asc';
-            if (isset($params['order']) && in_array($params['order'], ['desc', 'asc'])) {
+
+            if (
+                isset($params['order'])
+                && in_array($params['order'], ['desc', 'asc'])
+            ) {
                 $orderDirection = $params['order'];
             } else {
                 $sortOptions = $this->getDefaultSortByOption();
@@ -468,7 +472,7 @@ class ProductRepository extends Repository
                 ->where('visible_individually', 1)
                 ->orderBy('product_id', 'desc')
                 ->paginate(16);
-        } else if (config('scout.driver') == 'elastic') {
+        } elseif (config('scout.driver') == 'elastic') {
             $queries = explode('_', $term);
 
             $results = app(ProductFlatRepository::class)->getModel()::search(implode(' OR ', $queries))

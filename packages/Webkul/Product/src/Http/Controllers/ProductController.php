@@ -152,33 +152,7 @@ class ProductController extends Controller
      */
     public function update(ProductForm $request, $id)
     {
-        $data = request()->all();
-
-        $multiselectAttributeCodes = [];
-
-        $productAttributes = $this->productRepository->findOrFail($id);
-
-        foreach ($productAttributes->attribute_family->attribute_groups as $attributeGroup) {
-            $customAttributes = $productAttributes->getEditableAttributes($attributeGroup);
-
-            if (count($customAttributes)) {
-                foreach ($customAttributes as $attribute) {
-                    if ($attribute->type == 'multiselect' || $attribute->type == 'checkbox') {
-                        array_push($multiselectAttributeCodes, $attribute->code);
-                    }
-                }
-            }
-        }
-
-        if (count($multiselectAttributeCodes)) {
-            foreach ($multiselectAttributeCodes as $multiselectAttributeCode) {
-                if (! isset($data[$multiselectAttributeCode])) {
-                    $data[$multiselectAttributeCode] = [];
-                }
-            }
-        }
-
-        $this->productRepository->update($data, $id);
+        $this->productRepository->update(request()->all(), $id);
 
         session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Product']));
 
@@ -248,7 +222,10 @@ class ProductController extends Controller
 
         $copiedProduct = $this->productRepository->copy($originalProduct);
 
-        if ($copiedProduct instanceof Product && $copiedProduct->id) {
+        if (
+            $copiedProduct instanceof Product
+            && $copiedProduct->id
+        ) {
             session()->flash('success', trans('admin::app.response.product-copied'));
         } else {
             session()->flash('error', trans('admin::app.response.error-while-copying'));
@@ -330,7 +307,7 @@ class ProductController extends Controller
             return redirect()->back();
         }
 
-        if ($data['massaction-type'] !== 'update') {
+        if (! $data['massaction-type'] == 'update') {
             return redirect()->back();
         }
 

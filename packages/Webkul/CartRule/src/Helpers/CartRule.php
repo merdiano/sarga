@@ -46,20 +46,24 @@ class CartRule
     /**
      * Collect discount on cart
      *
+     * @param  \Webkul\Checkout\Contracts\Cart  $cart
      * @return void
      */
-    public function collect()
+    public function collect($cart)
     {
-        $cart = Cart::getCart();
         $appliedCartRuleIds = [];
 
-        $this->calculateCartItemTotals($cart->items);
+        $this->calculateCartItemTotals($cart, $cart->items);
 
         foreach ($cart->items as $item) {
-            $itemCartRuleIds = $this->process($item);
+            $itemCartRuleIds = $this->process($cart, $item);
+
             $appliedCartRuleIds = array_merge($appliedCartRuleIds, $itemCartRuleIds);
 
-            if ($item->children()->count() && $item->product->getTypeInstance()->isChildrenCalculated()) {
+            if (
+                $item->children()->count()
+                && $item->product->getTypeInstance()->isChildrenCalculated()
+            ) {
                 $this->divideDiscount($item);
             }
         }
@@ -72,7 +76,7 @@ class CartRule
 
         $this->processFreeShippingDiscount($cart);
 
-        if (! $this->checkCouponCode()) {
+        if (! $this->checkCouponCode($cart)) {
             cart()->removeCouponCode();
         }
     }
@@ -80,20 +84,24 @@ class CartRule
     /**
      * Returns cart rules
      *
+     * @param  \Webkul\Checkout\Contracts\Cart  $cart
      * @return \Illuminate\Support\Collection
      */
-    public function getCartRules()
+    public function getCartRules($cart)
     {
         $staticCartRules = new class() {
             public static $cartRules;
             public static $cartID;
         };
 
-        if ($staticCartRules::$cartID === cart()->getCart()->id && $staticCartRules::$cartRules) {
+        if (
+            $staticCartRules::$cartID === $cart->id
+            && $staticCartRules::$cartRules
+        ) {
             return $staticCartRules::$cartRules;
         }
 
-        $staticCartRules::$cartID = cart()->getCart()->id;
+        $staticCartRules::$cartID = $cart->id;
 
         $customerGroupId = null;
 
@@ -110,15 +118,15 @@ class CartRule
         $cartRules = $this->getCartRuleQuery($customerGroupId, core()->getCurrentChannel()->id);
 
         $staticCartRules::$cartRules = $cartRules;
+        
         return $cartRules;
     }
 
     /**
      * Check if cart rule can be applied
      *
-     * @param                                     $cart
-     * @param \Webkul\CartRule\Contracts\CartRule $rule
-     *
+     * @param  \Webkul\Checkout\Contracts\Cart  $cart
+     * @param  \Webkul\CartRule\Contracts\CartRule  $rule
      * @return bool
      */
     public function canProcessRule($cart, $rule): bool
@@ -130,18 +138,30 @@ class CartRule
                 // reasons (cart_rule_coupon-relation is pre-loaded by self::getCartRuleQuery())
                 $coupon = $rule->cart_rule_coupon()->where('code', $cart->coupon_code)->first();
 
-                if ($coupon && $coupon->code === $cart->coupon_code) {
-                    if ($coupon->usage_limit && $coupon->times_used >= $coupon->usage_limit) {
+                if (
+                    $coupon
+                    && $coupon->code === $cart->coupon_code
+                ) {
+                    if (
+                        $coupon->usage_limit
+                        && $coupon->times_used >= $coupon->usage_limit
+                    ) {
                         return false;
                     }
 
-                    if ($cart->customer_id && $coupon->usage_per_customer) {
+                    if (
+                        $cart->customer_id
+                        && $coupon->usage_per_customer
+                    ) {
                         $couponUsage = $this->cartRuleCouponUsageRepository->findOneWhere([
                             'cart_rule_coupon_id' => $coupon->id,
                             'customer_id'         => $cart->customer_id,
                         ]);
 
-                        if ($couponUsage && $couponUsage->times_used >= $coupon->usage_per_customer) {
+                        if (
+                            $couponUsage
+                            && $couponUsage->times_used >= $coupon->usage_per_customer
+                        ) {
                             return false;
                         }
                     }
@@ -159,7 +179,10 @@ class CartRule
                 'customer_id'  => $cart->customer_id,
             ]);
 
-            if ($ruleCustomer && $ruleCustomer->times_used >= $rule->usage_per_customer) {
+            if (
+                $ruleCustomer
+                && $ruleCustomer->times_used >= $rule->usage_per_customer
+            ) {
                 return false;
             }
         }
@@ -170,10 +193,11 @@ class CartRule
     /**
      * Cart item discount calculation process
      *
-     * @param \Webkul\Checkout\Models\CartItem $item
+     * @param  \Webkul\Checkout\Contracts\Cart  $cart
+     * @param  \Webkul\Checkout\Models\CartItem  $item
      * @return array
      */
-    public function process(CartItem $item): array
+    public function process($cart, CartItem $item): array
     {
         $item->discount_percent = 0;
         $item->discount_amount = 0;
@@ -181,9 +205,7 @@ class CartRule
 
         $appliedRuleIds = [];
 
-        $cart = Cart::getCart();
-
-        foreach ($rules = $this->getCartRules() as $rule) {
+        foreach ($rules = $this->getCartRules($cart) as $rule) {
             if (! $this->canProcessRule($cart, $rule)) {
                 continue;
             }
@@ -208,7 +230,10 @@ class CartRule
 
                     $baseDiscountAmount = ($quantity * $item->base_price + $item->base_tax_amount - $item->base_discount_amount) * ($rulePercent / 100);
 
-                    if (! $rule->discount_quantity || $rule->discount_quantity > $quantity) {
+                    if (
+                        ! $rule->discount_quantity
+                        || $rule->discount_quantity > $quantity
+                    ) {
                         $discountPercent = min(100, $item->discount_percent + $rulePercent);
 
                         $item->discount_percent = $discountPercent;
@@ -241,7 +266,10 @@ class CartRule
                     break;
 
                 case 'buy_x_get_y':
-                    if (! $rule->discount_step || $rule->discount_amount > $rule->discount_step) {
+                    if (
+                        ! $rule->discount_step
+                        || $rule->discount_amount > $rule->discount_step
+                    ) {
                         break;
                     }
 
@@ -304,9 +332,7 @@ class CartRule
 
         $appliedRuleIds = [];
 
-        $cart = Cart::getCart();
-
-        foreach ($this->getCartRules() as $rule) {
+        foreach ($this->getCartRules($cart) as $rule) {
             if (! $this->canProcessRule($cart, $rule)) {
                 continue;
             }
@@ -315,7 +341,10 @@ class CartRule
                 continue;
             }
 
-            if (! $rule || ! $rule->apply_to_shipping) {
+            if (
+                ! $rule
+                || ! $rule->apply_to_shipping
+            ) {
                 continue;
             }
 
@@ -388,11 +417,9 @@ class CartRule
 
         $appliedRuleIds = [];
 
-        $cart = Cart::getCart();
-
         foreach ($cart->items->all() as $item) {
 
-            foreach ($this->getCartRules() as $rule) {
+            foreach ($this->getCartRules($cart) as $rule) {
 
                 if (! $this->canProcessRule($cart, $rule)) {
                     continue;
@@ -403,7 +430,10 @@ class CartRule
                     continue;
                 }
 
-                if (! $rule || ! $rule->free_shipping) {
+                if (
+                    ! $rule
+                    || ! $rule->free_shipping
+                ) {
                     continue;
                 }
 
@@ -435,14 +465,13 @@ class CartRule
     /**
      * Calculate cart item totals for each rule
      *
+     * @param  \Webkul\Checkout\Contracts\Cart  $cart
      * @param  \Illuminate\Support\Collecton  $items
      * @return \Webkul\Rule\Helpers\Validator
      */
-    public function calculateCartItemTotals($items)
+    public function calculateCartItemTotals($cart, $items)
     {
-        $cart = Cart::getCart();
-
-        foreach ($this->getCartRules() as $rule) {
+        foreach ($this->getCartRules($cart) as $rule) {
             if ($rule->action_type == 'cart_fixed') {
                 $totalPrice = $totalBasePrice = $validCount = 0;
 
@@ -473,12 +502,11 @@ class CartRule
     /**
      * Check if coupon code is applied or not
      *
+     * @param  \Webkul\Checkout\Contracts\Cart  $cart
      * @return bool
      */
-    public function checkCouponCode(): bool
+    public function checkCouponCode($cart): bool
     {
-        $cart = cart()->getCart();
-
         if (! $cart->coupon_code) {
             return true;
         }
@@ -550,5 +578,4 @@ class CartRule
                 ->orderBy('sort_order', 'asc');
         })->findWhere(['status' => 1]);
     }
-
 }

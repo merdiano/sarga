@@ -55,12 +55,18 @@ class ConfigurableOption extends AbstractProduct
     /**
      * Get allowed attributes.
      *
-     * @param  \Webkul\Product\Contracts\Product|\Webkul\Product\Contracts\ProductFlat  $product
+     * @param  \Webkul\Product\Contracts\ProductFlat  $product
      * @return \Illuminate\Support\Collection
      */
     public function getAllowAttributes($product)
     {
-        return $product->product->super_attributes;
+        static $productSuperAttributes = [];
+
+        if (isset($productSuperAttributes[$product->id])) {
+            return $productSuperAttributes[$product->id];
+        }
+
+        return $productSuperAttributes[$product->id] = $product->product->super_attributes()->with(['translation', 'options', 'options.translation'])->get();
     }
 
     /**
@@ -88,7 +94,10 @@ class ConfigurableOption extends AbstractProduct
 
                 $attributeValue = $product->{$productAttribute->code};
 
-                if ($attributeValue == '' && $product instanceof \Webkul\Product\Models\ProductFlat) {
+                if (
+                    $attributeValue == ''
+                    && $product instanceof \Webkul\Product\Models\ProductFlat
+                ) {
                     $attributeValue = $product->product->{$productAttribute->code};
                 }
 

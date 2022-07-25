@@ -130,7 +130,7 @@ class Configurable extends AbstractType
             $super_attributes = [];
 
             foreach ($data['super_attributes'] as $attributeCode => $attributeOptions) {
-                $attribute = $this->attributeRepository->findOneByField('code', $attributeCode);
+                $attribute = $this->getAttributeByCode($attributeCode);
 
                 $super_attributes[$attribute->id] = $attributeOptions;
 
@@ -173,9 +173,7 @@ class Configurable extends AbstractType
                             $permutation[$superAttribute->id] = $variantData[$superAttribute->code];
                         }
 
-                        $variant = $this->createVariant($product, $permutation, $variantData);
-
-                        $this->productImageRepository->upload($variant, $variantData['images'] ?? null);
+                        $this->createVariant($product, $permutation, $variantData);
                     } else {
                         if (is_numeric($index = $previousVariantIds->search($variantId))) {
                             $previousVariantIds->forget($index);
@@ -226,7 +224,10 @@ class Configurable extends AbstractType
         $typeOfVariants = 'simple';
         $productInstance = app(config('product_types.' . $product->type . '.class'));
 
-        if (isset($productInstance->variantsType) && ! in_array($productInstance->variantsType, ['bundle', 'configurable', 'grouped'])) {
+        if (
+            isset($productInstance->variantsType)
+            && ! in_array($productInstance->variantsType, ['bundle', 'configurable', 'grouped'])
+        ) {
             $typeOfVariants = $productInstance->variantsType;
         }
 
@@ -237,67 +238,92 @@ class Configurable extends AbstractType
             'sku'                 => $data['sku'],
         ]);
 
+        $attributeValues = [];
+
         foreach ($this->fillableTypes as $attributeCode) {
             if (! isset($data[$attributeCode])) {
                 continue;
             }
 
-            $attribute = $this->attributeRepository->findOneByField('code', $attributeCode);
+            $attribute = $this->getAttributeByCode($attributeCode);
+
+            $attributeTypeFields = $this->getAttributeTypeValues($attribute->type, $data[$attributeCode]);
 
             if ($attribute->value_per_channel) {
                 if ($attribute->value_per_locale) {
                     foreach (core()->getAllChannels() as $channel) {
                         foreach (core()->getAllLocales() as $locale) {
-                            $this->attributeValueRepository->create([
+                            $attributeValues[] = array_merge($attributeTypeFields, [
                                 'product_id'   => $variant->id,
                                 'attribute_id' => $attribute->id,
                                 'channel'      => $channel->code,
                                 'locale'       => $locale->code,
-                                'value'        => $data[$attributeCode],
                             ]);
                         }
                     }
                 } else {
                     foreach (core()->getAllChannels() as $channel) {
-                        $this->attributeValueRepository->create([
+                        $attributeValues[] = array_merge($attributeTypeFields, [
                             'product_id'   => $variant->id,
                             'attribute_id' => $attribute->id,
                             'channel'      => $channel->code,
-                            'value'        => $data[$attributeCode],
+                            'locale'       => null,
                         ]);
                     }
                 }
             } else {
                 if ($attribute->value_per_locale) {
                     foreach (core()->getAllLocales() as $locale) {
-                        $this->attributeValueRepository->create([
+                        $attributeValues[] = array_merge($attributeTypeFields, [
                             'product_id'   => $variant->id,
                             'attribute_id' => $attribute->id,
+                            'channel'      => null,
                             'locale'       => $locale->code,
-                            'value'        => $data[$attributeCode],
                         ]);
                     }
                 } else {
-                    $this->attributeValueRepository->create([
+                    $attributeValues[] = array_merge($attributeTypeFields, [
                         'product_id'   => $variant->id,
                         'attribute_id' => $attribute->id,
-                        'value'        => $data[$attributeCode],
+                        'channel'      => null,
+                        'locale'       => null,
                     ]);
                 }
             }
         }
 
         foreach ($permutation as $attributeId => $optionId) {
-            $this->attributeValueRepository->create([
+            $attribute = $this->getAttributeById($attributeId);
+
+            $attributeValues[] = array_merge($this->getAttributeTypeValues($attribute->type, $optionId), [
                 'product_id'   => $variant->id,
                 'attribute_id' => $attributeId,
-                'value'        => $optionId,
+                'channel'      => null,
+                'locale'       => null,
             ]);
         }
 
+        $this->attributeValueRepository->insert($attributeValues);
+
         $this->productInventoryRepository->saveInventories($data, $variant);
 
+        $this->productImageRepository->upload($data, $variant, 'images');
+
         return $variant;
+    }
+
+    /**
+     * @param  string  $attributeType
+     * @param  mixed  $value
+     * @return array
+     */
+    public function getAttributeTypeValues($attributeType, $value)
+    {
+        $attributeTypeFields = array_fill_keys(array_values(ProductAttributeValue::$attributeTypeFields), null);
+
+        $attributeTypeFields[ProductAttributeValue::$attributeTypeFields[$attributeType]] = $value;
+
+        return $attributeTypeFields;
     }
 
     /**
@@ -318,27 +344,46 @@ class Configurable extends AbstractType
                 continue;
             }
 
-            $attribute = $this->attributeRepository->findOneByField('code', $attributeCode);
+            $attribute = $this->getAttributeByCode($attributeCode);
 
-            $attributeValue = $this->attributeValueRepository->findOneWhere([
-                'product_id'   => $id,
-                'attribute_id' => $attribute->id,
-                'channel'      => $attribute->value_per_channel ? $data['channel'] : null,
-                'locale'       => $attribute->value_per_locale ? $data['locale'] : null,
-            ]);
+            if ($attribute->value_per_channel) {
+                if ($attribute->value_per_locale) {
+                    $productAttributeValue = $variant->attribute_values
+                        ->where('channel', $attribute->value_per_channel ? $data['channel'] : null)
+                        ->where('locale', $attribute->value_per_locale ? $data['locale'] : null)
+                        ->where('attribute_id', $attribute->id)
+                        ->first();
+                } else {
+                    $productAttributeValue = $variant->attribute_values
+                        ->where('channel', $attribute->value_per_channel ? $data['channel'] : null)
+                        ->where('attribute_id', $attribute->id)
+                        ->first();
+                }
+            } else {
+                if ($attribute->value_per_locale) {
+                    $productAttributeValue = $variant->attribute_values
+                        ->where('locale', $attribute->value_per_locale ? $data['locale'] : null)
+                        ->where('attribute_id', $attribute->id)
+                        ->first();
+                } else {
+                    $productAttributeValue = $variant->attribute_values
+                        ->where('attribute_id', $attribute->id)
+                        ->first();
+                }
+            }
 
-            if (! $attributeValue) {
+            $columnName = ProductAttributeValue::$attributeTypeFields[$attribute->type];
+
+            if (! $productAttributeValue) {
                 $this->attributeValueRepository->create([
-                    'product_id'   => $id,
+                    'product_id'   => $variant->id,
                     'attribute_id' => $attribute->id,
-                    'value'        => $data[$attribute->code],
+                    $columnName    => $data[$attribute->code],
                     'channel'      => $attribute->value_per_channel ? $data['channel'] : null,
                     'locale'       => $attribute->value_per_locale ? $data['locale'] : null,
                 ]);
             } else {
-                $this->attributeValueRepository->update([
-                    ProductAttributeValue::$attributeTypeFields[$attribute->type] => $data[$attribute->code],
-                ], $attributeValue->id);
+                $productAttributeValue->update([$columnName => $data[$attribute->code]]);
             }
         }
 
@@ -461,7 +506,11 @@ class Configurable extends AbstractType
      */
     public function getMinimalPrice($qty = null)
     {
-        $minPrices = [];
+        static $minPrice = null;
+
+        if (! is_null($minPrice)) {
+            return $minPrice;
+        }
 
         /* method is calling many time so using variable */
         $tablePrefix = DB::getTablePrefix();
@@ -475,6 +524,9 @@ class Configurable extends AbstractType
             ->where('product_flat.channel', core()->getCurrentChannelCode())
             ->get();
 
+
+        $minPrices = [];
+
         foreach ($result as $price) {
             $minPrices[] = $price->min_price;
         }
@@ -483,7 +535,7 @@ class Configurable extends AbstractType
             return 0;
         }
 
-        return min($minPrices);
+        return $minPrice = min($minPrices);
     }
 
     /**
@@ -493,6 +545,12 @@ class Configurable extends AbstractType
      */
     public function getOfferPrice()
     {
+        static $offerPrice = null;
+
+        if (! is_null($offerPrice)) {
+            return $offerPrice;
+        }
+
         $rulePrices = $customerGroupPrices = [];
 
         foreach ($this->product->variants as $variant) {
@@ -505,11 +563,14 @@ class Configurable extends AbstractType
             $customerGroupPrices[] = $this->getCustomerGroupPrice($variant, 1);
         }
 
-        if ($rulePrices || $customerGroupPrices) {
-            return min(array_merge($rulePrices, $customerGroupPrices));
+        if (
+            $rulePrices
+            || $customerGroupPrices
+        ) {
+            return $offerPrice = min(array_merge($rulePrices, $customerGroupPrices));
         }
 
-        return [];
+        return $offerPrice = [];
     }
 
     /**
@@ -519,16 +580,11 @@ class Configurable extends AbstractType
      */
     public function haveOffer()
     {
-        $haveOffer = false;
-
-        $offerPrice = $this->getOfferPrice();
-        $minPrice = $this->getMinimalPrice();
-
-        if ($offerPrice < $minPrice) {
-            $haveOffer = true;
+        if ($this->getOfferPrice() < $this->getMinimalPrice()) {
+            return true;
         }
 
-        return $haveOffer;
+        return false;
     }
 
     /**
@@ -538,6 +594,12 @@ class Configurable extends AbstractType
      */
     public function getMaximamPrice()
     {
+        static $maxPrice = null;
+
+        if (! is_null($maxPrice)) {
+            return $maxPrice;
+        }
+
         $productFlat = ProductFlat::join('products', 'product_flat.product_id', '=', 'products.id')
             ->distinct()
             ->where('products.parent_id', $this->product->id)
@@ -546,7 +608,7 @@ class Configurable extends AbstractType
             ->where('product_flat.locale', app()->getLocale())
             ->first();
 
-        return $productFlat ? $productFlat->max_price : 0;
+        return $maxPrice = $productFlat ? $productFlat->max_price : 0;
     }
 
     /**
@@ -597,7 +659,10 @@ class Configurable extends AbstractType
      */
     public function prepareForCart($data)
     {
-        if (! isset($data['selected_configurable_option']) || ! $data['selected_configurable_option']) {
+        if (
+            ! isset($data['selected_configurable_option'])
+            || ! $data['selected_configurable_option']
+        ) {
             if ($this->getDefaultVariantId()) {
                 $data['selected_configurable_option'] = $this->getDefaultVariantId();
             } else {
@@ -658,7 +723,10 @@ class Configurable extends AbstractType
             return false;
         }
 
-        if (isset($options1['selected_configurable_option']) && isset($options2['selected_configurable_option'])) {
+        if (
+            isset($options1['selected_configurable_option'])
+            && isset($options2['selected_configurable_option'])
+        ) {
             return $options1['selected_configurable_option'] === $options2['selected_configurable_option'];
         }
 
@@ -679,7 +747,7 @@ class Configurable extends AbstractType
      */
     public function getAdditionalOptions($data)
     {
-        $childProduct = app('Webkul\Product\Repositories\ProductRepository')->findOneByField('id', $data['selected_configurable_option']);
+        $childProduct = app('Webkul\Product\Repositories\ProductRepository')->find($data['selected_configurable_option']);
 
         foreach ($this->product->super_attributes as $attribute) {
             $option = $attribute->options()->where('id', $childProduct->{$attribute->code})->first();
@@ -828,7 +896,7 @@ class Configurable extends AbstractType
         $total = 0;
 
         $channelInventorySourceIds = core()->getCurrentChannel()
-            ->inventory_sources()
+            ->inventory_sources
             ->where('status', 1)
             ->pluck('id');
 
@@ -839,7 +907,7 @@ class Configurable extends AbstractType
                 }
             }
 
-            $orderedInventory = $variant->ordered_inventories()
+            $orderedInventory = $variant->ordered_inventories
                 ->where('channel_id', core()->getCurrentChannel()->id)
                 ->first();
 
