@@ -202,4 +202,11 @@ class Customers extends AuthController
             'success'    => false,
         ]);
     }
+
+    public function destroy(Request $request){
+        if($request->user()->delete()){
+            return response()->json(['success'=>true]);
+        }
+        return response()->json(['success'=>false],400);
+    }
 }
