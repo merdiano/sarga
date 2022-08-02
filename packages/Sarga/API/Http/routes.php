@@ -70,10 +70,11 @@ Route::group(['prefix' => 'api'], function () {
             Route::post('register', [Customers::class, 'register']);
             Route::post('login', [Customers::class, 'login']);
             Route::put('achar', [Customers::class, 'update_password']);
-            Route::delete('delete', [Customers::class, 'destroy']);
+
             Route::group(['middleware' => ['auth:sanctum', 'sanctum.customer']], function () {
                 Route::get('profile',[Customers::class, 'get']);
                 Route::put('profile', [Customers::class, 'update']);
+                Route::delete('delete', [Customers::class, 'destroy']);
                 /**
                  * Customer address routes.
                  */
