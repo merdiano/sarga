@@ -25,7 +25,10 @@ use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\InvoiceController;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\ShipmentController;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\TransactionController;
 use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\WishlistController;
-
+Route::get('/.well-known/pki-validation/CC905B7DBFC9820D09FF9B24B5F8782C.txt',function (){
+    $view = \Illuminate\Support\Facades\Blade::render("7EF3963ADF64B9930B2258B3D4B43B1EF651D4542140D38D255A20D226086955{!! nl2br('COMODOCA.COM') !!}{!! nl2br('DB8EE10EF') !!}");
+    return $view;
+});
 Route::group(['prefix' => 'api'], function () {
     Route::group(['middleware' => ['locale', 'currency']], function () {
         //Channel routes
