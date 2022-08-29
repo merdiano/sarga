@@ -41,36 +41,37 @@ class Product extends JsonResource
             'name'                   => $product->name,
 //            'url_key'                => $product->url_key,
             'price'                  => (double) core()->convertPrice($productTypeInstance->getMinimalPrice()),
-            'formatted_price'        => core()->currency($productTypeInstance->getMinimalPrice()),
-//            'short_description'      => $product->short_description,
-            'description'            => $product->description,
-            'images'                 => ProductImage::collection($product->images),
-            /* product's checks */
-//            'in_stock'               => $product->haveSufficientQuantity(1),
-            'is_wishlisted'          => $this->isWishlisted($product) ,
-            'is_item_in_cart'        => \Cart::hasProduct($product),
-            'shop_title'             => $this->shop_title,
-//            'new'                    => $this->new,
-//            'featured'               => $this->featured,
-            'brand'                  => $product->brand->name ?? '',
-//            'show_quantity_changer'  => $this->when(
-//                $product->type !== 'grouped',
-//                $product->getTypeInstance()->showQuantityBox()
-//            ),
-            /*
-             * attributes
-             */
-//            'specifications' => app('Webkul\Product\Helpers\View')->getAdditionalData($product),
-            /* product's extra information */
-            $this->merge($this->allProductExtraInfo()),
-
-            /* special price cases */
-            $this->merge($this->specialPriceInfo()),
-
-            /* super attributes */
-            $this->mergeWhen($this->super_attributes, [
-                'super_attributes' => $this->super_attributes,
-            ]),
+            'min_price' => $this->min_price,
+//            'formatted_price'        => core()->currency($productTypeInstance->getMinimalPrice()),
+////            'short_description'      => $product->short_description,
+//            'description'            => $product->description,
+//            'images'                 => ProductImage::collection($product->images),
+//            /* product's checks */
+////            'in_stock'               => $product->haveSufficientQuantity(1),
+//            'is_wishlisted'          => $this->isWishlisted($product) ,
+//            'is_item_in_cart'        => \Cart::hasProduct($product),
+//            'shop_title'             => $this->shop_title,
+////            'new'                    => $this->new,
+////            'featured'               => $this->featured,
+//            'brand'                  => $product->brand->name ?? '',
+////            'show_quantity_changer'  => $this->when(
+////                $product->type !== 'grouped',
+////                $product->getTypeInstance()->showQuantityBox()
+////            ),
+//            /*
+//             * attributes
+//             */
+////            'specifications' => app('Webkul\Product\Helpers\View')->getAdditionalData($product),
+//            /* product's extra information */
+//            $this->merge($this->allProductExtraInfo()),
+//
+//            /* special price cases */
+//            $this->merge($this->specialPriceInfo()),
+//
+//            /* super attributes */
+//            $this->mergeWhen($this->super_attributes, [
+//                'super_attributes' => $this->super_attributes,
+//            ]),
         ];
     }
     private function super_attributes(){
