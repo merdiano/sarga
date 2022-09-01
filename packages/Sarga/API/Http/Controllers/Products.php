@@ -97,6 +97,10 @@ class Products extends ProductController
             foreach($distinctVariants as $variant)
             {
                 $option = $attribute->options->firstWhere('id',$variant->{$attribute->code});
+                Log::info($attribute);
+                Log::info($option,);
+                Log::info($variant);
+                Log::info($variant->{$attribute->code});
 
                 $item = [
                     'option' => $option->admin_name,
