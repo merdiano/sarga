@@ -233,8 +233,8 @@ class Product extends JsonResource
     {
         $wishlist = false;
 
-        if ($customer = auth('sanctum')->user()) {
-            $wishlist = $customer->wishlist_items->filter(function ($item) use ($product) {
+        if ($customer = auth('sanctum')->user() && $wishlist = auth('sanctum')->user()->wishlist_items) {
+            $wishlist = $wishlist->filter(function ($item) use ($product) {
                 return $item->product_id == $product->product_id;
             })->first();
         }
