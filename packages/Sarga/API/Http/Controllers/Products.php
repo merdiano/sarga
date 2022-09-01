@@ -84,6 +84,8 @@ class Products extends ProductController
 //            Log::info($variants->map->only(['status']));
             $attribute = $product->super_attributes->first();
 
+            Log::info($attribute);
+
             $distinctVariants =  $variants->unique($attribute->code);
 
             $gr_data = array(
