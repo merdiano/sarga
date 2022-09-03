@@ -328,7 +328,7 @@
                                                         <td>{{ core()->formatPrice($item->price,$order->order_currency_code) }}</td>
 
                                                         <td>
-                                                            <span class="qty-row">
+                                                            <span class="qty-row @if($item->qty_ordered>1)btn btn-sm btn-danger @endif">
                                                                 {{ $item->qty_ordered ? __('admin::app.sales.orders.item-ordered', ['qty_ordered' => $item->qty_ordered]) : '' }}
                                                             </span>
 
