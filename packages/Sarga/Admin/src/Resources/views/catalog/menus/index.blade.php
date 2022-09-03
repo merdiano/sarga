@@ -58,38 +58,7 @@
                 indexes = formData.indexes;
             }
 
-            if (indexes) {
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('admin.catalog.menus.product.count') }}',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        indexes: indexes
-                    },
-                    success: function(data) {
-                        $("input[type='checkbox']").attr('disabled', false);
-                        if (data.product_count > 0) {
-                            let message = "{{ trans('ui::app.datagrid.massaction.delete-category-product') }}";
 
-                            if (type == 'delete') {
-                                doAction(e, message);
-                            } else {
-                                $('form').attr('onsubmit', 'return confirm("' + message + '")');
-                            }
-                        } else {
-                            let message = "{{ __('ui::app.datagrid.click_on_action') }}";
-
-                            if (type == 'delete') {
-                                doAction(e, message);
-                            } else {
-                                $('form').attr('onsubmit', 'return confirm("' + message + '")');
-                            }
-                        }
-                    }
-                });
-            } else {
-                $("input[type='checkbox']").attr('disabled', false);
-            }
         }
 
         /**
