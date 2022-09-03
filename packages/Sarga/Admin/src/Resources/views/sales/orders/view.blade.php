@@ -351,14 +351,15 @@
 
                                                         <td>{{ core()->formatPrice($item->total,$order->order_currency_code) }}</td>
                                                         <td>
-                                                            {{core()->formatPrice($totalWeight > 0 ? $order->shipping_amount * $item->total_weight/$totalWeight:0,$order->order_currency_code)}}
+                                                            @php $weightPrice = $totalWeight > 0 ? $order->shipping_amount * $item->total_weight/$totalWeight:0 @endphp
+                                                            {{core()->formatPrice($weightPrice,$order->order_currency_code)}}
                                                         </td>
 
                                                         @if ($order->base_discount_amount != 0)
                                                             <td>{{ core()->formatPrice($item->discount_amount,$order->order_currency_code) }}</td>
                                                         @endif
 
-                                                        <td>{{ core()->formatPrice($item->total + $item->tax_amount - $item->discount_amount,$order->order_currency_code) }}</td>
+                                                        <td>{{ core()->formatPrice($item->total + $item->tax_amount - $item->discount_amount + $weightPrice,$order->order_currency_code) }}</td>
                                                         <td class="action">
                                                             @if($item->canCancel() && in_array($order->status, ['pending','processing']) && $order->total_item_count>1)
                                                             <a href="{{ route('admin.sales.orders.cancel_item', $item->id) }}">
