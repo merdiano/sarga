@@ -228,7 +228,7 @@
 
                                         </div>
                                     </div>
-@php $totalWeight = $order->items->sum('total_weight') ?:1;@endphp
+@php $totalWeight = $order->items->sum('total_weight');@endphp
                                     @if ($order->shipping_address)
                                         <div class="sale-section">
                                             <div class="secton-title">
@@ -281,8 +281,8 @@
                                                     <th>{{ __('admin::app.sales.orders.product-name') }}</th>
                                                     <th>{{ __('admin::app.sales.orders.price') }}</th>
                                                     <th>{{ __('admin::app.sales.orders.item-status') }}</th>
-                                                    <th>Weight price</th>
                                                     <th>{{ __('admin::app.sales.orders.subtotal') }}</th>
+                                                    <th>Weight price</th>
                                                     @if ($order->base_discount_amount != 0)
                                                         <th>{{ __('admin::app.sales.orders.discount-amount') }}</th>
                                                     @endif
@@ -351,7 +351,7 @@
 
                                                         <td>{{ core()->formatPrice($item->total,$order->order_currency_code) }}</td>
                                                         <td>
-                                                            {{core()->formatPrice($order->shipping_amount * $item->total_weight/$totalWeight)}}
+                                                            {{core()->formatPrice($totalWeight > 0 ? $order->shipping_amount * $item->total_weight/$totalWeight:0,$order->order_currency_code)}}
                                                         </td>
 
                                                         @if ($order->base_discount_amount != 0)
