@@ -1,6 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use Sarga\Admin\src\Http\Controllers\Menus;
+use Sarga\Admin\Http\Controllers\Menus;
 
 /**
  * Catalog routes.
