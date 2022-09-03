@@ -11,11 +11,11 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => config('app.admin_ur
          * Categories routes.
          */
         Route::get('/menus', [Menus::class, 'index'])->defaults('_config', [
-            'view' => 'admin::catalog.menus.index',
+            'view' => 'sarga_admin::catalog.menus.index',
         ])->name('admin.catalog.menus.index');
 
         Route::get('/menus/create', [Menus::class, 'create'])->defaults('_config', [
-            'view' => 'admin::catalog.menus.create',
+            'view' => 'sarga_admin::catalog.menus.create',
         ])->name('admin.catalog.menus.create');
 
         Route::post('/menus/create', [Menus::class, 'store'])->defaults('_config', [
@@ -23,7 +23,7 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => config('app.admin_ur
         ])->name('admin.catalog.menus.store');
 
         Route::get('/menus/edit/{id}', [Menus::class, 'edit'])->defaults('_config', [
-            'view' => 'admin::catalog.menus.edit',
+            'view' => 'sarga_admin::catalog.menus.edit',
         ])->name('admin.catalog.menus.edit');
 
         Route::put('/menus/edit/{id}', [Menus::class, 'update'])->defaults('_config', [
