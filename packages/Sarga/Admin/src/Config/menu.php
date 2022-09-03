@@ -24,8 +24,8 @@ return [
     ],
     [
         'key'        => 'catalog.menu',
-        'name'       => 'sarga::app.layouts.menu',
-        'route'      => 'admin.menu.index',
+        'name'       => 'sarga::app.layouts.menus',
+        'route'      => 'admin.menus.index',
         'sort'       => 7,
         'icon-class' => '',
     ],

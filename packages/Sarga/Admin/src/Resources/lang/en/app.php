@@ -3,7 +3,8 @@ return [
     'layouts' => [
         'scrap' => 'Scrap',
         'scrap-categories' => 'Categories',
-        'scrap-products' => 'Products'
+        'scrap-products' => 'Products',
+        'menus' => 'Menus'
     ],
     'sales' => [
         'orders' => [
