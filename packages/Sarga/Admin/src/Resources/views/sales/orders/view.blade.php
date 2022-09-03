@@ -162,7 +162,6 @@
                                                 <div class="section-content">
                                                     @include ('admin::sales.address', ['address' => $order->billing_address])
 
-                                                    {!! view_render_event('sales.order.billing_address.after', ['order' => $order]) !!}
                                                 </div>
                                             </div>
                                         @endif
@@ -229,7 +228,7 @@
 
                                         </div>
                                     </div>
-
+@php $totalWeight = $order->items->sum('total_weight') ?:1;@endphp
                                     @if ($order->shipping_address)
                                         <div class="sale-section">
                                             <div class="secton-title">
@@ -256,6 +255,14 @@
                                                         {{ core()->formatPrice($order->shipping_amount,$order->order_currency_code) }}
                                                     </span>
                                                 </div>
+                                                <div class="row">
+                                                    <span class="title">
+                                                        Total Weight
+                                                    </span>
+                                                    <span class="value">
+                                                        {{$totalWeight}}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     @endif
@@ -274,6 +281,7 @@
                                                     <th>{{ __('admin::app.sales.orders.product-name') }}</th>
                                                     <th>{{ __('admin::app.sales.orders.price') }}</th>
                                                     <th>{{ __('admin::app.sales.orders.item-status') }}</th>
+                                                    <th>Weight price</th>
                                                     <th>{{ __('admin::app.sales.orders.subtotal') }}</th>
                                                     @if ($order->base_discount_amount != 0)
                                                         <th>{{ __('admin::app.sales.orders.discount-amount') }}</th>
@@ -295,7 +303,7 @@
                                                                      alt="suraty" height="150" width="150">
                                                             </a>
                                                             @else
-                                                                {{$item->sku}}
+                                                                {{$item->sku}} Product not found
                                                             @endif
                                                         </td>
 
@@ -342,6 +350,9 @@
                                                         </td>
 
                                                         <td>{{ core()->formatPrice($item->total,$order->order_currency_code) }}</td>
+                                                        <td>
+                                                            {{core()->formatPrice($order->shipping_amount * $item->total_weight/$totalWeight)}}
+                                                        </td>
 
                                                         @if ($order->base_discount_amount != 0)
                                                             <td>{{ core()->formatPrice($item->discount_amount,$order->order_currency_code) }}</td>
