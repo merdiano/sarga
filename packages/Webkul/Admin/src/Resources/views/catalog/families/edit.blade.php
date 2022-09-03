@@ -83,7 +83,7 @@
 
     <script type="text/x-template" id="group-list-template">
         <div style="margin-top: 20px">
-            <button type="button" style="margin-bottom : 20px" class="btn btn-md btn-primary" @click="showModal('addGroupForm')">
+            <button type="button" style="margin-bottom : 20px" class="btn btn-md btn-primary" @click="$root.showModal('addGroupForm')">
                 {{ __('admin::app.catalog.families.add-group-title') }}
             </button>
 
@@ -237,7 +237,7 @@
 
     <script>
         var groups = @json($attributeFamily->attribute_groups);
-        var custom_attributes = @json($custom_attributes);
+        var custom_attributes = @json($customAttributes);
 
         Vue.component('group-list', {
 

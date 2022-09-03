@@ -2,25 +2,25 @@
 
 namespace Webkul\Product\Repositories;
 
-use Illuminate\Container\Container as App;
-use Webkul\Attribute\Repositories\AttributeRepository;
+use Illuminate\Container\Container;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Attribute\Repositories\AttributeRepository;
 
 class ProductFlatRepository extends Repository
 {
     /**
      * Create a new repository instance.
      *
-     * @param \Webkul\Attribute\Repositories\AttributeRepository $attributeRepository
-     * @param \Illuminate\Container\Container                    $app
+     * @param  \Webkul\Attribute\Repositories\AttributeRepository  $attributeRepository
+     * @param  \Illuminate\Container\Container  $container
      * @return void
      */
     public function __construct(
         protected AttributeRepository $attributeRepository,
-        App $app
+        Container $container
     )
     {
-        parent::__construct($app);
+        parent::__construct($container);
     }
 
     /**
@@ -30,7 +30,7 @@ class ProductFlatRepository extends Repository
      */
     public function model(): string
     {
-        return \Webkul\Product\Contracts\ProductFlat::class;
+        return 'Webkul\Product\Contracts\ProductFlat';
     }
 
     /**
@@ -39,7 +39,7 @@ class ProductFlatRepository extends Repository
      * @param  int  $categoryId
      * @return \Illuminate\Support\Querybuilder
      */
-    public function categoryProductQuerybuilder($categoryId)
+    public function categoryProductQueryBuilder($categoryId)
     {
         return $this->model
             ->leftJoin('product_categories', 'product_flat.product_id', 'product_categories.product_id')
@@ -74,7 +74,7 @@ class ProductFlatRepository extends Repository
      */
     public function getCategoryProductAttribute($categoryId)
     {
-        $qb = $this->categoryProductQuerybuilder($categoryId);
+        $qb = $this->categoryProductQueryBuilder($categoryId);
 
         $childQuery = $this->model->distinct()->whereIn('parent_id', $qb->distinct()->select(['id']));
 
@@ -144,18 +144,18 @@ class ProductFlatRepository extends Repository
             return $loadedCategoryAttributes[$category->id];
         }
 
-        $productsCount = $this->categoryProductQuerybuilder($category->id)->count();
+        $productsCount = $this->categoryProductQueryBuilder($category->id)->count();
 
         if ($productsCount > 0) {
             $categoryFilterableAttributes = $category->filterableAttributes->pluck('id')->toArray();
 
-            $productCategoryArrributes = $this->getCategoryProductAttribute($category->id);
+            $productCategoryAttributes = $this->getCategoryProductAttribute($category->id);
 
-            $allFilterableAttributes = array_filter(array_unique(array_intersect($categoryFilterableAttributes, $productCategoryArrributes['attributes'])));
+            $allFilterableAttributes = array_filter(array_unique(array_intersect($categoryFilterableAttributes, $productCategoryAttributes['attributes'])));
 
             $attributes = $this->attributeRepository->getModel()::with([
-                'options' => function ($query) use ($productCategoryArrributes) {
-                    return $query->whereIn('id', $productCategoryArrributes['attributeOptions'])
+                'options' => function ($query) use ($productCategoryAttributes) {
+                    return $query->whereIn('id', $productCategoryAttributes['attributeOptions'])
                         ->orderBy('sort_order');
                 }
             ])->whereIn('id', $allFilterableAttributes)->get();

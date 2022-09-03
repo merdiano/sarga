@@ -40,14 +40,14 @@ class Booking extends Virtual
     /**
      * Create a new product type instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeRepository           $attributeRepository
-     * @param  \Webkul\Product\Repositories\ProductRepository               $productRepository
-     * @param  \Webkul\Product\Repositories\ProductAttributeValueRepository $attributeValueRepository
-     * @param  \Webkul\Product\Repositories\ProductInventoryRepository      $productInventoryRepository
-     * @param  \Webkul\Product\Repositories\ProductImageRepository          $productImageRepository
+     * @param  \Webkul\Attribute\Repositories\AttributeRepository  $attributeRepository
+     * @param  \Webkul\Product\Repositories\ProductRepository  $productRepository
+     * @param  \Webkul\Product\Repositories\ProductAttributeValueRepository  $attributeValueRepository
+     * @param  \Webkul\Product\Repositories\ProductInventoryRepository  $productInventoryRepository
+     * @param  \Webkul\Product\Repositories\ProductImageRepository  $productImageRepository
      * @param  \Webkul\BookingProduct\Repositories\BookingProductRepository  $bookingProductRepository
-     * @param  \Webkul\BookingProduct\Helpers\BookingHelper                  $bookingHelper
-     * @param \Webkul\Product\Repositories\ProductVideoRepository            $productVideoRepository
+     * @param  \Webkul\BookingProduct\Helpers\BookingHelper  $bookingHelper
+     * @param  \Webkul\Product\Repositories\ProductVideoRepository  $productVideoRepository
      * @return void
      */
     public function __construct(
@@ -172,7 +172,19 @@ class Booking extends Virtual
 
         $bookingProduct = $this->getBookingProduct($data['product_id']);
 
-        if ($bookingProduct->type == 'event') {
+
+        if ($bookingProduct->type == 'rental') {
+            if (isset($data['booking']['slot']['from'])) {
+                $time = $data['booking']['slot']['to'] - $data['booking']['slot']['from'];
+                $hours = floor($time / 60) / 60;
+
+                if ($hours > 1) {
+                    return trans('shop::app.checkout.cart.integrity.select_hourly_duration');
+                }
+            }
+
+            $products = parent::prepareForCart($data);
+        } elseif ($bookingProduct->type == 'event') {
             if (
                 Carbon::now() > $bookingProduct->available_from
                 && Carbon::now() > $bookingProduct->available_to

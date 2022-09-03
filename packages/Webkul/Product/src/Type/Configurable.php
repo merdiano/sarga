@@ -592,7 +592,7 @@ class Configurable extends AbstractType
      *
      * @return float
      */
-    public function getMaximamPrice()
+    public function getMaximumPrice()
     {
         static $maxPrice = null;
 
@@ -659,6 +659,8 @@ class Configurable extends AbstractType
      */
     public function prepareForCart($data)
     {
+        $data['quantity'] = parent::handleQuantity((int) $data['quantity']);
+        
         if (
             ! isset($data['selected_configurable_option'])
             || ! $data['selected_configurable_option']
@@ -857,9 +859,7 @@ class Configurable extends AbstractType
      */
     public function haveSufficientQuantity(int $qty): bool
     {
-        $backorders = core()->getConfigData('catalog.inventory.stock_options.backorders');
-
-        $backorders = ! is_null($backorders) ? $backorders : false;
+        $isBackOrderEnable = (bool) core()->getConfigData('catalog.inventory.stock_options.backorders');
 
         foreach ($this->product->variants as $variant) {
             if ($variant->haveSufficientQuantity($qty)) {
@@ -867,7 +867,7 @@ class Configurable extends AbstractType
             }
         }
 
-        return $backorders;
+        return $isBackOrderEnable;
     }
 
     /**

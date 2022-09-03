@@ -489,6 +489,7 @@ return [
                 'missing_links'   => 'Il manque des liens téléchargeables pour ce produit.',
                 'qty_missing'     => 'Au moins un produit doit avoir plus d\'une quantité.',
                 'qty_impossible'  => 'Impossible d\'ajouter plus d\'un de ces produits au panier.',
+                'select_hourly_duration' => 'Sélectionnez une durée de créneau d\'une heure.',
             ],
 
             'create-error'             => 'J\'ai rencontré un problème lors de la création d\'une instance de panier.',
@@ -613,6 +614,7 @@ return [
             'invalid-coupon'      => 'Le code promo n\'est pas valide.',
             'success-coupon'      => 'Code promo appliqué avec succès.',
             'coupon-apply-issue'  => 'Le code promo ne peut pas être appliqué.',
+            'coupon-already-applied' => 'Code promo déjà appliqué.',
         ],
 
         'success' => [

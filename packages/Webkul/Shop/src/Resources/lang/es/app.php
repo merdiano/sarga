@@ -495,6 +495,7 @@ return [
                 'missing_links'   => 'Faltan enlaces descargables para este producto.',
                 'qty_missing'     => 'Al menos un producto debe tener más de 1 cantidad.',
                 'qty_impossible'  => 'No se pueden agregar más de uno de estos productos al carrito.',
+                'select_hourly_duration' => 'Seleccione una duración de ranura de una hora.',
             ],
             'create-error'              => 'Se encontraron problemas con el carrito de compra',
             'title'                     => 'Carrito de la compra',
@@ -614,6 +615,7 @@ return [
             'invalid-coupon'      => 'El código del cupón no es válido.',
             'success-coupon'      => 'Código del cupón aplicado correctamente.',
             'coupon-apply-issue'  => 'No se puede aplicar el código de cupón.',
+            'coupon-already-applied' => 'Código de cupón ya aplicado.',
         ],
 
         'success' => [

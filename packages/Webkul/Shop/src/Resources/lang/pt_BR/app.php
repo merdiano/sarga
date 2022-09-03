@@ -484,6 +484,7 @@ return [
                 'missing_links'   => 'Faltam links para download para este produto.',
                 'qty_missing'     => 'Pelo menos um produto deve ter mais de 1 quantidade.',
                 'qty_impossible'  => 'Não é possível adicionar mais do que um desse produto ao carrinho.',
+                'select_hourly_duration' => 'Selecione uma duração de slot de uma hora.',
             ],
 
             'create-error'             => 'Encontrou algum problema ao fazer a instância do carrinho',
@@ -599,6 +600,7 @@ return [
             'invalid-coupon'      => 'Código do Cupom é inválido.',
             'success-coupon'      => 'Cupom aplicado com sucesso.',
             'coupon-apply-issue'  => 'Não foi possível aplicar esse Cupom',
+            'coupon-already-applied' => 'Coupon code already applied.',
         ],
 
         'success' => [
