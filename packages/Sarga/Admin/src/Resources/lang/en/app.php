@@ -181,4 +181,19 @@ return [
             ],
         ],
     ],
+    'catalog' => [
+        'menus' => [
+            'title'                    => 'Menus',
+            'add-title'                => 'Add Menu',
+            'edit-title'               => 'Edit Menu',
+            'save-btn-title'           => 'Save Menu',
+            'general'                  => 'General',
+            'name'                     => 'Name',
+            'visible-in-menu'          => 'Visible In Menu',
+            'yes'                      => 'Yes',
+            'no'                       => 'No',
+            'position'                 => 'Position',
+            'description'              => 'Description',
+        ],
+    ]
 ];

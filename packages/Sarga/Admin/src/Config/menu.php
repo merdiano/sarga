@@ -19,7 +19,14 @@ return [
         'key'        => 'catalog.scrap.products',
         'name'       => 'sarga::app.layouts.scrap-products',
         'route'      => 'admin.scrap-products.index',
-        'sort'       => 1,
+        'sort'       => 2,
+        'icon-class' => '',
+    ],
+    [
+        'key'        => 'catalog.menu',
+        'name'       => 'sarga::app.layouts.menu',
+        'route'      => 'admin.menu.index',
+        'sort'       => 7,
         'icon-class' => '',
     ],
 ];
