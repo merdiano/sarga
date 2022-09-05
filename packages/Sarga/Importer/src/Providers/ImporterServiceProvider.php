@@ -13,7 +13,7 @@ class ImporterServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         $this->loadRoutesFrom(__DIR__ . '/../Routes/routes.php');
-        $this->mergeConfigFrom(__DIR__ . '/../Config/scrap.php');
+        $this->mergeConfigFrom(__DIR__ . '/../Config/scrap.php','scrap');
 
     }
 }

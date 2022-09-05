@@ -1,6 +1,6 @@
 <?php
 
-namespace Sarga\Importer\src;
+namespace Sarga\Importer\Repositories;
 
 use Illuminate\Container\Container as Application;
 use Illuminate\Support\Arr;
