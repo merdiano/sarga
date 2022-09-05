@@ -6,7 +6,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use Sarga\API\Repositories\ProductRepository;
+
+use Sarga\Shop\Repositories\ProductRepository;
 use Webkul\Marketplace\Repositories\SellerRepository;
 use Webkul\Product\Models\ProductFlat;
 
