@@ -12,7 +12,7 @@
     <div class="content">
         <div class="page-header">
             <div class="page-title">
-                <h1>{{ __('sarga_admin::app.catalog.menus.title') }}</h1>
+                <h1>{{ __('sarga::app.catalog.menus.title') }}</h1>
             </div>
 
             <div class="page-action">
@@ -20,7 +20,7 @@
                     href="{{ route('admin.catalog.menus.create') }}"
                     class="btn btn-lg btn-primary"
                 >
-                    {{ __('sarga_admin::app.catalog.menus.add-title') }}
+                    {{ __('sarga::app.catalog.menus.add-title') }}
                 </a>
             </div>
         </div>
