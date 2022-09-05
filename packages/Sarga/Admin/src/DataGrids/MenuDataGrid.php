@@ -72,9 +72,8 @@ class MenuDataGrid extends DataGrid
             })
 
             ->groupBy('m.id', 'mt.locale',);
-
-
         $this->addFilter('status', 'm.status');
+
         $this->addFilter('menu_id', 'm.id');
 
         $this->setQueryBuilder($queryBuilder);

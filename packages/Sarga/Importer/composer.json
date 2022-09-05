@@ -10,7 +10,9 @@
         }
     ],
 
-    "require": {},
+    "require": {
+        "bagisto/laravel-core": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "Sarga\\Importer\\": "src/"
@@ -20,7 +22,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "ImporterServiceProvider"
+                "Sarga\\Importer\\Providers\\ImporterServiceProvider"
             ],
             "aliases": {}
         }

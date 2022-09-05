@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Sarga\API\Repositories\ProductRepository;
 use Webkul\Marketplace\Repositories\SellerRepository;
+use Webkul\Product\Models\ProductFlat;
 
 class ProductController extends Controller
 {
@@ -64,7 +65,15 @@ class ProductController extends Controller
 
     }
 
-    public function update(){
-
+    public function flush(){
+        try{
+            $model = new ProductFlat();
+            $model::removeAllFromSearch();
+            $model::makeAllSearchable(500);
+            return response()->json(['success' => true]);
+        }
+        catch(\Exception $ex){
+            return response()->json(['success' => false, 'message' => $ex->getMessage()]);
+        }
     }
 }
