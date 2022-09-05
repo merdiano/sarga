@@ -289,6 +289,7 @@ return [
         Sarga\Shop\Providers\ShopServiceProvider::class,
         Sarga\API\Providers\APIServiceProvider::class,
         Sarga\Admin\Providers\AdminServiceProvider::class,
+        Sarga\Importer\Providers\ImporterServiceProvider::class,
         Sarga\Brand\Providers\BrandServiceProvider::class,
         Sarga\Payment\Providers\PaymentServiceProvider::class,
 //        Webkul\suggestion\Providers\suggestionServiceProvider::class,

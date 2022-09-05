@@ -112,7 +112,7 @@
             "Sarga\\Admin\\": "packages/Sarga/Admin/src",
             "Sarga\\Brand\\": "packages/Sarga/Brand/src",
             "Sarga\\Payment\\": "packages/Sarga/Payment",
-            "Sarga\\Importer\\": "packages/Sarga/Importer"
+            "Sarga\\Importer\\": "packages/Sarga/Importer/src"
         }
     },
     "autoload-dev": {
