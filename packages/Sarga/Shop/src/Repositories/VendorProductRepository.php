@@ -12,7 +12,7 @@ class VendorProductRepository extends Repository
     ){
         parent::__construct($app);
     }
-    public function model()
+    public function model(): string
     {
         return 'Webkul\Marketplace\Contracts\Product';
     }

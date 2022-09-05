@@ -14,7 +14,7 @@ class CategoryRepository extends WCategoryRepository
      *
      * @return mixed
      */
-    public function model()
+    public function model(): string
     {
         return Category::class;
     }

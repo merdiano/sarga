@@ -146,7 +146,7 @@ class ProductFlatRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    function model(): string
     {
         return 'Webkul\Product\Contracts\Product';
     }

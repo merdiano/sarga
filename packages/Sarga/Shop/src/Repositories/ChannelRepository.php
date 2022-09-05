@@ -7,7 +7,7 @@ use Webkul\Core\Repositories\ChannelRepository as BagistoChannelRepo;
 
 class ChannelRepository extends BagistoChannelRepo
 {
-    function model()
+    function model(): string
     {
         return Channel::class;
     }

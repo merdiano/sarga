@@ -12,7 +12,7 @@ class VendorRepository extends SellerRepository
      *
      * @return mixed
      */
-    function model()
+    function model(): string
     {
         return Vendor::class;
     }
