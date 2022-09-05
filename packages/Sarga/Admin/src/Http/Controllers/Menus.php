@@ -1,7 +1,7 @@
 <?php
 
 namespace Sarga\Admin\Http\Controllers;
-use Sarga\Admin\src\DataGrids\MenuDataGrid;
+use Sarga\Admin\DataGrids\MenuDataGrid;
 use Sarga\Shop\Repositories\MenuRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 
