@@ -67,7 +67,7 @@ class MenuDataGrid extends DataGrid
                 'mt.locale'
             )
             ->leftJoin('menu_translations as mt', function ($leftJoin) use ($whereInLocales) {
-                $leftJoin->on('m.id', '=', 'mt.cmenu_id')
+                $leftJoin->on('m.id', '=', 'mt.menu_id')
                     ->whereIn('mt.locale', $whereInLocales);
             })
 
