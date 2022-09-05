@@ -5,7 +5,7 @@
 @extends('admin::layouts.content')
 
 @section('page_title')
-    {{ __('sarga_admin::app.catalog.menus.title') }}
+    {{ __('sarga::app.catalog.menus.title') }}
 @stop
 
 @section('content')

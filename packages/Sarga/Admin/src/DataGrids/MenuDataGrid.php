@@ -1,6 +1,6 @@
 <?php
 
-namespace Sarga\Admin\src\DataGrids;
+namespace Sarga\Admin\DataGrids;
 
 use Illuminate\Support\Facades\DB;
 use Webkul\Core\Models\Locale;
