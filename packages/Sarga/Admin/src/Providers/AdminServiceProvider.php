@@ -20,7 +20,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'sarga');
 
         $this->publishes([
-            __DIR__ . '/../Resources/views/catalog/categories' => resource_path('views/vendor/admin/catalog/categories'),
+            __DIR__ . '/../Resources/views/catalog' => resource_path('views/vendor/admin/catalog'),
             __DIR__ . '/../Resources/views/notifications' => resource_path('views/vendor/admin/notifications'),
             __DIR__ . '/../Resources/views/customers/addresses' => resource_path('views/vendor/admin/customers/addresses'),
             __DIR__ . '/../Resources/views/sales' => resource_path('views/vendor/admin/sales'),
