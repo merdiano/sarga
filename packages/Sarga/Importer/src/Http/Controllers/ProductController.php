@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
+use Sarga\Brand\Models\Brand;
 use Sarga\Shop\Repositories\ProductRepository;
 use Webkul\Marketplace\Repositories\SellerRepository;
 use Webkul\Product\Models\ProductFlat;
@@ -71,6 +72,9 @@ class ProductController extends Controller
             $model = new ProductFlat();
             $model::removeAllFromSearch();
             $model::makeAllSearchable(500);
+            $modelBrand = new Brand();
+            $modelBrand::removeAllFromSearch();
+            $modelBrand::makeAllSearchable(500);
             return response()->json(['success' => true]);
         }
         catch(\Exception $ex){

@@ -6,19 +6,19 @@
 
 @section('content')
     <div class="content">
-        <form method="POST" action="{{ route('admin.catalog.categories.store') }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.catalog.menus.store') }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
             <div class="page-header">
                 <div class="page-title">
                     <h1>
-                        <i class="icon angle-left-icon back-link" onclick="window.location = '{{ route('admin.catalog.categories.index') }}'"></i>
+                        <i class="icon angle-left-icon back-link" onclick="window.location = '{{ route('admin.catalog.menus.index') }}'"></i>
 
-                        {{ __('admin::app.catalog.categories.add-title') }}
+                        {{ __('admin::app.catalog.menus.add-title') }}
                     </h1>
                 </div>
 
                 <div class="page-action">
                     <button type="submit" class="btn btn-lg btn-primary">
-                        {{ __('admin::app.catalog.categories.save-btn-title') }}
+                        {{ __('admin::app.catalog.menus.save-btn-title') }}
                     </button>
                 </div>
             </div>
@@ -29,11 +29,8 @@
 
                     <input type="hidden" name="locale" value="all"/>
 
-                    {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.general.before') !!}
-
                     <accordian title="{{ __('admin::app.catalog.categories.general') }}" :active="true">
                         <div slot="body">
-                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.general.controls.before') !!}
 
                             <div class="control-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">{{ __('admin::app.catalog.categories.name') }}</label>
@@ -60,128 +57,28 @@
                                 <span class="control-error" v-if="errors.has('position')">@{{ errors.first('position') }}</span>
                             </div>
 
-                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.general.controls.after') !!}
                         </div>
                     </accordian>
-
-                    {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.general.after') !!}
-
-                    {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.description_images.before') !!}
 
                     <accordian title="{{ __('admin::app.catalog.categories.description-and-images') }}" :active="true">
                         <div slot="body">
-                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.description_images.controls.before') !!}
-
-                            <div class="control-group" :class="[errors.has('display_mode') ? 'has-error' : '']">
-                                <label for="display_mode" class="required">{{ __('admin::app.catalog.categories.display-mode') }}</label>
-                                <select class="control" v-validate="'required'" id="display_mode" name="display_mode" data-vv-as="&quot;{{ __('admin::app.catalog.categories.display-mode') }}&quot;">
-                                    <option value="products_and_description">
-                                        {{ __('admin::app.catalog.categories.products-and-description') }}
-                                    </option>
-                                    <option value="products_only">
-                                        {{ __('admin::app.catalog.categories.products-only') }}
-                                    </option>
-                                    <option value="description_only">
-                                        {{ __('admin::app.catalog.categories.description-only') }}
-                                    </option>
-                                </select>
-                                <span class="control-error" v-if="errors.has('display_mode')">@{{ errors.first('display_mode') }}</span>
-                            </div>
 
                             <description></description>
 
-                            <div class="control-group {!! $errors->has('image.*') ? 'has-error' : '' !!}">
-                                <label>{{ __('admin::app.catalog.categories.image') }}</label>
-
-                                <image-wrapper button-label="{{ __('admin::app.catalog.products.add-image-btn-title') }}" input-name="image" :multiple="false"></image-wrapper>
-
-                                <span class="control-error" v-if="{!! $errors->has('image.*') !!}">
-                                    @foreach ($errors->get('image.*') as $key => $message)
-                                        @php echo str_replace($key, 'Image', $message[0]); @endphp
-                                    @endforeach
-                                </span>
-
-                                <span class="control-info mt-10">{{ __('admin::app.catalog.categories.image-size') }}</span>   
-                            </div>
-
-                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.description_images.controls.after') !!}
                         </div>
                     </accordian>
 
-                    {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.description_images.after') !!}
 
                     @if ($categories->count())
-                        {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.parent_category.before') !!}
 
                         <accordian title="{{ __('admin::app.catalog.categories.parent-category') }}" :active="true">
                             <div slot="body">
-
-                                {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.parent_category.controls.before') !!}
-
                                 <tree-view value-field="id" name-field="parent_id" input-type="radio" items='@json($categories)' fallback-locale="{{ config('app.fallback_locale') }}"></tree-view>
-
-                                {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.parent_category.controls.after') !!}
-
                             </div>
                         </accordian>
 
-                        {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.parent_category.after') !!}
                     @endif
 
-                    <accordian title="{{ __('admin::app.catalog.categories.filterable-attributes') }}" :active="true">
-                        <div slot="body">
-                            <?php $selectedaAtributes = old('attributes') ? old('attributes') : ['11']  ?>
-
-                            <div class="control-group multi-select" :class="[errors.has('attributes[]') ? 'has-error' : '']">
-                                <label for="attributes" class="required">{{ __('admin::app.catalog.categories.attributes') }}</label>
-                                <select class="control" name="attributes[]" v-validate="'required'" data-vv-as="&quot;{{ __('admin::app.catalog.categories.attributes') }}&quot;" multiple>
-
-                                    @foreach ($attributes as $attribute)
-                                        <option value="{{ $attribute->id }}" {{ in_array($attribute->id, $selectedaAtributes) ? 'selected' : ''}}>
-                                            {{ $attribute->name ? $attribute->name : $attribute->admin_name }}
-                                        </option>
-                                    @endforeach
-
-                                </select>
-                                <span class="control-error" v-if="errors.has('attributes[]')">
-                                    @{{ errors.first('attributes[]') }}
-                                </span>
-                            </div>
-                        </div>
-                    </accordian>
-
-                    {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.seo.before') !!}
-
-                    <accordian title="{{ __('admin::app.catalog.categories.seo') }}" :active="true">
-                        <div slot="body">
-                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.seo.controls.before') !!}
-
-                            <div class="control-group">
-                                <label for="meta_title">{{ __('admin::app.catalog.categories.meta_title') }}</label>
-                                <input type="text" class="control" id="meta_title" name="meta_title" value="{{ old('meta_title') }}"/>
-                            </div>
-
-                            <div class="control-group" :class="[errors.has('slug') ? 'has-error' : '']">
-                                <label for="slug" class="required">{{ __('admin::app.catalog.categories.slug') }}</label>
-                                <input type="text" v-validate="'required'" class="control" id="slug" name="slug" value="{{ old('slug') }}" data-vv-as="&quot;{{ __('admin::app.catalog.categories.slug') }}&quot;" v-slugify/>
-                                <span class="control-error" v-if="errors.has('slug')">@{{ errors.first('slug') }}</span>
-                            </div>
-
-                            <div class="control-group">
-                                <label for="meta_description">{{ __('admin::app.catalog.categories.meta_description') }}</label>
-                                <textarea class="control" id="meta_description" name="meta_description">{{ old('meta_description') }}</textarea>
-                            </div>
-
-                            <div class="control-group">
-                                <label for="meta_keywords">{{ __('admin::app.catalog.categories.meta_keywords') }}</label>
-                                <textarea class="control" id="meta_keywords" name="meta_keywords">{{ old('meta_keywords') }}</textarea>
-                            </div>
-
-                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.seo.controls.after') !!}
-                        </div>
-                    </accordian>
-
-                    {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.seo.after') !!}
                 </div>
             </div>
         </form>
