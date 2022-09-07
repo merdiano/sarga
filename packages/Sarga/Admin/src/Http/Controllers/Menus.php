@@ -2,6 +2,8 @@
 
 namespace Sarga\Admin\Http\Controllers;
 use Sarga\Admin\DataGrids\MenuDataGrid;
+use Sarga\Admin\Http\Requests\MenuRequest;
+use Sarga\Shop\Repositories\CategoryRepository;
 use Sarga\Shop\Repositories\MenuRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 
@@ -15,7 +17,7 @@ class Menus extends Controller
     protected $_config;
 
     public function __construct(
-        protected MenuRepository $attributeRepository
+        protected MenuRepository $mRepository
     )
     {
         $this->_config = request('_config');
@@ -29,17 +31,31 @@ class Menus extends Controller
         return view($this->_config['view']);
     }
 
-    public function create(){
+    public function create(CategoryRepository $repository){
+        $categories = $repository->getCategoryTree(null, ['id']);
 
+        return view($this->_config['view'], compact('categories'));
     }
 
-    public function store(){
+    public function store(MenuRequest $request){
 
+        $category = $this->mRepository->create($request->all());
+
+        session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Menu']));
+
+        return redirect()->route($this->_config['redirect']);
     }
 
-    public function edit(){
-
+    public function edit($id){
+        $menu = $this->mRepository->findOrFail($id);
+        return view($this->_config['view'], compact('menu'));
     }
 
-    public function update(){}
+    public function update(MenuRequest $request,$id){
+        $menu = $this->categoryRepository->update($request->all(), $id);
+
+        session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Menu']));
+
+        return redirect()->route($this->_config['redirect']);
+    }
 }
