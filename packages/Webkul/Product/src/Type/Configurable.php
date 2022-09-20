@@ -506,11 +506,7 @@ class Configurable extends AbstractType
      */
     public function getMinimalPrice($qty = null)
     {
-        static $minPrice = null;
 
-        if (! is_null($minPrice)) {
-            return $minPrice;
-        }
 
         /* method is calling many time so using variable */
         $tablePrefix = DB::getTablePrefix();
@@ -685,7 +681,7 @@ class Configurable extends AbstractType
     public function prepareForCart($data)
     {
         $data['quantity'] = parent::handleQuantity((int) $data['quantity']);
-        
+
         if (
             ! isset($data['selected_configurable_option'])
             || ! $data['selected_configurable_option']

@@ -40,7 +40,7 @@ class Product extends JsonResource
             'type'                   => $product->type,
             'name'                   => $product->name,
 //            'url_key'                => $product->url_key,
-            'price'                  => $productTypeInstance->getMinimalPrice(),//(double) core()->convertPrice($productTypeInstance->getMinimalPrice()),
+            'price'                  => (double) core()->convertPrice($productTypeInstance->getMinimalPrice()),
 
             'formatted_price'        => core()->currency($productTypeInstance->getMinimalPrice()),
 //            'short_description'      => $product->short_description,
