@@ -590,11 +590,6 @@ class Configurable extends AbstractType
      */
     public function getMaximumPrice()
     {
-        static $maxPrice = null;
-
-        if (! is_null($maxPrice)) {
-            return $maxPrice;
-        }
 
         $productFlat = ProductFlat::join('products', 'product_flat.product_id', '=', 'products.id')
             ->distinct()
