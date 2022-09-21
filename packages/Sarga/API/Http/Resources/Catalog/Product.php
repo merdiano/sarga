@@ -121,7 +121,7 @@ class Product extends JsonResource
             ),
             'formatted_regular_price' => $this->when(
                 $productTypeInstance->haveSpecialPrice(),
-                data_get($productTypeInstance->getMaximumPrice())
+                core()->currency($productTypeInstance->getMaximumPrice())
             ),
         ];
     }
