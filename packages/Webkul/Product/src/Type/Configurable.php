@@ -666,7 +666,7 @@ class Configurable extends AbstractType
         foreach ($this->product->variants as $variant) {
             $price[] = $variant->getTypeInstance()->getSpecialPrice($qty);
         }
-        \Log::info($price)
+        \Log::info($price);
 
         return min($price);
     }
