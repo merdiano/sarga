@@ -678,7 +678,7 @@ class Configurable extends AbstractType
     public function getImages(){
         $variant = $this->product->variants()->first();
 
-        return $variant->getTypeInstance()->getImages($qty);
+        return $variant->getTypeInstance()->getImages();
     }
 
     /**
