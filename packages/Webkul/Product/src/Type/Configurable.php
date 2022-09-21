@@ -590,7 +590,7 @@ class Configurable extends AbstractType
     {
         $variant = $this->product->variants()->first();
 
-        return $variant->getTypeInstance()->getMaximumPrice()
+        return $variant->getTypeInstance()->getMaximumPrice();
 
         $productFlat = ProductFlat::join('products', 'product_flat.product_id', '=', 'products.id')
             ->distinct()
