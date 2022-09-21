@@ -588,7 +588,7 @@ class Configurable extends AbstractType
      */
     public function getMaximumPrice()
     {
-        $variant = $this->product->variants()->first();
+        $variant = $this->product->variants()->latest()->first();
 
         return $variant->getTypeInstance()->getMaximumPrice();
 
@@ -655,7 +655,7 @@ class Configurable extends AbstractType
      */
     public function haveSpecialPrice($qty = null)
     {
-        $variant = $this->product->variants()->first();
+        $variant = $this->product->variants()->latest()->first();
 
         return $variant->getTypeInstance()->haveSpecialPrice($qty);
 
@@ -673,13 +673,13 @@ class Configurable extends AbstractType
     }
 
     public function getSpecialPrice($qty = null){
-        $variant = $this->product->variants()->first();
+        $variant = $this->product->variants()->latest()->first();
 
         return $variant->getTypeInstance()->getSpecialPrice($qty);
     }
 
     public function getImages(){
-        $variant = $this->product->variants()->first();
+        $variant = $this->product->variants()->latest()->first();
 
         return $variant->getTypeInstance()->getImages();
     }
