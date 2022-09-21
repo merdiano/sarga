@@ -117,11 +117,11 @@ class Product extends JsonResource
             ),
             'regular_price'          => $this->when(
                 $productTypeInstance->haveSpecialPrice(),
-                (double) core()->convertPrice(data_get($productTypeInstance->getProductPrices(), 'regular_price.price'))
+                (double) core()->convertPrice($productTypeInstance->getMaximumPrice())
             ),
             'formatted_regular_price' => $this->when(
                 $productTypeInstance->haveSpecialPrice(),
-                data_get($productTypeInstance->getProductPrices(), 'regular_price.formated_price')
+                data_get($productTypeInstance->getMaximumPrice())
             ),
         ];
     }
