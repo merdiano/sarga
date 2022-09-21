@@ -541,11 +541,6 @@ class Configurable extends AbstractType
      */
     public function getOfferPrice()
     {
-        static $offerPrice = null;
-
-        if (! is_null($offerPrice)) {
-            return $offerPrice;
-        }
 
         $rulePrices = $customerGroupPrices = [];
 
