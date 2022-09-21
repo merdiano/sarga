@@ -394,7 +394,7 @@ class Configurable extends AbstractType
 
     public function getSpecialPrice($qty = null)
     {
-        return $this->getMinimalPrice();
+        return $this->product->min_price;
     }
     /**
      * Fill required fields.
