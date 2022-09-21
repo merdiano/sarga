@@ -71,9 +71,9 @@
 
                     @if ($categories->count())
 
-                        <accordian title="{{ __('admin::app.catalog.categories.parent-category') }}" :active="true">
+                        <accordian title="{{ __('admin::app.catalog.products.categories') }}" :active="true">
                             <div slot="body">
-                                <tree-view value-field="id" name-field="parent_id" input-type="radio" items='@json($categories)' fallback-locale="{{ config('app.fallback_locale') }}"></tree-view>
+                                <tree-view behavior="normal" value-field="id" name-field="categories" input-type="checkbox" items='@json($categories)' fallback-locale="{{ config('app.fallback_locale') }}"></tree-view>
                             </div>
                         </accordian>
 
