@@ -392,10 +392,6 @@ class Configurable extends AbstractType
         return $variant;
     }
 
-    public function getSpecialPrice($qty = null)
-    {
-        return $this->product->min_price;
-    }
     /**
      * Fill required fields.
      *
@@ -674,6 +670,14 @@ class Configurable extends AbstractType
         }
 
         return $haveSpecialPrice;
+    }
+
+    public function getSpecialPrice($qty = null){
+        foreach ($this->product->variants as $variant) {
+            $price[] = $variant->getTypeInstance()->getSpecialPrice();
+        }
+
+        return min($price);
     }
 
     /**
