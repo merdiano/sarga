@@ -75,8 +75,7 @@ class Simple extends AbstractType
     }
 
     public function getImages(){
-        $variant = $this->product->variants()->first();
 
-        return $this->product->images();
+        return $this->product->images;
     }
 }
