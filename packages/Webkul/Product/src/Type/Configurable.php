@@ -507,6 +507,9 @@ class Configurable extends AbstractType
     public function getMinimalPrice($qty = null)
     {
 
+        $variant = $this->product->variants()->first();
+
+        return $variant->getTypeInstance()->getMinimalPrice($qty);
 
         /* method is calling many time so using variable */
         $tablePrefix = DB::getTablePrefix();
@@ -649,6 +652,10 @@ class Configurable extends AbstractType
      */
     public function haveSpecialPrice($qty = null)
     {
+        $variant = $this->product->variants()->first();
+
+        return $variant->getTypeInstance()->haveSpecialPrice($qty);
+
         $haveSpecialPrice = false;
 
         foreach ($this->product->variants as $variant) {
@@ -663,12 +670,15 @@ class Configurable extends AbstractType
     }
 
     public function getSpecialPrice($qty = null){
-        foreach ($this->product->variants as $variant) {
-            $price[] = $variant->getTypeInstance()->getSpecialPrice($qty);
-        }
-        \Log::info($price);
+        $variant = $this->product->variants()->first();
 
-        return min($price);
+        return $variant->getTypeInstance()->getSpecialPrice($qty);
+    }
+
+    public function getImages(){
+        $variant = $this->product->variants()->first();
+
+        return $variant->getTypeInstance()->getImages($qty);
     }
 
     /**

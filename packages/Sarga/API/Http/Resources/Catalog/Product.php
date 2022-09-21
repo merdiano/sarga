@@ -45,7 +45,7 @@ class Product extends JsonResource
             'formatted_price'        => core()->currency($productTypeInstance->getMinimalPrice()),
 //            'short_description'      => $product->short_description,
             'description'            => $product->description,
-            'images'                 => ProductImage::collection($product->images),
+            'images'                 => ProductImage::collection($productTypeInstance->getImages()),
             /* product's checks */
 //            'in_stock'               => $product->haveSufficientQuantity(1),
             'is_wishlisted'          => $this->isWishlisted($product) ,
