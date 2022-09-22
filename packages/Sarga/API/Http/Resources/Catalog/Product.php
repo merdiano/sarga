@@ -88,19 +88,19 @@ class Product extends JsonResource
         $typeInstance = $product->getTypeInstance();
 
         return [
-            'images'                 => ProductImage::collection($product->images)),
+            'images'                 => ProductImage::collection($product->images),
             'price'                  => (double) core()->convertPrice($typeInstance->getMinimalPrice()),
 
             'formatted_price'        => core()->currency($typeInstance->getMinimalPrice()),
 
-            'special_price'          => $this->when(
-                $typeInstance->haveSpecialPrice(),
-                (double) core()->convertPrice($typeInstance->getSpecialPrice())
-            ),
-            'formatted_special_price' => $this->when(
-                $typeInstance->haveSpecialPrice(),
-                core()->currency($typeInstance->getSpecialPrice())
-            ),
+//            'special_price'          => $this->when(
+//                $typeInstance->haveSpecialPrice(),
+//                (double) core()->convertPrice($typeInstance->getSpecialPrice())
+//            ),
+//            'formatted_special_price' => $this->when(
+//                $typeInstance->haveSpecialPrice(),
+//                core()->currency($typeInstance->getSpecialPrice())
+//            ),
             'regular_price'          => $this->when(
                 $typeInstance->haveSpecialPrice(),
                 (double) core()->convertPrice($typeInstance->getMaximumPrice())
