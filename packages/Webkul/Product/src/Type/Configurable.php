@@ -499,6 +499,7 @@ class Configurable extends AbstractType
     }
 
     public function getMinPriceVariant(){
+        $tablePrefix = DB::getTablePrefix();
         return ProductFlat::join('products', 'product_flat.product_id', '=', 'products.id')
             ->distinct()
             ->where('products.parent_id', $this->product->id)
