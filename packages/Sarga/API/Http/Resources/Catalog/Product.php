@@ -92,15 +92,15 @@ class Product extends JsonResource
             'price'                  => (double) core()->convertPrice($typeInstance->getMinimalPrice()),
 
             'formatted_price'        => core()->currency($typeInstance->getMinimalPrice()),
-
-//            'special_price'          => $this->when(
-//                $typeInstance->haveSpecialPrice(),
-//                (double) core()->convertPrice($typeInstance->getSpecialPrice())
-//            ),
-//            'formatted_special_price' => $this->when(
-//                $typeInstance->haveSpecialPrice(),
-//                core()->currency($typeInstance->getSpecialPrice())
-//            ),
+//todo remove special price
+            'special_price'          => $this->when(
+                $typeInstance->haveSpecialPrice(),
+                (double) core()->convertPrice($typeInstance->getSpecialPrice())
+            ),
+            'formatted_special_price' => $this->when(
+                $typeInstance->haveSpecialPrice(),
+                core()->currency($typeInstance->getSpecialPrice())
+            ),
             'regular_price'          => $this->when(
                 $typeInstance->haveSpecialPrice(),
                 (double) core()->convertPrice($typeInstance->getMaximumPrice())
