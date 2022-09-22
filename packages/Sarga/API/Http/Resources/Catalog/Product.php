@@ -83,7 +83,13 @@ class Product extends JsonResource
      */
     private function specialPriceInfo()
     {
-        $product = $this->type == 'configurable' ? $this->product->getTypeInstance()->getMinPriceVariant()->product : $this->product;
+        if($this->type == 'configurable')
+        {
+            $variant = $this->variants()->with('product')->orderBy('min_price')->first();
+            $product = $variant->product;
+        }else{
+            $product = $this->product ? $this->product : $this;
+        }
 
         $typeInstance = $product->getTypeInstance();
 
