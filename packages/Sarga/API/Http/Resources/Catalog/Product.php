@@ -85,7 +85,8 @@ class Product extends JsonResource
     {
         if($this->type == 'configurable')
         {
-            $product = $this->variants()->with('product_flats')->orderBy('product_flat.min_price')->first();
+            $variant = $this->product->getTypeInstance()->getMinPriceVariant();
+            $product = $variant->product;
 
         }else{
             $product = $this->product ? $this->product : $this;
