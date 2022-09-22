@@ -36,32 +36,13 @@ class Product extends JsonResource
         return [
             /* product's information */
             'id'                     => $product->id,
-//            'sku'                    => $product->sku,
             'type'                   => $product->type,
             'name'                   => $product->name,
-//            'url_key'                => $product->url_key,
-            'price'                  => (double) core()->convertPrice($productTypeInstance->getMinimalPrice()),
-
-            'formatted_price'        => core()->currency($productTypeInstance->getMinimalPrice()),
-//            'short_description'      => $product->short_description,
             'description'            => $product->description,
-            'images'                 => ProductImage::collection($productTypeInstance->getImages()),
-            /* product's checks */
-//            'in_stock'               => $product->haveSufficientQuantity(1),
             'is_wishlisted'          => $this->isWishlisted($product) ,
             'is_item_in_cart'        => \Cart::hasProduct($product),
             'shop_title'             => $this->shop_title,
-//            'new'                    => $this->new,
-//            'featured'               => $this->featured,
             'brand'                  => $product->brand->name ?? '',
-//            'show_quantity_changer'  => $this->when(
-//                $product->type !== 'grouped',
-//                $product->getTypeInstance()->showQuantityBox()
-//            ),
-            /*
-             * attributes
-             */
-//            'specifications' => app('Webkul\Product\Helpers\View')->getAdditionalData($product),
             /* product's extra information */
             $this->merge($this->allProductExtraInfo()),
 
@@ -102,26 +83,31 @@ class Product extends JsonResource
      */
     private function specialPriceInfo()
     {
-        $product = $this->product ? $this->product : $this;
+        $product = $this->type == 'configurable' ? $product->getTypeInstance()->getMinPriceVariant()->product : $this->product;
 
-        $productTypeInstance = $product->getTypeInstance();
+        $typeInstance = $product->getTypeInstance();
 
         return [
+            'images'                 => ProductImage::collection($product->images)),
+            'price'                  => (double) core()->convertPrice($typeInstance->getMinimalPrice()),
+
+            'formatted_price'        => core()->currency($typeInstance->getMinimalPrice()),
+
             'special_price'          => $this->when(
-                $productTypeInstance->haveSpecialPrice(),
-                (double) core()->convertPrice($productTypeInstance->getSpecialPrice())
+                $typeInstance->haveSpecialPrice(),
+                (double) core()->convertPrice($typeInstance->getSpecialPrice())
             ),
             'formatted_special_price' => $this->when(
-                $productTypeInstance->haveSpecialPrice(),
-                core()->currency($productTypeInstance->getSpecialPrice())
+                $typeInstance->haveSpecialPrice(),
+                core()->currency($typeInstance->getSpecialPrice())
             ),
             'regular_price'          => $this->when(
-                $productTypeInstance->haveSpecialPrice(),
-                (double) core()->convertPrice($productTypeInstance->getMaximumPrice())
+                $typeInstance->haveSpecialPrice(),
+                (double) core()->convertPrice($typeInstance->getMaximumPrice())
             ),
             'formatted_regular_price' => $this->when(
-                $productTypeInstance->haveSpecialPrice(),
-                core()->currency($productTypeInstance->getMaximumPrice())
+                $typeInstance->haveSpecialPrice(),
+                core()->currency($typeInstance->getMaximumPrice())
             ),
         ];
     }
