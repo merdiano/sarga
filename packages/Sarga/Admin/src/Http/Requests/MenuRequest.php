@@ -33,7 +33,8 @@ class MenuRequest extends FormRequest
 
         return [
             'name'        => 'required',
-            'description' => 'required_if:display_mode,==,description_only,products_and_description',
+            'status' => 'required',
+            'position' => 'required',
         ];
     }
 }

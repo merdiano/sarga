@@ -17,7 +17,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../Routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'sarga_admin');
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'sarga');
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'admin');
 
         $this->publishes([
             __DIR__ . '/../Resources/views/catalog' => resource_path('views/vendor/admin/catalog'),
