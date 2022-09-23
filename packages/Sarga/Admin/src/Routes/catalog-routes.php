@@ -36,6 +36,6 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => config('app.admin_ur
             'redirect' => 'admin.catalog.menus.index',
         ])->name('admin.catalog.menus.massdelete');
 
-        Route::get('menus/brands',[Menus::class, 'brands'])->name('admin.catalog.menus.brandsearch')
+        Route::get('menus/brands',[Menus::class, 'brands'])->name('admin.catalog.menus.brandsearch');
     });
 });
