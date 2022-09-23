@@ -56,7 +56,7 @@ class CreateMenusTable extends Migration
     {
         Schema::dropIfExists('menu_brands');
         Schema::dropIfExists('menu_categories');
-        Schema::dropIfExists('menus_translations');
+        Schema::dropIfExists('menu_translations');
         Schema::dropIfExists('menus');
     }
 }
