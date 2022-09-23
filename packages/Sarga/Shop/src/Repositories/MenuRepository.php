@@ -57,6 +57,7 @@ class MenuRepository extends Repository
 
         if (isset($data['brands'])) {
             $menu->brands()->sync($data['brands']);
+        }
     }
 
 
