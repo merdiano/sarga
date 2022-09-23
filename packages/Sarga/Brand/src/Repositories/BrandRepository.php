@@ -97,4 +97,15 @@ class BrandRepository extends Repository
             ->groupBy('brands.id')
             ->get();
     }
+
+    public function search($key){
+        $brands = $this->getModel()::search(implode(' OR ', $key))
+//            ->where('status',1)
+//            ->orderBy('name','asc')
+            ->take(10)
+            ->query(fn ($query) => $query->select('id','name')->orderBy('name'))
+            ->get();
+
+        return $brands;
+    }
 }

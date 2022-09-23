@@ -8,7 +8,7 @@ use Sarga\Admin\Http\Controllers\Menus;
 Route::group(['middleware' => ['web', 'admin'], 'prefix' => config('app.admin_url')], function () {
     Route::prefix('catalog')->group(function () {
         /**
-         * Categories routes.
+         * Menu routes.
          */
         Route::get('/menus', [Menus::class, 'index'])->defaults('_config', [
             'view' => 'sarga_admin::catalog.menus.index',
@@ -35,5 +35,7 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => config('app.admin_ur
         Route::post('menus/massdelete', [Menus::class, 'massDestroy'])->defaults('_config', [
             'redirect' => 'admin.catalog.menus.index',
         ])->name('admin.catalog.menus.massdelete');
+
+        Route::get('menus/brands',[Menus::class, 'brands'])->name('admin.catalog.menus.brandsearch')
     });
 });

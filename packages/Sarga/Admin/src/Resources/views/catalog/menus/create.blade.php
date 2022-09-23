@@ -29,38 +29,38 @@
 
                     <input type="hidden" name="locale" value="all"/>
 
-                    <accordian title="{{ __('sarga::app.catalog.categories.general') }}" :active="true">
+                    <accordian title="{{ __('sarga::app.catalog.menus.general') }}" :active="true">
                         <div slot="body">
 
                             <div class="control-group" :class="[errors.has('name') ? 'has-error' : '']">
-                                <label for="name" class="required">{{ __('sarga::app.catalog.categories.name') }}</label>
-                                <input type="text" v-validate="'required'" class="control" id="name" name="name" value="{{ old('name') }}" data-vv-as="&quot;{{ __('sarga::app.catalog.categories.name') }}&quot;" v-slugify-target="'slug'"/>
+                                <label for="name" class="required">{{ __('sarga::app.catalog.menus.name') }}</label>
+                                <input type="text" v-validate="'required'" class="control" id="name" name="name" value="{{ old('name') }}" data-vv-as="&quot;{{ __('sarga::app.catalog.menus.name') }}&quot;" v-slugify-target="'slug'"/>
                                 <span class="control-error" v-if="errors.has('name')">@{{ errors.first('name') }}</span>
                             </div>
 
                             <div class="control-group" :class="[errors.has('status') ? 'has-error' : '']">
-                                <label for="status" class="required">{{ __('sarga::app.catalog.categories.visible-in-menu') }}</label>
-                                <select class="control" v-validate="'required'" id="status" name="status" data-vv-as="&quot;{{ __('sarga::app.catalog.categories.visible-in-menu') }}&quot;">
+                                <label for="status" class="required">{{ __('sarga::app.catalog.menus.visible-in-menu') }}</label>
+                                <select class="control" v-validate="'required'" id="status" name="status" data-vv-as="&quot;{{ __('sarga::app.catalog.menus.visible-in-menu') }}&quot;">
                                     <option value="1">
-                                        {{ __('sarga::app.catalog.categories.yes') }}
+                                        {{ __('sarga::app.catalog.menus.yes') }}
                                     </option>
                                     <option value="0">
-                                        {{ __('sarga::app.catalog.categories.no') }}
+                                        {{ __('sarga::app.catalog.menus.no') }}
                                     </option>
                                 </select>
                                 <span class="control-error" v-if="errors.has('status')">@{{ errors.first('status') }}</span>
                             </div>
 
                             <div class="control-group" :class="[errors.has('position') ? 'has-error' : '']">
-                                <label for="position" class="required">{{ __('sarga::app.catalog.categories.position') }}</label>
-                                <input type="text" v-validate="'required|numeric'" class="control" id="position" name="position" value="{{ old('position') }}" data-vv-as="&quot;{{ __('sarga::app.catalog.categories.position') }}&quot;"/>
+                                <label for="position" class="required">{{ __('sarga::app.catalog.menus.position') }}</label>
+                                <input type="text" v-validate="'required|numeric'" class="control" id="position" name="position" value="{{ old('position') }}" data-vv-as="&quot;{{ __('sarga::app.catalog.menus.position') }}&quot;"/>
                                 <span class="control-error" v-if="errors.has('position')">@{{ errors.first('position') }}</span>
                             </div>
 
                         </div>
                     </accordian>
 
-                    <accordian title="{{ __('sarga::app.catalog.categories.description-and-images') }}" :active="true">
+                    <accordian title="{{ __('sarga::app.catalog.menus.description') }}" :active="true">
                         <div slot="body">
 
                             <description></description>

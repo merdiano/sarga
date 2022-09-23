@@ -5,6 +5,7 @@ use Sarga\Admin\DataGrids\MenuDataGrid;
 use Sarga\Admin\Http\Requests\MenuRequest;
 use Sarga\Shop\Repositories\CategoryRepository;
 use Sarga\Shop\Repositories\MenuRepository;
+use Sarga\Brand\Repositories\BrandRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 
 class Menus extends Controller
@@ -53,10 +54,27 @@ class Menus extends Controller
     }
 
     public function update(MenuRequest $request,$id){
-        $menu = $this->categoryRepository->update($request->all(), $id);
+        $menu = $this->mRepository->update($request->all(), $id);
 
         session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Menu']));
 
         return redirect()->route($this->_config['redirect']);
+    }
+
+    public function brands(BrandRepository $repository){
+        if (request()->ajax()) {
+            $results = [];
+
+            foreach ($repository->search(request()->input('query')) as $row) {
+                $results[] = [
+                    'id'   => $row->id,
+                    'name' => $row->name,
+                ];
+            }
+
+            return response()->json($results);
+        } else {
+            return view($this->_config['view']);
+        }
     }
 }

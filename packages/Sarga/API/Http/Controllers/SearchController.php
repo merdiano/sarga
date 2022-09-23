@@ -39,12 +39,7 @@ class SearchController extends V1Controller
     }
 
     private function searchBrands($key){
-        $brands = $this->brandRepository->getModel()::search(implode(' OR ', $key))
-//            ->where('status',1)
-//            ->orderBy('name','asc')
-            ->take(10)
-            ->query(fn ($query) => $query->select('id','name')->orderBy('name'))
-            ->get();
+        $brands = $this->brandRepository->search($key);
 
         if($brands->count()){
             $brands->flatMap(fn ($val) => $val['suggestion_type']='brand');

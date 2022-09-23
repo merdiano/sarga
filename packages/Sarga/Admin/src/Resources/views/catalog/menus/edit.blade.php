@@ -56,7 +56,7 @@
 
                     <input name="_method" type="hidden" value="PUT">
 
-                    <accordian title="{{ __('sarga::app.catalog.categories.general') }}" :active="true">
+                    <accordian title="{{ __('sarga::app.catalog.menus.general') }}" :active="true">
                         <div slot="body">
                             <div class="control-group" :class="[errors.has('{{$locale}}[name]') ? 'has-error' : '']">
                                 <label for="name" class="required">{{ __('sarga::app.catalog.menus.name') }}
@@ -90,15 +90,16 @@
                         </div>
                     </accordian>
 
-                    <accordian title="{{ __('sarga::app.catalog.menus.description-and-images') }}" :active="true">
+                    <accordian title="{{ __('sarga::app.catalog.menus.description') }}" :active="true">
                         <div slot="body">
                             <description></description>
                         </div>
                     </accordian>
+                    @include('sarga::catalog.menus.menu-brand-links')
 
                     @if ($categories->count())
 
-                        <accordian title="{{ __('sarga::app.catalog.menus.parent-category') }}" :active="true">
+                        <accordian title="{{ __('sarga::app.catalog.menus.categories') }}" :active="true">
                             <div slot="body">
                                 <tree-view behavior="normal" value-field="id" name-field="categories" input-type="checkbox" value='@json($menu->categories->pluck("id"))'
                                            items='@json($categories)' fallback-locale="{{ config('app.fallback_locale') }}"></tree-view>
