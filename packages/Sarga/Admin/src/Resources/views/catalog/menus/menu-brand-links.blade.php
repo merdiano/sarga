@@ -14,6 +14,11 @@
 
         <div class="control-group" >
 
+            <input type="text" class="control" autocomplete="off" v-model="search_term" placeholder="{{ __('sarga::app.catalog.menus.brand-search-hint') }}" v-on:keyup="search()">
+
+
+
+            <input type="hidden" name="brands[]" v-for='(brand, index) in addedBrands' v-if="addedBrands.length" :value="brand.id"/>
             <span class="filter-tag linked-product-filter-tag" v-if="addedBrands.length">
                 <span class="wrapper linked-product-wrapper " v-for='(brand, index) in addedBrands'>
                     <span class="do-not-cross-linked-product-arrow">
