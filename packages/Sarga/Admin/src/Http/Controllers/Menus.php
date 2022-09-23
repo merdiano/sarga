@@ -46,7 +46,7 @@ class Menus extends Controller
         return redirect()->route($this->_config['redirect']);
     }
 
-    public function edit($id){
+    public function edit(CategoryRepository $repository,$id){
         $menu = $this->mRepository->findOrFail($id);
         $categories = $repository->getCategoryTree(null, ['id']);
         return view($this->_config['view'], compact('menu','categories'));
