@@ -1,7 +1,7 @@
 @extends('admin::layouts.content')
 
 @section('page_title')
-    {{ __('admin::app.catalog.menus.edit-title') }}
+    {{ __('sarga::app.catalog.menus.edit-title') }}
 @stop
 
 @push('css')
@@ -27,7 +27,7 @@
                     <h1>
                         <i class="icon angle-left-icon back-link" onclick="window.location = '{{ route('admin.catalog.menus.index') }}'"></i>
 
-                        {{ __('admin::app.catalog.menus.edit-title') }}
+                        {{ __('sarga::app.catalog.menus.edit-title') }}
                     </h1>
 
                     <div class="control-group">
@@ -45,7 +45,7 @@
 
                 <div class="page-action">
                     <button type="submit" class="btn btn-lg btn-primary">
-                        {{ __('admin::app.catalog.menus.save-btn-title') }}
+                        {{ __('sarga::app.catalog.menus.save-btn-title') }}
                     </button>
                 </div>
             </div>
@@ -56,41 +56,41 @@
 
                     <input name="_method" type="hidden" value="PUT">
 
-                    <accordian title="{{ __('admin::app.catalog.categories.general') }}" :active="true">
+                    <accordian title="{{ __('sarga::app.catalog.categories.general') }}" :active="true">
                         <div slot="body">
                             <div class="control-group" :class="[errors.has('{{$locale}}[name]') ? 'has-error' : '']">
-                                <label for="name" class="required">{{ __('admin::app.catalog.menus.name') }}
+                                <label for="name" class="required">{{ __('sarga::app.catalog.menus.name') }}
                                     <span class="locale">[{{ $locale }}]</span>
                                 </label>
                                 <input type="text" v-validate="'required'" class="control" id="name" name="{{$locale}}[name]" value="{{ old($locale)['name'] ?? ($menu->translate($locale)['name'] ?? '') }}"
-                                       data-vv-as="&quot;{{ __('admin::app.catalog.menus.name') }}&quot;" />
+                                       data-vv-as="&quot;{{ __('sarga::app.catalog.menus.name') }}&quot;" />
                                 <span class="control-error" v-if="errors.has('{{$locale}}[name]')">@{{ errors.first('{!!$locale!!}[name]') }}</span>
                             </div>
 
                             <div class="control-group" :class="[errors.has('status') ? 'has-error' : '']">
-                                <label for="status" class="required">{{ __('admin::app.catalog.menus.visible-in-menu') }}</label>
-                                <select class="control" v-validate="'required'" id="status" name="status" data-vv-as="&quot;{{ __('admin::app.catalog.menus.visible-in-menu') }}&quot;">
+                                <label for="status" class="required">{{ __('sarga::app.catalog.menus.visible-in-menu') }}</label>
+                                <select class="control" v-validate="'required'" id="status" name="status" data-vv-as="&quot;{{ __('sarga::app.catalog.menus.visible-in-menu') }}&quot;">
                                     <option value="1" {{ $menu->status ? 'selected' : '' }}>
-                                        {{ __('admin::app.catalog.menus.yes') }}
+                                        {{ __('sarga::app.catalog.menus.yes') }}
                                     </option>
                                     <option value="0" {{ $menu->status ? '' : 'selected' }}>
-                                        {{ __('admin::app.catalog.menus.no') }}
+                                        {{ __('sarga::app.catalog.menus.no') }}
                                     </option>
                                 </select>
                                 <span class="control-error" v-if="errors.has('status')">@{{ errors.first('status') }}</span>
                             </div>
 
                             <div class="control-group" :class="[errors.has('position') ? 'has-error' : '']">
-                                <label for="position" class="required">{{ __('admin::app.catalog.menus.position') }}</label>
+                                <label for="position" class="required">{{ __('sarga::app.catalog.menus.position') }}</label>
                                 <input type="text" v-validate="'required|numeric'" class="control" id="position" name="position" value="{{ old('position') ?: $menu->position }}"
-                                       data-vv-as="&quot;{{ __('admin::app.catalog.menus.position') }}&quot;"/>
+                                       data-vv-as="&quot;{{ __('sarga::app.catalog.menus.position') }}&quot;"/>
                                 <span class="control-error" v-if="errors.has('position')">@{{ errors.first('position') }}</span>
                             </div>
 
                         </div>
                     </accordian>
 
-                    <accordian title="{{ __('admin::app.catalog.menus.description-and-images') }}" :active="true">
+                    <accordian title="{{ __('sarga::app.catalog.menus.description-and-images') }}" :active="true">
                         <div slot="body">
                             <description></description>
                         </div>
@@ -98,7 +98,7 @@
 
                     @if ($categories->count())
 
-                        <accordian title="{{ __('admin::app.catalog.menus.parent-category') }}" :active="true">
+                        <accordian title="{{ __('sarga::app.catalog.menus.parent-category') }}" :active="true">
                             <div slot="body">
                                 <tree-view behavior="normal" value-field="id" name-field="categories" input-type="checkbox" value='@json($menu->categories->pluck("id"))'
                                            items='@json($categories)' fallback-locale="{{ config('app.fallback_locale') }}"></tree-view>
@@ -120,11 +120,11 @@
 
     <script type="text/x-template" id="description-template">
         <div class="control-group" :class="[errors.has('{{$locale}}[description]') ? 'has-error' : '']">
-            <label for="description" :class="isRequired ? 'required' : ''">{{ __('admin::app.catalog.menus.description') }}
+            <label for="description" :class="isRequired ? 'required' : ''">{{ __('sarga::app.catalog.menus.description') }}
                 <span class="locale">[{{ $locale }}]</span>
             </label>
             <textarea v-validate="isRequired ? 'required' : ''" class="control" id="description" name="{{$locale}}[description]"
-                      data-vv-as="&quot;{{ __('admin::app.catalog.menus.description') }}&quot;">{{ old($locale)['description'] ?? ($menu->translate($locale)['description'] ?? '') }}</textarea>
+                      data-vv-as="&quot;{{ __('sarga::app.catalog.menus.description') }}&quot;">{{ old($locale)['description'] ?? ($menu->translate($locale)['description'] ?? '') }}</textarea>
             <span class="control-error" v-if="errors.has('{{$locale}}[description]')">@{{ errors.first('{!!$locale!!}[description]') }}</span>
         </div>
     </script>
