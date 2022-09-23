@@ -16,7 +16,19 @@
 
             <input type="text" class="control" autocomplete="off" v-model="search_term" placeholder="{{ __('sarga::app.catalog.menus.brand-search-hint') }}" v-on:keyup="search()">
 
+            <div class="linked-product-search-result">
+                <ul>
 
+
+                    <li v-if='! brands.length && search_term.length && ! is_searching'>
+                        {{ __('sarga::app.catalog.menus.no-result-found') }}
+                    </li>
+
+                    <li v-if="is_searching && search_term.length">
+                        {{ __('sarga::app.catalog.menus.searching') }}
+                    </li>
+                </ul>
+            </div>
 
             <input type="hidden" name="brands[]" v-for='(brand, index) in addedBrands' v-if="addedBrands.length" :value="brand.id"/>
             <span class="filter-tag linked-product-filter-tag" v-if="addedBrands.length">
