@@ -95,7 +95,7 @@
                             <description></description>
                         </div>
                     </accordian>
-                    @include('sarga::catalog.menus.menu-brand-links')
+                    @include('sarga_admin::catalog.menus.menu-brand-links')
 
                     @if ($categories->count())
 
