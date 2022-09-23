@@ -18,7 +18,7 @@
 
             <div class="linked-product-search-result">
                 <ul>
-                    <li v-for='(brand, index) in brands' v-if=brands.length' @click="addBrand(brand, key)">
+                    <li v-for='(brand, index) in brands' v-if=brands.length' @click="addBrand(brand)">
                         @{{ brand.name }}
                     </li>
 
@@ -104,16 +104,16 @@
                         .then (function(response) {
 
                             for (var index in response.data) {
-                                if (response.data[index].id == this_this.productId) {
+                                if (response.data[index].id == this_this.menuId) {
                                     response.data.splice(index, 1);
                                 }
                             }
 
                             if (this_this.addedBrands.length ) {
                                 for (var brand in this_this.addedBrands) {
-                                    for (var productId in response.data) {
-                                        if (response.data[productId].id == this_this.addedBrands[brand].id) {
-                                            response.data.splice(productId, 1);
+                                    for (var menuId in response.data) {
+                                        if (response.data[menuId].id == this_this.addedBrands[brand].id) {
+                                            response.data.splice(menuId, 1);
                                         }
                                     }
                                 }
