@@ -99,6 +99,7 @@ class BrandRepository extends Repository
     }
 
     public function search($key){
+        $key =
         $brands = $this->getModel()::search(implode(' OR ', $key))
 //            ->where('status',1)
 //            ->orderBy('name','asc')

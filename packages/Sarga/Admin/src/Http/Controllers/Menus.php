@@ -64,8 +64,8 @@ class Menus extends Controller
     public function brands(BrandRepository $repository){
         if (request()->ajax()) {
             $results = [];
-
-            foreach ($repository->search(request()->input('query')) as $row) {
+            $queries = explode(' ', request()->input('query'));
+            foreach ($repository->search($queries) as $row) {
                 $results[] = [
                     'id'   => $row->id,
                     'name' => $row->name,
