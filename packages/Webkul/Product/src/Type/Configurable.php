@@ -517,9 +517,9 @@ class Configurable extends AbstractType
     public function getMinimalPrice($qty = null)
     {
 
-        $variant = $this->product->variants()->first();
-
-        return $variant->getTypeInstance()->getMinimalPrice($qty);
+//        $variant = $this->product->variants()->first();
+//
+//        return $variant->getTypeInstance()->getMinimalPrice($qty);
 
         /* method is calling many time so using variable */
         $tablePrefix = DB::getTablePrefix();
@@ -598,9 +598,9 @@ class Configurable extends AbstractType
      */
     public function getMaximumPrice()
     {
-        $variant = $this->product->variants()->latest()->first();
-
-        return $variant->getTypeInstance()->getMaximumPrice();
+//        $variant = $this->product->variants()->latest()->first();
+//
+//        return $variant->getTypeInstance()->getMaximumPrice();
 
         $productFlat = ProductFlat::join('products', 'product_flat.product_id', '=', 'products.id')
             ->distinct()
