@@ -42,48 +42,22 @@ class MenuRepository extends Repository
             $menu->categories()->sync($data['categories']);
         }
 
-        if (isset($data['brands'])) {
-            $menu->brands()->sync($data['brands']);
-        }
-
         return $menu;
     }
 
     public function update(array $data, $id)
     {
         $menu = $this->find($id);
-    }
 
-    /**
-     * Set same value to all locales in category.
-     *
-     * To Do: Move column from the `category_translations` to `category` table. And remove
-     * this created method.
-     *
-     * @param  array  $data
-     * @param  string $attributeNames
-     * @return array
-     */
-    private function setSameAttributeValueToAllLocale(array $data, ...$attributeNames)
-    {
-        $requestedLocale = core()->getRequestedLocaleCode();
+        $menu->update($data)
 
-        $model = app()->make($this->model());
-
-        foreach ($attributeNames as $attributeName) {
-            foreach (core()->getAllLocales() as $locale) {
-                if ($requestedLocale == $locale->code) {
-                    foreach ($model->translatedAttributes as $attribute) {
-                        if ($attribute === $attributeName) {
-                            $data[$locale->code][$attribute] = isset($data[$requestedLocale][$attribute])
-                                ? $data[$requestedLocale][$attribute]
-                                : $data[$data['locale']][$attribute];
-                        }
-                    }
-                }
-            }
+        if (isset($data['categories'])) {
+            $menu->categories()->sync($data['categories']);
         }
 
-        return $data;
+        if (isset($data['brands'])) {
+            $menu->brands()->sync($data['brands']);
     }
+
+
 }
