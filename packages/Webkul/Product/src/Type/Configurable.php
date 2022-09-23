@@ -665,9 +665,9 @@ class Configurable extends AbstractType
      */
     public function haveSpecialPrice($qty = null)
     {
-        $variant = $this->product->variants()->latest()->first();
-
-        return $variant->getTypeInstance()->haveSpecialPrice($qty);
+//        $variant = $this->product->variants()->latest()->first();
+//
+//        return $variant->getTypeInstance()->haveSpecialPrice($qty);
 
         $haveSpecialPrice = false;
 
