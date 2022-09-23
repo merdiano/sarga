@@ -18,9 +18,9 @@
 
             <div class="linked-product-search-result">
                 <ul>
-                    <li v-for='(brand, index) in brands' v-if=brands.length' @click="addBrand(brand)">
-                        @{{ brand.name }}
-                    </li>
+{{--                    <li v-for='(brand, index) in brands' v-if=brands.length' @click="addBrand(brand)">--}}
+{{--                        @{{ brand.name }}--}}
+{{--                    </li>--}}
 
                     <li v-if='! brands.length && search_term.length && ! is_searching'>
                         {{ __('sarga::app.catalog.menus.no-result-found') }}
