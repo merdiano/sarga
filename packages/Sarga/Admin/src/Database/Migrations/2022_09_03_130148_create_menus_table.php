@@ -42,6 +42,8 @@ class CreateMenusTable extends Migration
             $table->string('locale');
             $table->unique(['menu_id', 'locale']);
             $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');
+            $table->integer('locale_id')->nullable()->unsigned();
+            $table->foreign('locale_id')->references('id')->on('locales')->onDelete('cascade');
         });
     }
 
