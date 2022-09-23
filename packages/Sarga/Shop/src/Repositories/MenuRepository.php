@@ -49,7 +49,7 @@ class MenuRepository extends Repository
     {
         $menu = $this->find($id);
 
-        $menu->update($data)
+        $menu->update($data);
 
         if (isset($data['categories'])) {
             $menu->categories()->sync($data['categories']);
