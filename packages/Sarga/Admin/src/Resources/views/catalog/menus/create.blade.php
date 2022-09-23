@@ -1,12 +1,12 @@
 @extends('admin::layouts.content')
 
 @section('page_title')
-    {{ __('admin::app.catalog.categories.add-title') }}
+    {{ __('admin::app.catalog.menus.add-title') }}
 @stop
 
 @section('content')
     <div class="content">
-        <form method="POST" action="{{ route('admin.catalog.menus.store') }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.catalog.menus.store') }}" @submit.prevent="onSubmit">
             <div class="page-header">
                 <div class="page-title">
                     <h1>
@@ -71,7 +71,7 @@
 
                     @if ($categories->count())
 
-                        <accordian title="{{ __('admin::app.catalog.products.categories') }}" :active="true">
+                        <accordian title="{{ __('admin::app.catalog.menus.categories') }}" :active="true">
                             <div slot="body">
                                 <tree-view behavior="normal" value-field="id" name-field="categories" input-type="checkbox" items='@json($categories)' fallback-locale="{{ config('app.fallback_locale') }}"></tree-view>
                             </div>
@@ -90,8 +90,8 @@
 
     <script type="text/x-template" id="description-template">
         <div class="control-group" :class="[errors.has('description') ? 'has-error' : '']">
-            <label for="description" :class="isRequired ? 'required' : ''">{{ __('admin::app.catalog.categories.description') }}</label>
-            <textarea v-validate="isRequired ? 'required' : ''"  class="control" id="description" name="description" data-vv-as="&quot;{{ __('admin::app.catalog.categories.description') }}&quot;">{{ old('description') }}</textarea>
+            <label for="description" :class="isRequired ? 'required' : ''">{{ __('admin::app.catalog.menus.description') }}</label>
+            <textarea v-validate="isRequired ? 'required' : ''"  class="control" id="description" name="description" data-vv-as="&quot;{{ __('admin::app.catalog.menus.description') }}&quot;">{{ old('description') }}</textarea>
             <span class="control-error" v-if="errors.has('description')">@{{ errors.first('description') }}</span>
         </div>
     </script>

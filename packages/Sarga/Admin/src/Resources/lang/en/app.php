@@ -195,6 +195,7 @@ return [
             'no'                       => 'No',
             'position'                 => 'Position',
             'description'              => 'Description',
+            'categories'               => 'Categories'
         ],
     ]
 ];

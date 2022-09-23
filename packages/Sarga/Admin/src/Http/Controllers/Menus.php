@@ -48,7 +48,8 @@ class Menus extends Controller
 
     public function edit($id){
         $menu = $this->mRepository->findOrFail($id);
-        return view($this->_config['view'], compact('menu'));
+        $categories = $repository->getCategoryTree(null, ['id']);
+        return view($this->_config['view'], compact('menu','categories'));
     }
 
     public function update(MenuRequest $request,$id){
