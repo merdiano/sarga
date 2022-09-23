@@ -682,11 +682,11 @@ class Configurable extends AbstractType
         return $haveSpecialPrice;
     }
 
-    public function getSpecialPrice($qty = null){
-        $variant = $this->product->variants()->latest()->first();
-
-        return $variant->getTypeInstance()->getSpecialPrice($qty);
-    }
+//    public function getSpecialPrice($qty = null){
+//        $variant = $this->product->variants()->latest()->first();
+//
+//        return $variant->getTypeInstance()->getSpecialPrice($qty);
+//    }
 
     public function getImages(){
         $variant = $this->product->variants()->latest()->first();
