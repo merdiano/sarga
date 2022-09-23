@@ -10,6 +10,16 @@ use Sarga\Shop\Contracts\Menu as MenuContract;
 
 class Menu extends TranslatableModel implements MenuContract
 {
+    /**
+     * Translated attributes.
+     *
+     * @var array
+     */
+    public $translatedAttributes = [
+        'name',
+        'description',
+    ];
+
     protected $fillable = [
         'position',
         'status',
