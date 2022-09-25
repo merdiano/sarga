@@ -34,10 +34,16 @@
 
                             <div class="control-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">{{ __('sarga::app.catalog.menus.name') }}</label>
-                                <input type="text" v-validate="'required'" class="control" id="name" name="name" value="{{ old('name') }}" data-vv-as="&quot;{{ __('sarga::app.catalog.menus.name') }}&quot;" v-slugify-target="'slug'"/>
+                                <input type="text" v-validate="'required'" class="control" id="name" name="name" value="{{ old('name') }}"
+                                       data-vv-as="&quot;{{ __('sarga::app.catalog.menus.name') }}&quot;" />
                                 <span class="control-error" v-if="errors.has('name')">@{{ errors.first('name') }}</span>
                             </div>
-
+                            <div class="control-group" :class="[errors.has('filter') ? 'has-error' : '']">
+                                <label for="name" class="required">{{ __('sarga::app.catalog.menus.filter') }}</label>
+                                <input type="text" v-validate="'required'" class="control" id="filter" name="filter" value="{{ old('filter') }}"
+                                       data-vv-as="&quot;{{ __('sarga::app.catalog.menus.filter') }}&quot;" />
+                                <span class="control-error" v-if="errors.has('filter')">@{{ errors.first('filter') }}</span>
+                            </div>
                             <div class="control-group" :class="[errors.has('status') ? 'has-error' : '']">
                                 <label for="status" class="required">{{ __('sarga::app.catalog.menus.visible-in-menu') }}</label>
                                 <select class="control" v-validate="'required'" id="status" name="status" data-vv-as="&quot;{{ __('sarga::app.catalog.menus.visible-in-menu') }}&quot;">
@@ -67,7 +73,28 @@
 
                         </div>
                     </accordian>
+                    <accordian title="{{ __('sarga::app.catalog.menus.sources') }}" :active="true">
+                        <div slot="body">
+                            <?php $selectedaSellers = old('sellers') ?: ['1']  ?>
 
+                            <div class="control-group multi-select" :class="[errors.has('sellers[]') ? 'has-error' : '']">
+                                <label for="sellers" class="required">{{ __('sarga::app.catalog.menus.sources') }}</label>
+                                <select class="control" name="sellers[]" v-validate="'required'"
+                                        data-vv-as="&quot;{{ __('admin::app.catalog.menus.sources') }}&quot;" multiple>
+
+                                    @foreach ($sellers as $seller)
+                                        <option value="{{ $seller->id }}" {{ in_array($seller->id, $selectedaSellers) ? 'selected' : ''}}>
+                                            {{ $seller->shop_title }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                                <span class="control-error" v-if="errors.has('sellers[]')">
+                                    @{{ errors.first('sellers[]') }}
+                                </span>
+                            </div>
+                        </div>
+                    </accordian>
 
                     @if ($categories->count())
 
@@ -78,6 +105,7 @@
                         </accordian>
 
                     @endif
+
 
                 </div>
             </div>

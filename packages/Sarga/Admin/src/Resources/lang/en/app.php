@@ -200,6 +200,7 @@ return [
             'brand-search-hint' => 'Brand search hint',
             'no-result-found'   => 'No result found',
             'searching'         => 'Searching',
+            'sources'           => 'Sources (Vendors)'
         ],
     ]
 ];

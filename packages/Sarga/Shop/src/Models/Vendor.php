@@ -10,12 +10,18 @@ use Webkul\Marketplace\Models\SellerCategoryProxy;
 
 class Vendor extends Seller
 {
-    public function categories()
+    public function categories() : HasOne
     {
         return $this->hasOne(SellerCategoryProxy::modelClass(),'seller_id',);
     }
 
-    public function brands(){
+    public function brands() : BelongsToMany
+    {
         return $this->belongsToMany(BrandProxy::modelClass(),'seller_brands','seller_id');
+    }
+
+    public function menus() : BelongsToMany
+    {
+        return $this->belongsToMany(MenuProxy::modelClass(),'seller_menus','seller_id')
     }
 }

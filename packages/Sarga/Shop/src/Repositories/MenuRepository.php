@@ -36,10 +36,12 @@ class MenuRepository extends Repository
 
         $menu = $this->model->create($data);
 
-//        $this->uploadImages($data, $menu);
-//        $product->categories()->sync($data['categories']);
         if (isset($data['categories'])) {
             $menu->categories()->sync($data['categories']);
+        }
+
+        if(isset($data['sellers'])){
+            $menu->sellers()->sync($data['sellers']);
         }
 
         return $menu;
@@ -57,6 +59,10 @@ class MenuRepository extends Repository
 
         if (isset($data['brands'])) {
             $menu->brands()->sync($data['brands']);
+        }
+
+        if(isset($data['sellers'])){
+            $menu->sellers()->sync($data['sellers']);
         }
     }
 

@@ -55,6 +55,11 @@ class Vendors extends V1Controller
         return Source::collection($categorizedVendors);
     }
 
+    public function menus(MenuRepository $repository){
+        $menus = $repository->where('status',1)->with(['categories','brands'])->orderBy('position','asc')->get();
+        return Menu::collection($menus);
+    }
+
     public function index()
     {
         $vendors = $this->vendorRepository->select('marketplace_sellers.id','url','logo','banner','shop_title','brand_attribute_id')

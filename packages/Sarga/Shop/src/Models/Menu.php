@@ -33,12 +33,18 @@ class Menu extends TranslatableModel implements MenuContract
      */
     protected $with = ['translations'];
 
-    public function brands() :BelongsToMany{
+    public function brands() :BelongsToMany
+    {
         return $this->belongsToMany(BrandProxy::modelClass(),'menu_brands');
     }
 
     public function categories():BelongsToMany
     {
         return $this->belongsToMany(CategoryProxy::modelClass(), 'menu_categories');
+    }
+
+    public function sellers():BelongsToMany
+    {
+        return $this->belongsToMany(VendorProxy::modelClass(),'seller_menus')
     }
 }
