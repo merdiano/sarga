@@ -17,6 +17,7 @@ class Menu extends JsonResource
         return [
             'id'          => $this->id,
             'name'        => $this->name,
+            'filter'      => $this->filter,
             'description' => $this->description,
             'categories'  => Category::collection($this->categories),
             'brands'      => Brands::collection($this->brands)

@@ -56,8 +56,15 @@ class Vendors extends V1Controller
     }
 
     public function menus(MenuRepository $repository){
-        $menus = $repository->where('status',1)->with(['categories','brands'])->orderBy('position','asc')->get();
-        return Menu::collection($menus);
+        $vendors = $this->vendorRepository->select('marketplace_sellers.id','url','shop_title')
+            ->where('is_approved',true)
+            ->with(['menus' => function($query){
+                $query->where('status',1)
+                    ->with(['categories','brands'])
+                    ->orderBy('position','asc')
+            }])
+        return Vendor::collection($vendors)
+
     }
 
     public function index()

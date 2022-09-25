@@ -4,6 +4,7 @@ namespace Sarga\API\Http\Resources\Core;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Sarga\API\Http\Resources\Catalog\Category;
+use Sarga\API\Http\Resources\Catalog\Menu;
 
 class Vendor extends JsonResource
 {
@@ -17,15 +18,9 @@ class Vendor extends JsonResource
     {
         return [
             'id'         => $this->id,
-            'url'        => $this->url,
             'shop_title' => $this->shop_title,
             'logo'       => $this->logo_url,
-            'banner'     => $this->banner_url,
-            'brand_id'   => $this->brand_attribute_id,
-            $this->mergeWhen(!empty($this->main_categories) && $this->main_categories->count(),[
-                'categories' => Category::collection($this->main_categories)
-            ])
-
+            'menus'      => Menu::collection($this->menus)
         ];
     }
 }
