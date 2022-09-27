@@ -79,7 +79,7 @@ class SearchController extends V1Controller
                 ->where('visible_individually', 1)
 //                ->addSelect(DB::raw("\'product\' as type" ))
                 ->orderBy('name'))
-                ->take(10)
+//                ->take(10)
             ->get();
 
         if($products->count()){
