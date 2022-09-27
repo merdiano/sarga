@@ -29,8 +29,6 @@
 
                     <input type="hidden" name="locale" value="all"/>
 
-                    {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.general.before') !!}
-
                     <accordian :title="'{{ __('admin::app.catalog.categories.general') }}'" :active="true">
                         <div slot="body">
                             {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.general.controls.before') !!}
@@ -68,10 +66,8 @@
                         </div>
                     </accordian>
 
-                    {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.general.after') !!}
                     @include('sarga_admin::catalog.categories.scrap.create')
 
-                    {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.description_images.before') !!}
 
                     <accordian :title="'{{ __('admin::app.catalog.categories.description-and-images') }}'" :active="true">
                         <div slot="body">
@@ -114,7 +110,6 @@
                         </div>
                     </accordian>
 
-                    {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.description_images.after') !!}
 
                     @if ($categories->count())
                         {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.parent_category.before') !!}
@@ -155,7 +150,33 @@
                             </div>
                         </div>
                     </accordian>
+                    <accordian title="{{ __('admin::app.catalog.categories.seo') }}" :active="true">
+                        <div slot="body">
 
+                            <div class="control-group">
+                                <label for="meta_title">{{ __('admin::app.catalog.categories.meta_title') }}</label>
+                                <input type="text" class="control" id="meta_title" name="meta_title" value="{{ old('meta_title') }}"/>
+                            </div>
+
+                            <div class="control-group" :class="[errors.has('slug') ? 'has-error' : '']">
+                                <label for="slug" class="required">{{ __('admin::app.catalog.categories.slug') }}</label>
+                                <input type="text" v-validate="'required'" class="control" id="slug" name="slug" value="{{ old('slug') }}"
+                                       data-vv-as="&quot;{{ __('admin::app.catalog.categories.slug') }}&quot;" v-slugify/>
+                                <span class="control-error" v-if="errors.has('slug')">@{{ errors.first('slug') }}</span>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="meta_description">{{ __('admin::app.catalog.categories.meta_description') }}</label>
+                                <textarea class="control" id="meta_description" name="meta_description">{{ old('meta_description') }}</textarea>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="meta_keywords">{{ __('admin::app.catalog.categories.meta_keywords') }}</label>
+                                <textarea class="control" id="meta_keywords" name="meta_keywords">{{ old('meta_keywords') }}</textarea>
+                            </div>
+
+                        </div>
+                    </accordian>
                 </div>
             </div>
         </form>
