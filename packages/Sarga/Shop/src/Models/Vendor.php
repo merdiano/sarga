@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Sarga\Brand\Models\BrandProxy;
 use Webkul\Marketplace\Models\Seller;
 use Webkul\Marketplace\Models\SellerCategoryProxy;
+use Sarga\Shop\Contracts\Vendor as VendorContract;
 
-class Vendor extends Seller
+class Vendor extends Seller implements VendorContract
 {
     public function categories() : HasOne
     {
