@@ -50,11 +50,12 @@ class SearchController extends V1Controller
 
     private function searchCategories(){
         $key = request('search');
-        $categories = CategoryTranslationProxy::modelClass()::select('category_id as id','name','description')
+        $categories = CategoryTranslationProxy::modelClass()::select('category_id as id','description','meta_title as name')
             ->where('locale', core()->getRequestedLocaleCode())
             ->where('name', 'like', '%'.$key.'%')
-            ->take(10)
+            ->orWhere('meta_title', 'like', '%'.$key.'%')
             ->orderBy('name')
+            ->take(10)
             ->get();
 
         if($categories->count()){
@@ -66,14 +67,14 @@ class SearchController extends V1Controller
 
     private function searchProducts($key){
 
-        $channel = core()->getRequestedChannelCode();
+//        $channel = core()->getRequestedChannelCode();
 
-        $locale = core()->getRequestedLocaleCode();
+//        $locale = core()->getRequestedLocaleCode();
         $products = $this->productFlatRepository->getModel()::search(implode(' OR ', $key))
 //            ->where('channel', $channel)
 //            ->where('locale', $locale)
             ->take(100)
-            ->query(fn ($query) => $query->select('id','name','product_id','description')
+            ->query(fn ($query) => $query->select('id','name','product_id','meta_keywords')
                 ->where('status', 1)
                 ->where('visible_individually', 1)
 //                ->addSelect(DB::raw("\'product\' as type" ))
