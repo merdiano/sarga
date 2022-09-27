@@ -74,7 +74,7 @@ class SearchController extends V1Controller
 //            ->where('channel', $channel)
 //            ->where('locale', $locale)
             ->take(100)
-            ->query(fn ($query) => $query->select('id','name','product_id','meta_keywords')
+            ->query(fn ($query) => $query->select('id','name','product_id','description')
                 ->where('status', 1)
                 ->where('visible_individually', 1)
 //                ->addSelect(DB::raw("\'product\' as type" ))
