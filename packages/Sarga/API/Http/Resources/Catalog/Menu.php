@@ -3,7 +3,7 @@
 namespace Sarga\API\Http\Resources\Catalog;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Sarga\API\Http\Controllers\Brands;
+
 
 class Menu extends JsonResource
 {
@@ -21,7 +21,7 @@ class Menu extends JsonResource
             'filter'      => $this->filter,
             'description' => $this->description,
             'categories'  => Category::collection($this->categories),
-            'brands'      => Brands::collection($this->brands)
+            'brands'      => Brand::collection($this->brands)
 
         ];
     }
