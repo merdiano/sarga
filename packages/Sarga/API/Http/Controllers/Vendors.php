@@ -23,6 +23,41 @@ class Vendors extends V1Controller
     public function sources(){
         $vendors = $this->vendorRepository->select('marketplace_sellers.id','url','shop_title')
             ->where('is_approved',true)
+            ->with(['categories:seller_id,type,categories'])
+//            ->leftJoin('seller_categories','marketplace_sellers.id','=','seller_categories.seller_id')
+            ->get();
+//return $vendors;
+
+        if(! $vendors){
+            return response()->json(['error' => 'not found'],404);
+        }
+
+//        return $vendors->first()->categories()->first();
+//        return  json_decode($cats->categories,true);
+        $categorizedVendors = $vendors->map(function ($item, $key){
+            if($item->categories && $mainCats = $item->categories()->first()){
+                $cat_ids = json_decode($mainCats->categories,true);
+//                $vendor->test = Category::collection($this->categoryRepository->getVisibleCategoryTree($cat_ids[0]));
+                $item->main_categories = $this->categoryRepository->whereIn('id',$cat_ids)
+                    ->select('id','image','position','parent_id','display_mode','category_icon_path')
+                    ->where('status',1)
+                    ->with(['children'=> function($q){
+                        $q->orderBy('position','asc');
+                    }])
+                    ->orderBy('position','asc')
+                    ->get();
+
+            }
+            return $item;
+        });
+
+
+        return Source::collection($categorizedVendors);
+    }
+
+    public function menus(){
+        $vendors = $this->vendorRepository->select('marketplace_sellers.id','url','shop_title')
+            ->where('is_approved',true)
             ->with(['menus' => function($query){
                 $query->where('status',1)
                     ->with(['categories','brands'])
