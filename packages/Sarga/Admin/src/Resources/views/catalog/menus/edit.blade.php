@@ -62,7 +62,8 @@
                                 <label for="name" class="required">{{ __('sarga::app.catalog.menus.name') }}
                                     <span class="locale">[{{ $locale }}]</span>
                                 </label>
-                                <input type="text" v-validate="'required'" class="control" id="name" name="{{$locale}}[name]" value="{{ old($locale,$menu->translate($locale) )['name']) }}"
+                                <input type="text" v-validate="'required'" class="control" id="name" name="{{$locale}}[name]"
+                                       value="{{ old($locale,$menu->translate($locale)['name']) }}"
                                        data-vv-as="&quot;{{ __('sarga::app.catalog.menus.name') }}&quot;" />
                                 <span class="control-error" v-if="errors.has('{{$locale}}[name]')">@{{ errors.first('{!!$locale!!}[name]') }}</span>
                             </div>
