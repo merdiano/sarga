@@ -187,13 +187,6 @@
                             </div>
 
                             <div class="control-group">
-                                <label for="meta_description">{{ __('admin::app.catalog.categories.meta_description') }}
-                                    <span class="locale">[{{ $locale }}]</span>
-                                </label>
-                                <textarea class="control" id="meta_description" name="{{$locale}}[meta_description]">{{ old($locale)['meta_description'] ?? ($category->translate($locale)['meta_description'] ?? '') }}</textarea>
-                            </div>
-
-                            <div class="control-group">
                                 <label for="meta_keywords">{{ __('admin::app.catalog.categories.meta_keywords') }}
                                     <span class="locale">[{{ $locale }}]</span>
                                 </label>

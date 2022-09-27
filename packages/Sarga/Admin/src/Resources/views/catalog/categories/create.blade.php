@@ -166,11 +166,6 @@
                             </div>
 
                             <div class="control-group">
-                                <label for="meta_description">{{ __('admin::app.catalog.categories.meta_description') }}</label>
-                                <textarea class="control" id="meta_description" name="meta_description">{{ old('meta_description') }}</textarea>
-                            </div>
-
-                            <div class="control-group">
                                 <label for="meta_keywords">{{ __('admin::app.catalog.categories.meta_keywords') }}</label>
                                 <textarea class="control" id="meta_keywords" name="meta_keywords">{{ old('meta_keywords') }}</textarea>
                             </div>
