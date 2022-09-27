@@ -2,10 +2,10 @@
 
 namespace Sarga\Shop\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Sarga\Brand\Models\BrandProxy;
-use Webkul\Category\Models\CategoryProxy;
 use Webkul\Marketplace\Models\Seller;
-use Webkul\Marketplace\Models\SellerCategory;
 use Webkul\Marketplace\Models\SellerCategoryProxy;
 
 class Vendor extends Seller
@@ -22,6 +22,6 @@ class Vendor extends Seller
 
     public function menus() : BelongsToMany
     {
-        return $this->belongsToMany(MenuProxy::modelClass(),'seller_menus','seller_id')
+        return $this->belongsToMany(MenuProxy::modelClass(),'seller_menus','seller_id');
     }
 }
