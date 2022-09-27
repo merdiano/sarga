@@ -39,7 +39,7 @@
                                 <span class="control-error" v-if="errors.has('name')">@{{ errors.first('name') }}</span>
                             </div>
                             <div class="control-group" :class="[errors.has('filter') ? 'has-error' : '']">
-                                <label for="name" class="control">{{ __('sarga::app.catalog.menus.filter') }}</label>
+                                <label for="filter">{{ __('sarga::app.catalog.menus.filter') }}</label>
                                 <input type="text" class="control" id="filter" name="filter" value="{{ old('filter') }}"
                                        data-vv-as="&quot;{{ __('sarga::app.catalog.menus.filter') }}&quot;" />
                                 <span class="control-error" v-if="errors.has('filter')">@{{ errors.first('filter') }}</span>
