@@ -91,13 +91,13 @@
                     <div slot="body">
 
                         <div class="control-group">
-                            <label>{{ __('marketplace::app.shop.sellers.account.profile.logo') }}
+                            <label>{{ __('marketplace::app.shop.sellers.account.profile.logo') }}</label>
 
                             <image-wrapper :button-label="'{{ __('marketplace::app.shop.sellers.account.profile.add-image-btn-title') }}'" input-name="logo" :multiple="false" :images='"{{ $seller->logo_url }}"'></image-wrapper>
                         </div>
 
                         <div class="control-group">
-                            <label>{{ __('marketplace::app.shop.sellers.account.profile.banner') }}
+                            <label>{{ __('marketplace::app.shop.sellers.account.profile.banner') }}</label>
 
                             <image-wrapper :button-label="'{{ __('marketplace::app.shop.sellers.account.profile.add-image-btn-title') }}'" input-name="banner" :multiple="false" :images='"{{ $seller->banner_url }}"'></image-wrapper>
                         </div>

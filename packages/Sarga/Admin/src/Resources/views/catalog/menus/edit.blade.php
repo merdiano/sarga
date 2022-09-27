@@ -104,7 +104,7 @@
                     @include('sarga_admin::catalog.menus.menu-brand-links')
                     <accordian title="{{ __('sarga::app.catalog.menus.sources') }}" :active="true">
                         <div slot="body">
-                            <?php $selectedaSellers = old('sellers',$menu->sellers->pluck('id')->toArray()) ?>
+                            <?php $selectedaSellers = old('sellers',$menu->sellers->pluck('id')->toArray());?>
 
                             <div class="control-group multi-select" :class="[errors.has('sellers[]') ? 'has-error' : '']">
                                 <label for="sellers" class="required">{{ __('sarga::app.catalog.menus.sources') }}</label>
