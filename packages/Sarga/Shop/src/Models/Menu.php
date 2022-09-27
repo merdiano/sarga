@@ -45,6 +45,6 @@ class Menu extends TranslatableModel implements MenuContract
 
     public function sellers():BelongsToMany
     {
-        return $this->belongsToMany(VendorProxy::modelClass(),'seller_menus');
+        return $this->belongsToMany(VendorProxy::modelClass(),'seller_menus','seller_id');
     }
 }
