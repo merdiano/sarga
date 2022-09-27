@@ -62,7 +62,7 @@ class Vendors extends V1Controller
                 $query->where('status',1)
                     ->with(['categories','brands'])
                     ->orderBy('position','asc');
-            }]);
+            }])->get();
         return Vendor::collection($vendors);
 
     }
