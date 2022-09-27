@@ -43,27 +43,27 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
     {
         $query = $this->getRepositoryInstance()->where('attribute_options.attribute_id',$request->get('attribute_id'));
 
-        if($request->has('category')){
-//                $query->join('product_attribute_values',function ($q){
-//                    $q->on('product_attribute_values.integer_value','=','attribute_options.id')
-//                        ->where('product_attribute_values.attribute_id',request()->get('attribute_id'))
-//                        ->whereNotNull('integer_value')
-//                        ->join('product_categories',function ($q) {
-//                            $q->on('product_categories.product_id','=','product_attribute_values.product_id')
-//                                ->where('product_categories.category_id',request()->get('category'));
-//                        });
-//                });
+        $query->whereIn('attribute_options.id',function ($q) {
+            $q->distinct()->select('integer_value')
+                ->from('product_attribute_values')
+                ->whereNotNull('product_attribute_values.integer_value');
 
-            $query->whereIn('id',function ($q) {
-                $q->distinct()->select('integer_value')
-                    ->from('product_attribute_values')
-                    ->whereNotNull('product_attribute_values.integer_value')
-                    ->whereIn('product_attribute_values.product_id',function ($q) {
-                        $q->select('product_categories.product_id')->from('product_categories')
-                            ->where('product_categories.category_id',request()->get('category'));
-                    })->groupBy('integer_value');
-            });
-        }
+            if(request()->has('category')){
+                $q->whereIn('product_attribute_values.product_id',function ($q) {
+                    $q->select('product_categories.product_id')->from('product_categories')
+                        ->where('product_categories.category_id',request()->get('category'));
+                });
+            }
+
+            if(request()->has('brand')){
+                $q->whereIn('product_attribute_values.product_id',function ($q) {
+                    $q->select('products.id')->from('products')
+                        ->where('products.brand_id',request()->get('brand'));
+                });
+            }
+
+            $q->groupBy('integer_value');
+        });
 
         //Log::info($query->toSql());
 
