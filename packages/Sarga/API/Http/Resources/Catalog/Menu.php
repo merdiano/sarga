@@ -3,6 +3,7 @@
 namespace Sarga\API\Http\Resources\Catalog;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Sarga\API\Http\Controllers\Brands;
 
 class Menu extends JsonResource
 {
