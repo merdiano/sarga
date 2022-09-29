@@ -51,8 +51,8 @@ class UpdateMeilisearchIndex extends Command
     protected function updateSortableAttributes(Client $client):void
     {
         $client->index('products_index')->updateSortableAttributes([
-            'status',
-            'visible_individually',
+            'name',
+            'product_id',
         ]);
 
         $this->info('Updated sortable attributes...');
@@ -61,8 +61,9 @@ class UpdateMeilisearchIndex extends Command
     protected function updateFilterableAttributes(Client $client): void
     {
         $client->index('products_index')->updateFilterableAttributes([
-            'name',
-            'product_id',
+            'status',
+            'visible_individually',
+
         ]);
 
         $this->info('Updated filterable attributes...');

@@ -60,7 +60,8 @@ class ProductFlat extends Model implements ProductFlatContract
             'name'          => $this->name,
             'meta_keywords' => $this->meta_keywords,
             'status'        => $this->status,
-            'visible_individually'=> $this->visible_individually
+            'visible_individually'=> $this->visible_individually,
+            'product_id' => $this->product_id
         ];
     }
     /**
