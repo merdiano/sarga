@@ -461,8 +461,8 @@ class ProductRepository extends Repository
             $results = app(ProductFlatRepository::class)->getModel()::search(implode(' OR ', $queries))
                 ->where('status', 1)
                 ->where('visible_individually', 1)
-                ->where('channel', $channel)
-                ->where('locale', $locale)
+//                ->where('channel', $channel)
+//                ->where('locale', $locale)
                 ->orderBy('product_id', 'desc')
                 ->paginate(16);
         } else {

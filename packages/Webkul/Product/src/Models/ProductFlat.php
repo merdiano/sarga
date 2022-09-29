@@ -61,6 +61,8 @@ class ProductFlat extends Model implements ProductFlatContract
             'name'          => $this->name,
 //            'meta_title'    => $this->meta_title,
             'meta_keywords' => $this->meta_keywords,
+            'status' => $this->status,
+            'visible_individually' => $this->visible_individually
         ];
     }
     /**
