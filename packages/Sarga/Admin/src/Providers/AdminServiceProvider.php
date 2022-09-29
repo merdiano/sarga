@@ -4,6 +4,7 @@ namespace Sarga\Admin\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Sarga\Admin\Console\Commands\UpdateMeilisearchIndex;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -46,5 +47,9 @@ class AdminServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/carriers.php', 'carriers'
         );
+
+        $this->commands([
+            UpdateMeilisearchIndex::class
+        ]);
     }
 }
