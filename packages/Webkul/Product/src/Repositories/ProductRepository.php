@@ -458,6 +458,8 @@ class ProductRepository extends Repository
         } elseif (config('scout.driver') == 'meilisearch') {
             $queries = explode('_', $term);
 
+            \Log::info($queries);
+
             $results = app(ProductFlatRepository::class)->getModel()::search(implode(' OR ', $queries))
 //                ->where('status', 1)
 //                ->where('visible_individually', 1)
