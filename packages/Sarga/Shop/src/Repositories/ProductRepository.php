@@ -834,14 +834,12 @@ class ProductRepository extends WProductRepository
             $queries = explode('_', $term);
 
             $results = app(ProductFlatRepository::class)->getModel()::search(implode(' OR ', $queries))
-                ->query(fn ($query) => $query->select('id','name','product_id','description')
-                    ->where('status', 1)
-                    ->where('visible_individually', 1)
-//                ->addSelect(DB::raw("\'product\' as type" ))
-                    ->orderBy('name'))
+                ->where('status', 1)
+                ->where('visible_individually', 1)
+                ->orderBy('name')
 //                ->where('channel', $channel)
 //                ->where('locale', $locale)
-//                ->orderBy('product_id', 'desc')
+
                 ->paginate(request()->input('limit')??50);
         } else {
             $results = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($term, $channel, $locale) {
