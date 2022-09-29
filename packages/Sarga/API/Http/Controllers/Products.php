@@ -127,6 +127,7 @@ class Products extends ProductController
 
     public function searchProducts(){
 //        return $this->productRepository->searchProductByAttribute(request('key'));
+        Log::info(config('scout.driver'));
         return ProductResource::collection($this->productRepository->searchProductByAttribute(request('key')));
     }
 
