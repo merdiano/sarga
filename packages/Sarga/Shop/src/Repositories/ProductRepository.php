@@ -842,7 +842,7 @@ class ProductRepository extends WProductRepository
 //                ->where('channel', $channel)
 //                ->where('locale', $locale)
 //                ->orderBy('product_id', 'desc')
-                ->paginate(request()->input('limit')??10);
+                ->paginate(request()->input('limit')??50);
         } else {
             $results = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($term, $channel, $locale) {
 
