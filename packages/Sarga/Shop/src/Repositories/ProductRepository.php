@@ -830,7 +830,7 @@ class ProductRepository extends WProductRepository
                 ->where('visible_individually', 1)
                 ->orderBy('product_id', 'desc')
                 ->paginate(request()->input('limit')??10);
-        } else if (config('scout.driver') == 'elastic') {
+        } else if (config('scout.driver') == 'meilisearch') {
             $queries = explode('_', $term);
 
             $results = app(ProductFlatRepository::class)->getModel()::search(implode(' OR ', $queries))
