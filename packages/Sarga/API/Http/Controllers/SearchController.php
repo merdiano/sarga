@@ -50,7 +50,7 @@ class SearchController extends V1Controller
 
     private function searchCategories(){
         $key = request('search');
-        $categories = CategoryTranslationProxy::modelClass()::select('category_id as id','description','meta_title as name')
+        $categories = CategoryTranslationProxy::modelClass()::select('category_id as id','meta_title as name')
             ->where('locale', core()->getRequestedLocaleCode())
             ->where('name', 'like', '%'.$key.'%')
             ->orWhere('meta_title', 'like', '%'.$key.'%')

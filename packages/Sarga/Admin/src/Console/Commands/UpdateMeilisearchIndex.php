@@ -39,7 +39,7 @@ class UpdateMeilisearchIndex extends Command
      */
     public function handle()
     {
-        $client = new Client(env('MEILISEARCH_HOST','http://127.0.0.1:7700'),env('MEILISEARCH_KEY','Y0urVery-S3cureAp1K3y'));
+        $client = new Meilisearch\Client(env('MEILISEARCH_HOST','http://127.0.0.1:7700'),env('MEILISEARCH_KEY','Y0urVery-S3cureAp1K3y'));
 
         $this->updateSortableAttributes($client);
 
