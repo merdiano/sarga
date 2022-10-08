@@ -43,7 +43,6 @@ class Product extends JsonResource
             'is_item_in_cart'        => \Cart::hasProduct($product),
             'shop_title'             => $this->shop_title,
             'brand'                  => $product->brand->name ?? '',
-            'images'                 => ProductImage::collection($product->images),
             /* product's extra information */
             $this->merge($this->allProductExtraInfo()),
 
@@ -95,7 +94,7 @@ class Product extends JsonResource
         $typeInstance = $product->getTypeInstance();
 
         return [
-
+            'images'                 => ProductImage::collection($product->images),
             'price'                  => (double) core()->convertPrice($typeInstance->getMinimalPrice()),
 
             'formatted_price'        => core()->currency($typeInstance->getMinimalPrice()),
