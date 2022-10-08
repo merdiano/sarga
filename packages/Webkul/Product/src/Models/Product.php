@@ -306,8 +306,7 @@ class Product extends Model implements ProductContract
      */
     public function related_products(): BelongsToMany
     {
-        return $this->belongsToMany(static::class, 'product_relations', 'parent_id', 'child_id')
-            ->limit(4);
+        return $this->belongsToMany(static::class, 'product_relations', 'parent_id', 'child_id');
     }
 
     /**
