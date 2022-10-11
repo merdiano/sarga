@@ -3,6 +3,7 @@
 namespace Sarga\API\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
+use Sarga\API\Http\Resources\Catalog\ProductDetail;
 use Sarga\API\Http\Resources\Catalog\ProductVariant;
 use Sarga\API\Http\Resources\Catalog\SuperAttribute;
 use Sarga\Shop\Repositories\ProductRepository;
@@ -55,6 +56,29 @@ class Products extends ProductController
         return  ($product)?
             new ProductResource($product) :
             response()->json(['error' => 'not found'],404);
+    }
+
+    public function product($id){
+        $product = $this->productRepository->select('id','attribute_family_id','type','brand_id')
+            ->with(['brand','related_products:id,type,attribute_family_id','variants'=>function($query)
+            {
+                $query->with(['product_flats' => function($qf)
+                {
+                    $channel = core()->getRequestedChannelCode();
+
+                    $locale = 'tm';//core()->getRequestedLocaleCode();
+
+                    $qf->where('product_flat.channel', $channel)
+                        ->where('product_flat.locale', $locale)
+//                        ->whereNotNull('product_flat.url_key')
+                        ->where('product_flat.status',1);
+                }]);
+            }])->find($id);
+
+//        return $product;
+
+        return ProductDetail::make($product);
+
     }
 
     public function variants($id)

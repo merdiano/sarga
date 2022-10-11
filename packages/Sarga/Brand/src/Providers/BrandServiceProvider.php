@@ -18,6 +18,7 @@ class BrandServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'brand');
 //        Log::info('brandd service provider');
         $this->app->register(EventServiceProvider::class);
+        $this->app->register(ModuleServiceProvider::class);
 //        CategoryProxy::observe(CategoryObserver::class);
     }
 

@@ -60,6 +60,7 @@ Route::group(['prefix' => 'api'], function () {
         Route::get('products-search', [Products::class, 'searchProducts']);
         Route::get('suggestions', [\Sarga\API\Http\Controllers\SearchController::class, 'index']);
         Route::get('products/{id}', [Products::class, 'get']);
+        Route::get('product/{id}', [Products::class, 'product']);
         Route::get('products/{id}/variants', [Products::class, 'variants']);
 
         Route::get('states', [ResourceController::class, 'index'])->defaults('_config', [

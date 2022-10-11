@@ -7,19 +7,6 @@ use Illuminate\Support\Facades\Log;
 
 class Product extends JsonResource
 {
-    /**
-     * Create a new resource instance.
-     *
-     * @return void
-     */
-    public function __construct($resource)
-    {
-//        $this->productReviewHelper = app('Webkul\Product\Helpers\Review');
-
-//        $this->wishlistHelper = app('Webkul\Customer\Helpers\Wishlist');
-
-        parent::__construct($resource);
-    }
 
     /**
      * Transform the resource into an array.
@@ -31,57 +18,31 @@ class Product extends JsonResource
     {
         $product = $this->product ? $this->product : $this;
 
-        $productTypeInstance = $product->getTypeInstance();
-
         return [
             /* product's information */
             'id'                     => $product->id,
             'type'                   => $product->type,
             'name'                   => $product->name,
-            'description'            => $product->description,
-            'is_wishlisted'          => $this->isWishlisted($product) ,
-            'is_item_in_cart'        => \Cart::hasProduct($product),
-            'shop_title'             => $this->shop_title,
+//            'description'            => $product->description,
+//            'is_wishlisted'          => $this->isWishlisted($product), //todo transfer to mobile
+//            'is_item_in_cart'        => \Cart::hasProduct($product),//todo transfer to mobile
+//            'shop_title'             => $this->shop_title,
             'brand'                  => $product->brand->name ?? '',
-            /* product's extra information */
-            $this->merge($this->allProductExtraInfo()),
+            'images'                 => ProductImage::collection($product->images),
+            'color_count'            => $this->related_products->count(),
 
             /* special price cases */
             $this->merge($this->specialPriceInfo()),
 
-            /* super attributes */
-            $this->mergeWhen($this->super_attributes, [
-                'super_attributes' => $this->super_attributes,
-            ]),
         ];
     }
-    private function super_attributes(){
-        if(is_countable($this->super_attributes)){
-            return $this->super_attributes->map(function($item, $key){
-                return [
-                    'code' => $item->code,
-                    'value' => $this->{$item->code},
-                    'name' => $item->name??$item->admin_name,
-                    'label' => $item->options->where('id',$this->{$item->code})->first()->admin_name
-                ];
-            })->toArray();
-        }else{
-            $item = $this->super_attributes;
-            return [
-                'code' => $item->code,
-                'value' => $this->{$item->code},
-                'name' => $item->name??$item->admin_name,
-                'label' => $item->options->where('id',$this->{$item->code})->first()->admin_name
-            ];
-        }
 
-    }
     /**
      * Get special price information.
      *
      * @return array
      */
-    private function specialPriceInfo()
+    protected function specialPriceInfo()
     {
         if($this->type == 'configurable' && $variant = $this->product->getTypeInstance()->getMinPriceVariant())
         {
@@ -94,19 +55,11 @@ class Product extends JsonResource
         $typeInstance = $product->getTypeInstance();
 
         return [
-            'images'                 => ProductImage::collection($product->images),
+
             'price'                  => (double) core()->convertPrice($typeInstance->getMinimalPrice()),
 
             'formatted_price'        => core()->currency($typeInstance->getMinimalPrice()),
-//todo remove special price
-            'special_price'          => $this->when(
-                $typeInstance->haveSpecialPrice(),
-                (double) core()->convertPrice($typeInstance->getSpecialPrice())
-            ),
-            'formatted_special_price' => $this->when(
-                $typeInstance->haveSpecialPrice(),
-                core()->currency($typeInstance->getSpecialPrice())
-            ),
+
             'regular_price'          => $this->when(
                 $typeInstance->haveSpecialPrice(),
                 (double) core()->convertPrice($typeInstance->getMaximumPrice())
@@ -116,109 +69,6 @@ class Product extends JsonResource
                 core()->currency($typeInstance->getMaximumPrice())
             ),
         ];
-    }
-
-    /**
-     * Get all product's extra information.
-     *
-     * @return array
-     */
-    private function allProductExtraInfo()
-    {
-        $product = $this->product ? $this->product : $this;
-
-        $productTypeInstance = $product->getTypeInstance();
-
-        return [
-            /* grouped product */
-//            $this->mergeWhen(
-//                $productTypeInstance instanceof \Webkul\Product\Type\Grouped,
-//                $product->type == 'grouped'
-//                    ? $this->getGroupedProductInfo($product)
-//                    : null
-//            ),
-//
-//            /* bundle product */
-//            $this->mergeWhen(
-//                $productTypeInstance instanceof \Webkul\Product\Type\Bundle,
-//                $product->type == 'bundle'
-//                    ? $this->getBundleProductInfo($product)
-//                    : null
-//            ),
-
-            /* configurable product */
-            $this->mergeWhen(
-                $productTypeInstance instanceof \Webkul\Product\Type\Configurable,
-                $product->type == 'configurable'
-                    ? $this->getConfigurableProductInfo($product)
-                    : null
-            ),
-
-        ];
-    }
-
-    /**
-     * Get grouped product's extra information.
-     *
-     * @param  \Webkul\Product\Models\Product
-     * @return array
-     */
-    private function getGroupedProductInfo($product)
-    {
-        return [
-            'grouped_products' => $product->grouped_products->map(function($groupedProduct) {
-                $associatedProduct = $groupedProduct->associated_product;
-
-                $data = $associatedProduct->toArray();
-
-                return array_merge($data, [
-                    'qty'                   => $groupedProduct->qty,
-                    'isSaleable'            => $associatedProduct->getTypeInstance()->isSaleable(),
-                    'formated_price'        => $associatedProduct->getTypeInstance()->getPriceHtml(),
-                    'show_quantity_changer' => $associatedProduct->getTypeInstance()->showQuantityBox(),
-                ]);
-            })
-        ];
-    }
-
-    /**
-     * Get bundle product's extra information.
-     *
-     * @param  \Webkul\Product\Models\Product
-     * @return array
-     */
-    private function getBundleProductInfo($product)
-    {
-        return [
-            'currency_options' => core()->getAccountJsSymbols(),
-            'bundle_options' => app('Webkul\Product\Helpers\BundleOption')->getBundleConfig($product)
-        ];
-    }
-
-    /**
-     * Get configurable product's extra information.
-     *
-     * @param  \Webkul\Product\Models\Product
-     * @return array
-     */
-    private function getConfigurableProductInfo($product)
-    {
-        $data =  [
-            'variants_count' => $this->variants->count(),
-            'color_count' => $this->variants->groupBy('color')->count(),
-        ];
-
-        $special_variant = $this->variants->sortBy('min_price')->first();
-
-        if($special_variant  && $special_variant->min_price < $special_variant->max_price){
-            $data = array_merge($data, [
-                'special_price' => core()->convertPrice($special_variant->min_price),
-                'formatted_special_price' => core()->currency($special_variant->min_price),
-                'regular_price'          => core()->convertPrice($special_variant->price),
-                'formatted_regular_price' => core()->currency($special_variant->price),
-            ]);
-        }
-        return $data;
     }
 
     private function isWishlisted($product):bool

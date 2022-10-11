@@ -83,13 +83,13 @@ class ProductRepository extends WProductRepository
         $page = Paginator::resolveCurrentPage('page');
 
         $repository = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($params, $categoryId) {
-            $channel = core()->getRequestedChannelCode();
+//            $channel = core()->getRequestedChannelCode();
 
             $locale = 'tm';//core()->getRequestedLocaleCode();
 
             $qb = $query->distinct()
                 ->select('product_flat.*')
-                ->where('product_flat.channel', $channel)
+//                ->where('product_flat.channel', $channel)
                 ->where('product_flat.locale', $locale);
 //                ->whereNotNull('product_flat.url_key');
 
