@@ -1,14 +1,14 @@
 @extends('admin::layouts.content')
 
 @section('page_title')
-    {{ __('admin::app.catalog.scrap.trendyol') }}
+    {{ __('sarga::app.catalog.scrap.trendyol') }}
 @stop
 
 @section('content')
     <div class="content">
         <div class="page-header">
             <div class="page-title">
-                <h1>{{ __('admin::app.catalog.scrap.trendyol') }}</h1>
+                <h1>{{ __('sarga::app.catalog.scrap.trendyol') }}</h1>
             </div>
         </div>
         <div class="page-content">
