@@ -1,10 +1,4 @@
 <?php
-
-/**
- * Settings routes.
- */
-require 'settings-routes.php';
-
 /**
  * Customer routes
  */

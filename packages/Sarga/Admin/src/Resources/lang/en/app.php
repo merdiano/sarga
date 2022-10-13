@@ -2,8 +2,6 @@
 return [
     'layouts' => [
         'scrap' => 'Scrap',
-        'scrap-categories' => 'Categories',
-        'scrap-products' => 'Products',
         'menus' => 'Menus'
     ],
     'sales' => [
@@ -203,5 +201,9 @@ return [
             'sources'           => 'Sources (Vendors)',
             'filter'            => 'Filter',
         ],
+        'scrap' => [
+            'title' => 'Scrap',
+            'trendyol' => 'Trendyol',
+        ]
     ]
 ];

@@ -22,6 +22,14 @@ class Scrap extends \Webkul\Admin\Http\Controllers\Controller
         return view($this->_config['view'],compact('results'));
     }
 
+    public function trendyolScarp(){
+
+    }
+
+    public function trendyolImport(){
+
+    }
+
     /**
      * Get necessary extra details.
      *
