@@ -4,7 +4,7 @@ return [
     [
         'key'        => 'catalog.scrap',
         'name'       => 'sarga::app.layouts.scrap',
-        'route'      => 'admin.scrap-categories.index',
+        'route'      => 'admin.scrap-trendyol.index',
         'sort'       => 6,
         'icon-class' => '',
     ],
