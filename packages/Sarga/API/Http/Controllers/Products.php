@@ -60,10 +60,9 @@ class Products extends ProductController
 
     public function product($id){
         $product = $this->productRepository->select('id','attribute_family_id','type','brand_id')
-            ->with(['brand','related_products:id,type,attribute_family_id','variants'=>function($query)
-            {
-                $query->with(['product_flats' => function($qf)
-                {
+            ->with(['brand','related_products'=> fn($rp) => $rp->select('id','type','attribute_family_id','brand_id')->with('brand'),
+                'variants' => function($query){
+                $query->with(['product_flats' => function($qf){
                     $channel = core()->getRequestedChannelCode();
 
                     $locale = 'tm';//core()->getRequestedLocaleCode();
