@@ -15,14 +15,14 @@ class ColorVariant extends Product
         $product = $this->product ? $this->product : $this;
 
         return [
-            'id'                     => $product->id,
-            'type'                   => $product->type,
-            'name'                   => $product->name,
-            'description'            => $product->description,
-            'images'                 => ProductImage::collection($product->images),
-            'size_variants'          => SizeVariant::collection($product->variants),
+            'id'             => $product->id,
+            'type'           => $product->type,
+            'name'           => $product->name,
+            'description'    => $product->description,
+            'brand'          => $product->brand->name ?? '',
+            'images'         => ProductImage::collection($product->images),
+            'size_variants'  => SizeVariant::collection($product->variants),
             $this->merge($this->specialPriceInfo()),
-
         ];
     }
 }

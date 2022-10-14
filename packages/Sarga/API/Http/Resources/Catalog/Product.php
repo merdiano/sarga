@@ -23,7 +23,7 @@ class Product extends JsonResource
             'id'                     => $product->id,
             'type'                   => $product->type,
             'name'                   => $product->name,
-//            'description'            => $product->description,
+            'description'            => $product->description,
 //            'is_wishlisted'          => $this->isWishlisted($product), //todo transfer to mobile
 //            'is_item_in_cart'        => \Cart::hasProduct($product),//todo transfer to mobile
 //            'shop_title'             => $this->shop_title,
