@@ -20,7 +20,7 @@ class CartItemProduct extends JsonResource
             return [
                 'id'                => $this->id,
                 'name'              => $this->name,
-                'images'            => ProductImage::collection($this->images),
+                'images'            => ProductImage::collection($this->parent?$this->parent->imaeges:$this->images),
                 /* super attributes */
                 $this->mergeWhen(!empty($this->parent && $this->parent->super_attributes), [
                     'super_attributes' => $this->super_attributes($this->parent->super_attributes),
@@ -30,7 +30,7 @@ class CartItemProduct extends JsonResource
             return [
                 'id'                => $this->id,
                 'name'              => $this->name,
-                'images'            => ProductImage::collection($this->images),
+                'images'            => ProductImage::collection($this->parent?$this->parent->imaeges:$this->images),
             ];
         }
 
