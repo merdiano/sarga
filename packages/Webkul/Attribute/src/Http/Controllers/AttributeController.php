@@ -99,6 +99,13 @@ class AttributeController extends Controller
     {
         $attribute = $this->attributeRepository->findOrFail($id);
 
+        if($filter = request()->get('filter')){
+            return $attribute->options()
+                ->where('admin_name','like',"{$filter}%")
+                ->orderBy('id','desc')
+                ->paginate(100);
+        }
+
         return $attribute->options()->orderBy('id','desc')->paginate(100);
     }
 
