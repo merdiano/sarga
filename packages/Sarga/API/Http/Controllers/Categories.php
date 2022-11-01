@@ -37,10 +37,12 @@ class Categories extends CategoryController
             } ])
             ->find($id);
 
+        $brendler = $category->brands()->has('products')->get();
+
         if($category)
             return response([
                 'attributes' => Attribute::collection($category->filterableAttributes),
-                'brands' => Brand::collection($category->brands),
+                'brands' => Brand::collection($brendler),
                 ]);
         else{
             return response(['error'=>'not found'],404);
