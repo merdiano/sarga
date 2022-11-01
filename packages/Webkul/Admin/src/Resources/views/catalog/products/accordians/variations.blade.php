@@ -470,6 +470,8 @@
 
                     index++;
                 }
+                console.warn(variants);
+                console.log(variants);
             },
 
             methods: {
