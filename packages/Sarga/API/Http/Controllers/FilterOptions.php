@@ -74,7 +74,7 @@ class FilterOptions extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceCon
         if ($sort = $request->input('sort')) {
             $query->orderBy($sort, $request->input('order') ?? 'desc');
         } else {
-            $query->orderBy('sort_order', 'desc');
+            $query->orderBy('sort_order', 'asc');
         }
 
 //        Log::info($query->toSql());
