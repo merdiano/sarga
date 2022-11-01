@@ -317,7 +317,7 @@
                 </span>
             </div>
             <div class="control-group">
-                <input type="text" v-model="filter" class="control" data-vv-as="&quot;{{ __('admin::app.catalog.attributes.filter') }}&quot;"/>
+                <input type="text" v-model="filter" class="control" placeholder="Filter"/>
             </div>
             <div class="table">
                 <table>
@@ -391,9 +391,6 @@
                 {{ __('admin::app.catalog.attributes.add-option-btn-title') }}
             </button>
 
-            <button type="button" class="btn btn-lg btn-primary" id="load-more-btm" style="margin-top: 20px" @click="loadMoreOptions()" v-if="loadMore">
-                Filter
-            </button>
         </div>
     </script>
 
@@ -435,6 +432,7 @@
                     }
                 },
                 filter: function(){
+                    this.optionRows =[]
                     this.getAttributeOptions();
                 }
             },
