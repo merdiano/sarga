@@ -416,7 +416,7 @@
                     swatch_type: "{{ $attribute->swatch_type == '' ? 'dropdown' : $attribute->swatch_type }}",
                     isNullOptionChecked: false,
                     idNullOption: null,
-                    filter:null
+                    filter:''
                 };
             },
 
