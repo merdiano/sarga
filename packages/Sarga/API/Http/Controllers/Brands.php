@@ -8,7 +8,7 @@ use Sarga\Brand\Repositories\BrandRepository;
 
 class Brands extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceController
 {
-    protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale','search','category'];
+    protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale','search','category','menu'];
 
     /**
      * Is resource authorized.
@@ -48,13 +48,18 @@ class Brands extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceController
                 $query = $query->whereIn($input, array_map('trim', explode(',', $value)));
             }
 
-            if($key = $request->input('search')){
-                $query = $query->where('name','like', '%'.$key.'%');
+            if($menu = $request->input('menu')){
+                $query = $query->join('menu_brands','brands.id','=','menu_brands.brand_id')
+                    ->where('menu_brands.menu_id', $menu);
+            }
+            elseif($category = $request->input('category'))
+            {
+                $query = $query->join('category_brands','brands.id','=','category_brands.brand_id')
+                    ->where('category_brands.category_id',$category);
             }
 
-            if($category = $request->input('category')){
-                $query = $query->rightJoin('category_brands','brands.id','=','category_brands.brand_id')
-                    ->where('category_brands.category_id',$category);
+            if($key = $request->input('search')){
+                $query = $query->where('name','like', '%'.$key.'%');
             }
 
             if ($sort = $request->input('sort')) {
