@@ -63,7 +63,7 @@ class Brands extends \Webkul\RestApi\Http\Controllers\V1\Shop\ResourceController
                 $query = $query->orderBy('position', 'desc')->orderBy('name', 'asc');
             }
 
-            return $query;
+            return $query->has('products');
         });
 
         if (is_null($request->input('pagination')) || $request->input('pagination')) {

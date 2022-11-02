@@ -33,16 +33,14 @@ class Categories extends CategoryController
 
     public function filters($id){
         $category = $this->getRepositoryInstance()->with(['filterableAttributes','brands' => function ($q){
-                $q->take(20)->orderBy('position', 'desc')->orderBy('name', 'asc');
+                $q->has('products')->take(20)->orderBy('position', 'desc')->orderBy('name', 'asc');
             } ])
             ->find($id);
-
-        $brendler = $category->brands()->has('products')->get();
 
         if($category)
             return response([
                 'attributes' => Attribute::collection($category->filterableAttributes),
-                'brands' => Brand::collection($brendler),
+                'brands' => Brand::collection($category->brands),
                 ]);
         else{
             return response(['error'=>'not found'],404);
