@@ -13,17 +13,8 @@ class Channels extends Controller
 
     public function index()
     {
+        return Channel::make($this->channelRepository->first());
 
-        $channels = $this->channelRepository->with('sliders')->get();
-
-        if($channels)
-        {
-            return Channel::collection($channels);
-        }
-        else
-        {
-            return response()->json(['not found'],404);
-        }
     }
 
     public function get($channel_id){
