@@ -46,7 +46,7 @@ class CartRuleRequest extends FormRequest
             && request()->action_type == 'by_percent'
         ) {
             $rules = array_merge($rules, [
-                'discount_amount' => 'required|numeric|min:0|max:100',
+                'discount_amount' => 'required|numeric|max:100',
             ]);
         }
 
