@@ -18,9 +18,11 @@ return [
         'order-status-fraud'           => 'Näsaz',
         'order-status-pending'         => 'Garaşylýar',
         'order-status-pending-payment' => 'Tölege garaşylýar',
-        'order-status-processing'      => 'Işlenilýär',
+        'order-status-processing'      => 'Türkmenistana geldi',
         'order-status-success'         => 'Tamamlandy',
-        'order-status-completed'       => 'Tamamlandy',
+        'order-status-completed'       => 'Eltip berildi',
+        'order-status-purchase'        => 'Satyn alynýar',
+        'order-status-shipping'        => 'Türkmenistana ugradyldy'
 
     ],
     'cart'=>[

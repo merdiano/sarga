@@ -18,10 +18,11 @@ return [
         'order-status-fraud'           => 'Мошенничество',
         'order-status-pending'         => 'В ожидании',
         'order-status-pending-payment' => 'В ожидании платежа',
-        'order-status-processing'      => 'В процессе',
+        'order-status-processing'      => 'Прибыл в Туркменистан',
         'order-status-success'         => 'Завершено',
-        'order-status-completed'         => 'Завершено',
-
+        'order-status-completed'       => 'Доставлено',
+        'order-status-purchase'        => 'На покупке',
+        'order-status-shipping'        => 'Отправлено в Туркменистан'
     ],
     'cart'=>[
         'item'=>[
