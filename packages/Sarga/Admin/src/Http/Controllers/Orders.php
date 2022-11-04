@@ -3,6 +3,7 @@
 namespace Sarga\Admin\Http\Controllers;
 
 use Sarga\Admin\DataGrids\OrderDataGrid;
+use Sarga\Shop\Models\Order;
 use Sarga\Shop\Repositories\OrderItemRepository;
 use Sarga\Shop\Repositories\OrderRepository;
 use Webkul\Admin\Http\Controllers\Sales\OrderController;
@@ -66,6 +67,18 @@ class Orders extends OrderController
             session()->flash('error', trans('admin::app.response.cancel-error', ['name' => 'Order Item']));
         }
 
+        return redirect()->back();
+    }
+
+    public function accept($orderId){
+        $order = $this->orderRepository->findOrFail($orderId);
+        $this->orderRepository->updateOrderStatus($order, Order::STATUS_PURCHASE);
+        return redirect()->back();
+    }
+
+    public function ship($orderId){
+        $order = $this->orderRepository->findOrFail($orderId);
+        $this->orderRepository->updateOrderStatus($order, Order::STATUS_SHIPPING);
         return redirect()->back();
     }
 }

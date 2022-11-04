@@ -9,6 +9,8 @@ return [
             'title'                        => 'Orders',
             'view-title'                   => 'Order #:order_id',
             'cancel-btn-title'             => 'Cancel',
+            'accept-btn-title'             => 'Accept',
+            'ship-btn-title'               => 'Cargo',
             'shipment-btn-title'           => 'Ship',
             'invoice-btn-title'            => 'Invoice',
             'info'                         => 'Information',

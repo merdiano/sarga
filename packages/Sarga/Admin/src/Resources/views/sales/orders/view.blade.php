@@ -26,8 +26,21 @@
                     <a href="{{ route('admin.sales.orders.cancel', $order->id) }}" class="btn btn-lg btn-primary" v-alert:message="'{{ __('admin::app.sales.orders.cancel-confirm-msg') }}'">
                         {{ __('admin::app.sales.orders.cancel-btn-title') }}
                     </a>
+
                 @endif
 
+                @if ($order->canAccept())
+
+                    <a href="{{ route('admin.sales.orders.accept', $order->id) }}" class="btn btn-lg btn-primary" >
+                        {{ __('admin::app.sales.orders.accept-btn-title') }}
+                    </a>
+                @endif
+                    @if ($order->canSendShip())
+
+                        <a href="{{ route('admin.sales.orders.ship', $order->id) }}" class="btn btn-lg btn-primary" >
+                            {{ __('admin::app.sales.orders.ship-btn-title') }}
+                        </a>
+                    @endif
                 @if ($order->canInvoice() && $order->payment->method !== 'paypal_standard')
                     <a href="{{ route('admin.sales.invoices.create', $order->id) }}" class="btn btn-lg btn-primary">
                         {{ __('admin::app.sales.orders.invoice-btn-title') }}

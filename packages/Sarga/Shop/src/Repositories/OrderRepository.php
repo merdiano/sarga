@@ -8,6 +8,15 @@ use Webkul\Sales\Repositories\OrderRepository as WOrderRepository;
 class OrderRepository extends WOrderRepository
 {
     /**
+     * Specify model class name.
+     *
+     * @return string
+     */
+    public function model(): string
+    {
+        return 'Sarga\Shop\Contracts\Order';
+    }
+    /**
      * Update order status.
      *
      * @param  \Webkul\Sales\Contracts\Order  $order
