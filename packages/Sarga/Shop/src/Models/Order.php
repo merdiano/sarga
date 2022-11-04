@@ -2,7 +2,7 @@
 
 namespace Sarga\Shop\Models;
 
-class Order extends \Webkul\Sales\Models\Order
+class Order extends \Webkul\Sales\Models\Order implements \Sarga\Shop\Contracts\Order
 {
     public const STATUS_PURCHASE = 'purchase';
 
