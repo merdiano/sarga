@@ -27,6 +27,8 @@ return [
             'order-status-pending-payment' => 'Pending Payment',
             'order-status-processing'      => 'Processing',
             'order-status-success'         => 'Completed',
+            'order-status-purchasing'      => 'Purchasing',
+            'order-status-shipping'        => 'Shipping',
             'channel'                      => 'Channel',
             'customer-name'                => 'Customer Name',
             'email'                        => 'Email',
@@ -207,5 +209,32 @@ return [
             'title' => 'Scrap',
             'trendyol' => 'Trendyol',
         ]
-    ]
+    ],
+    'notification' => [
+        'notification-title'          => 'Notification',
+        'title-plural'                => 'Notifications',
+        'status'                      => [
+            'all'        => 'All',
+            'pending'    => 'Pending',
+            'processing' => 'Processing',
+            'canceled'   => 'Canceled',
+            'closed'     => 'Closed',
+            'completed'  => 'Completed',
+        ],
+        'view-all'                    => 'View All Notifications',
+        'no-record'                   => 'No Record Found',
+        'read-all'                    => 'Mark as Read',
+        'notification-marked-success' => 'Notification Marked Successfully',
+        'order-status-messages'       => [
+            'completed'  => 'Order Completed',
+            'closed'     => 'Order Closed',
+            'canceled'   => 'Order Canceled',
+            'pending'    => 'Order Pending',
+            'processing' => 'Order Processing',
+            'pending_payment' => 'Pending Payment',
+            'purchasing' => "Purchasing",
+            'shipping'   => "Shipping"
+        ],
+    ],
+
 ];
