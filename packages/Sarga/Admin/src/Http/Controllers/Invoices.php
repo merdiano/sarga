@@ -23,10 +23,12 @@ class Invoices extends InvoiceController
      * @return void
      */
     public function __construct(
-        protected OrderRepository $orderRepository,
-        protected InvoiceRepository $invoiceRepository
+        OrderRepository $orderRepository,
+        InvoiceRepository $invoiceRepository
     )
     {
         $this->_config = request('_config');
+        $this->orderRepository = $orderRepository;
+        $this->invoiceRepository = $invoiceRepository;
     }
 }
