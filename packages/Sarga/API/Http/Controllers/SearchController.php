@@ -73,13 +73,13 @@ class SearchController extends V1Controller
         $products = $this->productFlatRepository->getModel()::search(implode(' OR ', $key))
 //            ->where('channel', $channel)
 //            ->where('locale', $locale)
-//            ->where('status', 1)
-//            ->where('visible_individually', 1)
+
 //                ->addSelect(DB::raw("\'product\' as type" ))
-//            ->orderBy('name')
+            ->orderBy('name')
             ->take(10)
             ->query(fn ($query) => $query->select('id','name','product_id','description'))
-
+                ->where('status', 1)
+                ->where('visible_individually', 1)
 //                ->take(10)
             ->get();
 
