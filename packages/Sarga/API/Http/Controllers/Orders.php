@@ -11,7 +11,7 @@ use Webkul\RestApi\Http\Controllers\V1\Shop\Customer\OrderController;
 
 class Orders extends OrderController
 {
-    protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale'];
+    protected $requestException = ['page', 'limit', 'pagination', 'sort', 'order', 'token','locale','currency'];
     public function __construct(protected OrderRepository $orderRepository,
                                 protected OrderItemRepository $orderItemRepository)
     {
