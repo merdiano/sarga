@@ -80,7 +80,7 @@ class SearchController extends V1Controller
             ->query(fn ($query) => $query->select('id','name','product_id','description'))
 //                ->where('status', 1)
 //                ->where('visible_individually', 1)
-                ->orderBy('name')
+//                ->orderBy('name')
 //                ->take(10)
             ->get();
 
