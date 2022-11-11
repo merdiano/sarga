@@ -37,12 +37,4 @@ class Order extends \Webkul\Sales\Models\Order implements \Sarga\Shop\Contracts\
         return $this->status === self::STATUS_SHIPPING && parent::canInvoice();
     }
 
-    /**
-     * Checks if new shipment is allow or not
-     *
-     * @return bool
-     */
-    public function canShip(): bool{
-        return $this->status === self::STATUS_SHIPPING && parent::canShip();
-    }
  }
