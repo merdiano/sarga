@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Sarga\Admin\Http\Controllers\Invoices;
+use Sarga\Admin\Http\Controllers\Shipments;
 
 /**
  * Sales routes.
@@ -56,5 +57,24 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => config('app.admin_ur
 
         Route::get('/invoices/{id}/transactions', [Invoices::class, 'invoiceTransactions'])
             ->name('admin.sales.invoices.transactions');
+
+        /**
+         * Shipments routes.
+         */
+        Route::get('/shipments', [Shipments::class, 'index'])->defaults('_config', [
+            'view' => 'admin::sales.shipments.index',
+        ])->name('admin.sales.shipments.index');
+
+        Route::get('/shipments/create/{order_id}', [Shipments::class, 'create'])->defaults('_config', [
+            'view' => 'admin::sales.shipments.create',
+        ])->name('admin.sales.shipments.create');
+
+        Route::post('/shipments/create/{order_id}', [Shipments::class, 'store'])->defaults('_config', [
+            'redirect' => 'admin.sales.orders.view',
+        ])->name('admin.sales.shipments.store');
+
+        Route::get('/shipments/view/{id}', [Shipments::class, 'view'])->defaults('_config', [
+            'view' => 'admin::sales.shipments.view',
+        ])->name('admin.sales.shipments.view');
     });
 });
