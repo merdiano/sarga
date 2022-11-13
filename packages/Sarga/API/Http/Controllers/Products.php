@@ -153,7 +153,7 @@ class Products extends ProductController
     }
 
     public function discountedProducts(){
-        return ProductResource::collection($this->productRepository->getDiscountedProducts(request()->input('category')));
+        return ProductResource::collection($this->productRepository->getDiscountedProducts(request()->input('vendor'),request()->input('category')));
     }
 
     public function popularProducts(){
