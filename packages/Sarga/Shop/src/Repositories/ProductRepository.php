@@ -287,7 +287,7 @@ class ProductRepository extends WProductRepository
         })->whereNotNull('product_flat.special_price')
             ->where('product_flat.special_price','>',0)->paginate(10);
 
-        return $results;
+        return null;
     }
 
     public function getPopularProducts($categoryId = null)
