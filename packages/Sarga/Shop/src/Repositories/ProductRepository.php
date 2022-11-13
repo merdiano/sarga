@@ -266,7 +266,7 @@ class ProductRepository extends WProductRepository
 
     public function getDiscountedProducts($seller_id,$categoryId = null){
 
-        $results = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($seller_id,$categoryId) {
+        $results = app(ProductFlatRepository::class)->scopeQuery(function ($query) use ($categoryId) {
             $channel = core()->getRequestedChannelCode();
             $locale = core()->getRequestedLocaleCode();
 
@@ -276,17 +276,17 @@ class ProductRepository extends WProductRepository
                 ->where('product_flat.status', 1)
                 ->where('product_flat.visible_individually', 1)
                 ->where('product_flat.channel', $channel)
-                ->where('product_flat.locale', $locale)
-                ->whereNotNull('product_flat.special_price')
-                ->where('product_flat.special_price','>',0)
-                ->join('marketplace_products', 'product_flat.product_id', '=', 'marketplace_products.product_id')
-                ->where('marketplace_products.marketplace_seller_id', $seller_id);
+                ->where('product_flat.locale', $locale);
             if ($categoryId) {
                 $query->leftJoin('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
                     ->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
             return $query->inRandomOrder();
-        })->paginate(10);
+        })->whereNotNull('product_flat.special_price')
+            ->where('product_flat.special_price','>',0)
+            ->join('marketplace_products', 'product_flat.product_id', '=', 'marketplace_products.product_id')
+            ->where('marketplace_products.marketplace_seller_id', $seller_id)
+            ->paginate(20);
 
         return $results;
     }
