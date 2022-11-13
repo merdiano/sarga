@@ -273,13 +273,11 @@ class ProductRepository extends WProductRepository
             $query->distinct()
                 ->addSelect('product_flat.*')
 
-
-//                ->where('product_flat.min_price','>','product_flat.max_price')
                 ->where('product_flat.status', 1)
                 ->where('product_flat.visible_individually', 1)
                 ->where('product_flat.channel', $channel)
                 ->where('product_flat.locale', $locale)
-                ->leftJoin('marketplace_products', 'product_flat.product_id', '=', 'marketplace_products.product_id')
+                ->join('marketplace_products', 'product_flat.product_id', '=', 'marketplace_products.product_id')
                 ->where('marketplace_products.marketplace_seller_id', $seller_id);
             if ($categoryId) {
                 $query->leftJoin('product_categories', 'product_categories.product_id', '=', 'product_flat.product_id')
