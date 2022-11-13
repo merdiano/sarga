@@ -284,7 +284,7 @@ class ProductRepository extends WProductRepository
             return $query->inRandomOrder();
         })->whereNotNull('product_flat.special_price')
             ->where('product_flat.special_price','>',0)
-            ->join('marketplace_products', 'product_flat.product_id', '=', 'marketplace_products.product_id')
+            ->leftJoin('marketplace_products', 'product_flat.product_id', '=', 'marketplace_products.product_id')
             ->where('marketplace_products.marketplace_seller_id', $seller_id)
             ->paginate(20);
 
