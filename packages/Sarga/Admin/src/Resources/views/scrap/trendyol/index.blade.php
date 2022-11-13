@@ -15,13 +15,13 @@
             <div class="table">
                 <div class="grid-container">
                     <a  target="_blank"
-                        href="https://scraper.sarga.tk/init-scraper"
+                        href="http://sc.sarga.tk/init-scraper"
                         class="btn btn-lg btn-primary"
                     >
                         Start Scrap
                     </a>
                     <a  target="_blank"
-                        href="https://importer.sarga.tk/init-importer"
+                        href="http://im.sarga.tk/init-importer"
                         class="btn btn-lg btn-primary"
                     >
                         Start import
