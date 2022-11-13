@@ -277,6 +277,8 @@ class ProductRepository extends WProductRepository
                 ->where('product_flat.visible_individually', 1)
                 ->where('product_flat.channel', $channel)
                 ->where('product_flat.locale', $locale)
+                ->whereNotNull('product_flat.special_price')
+                ->where('product_flat.special_price','>',0)
                 ->join('marketplace_products', 'product_flat.product_id', '=', 'marketplace_products.product_id')
                 ->where('marketplace_products.marketplace_seller_id', $seller_id);
             if ($categoryId) {
@@ -284,8 +286,7 @@ class ProductRepository extends WProductRepository
                     ->whereIn('product_categories.category_id', explode(',', $categoryId));
             }
             return $query->inRandomOrder();
-        })->whereNotNull('product_flat.special_price')
-            ->where('product_flat.special_price','>',0)->paginate(10);
+        })->paginate(10);
 
         return $results;
     }
