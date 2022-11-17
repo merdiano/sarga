@@ -79,7 +79,7 @@ class CartResource extends JsonResource
         $ruleResources = array();
 
         if($this->applied_cart_rule_ids){
-            $rule_ids =implode(',',$this->applied_cart_rule_ids);
+            $rule_ids =explode(',',$this->applied_cart_rule_ids);
             $cols = ['id','name','description','action_type','amount'];
             $cartRules = $this->cartRuleRepository->findWhereIn('applied_cart_rule_ids',$rule_ids,$cols);
 

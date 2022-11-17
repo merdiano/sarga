@@ -18,7 +18,9 @@ class CartRuleResource extends JsonResource
             'name'        => $this->name,
             'description' => $this->description,
             'action_type' => $this->action_type,
-            'amount'      => str_contains($this->action_type,'fixed')? core()->formatPrice($this->discount_amount,  $this->currency):$this->discount_amount.'%'
+            'amount'      => str_contains($this->action_type,'fixed')?
+                core()->formatPrice($this->discount_amount,  $this->currency):
+                $this->discount_amount.'%'
         ];
     }
 
