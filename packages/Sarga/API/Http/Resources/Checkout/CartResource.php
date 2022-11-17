@@ -5,6 +5,7 @@ namespace Sarga\API\Http\Resources\Checkout;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
 use Sarga\API\Http\Resources\Customer\AddressResource;
+use Webkul\CartRule\Repositories\CartRuleRepository;
 use Webkul\Marketplace\Repositories\ProductRepository;
 use Webkul\Tax\Helpers\Tax;
 
@@ -13,6 +14,7 @@ class CartResource extends JsonResource
     public function __construct($resource)
     {
         $this->sellerProductRepository = app(ProductRepository::class);
+        $this->cartRuleRepository = app(CartRuleRepository::class);
         parent::__construct($resource);
     }
     /**
@@ -46,7 +48,8 @@ class CartResource extends JsonResource
             'payment'                            => new CartPaymentResource($this->payment),
             'billing_address'                    => new AddressResource($this->billing_address),
             'shipping_address'                   => new AddressResource($this->shipping_address),
-            'formatted_discounted_sub_total'     => core()->formatPrice($this->base_sub_total - $this->base_discount_amount, $this->cart_currency_code)
+            'formatted_discounted_sub_total'     => core()->formatPrice($this->base_sub_total - $this->base_discount_amount, $this->cart_currency_code),
+            'cart_rules'                         => $this->cartRules(),
         ];
     }
 
@@ -71,6 +74,23 @@ class CartResource extends JsonResource
 
         return $result;
     }
+
+    private function cartRules(){
+        $ruleResources = array();
+
+        if($this->applied_cart_rule_ids){
+            $rule_ids =implode(',',$this->applied_cart_rule_ids);
+            $cols = ['id','name','description','action_type','amount'];
+            $cartRules = $this->cartRuleRepository->findWhereIn('applied_cart_rule_ids',$rule_ids,$cols);
+
+            foreach($cartRules as $rule){
+                $ruleResources [] = new CartRuleResource($rule,$this->cart_currency_code);
+            }
+        }
+
+        return $ruleResources;
+    }
+
 
     private function groupByVendors($items){
         $data = array();
