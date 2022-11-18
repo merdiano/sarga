@@ -62,12 +62,16 @@ class CategoryRepository extends WCategoryRepository
             $category->vendors()->sync($data['vendors']);
         }
 
+        return $category;
     }
 
     public function update(array $data, $id, $attribute = 'id'){
         $category = parent::update($data,$id,$attribute );
+
         if (isset($data['vendors'])) {
             $category->vendors()->sync($data['vendors']);
         }
+
+        return $category;
     }
 }
