@@ -29,7 +29,7 @@
         </div>
         <div class="control-group multi-select" :class="[errors.has('channels[]') ? 'has-error' : '']">
             <label for="channels" class="required">Vendors</label>
-            <?php $selectedaVendors = old('vendors') ?? $category->vendors->pluck('id')->toArray() ?>
+            <?php $selectedaVendors = old('vendors') ?? $category->vendors()->all()->pluck('id')->toArray() ?>
             <select class="control" name="vendors[]" v-validate="'required'" data-vv-as="&quot;Vendors&quot;" multiple>
                 @foreach (app('Sarga\Shop\Repositories\VendorRepository')->all() as $vendor)
                     <option value="{{ $vendor->id }}" {{ in_array($vendor->id, $selectedaVendors) ? 'selected' : ''}}>
