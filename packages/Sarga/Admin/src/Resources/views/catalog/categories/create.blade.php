@@ -37,11 +37,7 @@
                                 <input type="text" v-validate="'required'" class="control" id="name" name="name" value="{{ old('name') }}" data-vv-as="&quot;{{ __('admin::app.catalog.categories.name') }}&quot;" v-slugify-target="'slug'"/>
                                 <span class="control-error" v-if="errors.has('name')">@{{ errors.first('name') }}</span>
                             </div>
-                            <div class="control-group" :class="[errors.has('slug') ? 'has-error' : '']">
-                                <label for="slug" class="required">{{ __('admin::app.catalog.categories.slug') }}</label>
-                                <input type="text" v-validate="'required'" class="control" id="slug" name="slug" value="{{ old('slug') }}" data-vv-as="&quot;{{ __('admin::app.catalog.categories.slug') }}&quot;" v-slugify/>
-                                <span class="control-error" v-if="errors.has('slug')">@{{ errors.first('slug') }}</span>
-                            </div>
+
                             <div class="control-group" :class="[errors.has('status') ? 'has-error' : '']">
                                 <label for="status" class="required">{{ __('admin::app.catalog.categories.visible-in-menu') }}</label>
                                 <select class="control" v-validate="'required'" id="status" name="status" data-vv-as="&quot;{{ __('admin::app.catalog.categories.visible-in-menu') }}&quot;">
