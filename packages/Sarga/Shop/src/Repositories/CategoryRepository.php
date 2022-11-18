@@ -18,6 +18,32 @@ class CategoryRepository extends WCategoryRepository
     {
         return \Sarga\Shop\Contracts\Category::class;
     }
+    /**
+     * get visible category tree.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Support\Collection
+     */
+    public function getVisibleCategoryTree($id = null)
+    {
+        static $categories = [];
+
+        if (array_key_exists($id, $categories)) {
+            return $categories[$id];
+        }
+
+        $query = $this->model::orderBy('position', 'ASC')->where('status', 1);
+
+        if(request()->has('vendor')){
+            $query->whereHas('vendors', function($q){
+               $q->where('id',request()->get('vendor'));
+            });
+        }
+
+        return $categories[$id] = $id
+            ? $query->descendantsAndSelf($id)->toTree($id)
+            : $query->get()->toTree();
+    }
 
     public function getCategoryTree($id = null)
     {
@@ -27,9 +53,17 @@ class CategoryRepository extends WCategoryRepository
             return $categories[$id];
         }
 
+        $query = $this->model::orderBy('position', 'ASC');
+
+        if(request()->has('vendor')){
+            $query->whereHas('vendors', function($q){
+                $q->where('id',request()->get('vendor'));
+            });
+        }
+
         return $categories[$id] = $id
-            ? $this->model::orderBy('position', 'ASC')->descendantsAndSelf($id)->toTree($id)
-            : $this->model::orderBy('position', 'ASC')->get()->toTree();
+            ? $query->descendantsAndSelf($id)->toTree($id)
+            : $query->get()->toTree();
     }
 
     public function getInvisibleCategories(){
@@ -40,11 +74,16 @@ class CategoryRepository extends WCategoryRepository
     }
 
     public function getDescriptionCategories(){
-        return $this->getModel()
+        $query = $this->getModel()
             ->whereNotNull('parent_id')
             ->where('status',1)
-            ->where('display_mode','description_only')
-            ->get();
+            ->where('display_mode','description_only');
+
+        if(request()->has('vendor')){
+
+        }
+
+        return $query->get();
     }
 
     public function findByName($name, $limit = 10 ){
