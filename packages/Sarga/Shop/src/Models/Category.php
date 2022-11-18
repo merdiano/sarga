@@ -8,7 +8,7 @@ use Laravel\Scout\Searchable;
 use Sarga\Brand\Models\BrandProxy;
 use Webkul\Category\Database\Factories\CategoryFactory;
 use Webkul\Category\Models\Category as WCategory;
-class Category extends WCategory
+class Category extends WCategory implements \Sarga\Shop\Contracts\Category
 {
     /**
      * Fillables.
