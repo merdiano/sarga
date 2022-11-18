@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Sarga\Admin\Http\Controllers\Categories;
 use Sarga\Admin\Http\Controllers\Menus;
 use Sarga\Admin\Http\Controllers\Scrap;
 
@@ -8,6 +9,25 @@ use Sarga\Admin\Http\Controllers\Scrap;
  */
 Route::group(['middleware' => ['web', 'admin'], 'prefix' => config('app.admin_url')], function () {
     Route::prefix('catalog')->group(function () {
+        /**
+         * Categories routes.
+         */
+
+        Route::get('/categories/create', [Categories::class, 'create'])->defaults('_config', [
+            'view' => 'admin::catalog.categories.create',
+        ])->name('admin.catalog.categories.create');
+
+        Route::post('/categories/create', [Categories::class, 'store'])->defaults('_config', [
+            'redirect' => 'admin.catalog.categories.index',
+        ])->name('admin.catalog.categories.store');
+
+        Route::get('/categories/edit/{id}', [Categories::class, 'edit'])->defaults('_config', [
+            'view' => 'admin::catalog.categories.edit',
+        ])->name('admin.catalog.categories.edit');
+
+        Route::put('/categories/edit/{id}', [Categories::class, 'update'])->defaults('_config', [
+            'redirect' => 'admin.catalog.categories.index',
+        ])->name('admin.catalog.categories.update');
         /**
          * Menu routes.
          */

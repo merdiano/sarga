@@ -16,7 +16,7 @@ class CategoryRepository extends WCategoryRepository
      */
     public function model(): string
     {
-        return Category::class;
+        return \Sarga\Shop\Contracts\Category::class;
     }
 
     public function getCategoryTree($id = null)
