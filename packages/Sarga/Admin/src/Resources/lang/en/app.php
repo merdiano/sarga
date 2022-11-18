@@ -208,7 +208,7 @@ return [
         'scrap' => [
             'title' => 'Scrap',
             'trendyol' => 'Trendyol',
-        ]
+        ],
     ],
     'notification' => [
         'notification-title'          => 'Notification',

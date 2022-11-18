@@ -27,6 +27,20 @@
                    value="{{ old('product_limit',$category->product_limit)}}" data-vv-as="&quot;Products limit&quot;"/>
             <span class="control-error" v-if="errors.has('product_limit')">@{{ errors.first('product_limit') }}</span>
         </div>
+        <div class="control-group multi-select" :class="[errors.has('channels[]') ? 'has-error' : '']">
+            <label for="channels" class="required">Vendors</label>
+            <?php $selectedaVendors = old('vendors') ?? $category->vendors->pluck('id')->toArray() ?>
+            <select class="control" name="vendors[]" v-validate="'required'" data-vv-as="&quot;Vendors&quot;" multiple>
+                @foreach (app('Sarga\Shop\Repositories\VendorRepository')->all() as $vendor)
+                    <option value="{{ $vendor->id }}" {{ in_array($vendor->id, $selectedaVendors) ? 'selected' : ''}}>
+                        {{ $vendor->shop_title }}
+                    </option>
+                @endforeach
+            </select>
 
+            <span class="control-error" v-if="errors.has('vendors[]')">
+                @{{ errors.first('vendors[]') }}
+            </span>
+        </div>
     </div>
 </accordian>

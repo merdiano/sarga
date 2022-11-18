@@ -25,5 +25,21 @@
             <input type="text" v-validate="'required|numeric'" class="control" id="product_limit" name="product_limit" value="{{ old('product_limit',500)}}" data-vv-as="&quot;Products limit&quot;"/>
             <span class="control-error" v-if="errors.has('product_limit')">@{{ errors.first('product_limit') }}</span>
         </div>
+
+        <div class="control-group multi-select" :class="[errors.has('channels[]') ? 'has-error' : '']">
+            <label for="channels" class="required">Vendors</label>
+
+            <select class="control" name="vendors[]" v-validate="'required'" data-vv-as="&quot;Vendors&quot;" multiple>
+                @foreach (app('Sarga\Shop\Repositories\VendorRepository')->all() as $vendor)
+                    <option value="{{ $vendor->id }}" >
+                        {{ $vendor->shop_title }}
+                    </option>
+                @endforeach
+            </select>
+
+            <span class="control-error" v-if="errors.has('vendors[]')">
+                @{{ errors.first('vendors[]') }}
+            </span>
+        </div>
     </div>
 </accordian>

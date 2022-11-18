@@ -54,4 +54,8 @@ class Category extends WCategory
     public function brands() :BelongsToMany{
         return $this->belongsToMany(BrandProxy::modelClass(),'category_brands');
     }
+
+    public function vendors() :BelongsToMany{
+        return $this->belongsToMany(VendorProxy::modelClass(),'vendor_categories');
+    }
 }

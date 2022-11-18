@@ -31,7 +31,6 @@
 
                     <accordian :title="'{{ __('admin::app.catalog.categories.general') }}'" :active="true">
                         <div slot="body">
-                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.general.controls.before') !!}
 
                             <div class="control-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">{{ __('admin::app.catalog.categories.name') }}</label>
@@ -62,7 +61,6 @@
                                 <span class="control-error" v-if="errors.has('position')">@{{ errors.first('position') }}</span>
                             </div>
 
-                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.general.controls.after') !!}
                         </div>
                     </accordian>
 
@@ -71,7 +69,6 @@
 
                     <accordian :title="'{{ __('admin::app.catalog.categories.description-and-images') }}'" :active="true">
                         <div slot="body">
-                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.description_images.controls.before') !!}
 
                             <div class="control-group" :class="[errors.has('display_mode') ? 'has-error' : '']">
                                 <label for="display_mode" class="required">{{ __('admin::app.catalog.categories.display-mode') }}</label>
@@ -106,7 +103,6 @@
                                 </span>
                             </div>
 
-                            {!! view_render_event('bagisto.admin.catalog.category.create_form_accordian.description_images.controls.after') !!}
                         </div>
                     </accordian>
 
