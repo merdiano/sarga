@@ -54,4 +54,20 @@ class CategoryRepository extends WCategoryRepository
             ->groupBy('category_id')
             ->get();
     }
+
+    public function create(array $data){
+        $category = parent::create($data);
+
+        if (isset($data['vendors'])) {
+            $category->vendors()->sync($data['vendors']);
+        }
+
+    }
+
+    public function update(array $data, $id, $attribute = 'id'){
+        $category = parent::update($data,$id,$attribute );
+        if (isset($data['vendors'])) {
+            $category->vendors()->sync($data['vendors']);
+        }
+    }
 }
