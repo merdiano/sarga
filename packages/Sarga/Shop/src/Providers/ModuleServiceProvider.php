@@ -13,5 +13,6 @@ class ModuleServiceProvider extends CoreModuleServiceProvider
         \Sarga\Shop\Models\MenuTranslation::class,
         \Sarga\Shop\Models\Order::class,
         \Sarga\Shop\Models\Category::class,
+        \Sarga\Shop\Models\Notification::class,
     ];
 }

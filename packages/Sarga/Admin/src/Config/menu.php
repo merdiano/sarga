@@ -28,5 +28,11 @@ return [
         'route'      => 'admin.catalog.menus.index',
         'sort'       => 7,
         'icon-class' => '',
+    ],[
+        'key'        => 'marketing.push-notification',
+        'name'       => 'Push notifications',
+        'route'      => 'admin.push.index',
+        'sort'       => 3,
+        'icon-class' => '',
     ],
 ];

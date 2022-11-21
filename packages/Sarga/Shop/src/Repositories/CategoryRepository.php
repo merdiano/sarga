@@ -80,7 +80,9 @@ class CategoryRepository extends WCategoryRepository
             ->where('display_mode','description_only');
 
         if(request()->has('vendor')){
-
+            $query->whereHas('vendors', function($q){
+                $q->where('id',request()->get('vendor'));
+            });
         }
 
         return $query->get();
