@@ -40,7 +40,7 @@ class Firebase
         $body = json_encode((object)$this);
 
         $response = Http::withHeaders([
-            'Authorization' => config('notification.push.token'),
+            'Authorization' => config('push.push.token'),
             'Content-Type' => 'application/json'
         ])->withBody($body,'application/json')
             ->timeout(30)
