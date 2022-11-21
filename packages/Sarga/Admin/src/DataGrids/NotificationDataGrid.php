@@ -70,7 +70,7 @@ class NotificationDataGrid  extends DataGrid
         $this->addAction([
             'title'  => trans('admin::app.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.notifications.edit',
+            'route'  => 'admin.push.edit',
             'icon'   => 'icon pencil-lg-icon',
         ]);
 
