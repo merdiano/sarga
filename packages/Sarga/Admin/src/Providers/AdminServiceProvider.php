@@ -28,7 +28,7 @@ class AdminServiceProvider extends ServiceProvider
             __DIR__ . '/../Resources/views/customers/edit.blade.php' => resource_path('views/vendor/admin/customers/edit.blade.php'),
         ],'admin');
 
-        $this->publishes([ __DIR__ . '/../Config/push.php' => resource_path('config/push.php')],'sarga_config');
+        $this->publishes([ __DIR__ . '/../Config/push.php' => config_path('push.php')],'sarga_config');
 
         $this->app->register(EventServiceProvider::class);
 
