@@ -22,7 +22,7 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => config('app.admin_ur
     ])->name('admin.push.create');
 
     Route::post('push-notifications/create', [PushController::class,'store'])->defaults('_config', [
-        'redirect' => 'sarga_admin.notifications.index',
+        'redirect' => 'admin.push.index',
     ])->name('admin.push.store');
 
     Route::get('push-notifications/edit/{id}', [PushController::class,'edit'])->defaults('_config', [
