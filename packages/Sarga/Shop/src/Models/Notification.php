@@ -3,7 +3,7 @@
 namespace Sarga\Shop\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Marketing\Contracts\Notification as NotificationContract;
+use Sarga\Shop\Contracts\Notification as NotificationContract;
 
 class Notification extends Model implements  NotificationContract
 {
