@@ -2,13 +2,16 @@
 
 namespace Sarga\Admin\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
 use Sarga\Admin\Http\Firebase;
 use Sarga\Shop\Repositories\NotificationRepository;
 
 class PushController extends Controller
 {
-
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public function __construct(protected NotificationRepository $notificationRepository)
     {
         $this->_config = request('_config');
