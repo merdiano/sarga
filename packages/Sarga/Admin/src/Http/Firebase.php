@@ -44,7 +44,7 @@ class Firebase
             'Content-Type' => 'application/json'
         ])->withBody($body,'application/json')
             ->timeout(30)
-            ->post(config('notification.push.url'));
+            ->post(config('push.push.url'));
 
 
         if($response->failed())
