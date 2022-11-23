@@ -9,10 +9,14 @@ class Firebase
 {
     public $data;
 
+    public  $priority;
+
     public $notification;
 
+    public $to;
 
-    public function __construct(protected $to,$content,protected $priority = 'high')
+
+    public function __construct($to,$content,$priority = 'high')
     {
         $this->data = [
             'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
@@ -24,6 +28,10 @@ class Firebase
             'title' => $content['title'],
             'body' =>$content['content']
         ];
+
+        $this->to = $to;
+
+        $this->priority = $priority;
 
     }
 
@@ -43,6 +51,7 @@ class Firebase
             Log::error($response);
             $response->throw();
         }
+
         Log::info($response->body());
     }
 }
