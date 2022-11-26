@@ -19,7 +19,7 @@ class CartRuleResource extends JsonResource
             'name'        => $this->name,
             'description' => $this->description,
             'is_fixed'    => $is_fixed,
-            'is_discount' => $this->discount_amoun >0,
+            'is_discount' => $this->discount_amount >0,
             'amount'      => abs($is_fixed ?
                 core()->convertPrice($this->discount_amount,  $this->currency):
                 $this->discount_amount)
