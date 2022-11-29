@@ -23,6 +23,7 @@ class ProductDetail extends Product
             'name'           => $product->name,
             'description'    => $product->description,
             'brand'          => $product->brand->name ?? '',
+            'color'          => $product->color,
             'images'         => ProductImage::collection($product->images),
             'color_variants' => ColorVariant::collection($product->related_products->where('status',1)),
             'size_variants'  => SizeVariant::collection($product->variants->where('status',1)),

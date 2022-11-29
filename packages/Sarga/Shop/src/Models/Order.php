@@ -9,15 +9,15 @@ class Order extends \Webkul\Sales\Models\Order implements \Sarga\Shop\Contracts\
     public const STATUS_SHIPPING = 'shipping';
 
     protected $statusLabel = [
-        self::STATUS_PENDING         => 'Pending',
-        self::STATUS_PENDING_PAYMENT => 'Pending Payment',
-        self::STATUS_PURCHASE        => 'Accepted',
-        self::STATUS_SHIPPING        => 'Shipping',
-        self::STATUS_PROCESSING      => 'Arrived',
-        self::STATUS_COMPLETED       => 'Completed',
-        self::STATUS_CANCELED        => 'Canceled',
-        self::STATUS_CLOSED          => 'Closed',
-        self::STATUS_FRAUD           => 'Fraud',
+        self::STATUS_PENDING         => 'pending',
+        self::STATUS_PENDING_PAYMENT => 'pending_payment',
+        self::STATUS_PURCHASE        => 'accepted',
+        self::STATUS_SHIPPING        => 'shipping',
+        self::STATUS_PROCESSING      => 'arrived',
+        self::STATUS_COMPLETED       => 'completed',
+        self::STATUS_CANCELED        => 'canceled',
+        self::STATUS_CLOSED          => 'closed',
+        self::STATUS_FRAUD           => 'fraud',
 
     ];
 

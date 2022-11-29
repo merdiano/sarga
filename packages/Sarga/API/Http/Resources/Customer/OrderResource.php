@@ -26,7 +26,7 @@ class OrderResource extends JsonResource
     public function toArray($request){
         return [
             'id'                                 => $this->id,
-            'status'                             => $this->status,
+            'status'                             => $this->status_label,
             'status_label'                       => trans('sarga-api::app.orders.order-status-'.$this->status),
             'shipping_method'                    => $this->shipping_method,
             'shipping_title'                     => $this->shipping_title,
